@@ -1,0 +1,375 @@
+/*
+ * Functions that modify variables of some effects, functions that changes colours or initialize the arrays
+ */
+
+// addition for the fastled library
+LIB8STATIC uint8_t beattriwave8(accum88 beats_per_minute, uint8_t lowest = 0, uint8_t highest = 255, uint32_t timebase = 0, uint8_t phase_offset = 0)
+{
+ uint8_t beat = beat8(beats_per_minute, timebase);
+ uint8_t beatcos = triwave8(beat + phase_offset);
+ uint8_t rangewidth = highest - lowest;
+ uint8_t scaledbeat = scale8(beatcos, rangewidth);
+ uint8_t result = lowest + scaledbeat;
+ return result;
+}
+
+//
+
+
+void handleAdditionalVariables(){ // HANDLE ADDITIONAL DEVIATION OF THE LED COLOUR. IN HINDSIGHT A SIMPLE SINUS FUNCTION DOES THE SAME - another future code improvement.
+if (effect_function != *rainbow_4 && effect_function != *xmas_solid && num50 != 1){  
+  if (millis() - previousMillis >= 50) {
+    previousMillis = millis();
+    diff1 = map(beattriwave8(diffbeat, 0, 255), 0, 255, -setDifference, setDifference+1); // triwave code below. Added to FastLed lib8tion.h -- library.
+
+    if (setDifference == 1){
+      for (int i = 0; i < 10; i++){
+        diff[i]=0;
+      }      
+    }
+    else {
+        if (dir == 1){
+          for (int i = 0; i < 10; i++){
+            diff[i]=diff1;
+          }
+        }
+        else {
+        diff[0]=diff1;
+        diff[1]=diff1;
+        diff[2]=diff1;
+        diff[3]=-diff1;
+        diff[4]=diff1;
+        diff[5]=-diff1;
+        diff[6]=-diff1;
+        diff[7]=diff1;
+        diff[8]=diff1;
+        diff[9]=-diff1;  
+      } 
+    }
+}
+}
+  
+else if (effect_function == *rainbow_4 || effect_function == *xmas_solid){  
+  if (millis() - previousMillis >= 50) {
+    previousMillis = millis();
+    diff1=map(beattriwave8(diffbeat, 0, 255), 0, 255, -setDifference, setDifference+1); // triwave code below. Added to FastLed lib8tion.h -- library.
+    diff2=map(beattriwave8(diffbeat2, 0, 255), 0, 255, -setDifference2, setDifference2+1);
+
+    if (setDifference == 1){
+      for (int i = 0; i < 10; i++){
+        diff[i]=0;
+      }      
+    }
+    else {
+        diff[0]=diff2;
+        diff[1]=-diff1;
+        diff[2]=diff1;
+        diff[3]=-diff2;
+        diff[4]=diff1;
+        diff[5]=-diff1;
+        diff[6]=+diff2;
+        diff[7]=diff1;
+        diff[8]=-diff1;
+        diff[9]=-diff2;  
+    }
+  }    
+}
+}
+
+void fillxmasArray(){
+        numfirstcycle=0;
+        yxmas=0;
+        
+        for (int i = 0; i < 256; i++){
+        longxArray[i]=yxmas;
+        yxmasold=yxmas; 
+        {if ((yxmas < ymaxrood) || (yxmas > ymingroen && yxmas < ymaxgroen) || (yxmas > yminblauw && yxmas < ymaxblauw) || (yxmas > yminrood)){  
+          yxmas=yxmas+setDifference+offdis; 
+        }
+        else {
+          yxmas+=setDifference;
+        }
+        if (yxmasold > yxmas && numfirstcycle == 0){
+          numAmax=i;
+          numfirstcycle++;
+        }
+        }
+        }
+}
+
+void changePColors(){
+newColors++;  
+int pp = colour[0];
+whitepos--;
+if (whitepos == 0 || whitepos >= numcolor){
+  whitepos = numcolor-1;
+}
+
+for (int t=0; t<numcolor; t++){
+    colour[t]=colour[t+1];
+    if (t == numcolor-1){
+    colour[t] = pp;
+    }
+}
+}
+
+
+void selectcolorArray(){
+  numcolor = pgm_read_byte(&selectColor_array[arrayn].numcolor);
+  if ((effect_function == *pers_color && varON == 2) || (effect_function == *rainbow_1 && varON == 2)){
+    numcolor=15;  
+    for (int i = 0; i < 15; i++){
+      newColour[i] = pgm_read_byte(&selectColor_array[arrayn].colour[i]); 
+    }
+  }
+  else {     // else if (dir == 2)
+    for (int i = 0; i < 15; i++){
+      colour[i] = pgm_read_byte(&selectColor_array[arrayn].colour[i]); 
+//      Serial.println(colour[i]);
+    }
+  }                                                
+}
+
+void fillLongxArray(uint8_t colour){
+      for (int i = 0; i < NUM_LEDS; i++){
+        longxArray[i]=colour+random(-10,10);
+      }
+}
+
+void fillColourArray (uint8_t colour[], uint8_t mainColour, int var[], int diff[]){
+        for (int i = 0; i<10; i++){
+          colour[i]=mainColour+var[i]+diff[i];
+        }
+        return;
+}
+
+void fillNUM_LEDS1(uint8_t arrayType[], int NUM_LEDS){
+       for(int i = 0; i < NUM_LEDS; i++ ){
+       leds[i] = CHSV(arrayType[colourlu],satval[satlu],brigh[brighlu]);
+        
+       brighlu++;
+       if (brighlu >= numbrigh){brighlu = 0;}
+       
+       colourlu++;
+       if (colourlu > 9){colourlu = 0;}
+
+       satlu++;
+       if (satlu >= numsat){satlu = 0;}
+       } 
+
+       handleGlitter();
+       FastLED.show();
+
+       satlu=0;
+       brighlu=0;
+       colourlu=0;
+       return;
+}
+
+uint8_t changeColourFcn(int selectMode, uint8_t yvIn, uint8_t yvalmin, uint8_t yvalmax){
+  switch (selectMode){
+    case 0: { yvIn = yval; } break;  // Serial.println (yvIn); } break;   
+    case 1: { yvIn = random(yvalmin, yvalmax); } break;   
+    case 2: { yvIn = random(yvalmin, yvalmax);  while ((yvIn >= ymin && yvIn <= ymax) || (yvIn >= ymin1 && yvIn <= ymax1)){yvIn=random(yvalmin, yvalmax);}; } break;  
+    case 3: { yvIn=random(yvalmin, yvalmax);   while (yvIn < ymin || (yvIn > ymax && yvIn < ymin1) || yvIn > ymax1){yvIn=random(yvalmin, yvalmax);}; } break;   
+    case 4: { uint8_t rando = random(0,15); yvIn=colour[rando]; } break; 
+    default: { yvIn = 0; } break;
+  }
+  return yvIn;
+}
+
+uint8_t changeColourFcn2(int selectMode, uint8_t yvIn, uint8_t yvMem, uint8_t yvalmin, uint8_t yvalmax){
+  switch (selectMode){
+    case 0: { yvIn = yval; } break; // Serial.println (yvIn); } break;   
+    case 1: { yvIn = yvMem + random(yvalmin, yvalmax); } break;  // 
+    case 2: { yvIn = yvMem + random(yvalmin, yvalmax);   while ((yvIn >= ymin && yvIn <= ymax) || (yvIn >= ymin1 && yvIn <= ymax1)){yvIn= yvMem + random(yvalmin, yvalmax);}; } break; 
+    case 3: { yvIn = yvMem + random(yvalmin, yvalmax);   while (yvIn < ymin || (yvIn > ymax && yvIn < ymin1) || yvIn > ymax1){yvIn = yvMem + random(yvalmin, yvalmax);}; } break;   
+    case 4: { yvIn = colour[random(0,15)]; while (yvIn == yvMem){yvIn = colour[random(0,15)];}; } break;
+    case 5: { yvIn = yval; if (evenOddCounter % 2){yvIn = z5;}; } break; 
+    default: { yvIn = 0; } break;
+  }
+  return yvIn;
+}
+
+void procesColourMode(){
+      if ((effect_function == *static_glow && colorMode <= 3) ||  (effect_function == *s7_strings && colorMode <= 3) || (effect_function == *snow_flakes && colorMode <= 4) || (effect_function == *sparkling && colorMode <= 4) || (effect_function == *snow_storm && colorMode <= 4) || (effect_function == *random_led && colorMode <= 4) || (effect_function == *random_string && colorMode <= 3) || (effect_function == *twinkle && colorMode <= 4) || (effect_function == *static_glow_2 && colorMode <= 3) || (effect_function == *sparkling_2 && colorMode <=4) || (effect_function == *meteor && colorMode <=4) || (effect_function == *snow_flakes_2 && colorMode <=4)){
+        colorMode++;
+        forcedColourChange = true;
+        INTERVAL7=5000;  
+      }
+      else if ((effect_function == *pers_color || effect_function == *pers_block) && numcolor <= 14){
+      numcolor++;
+      newColors++;
+      }
+return;      
+}
+
+uint8_t fadeFnc(uint8_t value, uint8_t valueTo){
+    if (value < valueTo){
+      if (valueTo-value <=128){
+        value++;
+      }   
+      else {value--;}
+    }
+    else if (value > valueTo){
+      if (value-valueTo <=128){
+        value--;  
+      }
+      else {value++;}
+    }
+  return value;
+}
+
+/*
+ * specifically handles the twinkles. Modified from Mark Kriegman's code. 
+ * https://gist.github.com/kriegsman/5408ecd397744ba0393e
+ */
+
+
+
+void colortwinkles(){
+fadeOutSpeed=35;
+Stwinkle = random(150,256);
+
+if (millis() - previousMillis36 > INTERVAL7 && varON == 2 && colorMode == 4) {
+      arrayn = random(arrayCount);
+      updateOled(24, 40, &arrayn);
+      selectcolorArray();
+      INTERVAL7=(interval9/7)*timeArray2[random(0,6)]*timefactor3;
+      updateOledFloat(88, 0, &INTERVAL7, 0); 
+      previousMillis36 = millis();
+      T=0;        
+}
+
+if (colorMode == 0){
+     yval1=yval;}
+ else if (colorMode == 1){
+     yval1=random(256);} 
+ else if (colorMode == 2){
+     yval1=random(256);
+      while ((yval1 >= ymin && yval1 <= ymax) || (yval1 >= ymin1 && yval1 <= ymax1)){
+      yval1=random(256);
+      }}
+ else if (colorMode == 3){
+     yval1=random(256);
+      while ((yval1 < ymin || yval1 > ymax) && (yval1 < ymin1 || yval1 > ymax1)){
+      yval1=random(256);
+      }}
+ else if (colorMode == 4){
+     yval1=colour[random(0, 15)];
+ }
+ else if (colorMode == 5){
+  colourChangeDelay++;
+  if (colourChangeDelay >= 200/changeSpeed){
+  yval1++;
+  colourChangeDelay=0;}
+ }
+      
+    brightenOrDarkenEachPixel(fadeInSpeed, fadeOutSpeed);
+
+  if (density == 0){
+    DENSITY=setDifference;}
+  else if (density == 1){
+    DENSITY=85;}
+  else if (density == 2){
+    DENSITY=170;}
+  else if (density == 3){
+    DENSITY=255;}    
+
+  if( random(255) < DENSITY ) {
+    int pos = random(NUM_LEDS);
+    if( !leds[pos]) {
+      leds[pos] = CHSV(yval1,Stwinkle,150);
+      setPixelDirection(pos, GETTING_BRIGHTER);
+    }
+  }
+}
+
+void brightenOrDarkenEachPixel( fract8 fadeUpAmount, fract8 fadeDownAmount)
+{
+ for( uint16_t i = 0; i < NUM_LEDS; i++) {
+    if( getPixelDirection(i) == GETTING_DARKER) {
+      leds[i] = makeDarker( leds[i], fadeDownAmount);
+    } else {
+      leds[i] = makeBrighter( leds[i], fadeUpAmount);
+      if( leds[i].r >= 255 || leds[i].g >= 255 || leds[i].b >= 255) { // 255 vervangen met BRIGH
+        setPixelDirection(i, GETTING_DARKER);
+      }
+    }
+  }
+}
+
+CRGB makeBrighter( const CRGB& color, fract8 howMuchBrighter) 
+{
+  CRGB incrementalColor = color;
+  incrementalColor.nscale8( howMuchBrighter);
+  return color + incrementalColor;
+}
+
+CRGB makeDarker( const CRGB& color, fract8 howMuchDarker) 
+{
+  CRGB newcolor = color;
+  newcolor.nscale8( 255 - howMuchDarker);
+  return newcolor;
+}
+
+uint8_t directionFlags[NUM_SET];
+
+bool getPixelDirection( uint16_t i) {
+  return directionFlags[i];
+}
+
+void setPixelDirection( uint16_t i, bool dir) {
+  directionFlags[i] = dir;
+}
+
+/*
+ * specifically handles the twinkles. Modified from Mark Kriegman's code. 
+ * https://gist.github.com/kriegsman/36a1e277f5b4084258d9af1eae29bac4
+ */
+
+// Add one layer of waves into the led array
+void pacifica_one_layer( CRGBPalette16& p, uint16_t cistart, uint16_t wavescale, uint8_t BRIGH, uint16_t ioff)
+{
+  uint16_t ci = cistart;
+  uint16_t waveangle = ioff;
+  uint16_t wavescale_half = (wavescale / 2) + 20;
+  for( uint16_t i = 0; i < NUM_LEDS; i++) {
+    waveangle += 250;
+    uint16_t s16 = sin16( waveangle ) + 32768;
+    uint16_t cs = scale16( s16 , wavescale_half ) + wavescale_half;
+    ci += cs;
+    uint16_t sindex16 = sin16( ci) + 32768;
+    uint8_t sindex8 = scale16( sindex16, 240);
+    CRGB c = ColorFromPalette( p, sindex8, BRIGH, LINEARBLEND);
+    leds[i] += c;
+  }
+}
+
+// Add extra 'white' to areas where the four layers of light have lined up brightly
+void pacifica_add_whitecaps()
+{
+  uint8_t basethreshold = beatsin8( 9, 55, 65);
+  uint8_t wave = beat8( 7 );
+  
+  for( uint16_t i = 0; i < NUM_LEDS; i++) {
+    uint8_t threshold = scale8( sin8( wave), 20) + basethreshold;
+    wave += 7;
+    uint8_t l = leds[i].getAverageLight();
+    if( l > threshold) {
+      uint8_t overage = l - threshold;
+      uint8_t overage2 = qadd8( overage, overage);
+      leds[i] += CRGB( overage, overage2, qadd8( overage2, overage2));
+    }
+  }
+}
+
+// Deepen the blues and greens
+void pacifica_deepen_colors()
+{
+  for( uint16_t i = 0; i < NUM_LEDS; i++) {
+    leds[i].blue = scale8( leds[i].blue,  145); 
+    leds[i].green= scale8( leds[i].green, 200); 
+    leds[i] |= CRGB( 2, 5, 7);
+  }
+}
