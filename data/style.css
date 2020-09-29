@@ -1,0 +1,970 @@
+
+body {
+  background-color: grey;
+}
+
+
+h1 {
+	color: white;
+	text-align: center;
+}
+
+p.sliderwindow {
+	color: white;
+	text-align: center;
+}
+
+.textinfo {
+	color: white;
+	text-align: center;
+}
+
+.inputparam {
+	color: grey;
+	text-align: center;
+}
+
+p.sliderwindowsmall {
+	color: white;
+	text-align: center;
+	font-size: 0.8em;
+}
+
+p.infowindow {
+	color: white;
+	text-align: center;
+	padding: 0 0px;
+	margin: 0px 0px 0px 0px;
+}
+
+p.sliderwindows {
+	color: white;
+	text-align: center;
+	margin: 12px 0px 0px 0px;
+}
+
+p.progwindows {
+	color: red;
+	text-align: center;
+	margin: 10px 0px 0px 0px;
+}
+
+p.togglewindow {
+	color: white;
+	text-align: left;
+}
+
+.varvaluex {
+  color: white;
+  position: relative;
+  display: flex;
+  width: 3%;
+  float: center;
+}
+
+.varvalueh {
+  color: white;
+  position: relative;
+  display: flex;
+  width: 13%;
+  float: center;
+}
+
+.titleswitch{
+  width: 100%;
+  position: relative;
+  display: flex;
+}
+
+.infox {
+ color: white;	
+ position: relative;
+ display: flex;
+ width: 10%;
+}
+
+
+.titlex { 
+  color: white;
+  width: 12%;
+  position: relative;
+  display: flex;
+  text-align: left;
+}
+
+.titlez { 
+  color: white;
+  position: relative;
+  display: flex;
+}
+
+.titles { 
+  position: relative;
+  display: flex;
+  width: 78%;
+  left: 47%
+}
+
+p.progwindows {
+	color: white;
+	text-align: center;
+}
+
+.slidecontainerx {
+  width: 100%;
+  display: flex;
+}
+
+.timecontainer {
+  width: 50%;
+  display: flex;
+}
+
+.switchcontainer{
+	text-align: center;
+	color: white;
+}
+
+.sliderhue {
+  -webkit-appearance: none;
+  width: 75%;
+  display: flex;
+  position: relative;
+  height: 15px;
+  border-radius: 5px;  
+  outline: none;
+  opacity: 1.0;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+  
+  background: -moz-linear-gradient(left, #ff0000 0%, #ffff00 25%, #00ff00 33%, #00ffff 50%, #0000ff 55%, #ff00ff 93%, #ff0000 100%);
+  background: -ms-linear-gradient(left, #ff0000 0%, #ffff00 25%, #00ff00 33%, #00ffff 50%, #0000ff 55%, #ff00ff 93%, #ff0000 100%);
+  background: -o-linear-gradient(left, #ff0000 0%, #ffff00 25%, #00ff00 33%, #00ffff 50%, #0000ff 55%, #ff00ff 93%, #ff0000 100%);
+  background: -webkit-gradient(linear, left left, left bottom, from(#ff0000), color-stop(0.25, #ffff00), color-stop(0.33, #00ff00), color-stop(0.5, #00ffff), color-stop(0.55, #0000ff), color-stop(0.93, #ff00ff), to(#ff0000));
+    
+  background: -webkit-linear-gradient(left, #ff0000 0%, #ffff00 25%, #00ff00 33%, #00ffff 50%, #0000ff 55%, #ff00ff 93%, #ff0000 100%);
+  background: linear-gradient(to right, #ff0000 0%, #ffff00 25%, #00ff00 33%, #00ffff 50%, #0000ff 55%, #ff00ff 93%, #ff0000 100%);
+  
+}
+
+.sliderhue::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  cursor: pointer;
+  border: 2px solid #000000;
+}
+
+.sliderhue::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  cursor: pointer;
+  border: 2px solid #000000;
+}
+
+.sliderbri {
+  -webkit-appearance: none;
+  width: 75%;
+  display: flex;
+  position: relative;
+  height: 15px;
+  border: 1px solid grey;
+  outline: none;
+  border-radius: 5px;  
+  opacity: 1.0;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+  
+  background: -moz-linear-gradient(left, #000000 0%, #ffffff 100%);
+  background: -ms-linear-gradient(left, #000000 0%, #ffffff 100%);
+  background: -o-linear-gradient(left, #000000 0%, #ffffff 100%);
+  background: -webkit-gradient(linear, left left, left bottom, from(#000000), to(#ffffff));  
+  background: -webkit-linear-gradient(left, #000000 0%, #ffffff 100%);
+  background: linear-gradient(to right, #000000 0%, #ffffff 100%);
+  
+}
+
+.sliderbri::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  cursor: pointer;
+  border: 2px solid #000000;
+}
+
+.sliderbri::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  cursor: pointer;
+  border: 2px solid #000000;
+}
+
+.slidersat {
+  -webkit-appearance: none;
+  width: 75%;
+  display: flex;
+  position: relative;
+  height: 15px;
+  border: 1px solid grey;
+  border-radius: 5px;  
+  outline: none;
+  opacity: 1.0;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+  
+  background: -moz-linear-gradient(left, #ffffff 0%, #ff0000 100%);
+  background: -ms-linear-gradient(left, #ffffff 0%, #ff0000 100%);
+  background: -o-linear-gradient(left, #ffffff 0%, #ff00000 100%);
+  background: -webkit-gradient(linear, left left, left bottom, from(#ffffff), to(#ff0000));  
+  background: -webkit-linear-gradient(left, #ffffff 0%, #ff0000 100%);
+  background: linear-gradient(to right, #ffffff 0%, #ff0000 100%);
+  
+}
+
+.slidersat::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  cursor: pointer;
+  border: 2px solid #000000;
+}
+
+.slidersat::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  cursor: pointer;
+  border: 2px solid #000000;
+}
+
+.sliderred {
+  -webkit-appearance: none;
+  width: 75%;
+  display: flex;
+  position: relative;
+  height: 15px;
+  border: 1px solid grey;
+  outline: none;
+  border-radius: 5px;  
+  opacity: 1.0;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+  
+  background: -moz-linear-gradient(left, #000000 0%, #ff0000 100%);
+  background: -ms-linear-gradient(left, #000000 0%, #ff0000 100%);
+  background: -o-linear-gradient(left, #000000 0%, #ff0000 100%);
+  background: -webkit-gradient(linear, left left, left bottom, from(#000000), to(#ff0000));  
+  background: -webkit-linear-gradient(left, #000000 0%, #ff0000 100%);
+  background: linear-gradient(to right, #000000 0%, #ff0000 100%);
+  
+}
+
+.sliderred::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  cursor: pointer;
+  border: 2px solid #000000;
+}
+
+.sliderred::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  cursor: pointer;
+  border: 2px solid #000000;
+}
+
+.slidergreen {
+  -webkit-appearance: none;
+  width: 75%;
+  display: flex;
+  position: relative;
+  height: 15px;
+  border: 1px solid grey;
+  outline: none;
+  border-radius: 5px;  
+  opacity: 1.0;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+  
+  background: -moz-linear-gradient(left, #000000 0%, #00ff00 100%);
+  background: -ms-linear-gradient(left, #000000 0%, #00ff00 100%);
+  background: -o-linear-gradient(left, #000000 0%, #00ff00 100%);
+  background: -webkit-gradient(linear, left left, left bottom, from(#000000), to(#00ff00));  
+  background: -webkit-linear-gradient(left, #000000 0%, #00ff00 100%);
+  background: linear-gradient(to right, #000000 0%, #00ff00 100%);
+  
+}
+
+.slidergreen::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  cursor: pointer;
+  border: 2px solid #000000;
+}
+
+.slidergreen::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  cursor: pointer;
+  border: 2px solid #000000;
+}
+
+
+.sliderblues {
+  -webkit-appearance: none;
+  width: 75%;
+  display: flex;
+  position: relative;
+  height: 15px;
+  border: 1px solid grey;
+  outline: none;
+  border-radius: 5px;  
+  opacity: 1.0;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+  
+  background: -moz-linear-gradient(left, #000000 0%, #0000ff 100%);
+  background: -ms-linear-gradient(left, #000000 0%, #0000ff 100%);
+  background: -o-linear-gradient(left, #000000 0%, #0000ff 100%);
+  background: -webkit-gradient(linear, left left, left bottom, from(#000000), to(#0000ff));  
+  background: -webkit-linear-gradient(left, #000000 0%, #0000ff 100%);
+  background: linear-gradient(to right, #000000 0%, #0000ff 100%);
+  
+}
+
+.sliderblues::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  cursor: pointer;
+  border: 2px solid #000000;
+}
+
+.sliderblues::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  cursor: pointer;
+  border: 2px solid #000000;
+}
+
+.sliderx {
+  -webkit-appearance: none;
+  width: 75%;
+  display: flex;
+  position: relative;
+  height: 15px;
+  border-radius: 5px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.sliderx:hover {
+  opacity: 1;
+}
+
+.sliderx::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+   background: #FFFFFF;
+  cursor: pointer;
+  border: 2px solid #000000;
+}
+
+.sliderx::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  cursor: pointer;
+  border: 2px solid #000000;
+}
+
+
+.sliderticksx {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 0px;
+}
+
+.sliderticksx p {
+  color: white;	
+  position: left;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  width: 2px;
+  background: #D3D3D3;
+  height: 10px;
+  line-height: 40px;
+  margin: 0px 5px 20px 5px;
+}
+
+.sliderticksEmptyx {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 0px;
+}
+
+.sliderticksEmptyx p {
+  position: left;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  width: 2px;
+  background: #D3D3D3;
+  height: 10px;
+  line-height: 0px;
+  margin: 0px 5px 10px 5px;
+}
+
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.switch2 {
+  position: relative;
+  display: flex;
+  width: 10%;
+  width: 60px;
+  height: 34px;
+  margin: 0px 0px 0px 0px;
+}
+
+.switch2 input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.sliderround {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.sliderround:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  border-radius: 50%;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .sliderround {
+  background-color: #333333;
+}
+
+input:focus + .sliderround {
+  box-shadow: 0 0 1px #333333;
+}
+
+input:checked + .sliderround:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+.dropbtn {
+  background-color: red;
+  color: white;
+  padding: 4px;
+  font-size: 14px;
+  border: none;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content li {
+  color: #333333;
+  padding: 4px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content li:hover {background-color: white;}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+.dropdown:hover .dropbtn {background-color: #333333;}
+
+.glyphicon {
+    font-size: 20px;
+}
+
+#checkbox1{
+  background:grey;
+  display:inline-block;
+  padding:10px 10px;
+  border-radius:2px;
+  position:relative;
+  cursor:pointer;
+}
+
+#checkbox2{
+  background:grey;
+  display:inline-block;
+  padding:10px 10px;
+  border-radius:2px;
+  position:relative;
+  cursor:pointer;
+}
+
+.ckeckbox-element{
+  display:block;
+  position:absolute;
+  left:0;
+  top:0;
+  width:100%;
+  height:100%;
+  z-index:99999;
+  opacity:0;
+}
+
+
+#checkbox1>input[type='checkbox']+i{
+  color:white;
+}
+
+#checkbox1>input[type='checkbox']:checked+i{
+  color:#333333;
+}
+
+ section.range-slider {
+    position: relative;
+    width: 75%;
+    height: 35px;
+    text-align: center;
+	display: left;
+}
+
+section.range-slider input { 
+  pointer-events:none;
+  width: 100%;
+  display: left;
+  position: absolute;
+  height: 15px;
+  border-radius: 5px;  
+  outline: none;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+  
+  background: -moz-linear-gradient(left, #ff0000 0%, #ffff00 25%, #00ff00 33%, #00ffff 50%, #0000ff 55%, #ff00ff 93%, #ff0000 100%);
+  background: -ms-linear-gradient(left, #ff0000 0%, #ffff00 25%, #00ff00 33%, #00ffff 50%, #0000ff 55%, #ff00ff 93%, #ff0000 100%);
+  background: -o-linear-gradient(left, #ff0000 0%, #ffff00 25%, #00ff00 33%, #00ffff 50%, #0000ff 55%, #ff00ff 93%, #ff0000 100%);
+  background: -webkit-gradient(linear, left left, left bottom, from(#ff0000), color-stop(0.25, #ffff00), color-stop(0.33, #00ff00), color-stop(0.5, #00ffff), color-stop(0.55, #0000ff), color-stop(0.93, #ff00ff), to(#ff0000));
+    
+  background: -webkit-linear-gradient(left, #ff0000 0%, #ffff00 25%, #00ff00 33%, #00ffff 50%, #0000ff 55%, #ff00ff 93%, #ff0000 100%);
+  background: linear-gradient(to right, #ff0000 0%, #ffff00 25%, #00ff00 33%, #00ffff 50%, #0000ff 55%, #ff00ff 93%, #ff0000 100%);
+}
+
+section.range-slider input::-webkit-slider-thumb {
+    pointer-events: all;
+    position: relative;
+    z-index: 1;
+    outline: 0;
+        
+}
+
+section.range-slider input::-moz-range-thumb {
+    pointer-events: all;
+    position: relative;
+    z-index: 10;
+    -moz-appearance: none;
+    width: 9px;
+     
+}
+
+
+
+ section.range-slider1 {
+    position: relative;
+    width: 75%;
+    height: 35px;
+    text-align: center;
+	display: left;
+    
+}
+
+section.range-slider1 input { 
+  pointer-events:none;
+  width: 100%;
+  display: flex;
+  position: absolute;
+  height: 15px;
+  border-radius: 5px;  
+  outline: none;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+  
+  background: -moz-linear-gradient(left, #ff0000 0%, #ffff00 25%, #00ff00 33%, #00ffff 50%, #0000ff 55%, #ff00ff 93%, #ff0000 100%);
+  background: -ms-linear-gradient(left, #ff0000 0%, #ffff00 25%, #00ff00 33%, #00ffff 50%, #0000ff 55%, #ff00ff 93%, #ff0000 100%);
+  background: -o-linear-gradient(left, #ff0000 0%, #ffff00 25%, #00ff00 33%, #00ffff 50%, #0000ff 55%, #ff00ff 93%, #ff0000 100%);
+  background: -webkit-gradient(linear, left left, left bottom, from(#ff0000), color-stop(0.25, #ffff00), color-stop(0.33, #00ff00), color-stop(0.5, #00ffff), color-stop(0.55, #0000ff), color-stop(0.93, #ff00ff), to(#ff0000));
+    
+  background: -webkit-linear-gradient(left, #ff0000 0%, #ffff00 25%, #00ff00 33%, #00ffff 50%, #0000ff 55%, #ff00ff 93%, #ff0000 100%);
+  background: linear-gradient(to right, #ff0000 0%, #ffff00 25%, #00ff00 33%, #00ffff 50%, #0000ff 55%, #ff00ff 93%, #ff0000 100%); 
+}
+
+section.range-slider1 input::-webkit-slider-thumb {
+    pointer-events: all;
+    position: relative;
+    z-index: 1;
+    outline: 0;
+        
+}
+
+section.range-slider1 input::-moz-range-thumb {
+    pointer-events: all;
+    position: relative;
+    z-index: 10;
+    -moz-appearance: none;
+    width: 9px;
+     
+}
+
+
+ section.range-slider2 {
+    position: relative;
+    width: 75%;
+    height: 35px;
+    text-align: center;
+	display: left;	
+}
+
+
+section.range-slider2 input { 
+  pointer-events:none;
+  width: 100%;
+  display: left;
+  position: absolute;
+  height: 15px;
+  border-radius: 5px;  
+  outline: none;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+  
+  background: -moz-linear-gradient(left, #ff0000 0%, #ffff00 25%, #00ff00 33%, #00ffff 50%, #0000ff 55%, #ff00ff 93%, #ff0000 100%);
+  background: -ms-linear-gradient(left, #ff0000 0%, #ffff00 25%, #00ff00 33%, #00ffff 50%, #0000ff 55%, #ff00ff 93%, #ff0000 100%);
+  background: -o-linear-gradient(left, #ff0000 0%, #ffff00 25%, #00ff00 33%, #00ffff 50%, #0000ff 55%, #ff00ff 93%, #ff0000 100%);
+  background: -webkit-gradient(linear, left left, left bottom, from(#ff0000), color-stop(0.25, #ffff00), color-stop(0.33, #00ff00), color-stop(0.5, #00ffff), color-stop(0.55, #0000ff), color-stop(0.93, #ff00ff), to(#ff0000));
+    
+  background: -webkit-linear-gradient(left, #ff0000 0%, #ffff00 25%, #00ff00 33%, #00ffff 50%, #0000ff 55%, #ff00ff 93%, #ff0000 100%);
+  background: linear-gradient(to right, #ff0000 0%, #ffff00 25%, #00ff00 33%, #00ffff 50%, #0000ff 55%, #ff00ff 93%, #ff0000 100%);
+}
+
+section.range-slider2 input::-webkit-slider-thumb {
+    pointer-events: all;
+    position: relative;
+    z-index: 1;
+    outline: 0;
+        
+}
+
+section.range-slider2 input::-moz-range-thumb {
+    pointer-events: all;
+    position: relative;
+    z-index: 10;
+    -moz-appearance: none;
+    width: 9px;
+     
+}
+
+
+ section.range-slider3 {
+    position: relative;
+    width: 75%;
+    height: 35px;
+    text-align: center;
+	display: left;
+}
+
+
+section.range-slider3 input { 
+  pointer-events:none;
+  width: 100%;
+  display: left;
+  position: absolute;
+  height: 15px;
+  border-radius: 5px;  
+  outline: none;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+  
+  background: -moz-linear-gradient(left, #ff0000 0%, #ffff00 25%, #00ff00 33%, #00ffff 50%, #0000ff 55%, #ff00ff 93%, #ff0000 100%);
+  background: -ms-linear-gradient(left, #ff0000 0%, #ffff00 25%, #00ff00 33%, #00ffff 50%, #0000ff 55%, #ff00ff 93%, #ff0000 100%);
+  background: -o-linear-gradient(left, #ff0000 0%, #ffff00 25%, #00ff00 33%, #00ffff 50%, #0000ff 55%, #ff00ff 93%, #ff0000 100%);
+  background: -webkit-gradient(linear, left left, left bottom, from(#ff0000), color-stop(0.25, #ffff00), color-stop(0.33, #00ff00), color-stop(0.5, #00ffff), color-stop(0.55, #0000ff), color-stop(0.93, #ff00ff), to(#ff0000));
+    
+  background: -webkit-linear-gradient(left, #ff0000 0%, #ffff00 25%, #00ff00 33%, #00ffff 50%, #0000ff 55%, #ff00ff 93%, #ff0000 100%);
+  background: linear-gradient(to right, #ff0000 0%, #ffff00 25%, #00ff00 33%, #00ffff 50%, #0000ff 55%, #ff00ff 93%, #ff0000 100%);
+}
+
+section.range-slider3 input::-webkit-slider-thumb {
+    pointer-events: all;
+    position: relative;
+    z-index: 1;
+    outline: 0;
+        
+}
+
+section.range-slider3 input::-moz-range-thumb {
+    pointer-events: all;
+    position: relative;
+    z-index: 10;
+    -moz-appearance: none;
+    width: 9px;
+     
+}
+
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  cursor: pointer; 
+}
+
+.sliderpink {
+  -webkit-appearance: none;
+  width: 100%;
+  display: flex;
+  position: relative;
+  height: 15px;
+  border-radius: 5px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 1;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.sliderpink::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: deeppink;
+  cursor: pointer;
+  border: 2px solid #000000;
+}
+
+.sliderorange {
+  -webkit-appearance: none;
+  width: 100%;
+  display: flex;
+  position: relative;
+  height: 15px;
+  border-radius: 5px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 1;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.sliderorange::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: orange;
+  cursor: pointer;
+  border: 2px solid #000000;
+}
+
+.sliderlemon {
+  -webkit-appearance: none;
+  width: 100%;
+  display: flex;
+  position: relative;
+  height: 15px;
+  border-radius: 5px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 1;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.sliderlemon::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: greenyellow;
+  cursor: pointer;
+  border: 2px solid #000000;
+}
+
+.slideraqua {
+  -webkit-appearance: none;
+  width: 100%;
+  display: flex;
+  position: relative;
+  height: 15px;
+  border-radius: 5px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 1;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slideraqua::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: turquoise;
+  cursor: pointer;
+  border: 2px solid #000000;
+}
+
+.sliderblue {
+  -webkit-appearance: none;
+  width: 100%;
+  display: flex;
+  position: relative;
+  height: 15px;
+  border-radius: 5px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 1;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.sliderblue::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: blue;
+  cursor: pointer;
+  border: 2px solid #000000;
+}
+
+.sliderpurple {
+  -webkit-appearance: none;
+  width: 100%;
+  display: flex;
+  position: relative;
+  height: 15px;
+  border-radius: 5px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 1;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.sliderpurple::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: darkviolet;
+  cursor: pointer;
+  border: 2px solid #000000;
+}
+
+.time-frame {
+	text-align: center;
+    color: #ffffff;
+    width: 100%;
+    font-family: Arial;
+}
+
+.time-frame > div {
+    width: 100%;
+    text-align: center;
+}
+
+#date-part {
+    font-size: 1em;
+}
+#time-part {
+    font-size: 1em;
+}
