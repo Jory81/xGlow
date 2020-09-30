@@ -3,7 +3,7 @@
 
  Summary:
 
- -mainly producded for Christmass lighting: slow effects without flicker (strobe), always glowing, and ever changing colours
+ -mainly producded for Christmass lighting: slow effects without too much black or flicker (strobe), always glowing, and ever changing colours
 
  -37 presets (you can add more)
 
