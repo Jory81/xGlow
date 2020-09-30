@@ -30,7 +30,7 @@ This project started in january 2019. I didn't know a single thing about program
 
 Future goals:
 
-The code is amateurish. I will probably update certain aspects: IR part is somewhat outdated (due the web interface), add relay support, add pre-compiled binaries (I can't yet succesfully flash the file system with the binaries I made), and I still would like to learn and make use of json, but other than these things I won't likely do much more. The code works, it suits my needs for christmass, it can do things other available firwmare can't, but I don't feel like adding all the options that WLED for example. For other use than christmass lightning I'd highly recommend WLED. 
+The code is amateurish. I will probably update certain aspects: IR part is somewhat outdated (due the web interface), add relay support, add pre-compiled binaries (I can't yet succesfully flash the file system with the binaries I made), and I still would like to learn and make use of json, but other than these things I won't likely do much more. The code works, it suits my needs for christmass, it can do things other available firwmare can't, but I don't feel like adding all the options that WLED has for example. For other use than christmass lightning I'd highly recommend WLED. 
 
 
 Thanks to:
