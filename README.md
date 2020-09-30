@@ -13,7 +13,7 @@
  -And more
 
  Motivation:\
-This project started in january 2019. I didn't know a single thing about programming, and had to learn the very basics such as what a byte actually means. Initially I flashed scripts from for example Mark Kriegsman (FastLED developer),  but I got tired of doing so. I also had discovered the work of Stephen Culley and his presets are very very subtle and mesmerizing - go check out his youtube video. The only downside is that his code isn't made public (yet?) and the firmware has/had no options to lower the brightness for example, so I started coding myself.
+This project started in january 2019. I didn't know a single thing about programming, and had to learn the very basics such as what a byte actually means. Initially I flashed scripts from Mark Kriegsman (FastLED developer),  but I got tired of doing so. I also had discovered the work of Stephen Culley and his presets are very very subtle and mesmerizing - go check out his youtube video. The only downside is that his code isn't made public (yet?) and the firmware has/had no options to lower the brightness, so I started coding myself.
 
 
 Future goals:\
