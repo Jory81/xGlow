@@ -1,5 +1,5 @@
 # xGlow
- Standalone LED firmware for esp8266 and esp32 based on the FastLED library. The code is quite amateurish; however, it works, it 's stable, the effects are neat and once initialized - and personalized - you only have to power the LEDS and the ESP controller, and it will run through all the selected presets (with all the desired parameters) for hours without getting bored.
+ Standalone LED firmware for esp8266 and esp32 based on the FastLED library. The code is quite amateurish; however, it works, it 's stable, the effects are neat and once initialized (and personalized) you only have to power the LEDS and the ESP controller (I use a quinled DigUno), and it will run through all the selected presets (with all the desired parameters) for hours without getting bored.
 
  Summary:\
  -mainly producded for Christmass lighting: slow effects without too much black or flicker (strobe), always glowing, and ever changing colours\
