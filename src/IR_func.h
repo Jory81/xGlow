@@ -12,20 +12,19 @@
 
 #define IR47_EXCLUDE             0xFF28D7  // byte 'z' Enables exclude boolean. When exclude is set to false, all presets are enable (this is requierd for switching on modes that may have been disabled.
 
-// static colour values. These values are saved to eeprom. When the program is booted for the first time, decomment "Write to EEPROM" in setup.
-#define IR47_YMINRED             0xFF10EF  // colorNumber = 1
-#define IR47_YMINGREEN           0xFF906F  // colorNumber = 2
-#define IR47_YMINBLUE            0xFFB04F  // colorNumber = 3
-#define IR47_YMIN                0xFF8877  // colorNumber = 4
-#define IR47_YMIN1               0xFF48B7  // colorNumber = 5
-#define IR47_YMAXRED             0xFF12ED  // colorNumber = 6
-#define IR47_YMAXGREEN           0xFFB847  // colorNumber = 7
-#define IR47_YMAXBLUE            0xFF9867  // colorNumber = 8
-#define IR47_YMAX                0xFFA857  // colorNumber = 9
-#define IR47_YMAX1               0xFF9A65  // colorNumber = 10
- 
-#define IR47_STATIC_COLOUR_UP    0xFF926D  // This button, depending on the colournumber that is selected, increases the colour variable 
-#define IR47_STATIC_COLOUR_DOWN  0xFFF807  // This button, depending on the colournumber that is selected, decreases the colour variable
+// FREE AVAILABLE INPUTS (were useful before webinterface - not anymore)
+#define IR47_YMINRED             0xFF10EF  // does nothing 
+#define IR47_YMINGREEN           0xFF906F  // does nothing 
+#define IR47_YMINBLUE            0xFFB04F  // does nothing 
+#define IR47_YMIN                0xFF8877  // does nothing 
+#define IR47_YMIN1               0xFF48B7  // does nothing 
+#define IR47_YMAXRED             0xFF12ED  // does nothing 
+#define IR47_YMAXGREEN           0xFFB847  // does nothing 
+#define IR47_YMAXBLUE            0xFF9867  // does nothing 
+#define IR47_YMAX                0xFFA857  // does nothing 
+#define IR47_YMAX1               0xFF9A65  // does nothing 
+#define IR47_STATIC_COLOUR_UP    0xFF926D  // does nothing 
+#define IR47_STATIC_COLOUR_DOWN  0xFFF807  // does nothing 
 
 // additional system values. Also saved in EEPROM.
 #define IR47_NUM_LEDS_UP         0xFFD827  // Increases LED NUMBER by 50
@@ -108,73 +107,53 @@ return;
 void decodeIR47(uint32_t code){
 //  Serial.println("decode_IR47");
   switch (code) {
-    case IR47_EXCLUDE            : memoryByte='z'; colorNumber = 0;                    break;
+    case IR47_EXCLUDE            : memoryByte='z';                      break;
     
-    case IR47_YMINRED            : colorNumber = 1;                                    break;    
-    case IR47_YMAXRED            : colorNumber = 2;                                    break;
-    case IR47_YMINGREEN          : colorNumber = 3;                                    break;
-    case IR47_YMAXGREEN          : colorNumber = 4;                                    break;    
-    case IR47_YMINBLUE           : colorNumber = 5;                                    break;
-    case IR47_YMAXBLUE           : colorNumber = 6;                                    break;
-    case IR47_YMIN               : colorNumber = 7;                                    break;
-    case IR47_YMAX               : colorNumber = 8;                                    break;
-    case IR47_YMIN1              : colorNumber = 9;                                    break;
-    case IR47_YMAX1              : colorNumber = 10;                                   break;
-    case IR47_STATIC_COLOUR_UP   : {  
-                                    if (colorNumber == 1)      {memoryByte='F';}
-                                    else if (colorNumber == 2) {memoryByte='G';}
-                                    else if (colorNumber == 3) {memoryByte='H';}
-                                    else if (colorNumber == 4) {memoryByte='I';}
-                                    else if (colorNumber == 5) {memoryByte='J';}
-                                    else if (colorNumber == 6) {memoryByte='K';}
-                                    else if (colorNumber == 7) {memoryByte='L';}
-                                    else if (colorNumber == 8) {memoryByte='M';}
-                                    else if (colorNumber == 9) {memoryByte='N';}                                   
-                                    else if (colorNumber == 10){memoryByte='O';};  }   break;
-    case IR47_STATIC_COLOUR_DOWN : {  
-                                    if (colorNumber == 1)      {memoryByte='P';}
-                                    else if (colorNumber == 2) {memoryByte='Q';}
-                                    else if (colorNumber == 3) {memoryByte='R';}
-                                    else if (colorNumber == 4) {memoryByte='S';}
-                                    else if (colorNumber == 5) {memoryByte='T';}
-                                    else if (colorNumber == 6) {memoryByte='U';}
-                                    else if (colorNumber == 7) {memoryByte='V';}
-                                    else if (colorNumber == 8) {memoryByte='W';}
-                                    else if (colorNumber == 9) {memoryByte='X';}
-                                    else if (colorNumber == 10) {memoryByte='Y';} }    break; 
-    case IR47_NUM_LEDS_UP        : memoryByte='1'; colorNumber = 11;                   break;
-    case IR47_NUM_LEDS_DOWN      : memoryByte='2'; colorNumber = 12;                   break;
-    case IR47_MODE_EEPROM        : memoryByte='3'; colorNumber = 0;                    break;
-    case IR47_CYCLE_MODE         : memoryByte='A'; colorNumber = 0;                    break;
-    case IR47_RANDOM_MODE        : memoryByte='B'; colorNumber = 0;                    break;
-    case IR47_FADE_MODE          : memoryByte='C'; colorNumber = 0;                    break;
-    case IR47_TIME_LONGER        : memoryByte='D'; colorNumber = 0;                    break;
-    case IR47_TIMER_SHORTER      : memoryByte='E'; colorNumber = 0;                    break;
-    case IR47_EDIT_MODE_STATUS   : memoryByte='x'; colorNumber = 0;                    break;
-    case IR47_NUMBRIGH_UP        : memoryByte='v'; colorNumber = 0;                    break;
-    case IR47_NUMBRIGH_DOWN      : memoryByte='w'; colorNumber = 0;                    break;
-    case IR47_NUMSPARK_UP        : memoryByte='r'; colorNumber = 0;                    break;
-    case IR47_NUMSPARK_DOWN      : memoryByte='s'; colorNumber = 0;                    break;
-    case IR47_SPARK_BRI_UP       : memoryByte='t'; colorNumber = 0;                    break;
-    case IR47_SPARK_BRI_DOWN     : memoryByte='u'; colorNumber = 0;                    break;
-    case IR47_DENSITY            : memoryByte='y'; colorNumber = 0;                    break;
-    case IR47_BRI_UP             : memoryByte='f'; colorNumber = 0;                    break;
-    case IR47_BRI_DOWN           : memoryByte='g'; colorNumber = 0;                    break;
-    case IR47_MODE_UP            : memoryByte='a'; colorNumber = 0;                    break;
-    case IR47_MODE_DOWN          : memoryByte='b'; colorNumber = 0;                    break;
-    case IR47_COLORMODE_UP       : memoryByte='c'; colorNumber = 0;                    break;
-    case IR47_COLORMODE_DOWN     : memoryByte='d'; colorNumber = 0;                    break;
-    case IR47_COLOR_UP           : memoryByte='h'; colorNumber = 0;                    break;
-    case IR47_COLOR_DOWN         : memoryByte='i'; colorNumber = 0;                    break;
-    case IR47_GLITTER            : memoryByte='e'; colorNumber = 0;                    break;
-    case IR47_GLOW_MODE          : memoryByte='j'; colorNumber = 0;                    break;
-    case IR47_VARIATION_MODE     : memoryByte='n'; colorNumber = 0;                    break;
-    case IR47_SATURATION_UP      : memoryByte='k'; colorNumber = 0;                    break;
-    case IR47_SATURATION_DOWN    : memoryByte='o'; colorNumber = 0;                    break;
-    case IR47_SPEED_UP           : memoryByte='l'; colorNumber = 0;                    break;
-    case IR47_SPEED_DOWN         : memoryByte='p'; colorNumber = 0;                    break;
-    case IR47_SET_addi_VAR_UP    : memoryByte='m'; colorNumber = 0;                    break;
-    case IR47_SET_addi_VAR_DOWN  : memoryByte='q'; colorNumber = 0;                    break;
+    case IR47_YMINRED            :                                     break; // does nothing 
+    case IR47_YMAXRED            :                                     break; // does nothing 
+    case IR47_YMINGREEN          :                                     break; // does nothing 
+    case IR47_YMAXGREEN          :                                     break; // does nothing     
+    case IR47_YMINBLUE           :                                     break; // does nothing 
+    case IR47_YMAXBLUE           :                                     break; // does nothing 
+    case IR47_YMIN               :                                     break; // does nothing 
+    case IR47_YMAX               :                                     break; // does nothing 
+    case IR47_YMIN1              :                                     break; // does nothing 
+    case IR47_YMAX1              :                                     break; // does nothing 
+    case IR47_STATIC_COLOUR_UP   :                                     break; // does nothing 
+    case IR47_STATIC_COLOUR_DOWN :                                     break; 
+    case IR47_NUM_LEDS_UP        : memoryByte='1';                     break;
+    case IR47_NUM_LEDS_DOWN      : memoryByte='2';                     break;
+    case IR47_MODE_EEPROM        : memoryByte='3';                     break;
+    case IR47_CYCLE_MODE         : memoryByte='A';                     break;
+    case IR47_RANDOM_MODE        : memoryByte='B';                     break;
+    case IR47_FADE_MODE          : memoryByte='C';                     break;
+    case IR47_TIME_LONGER        : memoryByte='D';                     break;
+    case IR47_TIMER_SHORTER      : memoryByte='E';                     break;
+    case IR47_EDIT_MODE_STATUS   : memoryByte='x';                     break;
+    case IR47_NUMBRIGH_UP        : memoryByte='v';                     break;
+    case IR47_NUMBRIGH_DOWN      : memoryByte='w';                     break;
+    case IR47_NUMSPARK_UP        : memoryByte='r';                     break;
+    case IR47_NUMSPARK_DOWN      : memoryByte='s';                     break;
+    case IR47_SPARK_BRI_UP       : memoryByte='t';                     break;
+    case IR47_SPARK_BRI_DOWN     : memoryByte='u';                     break;
+    case IR47_DENSITY            : memoryByte='y';                     break;
+    case IR47_BRI_UP             : memoryByte='f';                     break;
+    case IR47_BRI_DOWN           : memoryByte='g';                     break;
+    case IR47_MODE_UP            : memoryByte='a';                     break;
+    case IR47_MODE_DOWN          : memoryByte='b';                     break;
+    case IR47_COLORMODE_UP       : memoryByte='c';                     break;
+    case IR47_COLORMODE_DOWN     : memoryByte='d';                     break;
+    case IR47_COLOR_UP           : memoryByte='h';                     break;
+    case IR47_COLOR_DOWN         : memoryByte='i';                     break;
+    case IR47_GLITTER            : memoryByte='e';                     break;
+    case IR47_GLOW_MODE          : memoryByte='j';                     break;
+    case IR47_VARIATION_MODE     : memoryByte='n';                     break;
+    case IR47_SATURATION_UP      : memoryByte='k';                     break;
+    case IR47_SATURATION_DOWN    : memoryByte='o';                     break;
+    case IR47_SPEED_UP           : memoryByte='l';                     break;
+    case IR47_SPEED_DOWN         : memoryByte='p';                     break;
+    case IR47_SET_addi_VAR_UP    : memoryByte='m';                     break;
+    case IR47_SET_addi_VAR_DOWN  : memoryByte='q';                     break;
     default: memoryByte=0; return;
   } 
 }
@@ -217,10 +196,6 @@ else if (memoryByte == 'g'){if (BRIGH >= 5) {BRIGH-=5;}}
 else if (memoryByte == 'k'){if (S <= 250){S+=5;}} 
 else if (memoryByte == 'o'){if (S >= 5) {S-=5;}}
 
-//else if (memoryByte == 'k'){if (offmin <= 250){offmin+=5;}} 
-//else if (memoryByte == 'o'){if (offmin > 1) {offmin--;}}
-
-
 else if (memoryByte == 'r'){
   if (effect_function == *sparkling){
   if (numsparks < 30){numsparks++;}
@@ -235,17 +210,8 @@ else if (memoryByte == 's'){
 
 else if (memoryByte == 't'){if (BrF <= 250){BrF+=5;}}   
 else if (memoryByte == 'u'){if (BrF >= 5) {BrF-=5;}}
-
-//else if (memoryByte == 't'){if (offmax < -1){offmax++;}}   
-//else if (memoryByte == 'u'){if (offmax > -15) {offmax--;}}
-
 else if (memoryByte == 'v'){if (numbrigh < 16){numbrigh++; convBrigh=waveTimeBr/numbrigh;}}  
 else if (memoryByte == 'w'){if (numbrigh > 1) {numbrigh--; convBrigh=waveTimeBr/numbrigh;}}
-
-//else if (memoryByte == 'v'){if (slingerSpeed < 105){slingerSpeed+=10;}}  
-//else if (memoryByte == 'w'){if (slingerSpeed > 15) {slingerSpeed-=10;}}
-//else if (memoryByte == 'l'){if (sparkSpeed < 200){sparkSpeed+=2;}}
-//else if (memoryByte == 'p') {if (sparkSpeed > 40){sparkSpeed -=2;}}
 
 else if (memoryByte == 'l'){ 
        if (changeSpeed < 40){
@@ -305,7 +271,6 @@ else if (memoryByte == 'h'){
   }    
 }
 
-  
 else if (memoryByte == 'i'){
     if (colorMode != 4 && effect_function != *rainbow_5 && effect_function != *pers_color && effect_function != *gradient && effect_function != *pers_block && effect_function != *rainbow_3 && effect_function != *rainbow_1 && effect_function != *palettes){
         yval-=3;
@@ -523,32 +488,6 @@ else if (memoryByte == 'E'){
  }
 
 else if (memoryByte == '3'){enableMode();}// usual code, this function allows to enable or disable certain presets.
-   
-else if (memoryByte == 'F'){yminrood+=3; EEPROM.put(offsetof(storeInEEPROM, yminrood) , yminrood);  EEPROM.commit();}
-else if (memoryByte == 'P'){yminrood-=3; EEPROM.put(offsetof(storeInEEPROM, yminrood) , yminrood);  EEPROM.commit();}
-else if (memoryByte == 'G'){ymaxrood+=3; EEPROM.put(offsetof(storeInEEPROM, ymaxrood) , ymaxrood);  EEPROM.commit();}
-else if (memoryByte == 'Q'){ymaxrood-=3; EEPROM.put(offsetof(storeInEEPROM, ymaxrood) , ymaxrood);  EEPROM.commit();}
-
-else if (memoryByte == 'H'){ymingroen+=3; EEPROM.put(offsetof(storeInEEPROM, ymingroen) , ymingroen);  EEPROM.commit();}  
-else if (memoryByte == 'R'){ymingroen-=3; EEPROM.put(offsetof(storeInEEPROM, ymingroen) , ymingroen);  EEPROM.commit();}
-else if (memoryByte == 'I'){ymaxgroen+=3; EEPROM.put(offsetof(storeInEEPROM, ymaxgroen) , ymaxgroen);  EEPROM.commit();}  
-else if (memoryByte == 'S'){ymaxgroen-=3; EEPROM.put(offsetof(storeInEEPROM, ymaxgroen) , ymaxgroen);  EEPROM.commit();}
-
-else if (memoryByte == 'J'){yminblauw+=3; EEPROM.put(offsetof(storeInEEPROM, yminblauw) , yminblauw);  EEPROM.commit();}
-else if (memoryByte == 'T'){yminblauw-=3; EEPROM.put(offsetof(storeInEEPROM, yminblauw) , yminblauw);  EEPROM.commit();}
-else if (memoryByte == 'K'){ymaxblauw+=3; EEPROM.put(offsetof(storeInEEPROM, ymaxblauw) , ymaxblauw);  EEPROM.commit();}
-else if (memoryByte == 'U'){ymaxblauw-=3; EEPROM.put(offsetof(storeInEEPROM, ymaxblauw) , ymaxblauw);  EEPROM.commit();}
-
-else if (memoryByte == 'L'){ymin+=3; EEPROM.put(offsetof(storeInEEPROM, ymin) , ymin);  EEPROM.commit();}
-else if (memoryByte == 'V'){ymin-=3; EEPROM.put(offsetof(storeInEEPROM, ymin) , ymin);  EEPROM.commit();}
-else if (memoryByte == 'M'){ymax+=3; EEPROM.put(offsetof(storeInEEPROM, ymax) , ymax);  EEPROM.commit();}
-else if (memoryByte == 'W'){ymax-=3; EEPROM.put(offsetof(storeInEEPROM, ymax) , ymax);  EEPROM.commit();}
-
-else if (memoryByte == 'N'){ymin1+=3; EEPROM.put(offsetof(storeInEEPROM, ymin1) , ymin1);  EEPROM.commit();}
-else if (memoryByte == 'X'){ymin1-=3; EEPROM.put(offsetof(storeInEEPROM, ymin1) , ymin1);  EEPROM.commit();}
-else if (memoryByte == 'O'){ymax1+=3; EEPROM.put(offsetof(storeInEEPROM, ymax1) , ymax1);  EEPROM.commit();}
-else if (memoryByte == 'Y'){ymax1-=3; EEPROM.put(offsetof(storeInEEPROM, ymax1) , ymax1);  EEPROM.commit();}
-
 else if (memoryByte == '1'){if (NUM_LEDS <= 250){NUM_LEDS+=50;} EEPROM.put(offsetof(storeInEEPROM, NUM_LEDS) , NUM_LEDS);  EEPROM.commit();}
 else if (memoryByte == '2'){if (NUM_LEDS >= 100){NUM_LEDS-=50;} EEPROM.put(offsetof(storeInEEPROM, NUM_LEDS), NUM_LEDS);  EEPROM.commit();}
 

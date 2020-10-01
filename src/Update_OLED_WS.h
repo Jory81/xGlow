@@ -28,7 +28,7 @@ if (millis() - previousMillis44 >= 1000 && (cycle)) { // 60000 for updating ever
  }   
 
 void displayOled(){
-if (colorNumber == 0){
+//if (colorNumber == 0){
      display.clearDisplay();
      display.setCursor(0,0); if (!excludeModes){display.print("-");} display.print(programMode); if (!cmode[programMode]){display.print(F("*"));}; display.print(F(":")); 
      strcpy_P(buffer, (char*)pgm_read_dword(&(string_table[programMode]))); display.print(buffer);if (glitterON){display.print(F("+"));};
@@ -50,19 +50,19 @@ if (colorNumber == 0){
      if (numsparks > 0){display.print (F("sparks: ")); display.print (numsparks); display.setCursor(64,48); display.print(F("sbri:")); display.setCursor(102,48); display.println(BrF);}  
      display.setCursor(0,56); if (cycle){display.print(F("C"));}; display.setCursor(36,56); display.print(F("/")); display.print(cycleTime/1000); if (fadeFirst){display.print(F("F"));} else if (!fadeFirst){display.print(F("_"));}; if (randomCycle){display.print(F("R"));} else if (!randomCycle) {display.print("_");}; display.setCursor(72,56); display.print(INTERVAL, 0);
      display.display();
-}
-else if (colorNumber > 0){  
-     display.clearDisplay();
-     display.setCursor(0,0); display.print(F("EEPROM SETTINGS*"));
-     display.setCursor(0,8);  display.print (F("yred:"));    display.setCursor(56,8);    display.print (yminrood);   if (colorNumber == 1){display.print(F("*"));}; display.print(F("-")); display.setCursor(96,8);  display.print (ymaxrood); if (colorNumber == 2){display.print(F("*"));};
-     display.setCursor(0,16);  display.print (F("ygreen:"));  display.setCursor(56,16);  display.print (ymingroen);  if (colorNumber == 3){display.print(F("*"));}; display.print(F("-")); display.setCursor(96,16); display.print (ymaxgroen); if (colorNumber == 4){display.print(F("*"));};
-     display.setCursor(0,24); display.print (F("yblue:"));   display.setCursor(56,24);   display.print (yminblauw);  if (colorNumber == 5){display.print(F("*"));}; display.print(F("-")); display.setCursor(96,24); display.print (ymaxblauw); if (colorNumber == 6){display.print(F("*"));};
-     display.setCursor(0,32); display.print (F("ygap:"));    display.setCursor(56,32);   display.print (ymin);       if (colorNumber == 7){display.print(F("*"));}; display.print(F("-")); display.setCursor(96,32); display.print (ymax); if (colorNumber == 8){display.print(F("*"));};
-     display.setCursor(0,40); display.print (F("ygap1:"));   display.setCursor(56,40);   display.print (ymin1);      if (colorNumber == 9){display.print(F("*"));}; display.print(F("-")); display.setCursor(96,40); display.print (ymax1); if (colorNumber == 10){display.print(F("*"));};
-     display.setCursor(0,48); if (colorNumber == 11 || colorNumber == 12) display.print (F("NUM_LEDS: ")); display.print(NUM_LEDS);
+//}
+// else if (colorNumber > 0){  
+//      display.clearDisplay();
+//      display.setCursor(0,0); display.print(F("EEPROM SETTINGS*"));
+//      display.setCursor(0,8);  display.print (F("yred:"));    display.setCursor(56,8);    display.print (yminrood);   if (colorNumber == 1){display.print(F("*"));}; display.print(F("-")); display.setCursor(96,8);  display.print (ymaxrood); if (colorNumber == 2){display.print(F("*"));};
+//      display.setCursor(0,16);  display.print (F("ygreen:"));  display.setCursor(56,16);  display.print (ymingroen);  if (colorNumber == 3){display.print(F("*"));}; display.print(F("-")); display.setCursor(96,16); display.print (ymaxgroen); if (colorNumber == 4){display.print(F("*"));};
+//      display.setCursor(0,24); display.print (F("yblue:"));   display.setCursor(56,24);   display.print (yminblauw);  if (colorNumber == 5){display.print(F("*"));}; display.print(F("-")); display.setCursor(96,24); display.print (ymaxblauw); if (colorNumber == 6){display.print(F("*"));};
+//      display.setCursor(0,32); display.print (F("ygap:"));    display.setCursor(56,32);   display.print (ymin);       if (colorNumber == 7){display.print(F("*"));}; display.print(F("-")); display.setCursor(96,32); display.print (ymax); if (colorNumber == 8){display.print(F("*"));};
+//      display.setCursor(0,40); display.print (F("ygap1:"));   display.setCursor(56,40);   display.print (ymin1);      if (colorNumber == 9){display.print(F("*"));}; display.print(F("-")); display.setCursor(96,40); display.print (ymax1); if (colorNumber == 10){display.print(F("*"));};
+//      display.setCursor(0,48); if (colorNumber == 11 || colorNumber == 12) display.print (F("NUM_LEDS: ")); display.print(NUM_LEDS);
 //     display.setCursor(0,56); display.print ("colorOrder: "); display.print(rgbORDER);
-     display.display();
-}
+//     display.display();
+//}
 return;
 }
 
