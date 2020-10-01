@@ -224,7 +224,7 @@ p.progwindows {
   
   background: -moz-linear-gradient(left, #ffffff 0%, #ff0000 100%);
   background: -ms-linear-gradient(left, #ffffff 0%, #ff0000 100%);
-  background: -o-linear-gradient(left, #ffffff 0%, #ff00000 100%);
+  background: -o-linear-gradient(left, #ffffff 0%, #ff0000 100%);
   background: -webkit-gradient(linear, left left, left bottom, from(#ffffff), to(#ff0000));  
   background: -webkit-linear-gradient(left, #ffffff 0%, #ff0000 100%);
   background: linear-gradient(to right, #ffffff 0%, #ff0000 100%);
