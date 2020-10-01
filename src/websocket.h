@@ -119,7 +119,7 @@ void processWebSocketMessage(String str, int dataVar){
       else if (str == "SLSP"){changeSpeed = dataVar;}
       else if (str == "SNLD"){NUM_LEDS = dataVar; EEPROM.put(offsetof(storeInEEPROM, NUM_LEDS), NUM_LEDS);  EEPROM.commit();}
       else if (str == "SCAR"){arrayn = dataVar;     selectcolorArray();    newColors++;}  // THIS ONE
-      else if (str == "SPAL"){gCurrentPaletteNumber = dataVar; gCurrentPalette =( gGradientPalettes[gCurrentPaletteNumber] );}
+      else if (str == "SPAL"){gCurrentPaletteNumber = dataVar; gTargetPalette =( gGradientPalettes[gCurrentPaletteNumber] );}
       else if (str == "SGRA"){selectColor = dataVar;   dir1=1;    ymax4 = pgm_read_byte(&selectColor_data[selectColor].ymax4);  ymin4 = pgm_read_byte(&selectColor_data[selectColor].ymin4);   setDifference = pgm_read_byte(&selectColor_data[selectColor].setDifference);    yval1=ymin4;   dir0=1;   if (effect_function == *rainbow_3){setDifference = 4;  }}
       else if (str == "SNCO"){numcolor = dataVar;   newColors++;    if (whiteON){for (int t=0; t<15; t++){satval[t]=S; satval[0]=0;}}      else if (!whiteON){for (int t=0; t<15; t++){satval[t]=S;}}}
       else if (str == "SNCL"){colorlength = dataVar; newColors++;}// if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, colorlength), colorlength);  EEPROM.commit();};}

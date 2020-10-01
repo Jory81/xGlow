@@ -154,14 +154,14 @@ DEFINE_GRADIENT_PALETTE( pink_orange_red ) {
     171, 255,  0,  0,
     255, 255,  0,  255};
     
-DEFINE_GRADIENT_PALETTE( Wpink_orange_red ) {
-    0, 255,  0,  255,
-    42, 125, 100, 100, 
-    85, 255,  255,  0,
-    127, 125, 125, 100,
-    171, 255,  0,  0,
-    213, 125, 100, 125,
-    255, 255,  0,  255};
+// DEFINE_GRADIENT_PALETTE( Wpink_orange_red ) {
+//     0, 255,  0,  255,
+//     42, 125, 100, 100, 
+//     85, 255,  255,  0,
+//     127, 125, 125, 100,
+//     171, 255,  0,  0,
+//     213, 125, 100, 125,
+//     255, 255,  0,  255};
     
 DEFINE_GRADIENT_PALETTE( pink_blgreen_blue ) {
     0, 255,  0,  255,
@@ -191,14 +191,13 @@ const TProgmemRGBGradientPalettePtr gGradientPalettes[] = {
   es_ocean_breeze_036_gp,
   lava_gp,
   personal_color,
-  
   purple_yellow,
   red_green,
   blue_pink,
   red_blue,
   green_pink,
   pink_orange_red,
-  Wpink_orange_red,
+  //Wpink_orange_red,
   pink_blgreen_blue,
   Wpink_blgreen_blue
 };

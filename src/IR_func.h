@@ -338,7 +338,7 @@ else if (memoryByte == 'i'){
 
   else if (effect_function == *palettes){
       gCurrentPaletteNumber = addmod8( gCurrentPaletteNumber, 1, gGradientPaletteCount);
-      gCurrentPalette =( gGradientPalettes[gCurrentPaletteNumber] );
+      gTargetPalette =( gGradientPalettes[gCurrentPaletteNumber] );
       }
 
   else if (effect_function == *rainbow_5 && offdis > 1){

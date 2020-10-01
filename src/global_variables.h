@@ -633,6 +633,7 @@ extern const TProgmemRGBGradientPalettePtr gGradientPalettes[];
 extern const uint8_t gGradientPaletteCount;
 uint8_t gCurrentPaletteNumber = 0;
 CRGBPalette16 gCurrentPalette( gGradientPalettes[1] );
+CRGBPalette16 gTargetPalette( gGradientPalettes[1] );
 
 
 

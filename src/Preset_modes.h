@@ -2267,14 +2267,24 @@ if (millis() - previousMillis1 >= changeSpeed) {
 }
 
 if (millis() - previousMillis36 > INTERVAL7 && varON == 2) {
-  gCurrentPaletteNumber = addmod8( gCurrentPaletteNumber, 1, gGradientPaletteCount); 
-  gCurrentPalette =( gGradientPalettes[gCurrentPaletteNumber] );
+  //gCurrentPaletteNumber = addmod8( gCurrentPaletteNumber, 1, gGradientPaletteCount); 
+  gCurrentPaletteNumber = random(gGradientPaletteCount);
+  //gCurrentPalette =( gGradientPalettes[gCurrentPaletteNumber] );
+  gTargetPalette = gGradientPalettes[gCurrentPaletteNumber];
   INTERVAL7=interval9*timeArray2[random(0,6)]*timefactor3;
   previousMillis36 = millis(); 
+  T=0;
 }
  
 if (millis() - previousMillis2 >= FPS) { 
-previousMillis2 = millis();   
+previousMillis2 = millis(); 
+
+    if (varON == 2){
+    nblendPaletteTowardPalette( gCurrentPalette, gTargetPalette, 16);
+    }
+    else {
+    nblendPaletteTowardPalette( gCurrentPalette, gTargetPalette, 96); 
+    }
 
    for( int i = 0; i < NUM_LEDS; i++) {
       leds[i] = ColorFromPalette(gCurrentPalette, y0r, brigh[brighlu], LINEARBLEND);
