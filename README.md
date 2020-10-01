@@ -4,8 +4,8 @@
  Summary:\
  -mainly producded for Christmass lighting: slow effects without too much black or flicker (strobe), always glowing, and ever changing colours\
  -37 presets (you can add more)\
- -web and OLED interface (web is based on websocktets)\
- -IR controlled\
+ -web and OLED interface (web is based on websocktets) - OLED not necessary\
+ -IR controlled (not necessary)\
  -Cycle options: random, fade, time to change preset, every preset can be excluded, etc.\
  -EEPROM/ SPIFFS\
  -Many, many options of which many can be saved to EEPROM\
