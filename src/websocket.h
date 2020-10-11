@@ -345,18 +345,46 @@ void enableMode(){
   #endif
 }
 
-void readBrisData(uint8_t BriSPreset)
+void readBriSData(byte preset)
 {
-  BRIGH = pgm_read_byte(&selectPresetB_data[BriSPreset].BRIGH);
-  glowON = pgm_read_byte(&selectPresetB_data[BriSPreset].glowON);
-  offBr = pgm_read_byte(&selectPresetB_data[BriSPreset].offBr);
-  numbrigh = pgm_read_byte(&selectPresetB_data[BriSPreset].numbrigh);
-  BPMB = pgm_read_dword(&selectPresetB_data[BriSPreset].BPMB);
-  waveTimeBr = pgm_read_dword(&selectPresetB_data[BriSPreset].waveTimeBr);
-  S = pgm_read_byte(&selectPresetB_data[BriSPreset].S);
-  satON = pgm_read_byte(&selectPresetB_data[BriSPreset].satON);
-  offS = pgm_read_byte(&selectPresetB_data[BriSPreset].offS);
-  numsat = pgm_read_byte(&selectPresetB_data[BriSPreset].numsat);
-  BPMS = pgm_read_dword(&selectPresetB_data[BriSPreset].BPMS);
-  waveTimeS = pgm_read_dword(&selectPresetB_data[BriSPreset].waveTimeS);
+  if (preset == 0){
+    #ifdef ESP8266  
+    EEPROM.get(offsetof(storeInEEPROM, BPMB), BPMB);
+    EEPROM.get(offsetof(storeInEEPROM, BPMS), BPMS);
+    EEPROM.get(offsetof(storeInEEPROM, waveTimeBr), waveTimeBr);
+    EEPROM.get(offsetof(storeInEEPROM, waveTimeS), waveTimeS);
+    #else
+    BPMB = EEPROM.readInt(offsetof(storeInEEPROM, BPMB));
+    BPMS = EEPROM.readInt(offsetof(storeInEEPROM, BPMS));
+    waveTimeBr = EEPROM.readLong(offsetof(storeInEEPROM, waveTimeBr));
+    waveTimeS = EEPROM.readLong(offsetof(storeInEEPROM, waveTimeS));
+    #endif
+
+    BRIGH = EEPROM.read(offsetof(storeInEEPROM, BRIGH));
+    offBr = EEPROM.read(offsetof(storeInEEPROM, offBr));
+    glowON = EEPROM.read(offsetof(storeInEEPROM, glowON));
+    BrF = EEPROM.read(offsetof(storeInEEPROM, BrF));
+    offS = EEPROM.read(offsetof(storeInEEPROM, offS));
+    S = EEPROM.read(offsetof(storeInEEPROM, S));
+    SF = EEPROM.read(offsetof(storeInEEPROM, SF));
+    satON = EEPROM.read(offsetof(storeInEEPROM, satON));
+    numsat = EEPROM.read(offsetof(storeInEEPROM, numsat));
+    numbrigh = EEPROM.read(offsetof(storeInEEPROM, numbrigh));
+  }
+  else {
+  BRIGH = pgm_read_byte(&selectPresetB_data[preset].BRIGH);
+  BrF = pgm_read_byte(&selectPresetB_data[preset].BrF);
+  glowON = pgm_read_byte(&selectPresetB_data[preset].glowON);
+  offBr = pgm_read_byte(&selectPresetB_data[preset].offBr);
+  numbrigh = pgm_read_byte(&selectPresetB_data[preset].numbrigh);
+  BPMB = pgm_read_dword(&selectPresetB_data[preset].BPMB);
+  waveTimeBr = pgm_read_dword(&selectPresetB_data[preset].waveTimeBr);
+  S = pgm_read_byte(&selectPresetB_data[preset].S);
+  SF = pgm_read_byte(&selectPresetB_data[preset].SF);
+  satON = pgm_read_byte(&selectPresetB_data[preset].satON);
+  offS = pgm_read_byte(&selectPresetB_data[preset].offS);
+  numsat = pgm_read_byte(&selectPresetB_data[preset].numsat);
+  BPMS = pgm_read_dword(&selectPresetB_data[preset].BPMS);
+  waveTimeS = pgm_read_dword(&selectPresetB_data[preset].waveTimeS);
+  }
 }

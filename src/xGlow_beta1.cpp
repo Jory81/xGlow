@@ -186,7 +186,7 @@ void onEvent(AsyncWebSocket *server, AsyncWebSocketClient *client, AwsEventType 
 void saveEverythingToEEPROM();
 void ActiveModesToEEPROM();
 void DeactiveModesToEEPROM();
-void readBriSData(uint8_t BriSPreset);
+void readBriSData(byte preset);
 
 #include "Change_preset.h"
 #include "Bri_Sat_Settings.h"
