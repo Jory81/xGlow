@@ -32,16 +32,16 @@ const char string_22[] PROGMEM = "xmas_singles";
 const char string_23[] PROGMEM = "xmas_solid";
 const char string_24[] PROGMEM = "static_glow_2"; 
 const char string_25[] PROGMEM = "splicing_1";
-const char string_26[] PROGMEM = "zagging";
+const char string_26[] PROGMEM = "zigzag";
 const char string_27[] PROGMEM = "splicing2";
-const char string_28[] PROGMEM = "blendEffect";
+const char string_28[] PROGMEM = "colourSplash";
 const char string_29[] PROGMEM = "meteor"; 
 const char string_30[] PROGMEM = "palettes"; 
 const char string_31[] PROGMEM = "demo100";
 const char string_32[] PROGMEM = "demo_palette";
 const char string_33[] PROGMEM = "demo_hail";
 const char string_34[] PROGMEM = "demo_gradient";
-const char string_35[] PROGMEM = "demo_snow";
+const char string_35[] PROGMEM = "rainbow_snow";
 const char string_36[] PROGMEM = "pacifica";
 const char string_37[] PROGMEM = "RGBmode";
 
@@ -178,6 +178,30 @@ storeInEEPROM customVar = {
       14, // offdisC
       300 // NUM_LEDS      
     };
+
+
+struct presetBrighSat_pgm
+{
+  byte BRIGH;
+  byte glowON;
+  byte offBr;
+  byte numbrigh; // numBrigh
+  int BPMB;
+  uint32_t waveTimeBr;
+  byte S; 
+  byte satON;
+  byte offS;
+  byte numsat; // numSat
+  int BPMS;
+  uint32_t waveTimeS;
+};
+
+static const presetBrighSat_pgm selectPresetB_data[] PROGMEM = 
+{
+  //BRIGH, glowON, offBr, numbrigh, BPMB, waveTimeBr,   S,    satON,    offS,   numsat,     BPMS,    waveTimeS  
+  {205,    4,      45,    13,       30,   2000,         200,  4,        145,    31,         60,      1000}
+
+};
 
 //const byte rgbcolor = 1;
 struct selectColorArray_pgm
@@ -325,6 +349,7 @@ uint16_t rn[21]={70, 60, 50, 40, 40, 50, 60, 180, 170, 160, 150, 140, 50, 60, 70
 int yvarC[10]={0, 9, 4, -11, -3, -6, 7, 10, 0, -6};
 int yvargC[10]={-3, -9, 4, 16, 0, 11, 7, 19, 0, -3};
 int yvar[10]={0, 9, 4, -11, -3, -6, 7, 10, 0, -6};
+int yvarb[16]={0, 3, 1, 0, -1, 0, -2, 0, 0, 3, -2, 0, 2, 0, -1, 0};
 int yvarg[10]={-3, -9, 4, 16, 0, 11, 7, 19, 0, -3};
 byte varlu = 0;
 byte difflu = 0;

@@ -156,7 +156,7 @@ void random_string(void); // 10
 void rainbow_5(void); // 11
 void twinkle(void); // 12
 void static_glow_2(void); //13
-void blendEffect(void); // 14
+void colourSplash(void); // 14
 void sparkling_2(void); // 15
 void meteor(void); // 16
 void snow_flakes_2(void); // 17

@@ -101,7 +101,7 @@ if (changeModus){
     case 25: {       effect_function = static_glow;         changeSpeed=100;        setDifference=25;        colorMode=2;        forcedColourChange = false;        num50=0;        yval1=5;     numsparks=0;} break; 
     case 26: {       effect_function = static_glow;         changeSpeed=100;        setDifference=80;        colorMode=0;        forcedColourChange = true;        num50=0;     numsparks=0;} break;                                                              
     case 27: {       effect_function = static_glow_2;        changeSpeed=100;        setDifference=80;        colorMode=1;        num50=0;     numsparks=0;} break; 
-    case 28: {       effect_function = blendEffect;        changeSpeed=100;        setDifference=7;         colorMode=2;        num50=0;     numsparks=0;} break;   
+    case 28: {       effect_function = colourSplash;        changeSpeed=100;        setDifference=7;         colorMode=2;        num50=0;     numsparks=0;} break;   
     case 29: {       effect_function = meteor;        if (tower){changeSpeed=60;} else{changeSpeed=50;}        setDifference=11;   flakeCounter=0;        colorMode=2;        offmin=13;        offmax=13;     offdis = offdisC;        num50=1;    numsparks=cfactor2*5;
                       for (int s=0;s<30; s++){pos[s]=NUM_LEDS-1; y[s]=offdisC;}    poshh=-1;   if (tower){slingerSpeed=45/cfactor2;} else {slingerSpeed = changeSpeed;};} break;
 
@@ -130,7 +130,7 @@ if (changeModus){
    slowFactor=0;
    INTERVAL7=5000;
    dir1 = 1;
-   if ((effect_function == *static_glow && programMode == 26)  || effect_function == blendEffect){
+   if ((effect_function == *static_glow && programMode == 26)  || effect_function == colourSplash){
     dir = 1; xdir = 0;
    }
    else {

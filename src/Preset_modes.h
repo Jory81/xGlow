@@ -853,37 +853,37 @@ else if ((variant==3 || variant ==4 || variant ==5) && (!readyToChange)){
         }            
        }
 
-       fillColourArray(colourR, yold, yvar, diff);  
+       //fillColourArray(colourR, yold, yvar, diff);  
         
        for(int i = 0; i < NUM_LEDS; i++ ){
          if ((fadeIsActive) && longxArray[i] == yold1){
          leds[i] = CHSV((longxArray[i]+yvar[varlu]+diff[difflu]),satval[satlu],brigh[brighlu]);
          }
          else {
-         leds[i] = CHSV(colourR[colourlu],satval[satlu],brigh[brighlu]);
+         leds[i] = CHSV((yold+yvar[varlu]+diff[difflu]),satval[satlu],brigh[brighlu]);
          }
         
-       brighlu++;
-       if (brighlu >= numbrigh){brighlu = 0;}
-       
-       colourlu++;
-       if (colourlu > 9){colourlu = 0;}
+        brighlu++;
+        if (brighlu >= numbrigh){brighlu = 0;}
+        
+        // colourlu++;
+        // if (colourlu > 9){colourlu = 0;}
 
-       satlu++;
-       if (satlu >= numsat){satlu=0;}
+        satlu++;
+        if (satlu >= numsat){satlu=0;}
 
-       varlu++;
-       if (varlu >= 10){varlu = 0;}
+        varlu++;
+        if (varlu >= 10){varlu = 0;}
 
-       difflu++;
-       if (difflu >= 10){difflu = 0;}
+        difflu++;
+        if (difflu >= 10){difflu = 0;}
        }
 
        handleGlitter();
        FastLED.show();
     
        brighlu=0;
-       colourlu=0;
+       //colourlu=0;
        satlu=0;
        varlu=0;
        difflu=0;
@@ -1422,20 +1422,19 @@ void static_glow_2(void){
     }
 }
 
-void blendEffect(void){ 
+void colourSplash(void){ 
 
 if (millis() - previousMillis1 > INTERVAL7) {
   if (millis() - previousMillis36 >= FPS) {
     previousMillis36 = millis();
     if (yTrans == yval1) {
-      yval1 = random(256);
+      yval1 = random(30, 226);
       seedNumber = random(6, 18)*cfactor2;
         for (int i = 0; i < seedNumber; i++){
          seedArray[i]=random(NUM_LEDS);
         }
     }
-    yTrans = fadeFnc(yTrans, yval1);   
-    fillColourArray(colour, yTrans, yvar, diff);   
+    yTrans = fadeFnc(yTrans, yval1);     
       if (yTrans == yval1) {
         INTERVAL7=(interval9/6)*timeArray2[random(0,6)]*timefactor3;
         updateOledFloat(88, 0, &INTERVAL7, 0); 
@@ -1445,30 +1444,42 @@ if (millis() - previousMillis1 > INTERVAL7) {
   } 
 } 
 
-    if (millis() - previousMillis2 >= FPS) { 
+    if (millis() - previousMillis2 >= FPS) {
+      //fillColourArray(colour, yTrans, yvar, diff);  
           for(int i = 0; i < NUM_LEDS; i++ ){
-          leds[i] = CHSV(colour[colourlu],satval[satlu],brigh[brighlu]);
+            for(int j = 0; j < seedNumber; j++){
+              if (i == seedArray[j]){
+                leds[seedArray[i]]=CHSV((yval1+yvar[varlu]+diff[difflu]),satval[satlu],brigh[brighlu]);
+              }
+              else {          
+                leds[i] = CHSV((yTrans+yvar[varlu]+diff[difflu]),satval[satlu],brigh[brighlu]);
+              }
+            }
             
           brighlu++;
           if (brighlu >= numbrigh){brighlu = 0;}
           
-          colourlu++;
-          if (colourlu > 9){colourlu = 0;}
+          // colourlu++;
+          // if (colourlu > 9){colourlu = 0;}
 
           satlu++;
           if (satlu >= numsat){satlu = 0;}
-          } 
 
-          for (int i = 0; i < seedNumber; i++){
-          leds[seedArray[i]]=CHSV(yval1,satval[satlu],brigh[brighlu]);
-          }
+          varlu++;
+          if (varlu >= 10){varlu = 0;}
+
+          difflu++;
+          if (difflu >= 10){difflu = 0;}
+          } 
 
           handleGlitter();
           FastLED.show();
 
           satlu=0;
           brighlu=0;
-          colourlu=0;
+          //colourlu=0;
+          varlu=0;
+          difflu=0;
           previousMillis2 = millis();    
     }
 }
@@ -2239,7 +2250,7 @@ if (millis() - previousMillis2 >= FPS) {
 previousMillis2 = millis();  
     
    for(int i = 0; i < NUM_LEDS; i++ ){
-   leds[i] = CHSV((blockArray[yint]+yvar[varlu]),satval[satlu],brigh[brighlu]);
+   leds[i] = CHSV((blockArray[yint]+yvarb[varlu]),satval[satlu],brigh[brighlu]);
    yint++;
    if (yint > 10*colorlength-1){
     yint=0;  
@@ -2252,7 +2263,7 @@ previousMillis2 = millis();
    if (satlu >= numsat){satlu = 0;}
 
    varlu++;
-   if (varlu >= 10){varlu = 0;}   
+   if (varlu >= 16){varlu = 0;}   
    }
    
    handleGlitter();
@@ -2308,7 +2319,7 @@ if (millis() - previousMillis2 >= FPS) {
 previousMillis2 = millis();  
     
    for(int i = 0; i < NUM_LEDS; i++ ){
-   leds[i] = CHSV((blockArray[yint]+yvar[varlu]),satval[satlu],brigh[brighlu]);
+   leds[i] = CHSV((blockArray[yint]+yvarb[varlu]),satval[satlu],brigh[brighlu]);
    yint++;
    if (yint > (numcolor*colorlength-1)){
     yint=0;   
@@ -2321,7 +2332,7 @@ previousMillis2 = millis();
    if (satlu >= numsat){satlu = 0;}      
 
    varlu++;
-   if (varlu >= 10){varlu = 0;}
+   if (varlu >= 16){varlu = 0;}
 
    }
 

@@ -178,6 +178,12 @@ function updateProgSlider(slideAmount){
 	doSend('SPGM'+slideAmount);
 	}
 
+function updateBriSSlider(slideAmount){
+	document.getElementById('SBSM').value = slideAmount;
+	document.getElementById('SBSMS').innerHTML = slideAmount;
+	doSend('SBSM'+slideAmount);
+	}	
+
 function updateButton(fixedVariable) { 
 	 if (document.getElementById(fixedVariable).checked == true){
 		doSend(fixedVariable+1);
@@ -471,14 +477,14 @@ _Prog. Mode (0-36):
     <li value="25"  onclick="updateProgSlider(this.value)">25: splicing_1</li>
     <li value="26"  onclick="updateProgSlider(this.value)">26: zagging</li>
     <li value="27"  onclick="updateProgSlider(this.value)">27: splicing2</li>
-    <li value="28"  onclick="updateProgSlider(this.value)">28: blendEffect</li>
+    <li value="28"  onclick="updateProgSlider(this.value)">28: colourSplash</li>
     <li value="29"  onclick="updateProgSlider(this.value)">29: meteor</li>
     <li value="30"  onclick="updateProgSlider(this.value)">30: palettes</li>
     <li value="31"  onclick="updateProgSlider(this.value)">31: demo100</li>
     <li value="32"  onclick="updateProgSlider(this.value)">32: demo_palette</li>	
 	<li value="33"  onclick="updateProgSlider(this.value)">33: demo_hail</li>
     <li value="34"  onclick="updateProgSlider(this.value)">34: demo_gradient</li>
-    <li value="35"  onclick="updateProgSlider(this.value)">35: demo_snow</li>	
+    <li value="35"  onclick="updateProgSlider(this.value)">35: rainbow_snow</li>	
 	<li value="36"  onclick="updateProgSlider(this.value)">36: pacifica</li>
 	<li value="37"  onclick="updateProgSlider(this.value)">37: RGBmode</li>
   </div>
@@ -529,52 +535,44 @@ _Prog. Mode (0-36):
   </div>
   <div class="varvaluex"></div><div class="infox"></div>
 </div>
-<div class="slidecontainerx">
-<div class="titlex">
-_Glow Mode (0-7):
-</div>
-<input id="SGLO" class="sliderx" type="range" min="0" max="7" step="1" value="0" onchange="updateSlider('SGLO', this.value)">
-<div class="varvaluex" id="SGLOS"></div><div class="infox"></div>
-</div>
 
 <div class="slidecontainerx">
-<div class="titlex">
+	<div class="titlex">
+	_BriS preset (0-7):
+	</div>
+	<input id="SBSM" class="sliderx" type="range" min="0" max="7" step="1" value="0" onchange="updateSlider('SBSM', this.value)">
+	<div class="varvaluex" id="SBSMS"></div><div class="infox">
+		<div class="dropdown">
+			<button class="dropbtn">Modes:</button>
+			<div class="dropdown-content">
+			  <li value="0"  onclick="updateBriSSlider(this.value)">0: basic glow</li>
+			  <li value="1"  onclick="updateBriSSlider(this.value)">1: diamond</li>
+			  <li value="2"  onclick="updateBriSSlider(this.value)">2: slow_twinkle</li>
+			  <li value="3"  onclick="updateBriSSlider(this.value)">3: fast_Twinkle</li>
+			  <li value="4"  onclick="updateBriSSlider(this.value)">4: gradient</li>
+			  <li value="5"  onclick="updateBriSSlider(this.value)">5: sparkle_1</li>
+			  <li value="6"  onclick="updateBriSSlider(this.value)">6: sparkle_2</li>	
+			  <li value="7"  onclick="updateBriSSlider(this.value)">7: sparkle_3</li>	
+			  <li value="8"  onclick="updateBriSSlider(this.value)">8: basic</li>	
+			</div>
+		  </div>
+		  </div>
 </div>
-  <div class="sliderticksEmptyx">
-    <p></p>
-    <p></p>
-    <p></p>
-    <p></p>
-    <p></p>
-    <p></p>
-    <p></p>
-    <p></p>	
-  </div>
-  <div class="varvaluex"></div><div class="infox"></div>
-</div>
-
-<div class="slidecontainerx">
-<div class="titlex">
-_Sat Mode (0-7):
-</div>
-<input id="SSTM" class="sliderx" type="range" min="0" max="7" step="1" value="0" onchange="updateSlider('SSTM', this.value)">
-<div class="varvaluex" id="SSTMS"></div><div class="infox"></div>
-</div>
-
-<div class="slidecontainerx">
-<div class="titlex">
-</div>
-  <div class="sliderticksEmptyx">
-    <p></p>
-    <p></p>
-    <p></p>
-    <p></p>
-    <p></p>
-    <p></p>
-    <p></p>
-    <p></p>	
-  </div>
-<div class="varvaluex"></div><div class="infox"></div>  
+	
+	<div class="slidecontainerx">
+	<div class="titlex">
+	</div>
+	  <div class="sliderticksEmptyx">
+		<p></p>
+		<p></p>
+		<p></p>
+		<p></p>
+		<p></p>
+		<p></p>
+		<p></p>
+		<p></p>	
+	  </div>
+	  <div class="varvaluex"></div><div class="infox"></div>
 </div>
 
 <div class="slidecontainerx">
@@ -920,7 +918,30 @@ _Bees
 
 <p>
 
-<p class="sliderwindow"> BRIGHTNESS:</P>
+<p class="sliderwindow"> BRIGHTNESS:</p>
+<div class="slidecontainerx">
+	<div class="titlex">
+	_Glow Mode (0-7):
+	</div>
+	<input id="SGLO" class="sliderx" type="range" min="0" max="7" step="1" value="0" onchange="updateSlider('SGLO', this.value)">
+	<div class="varvaluex" id="SGLOS"></div><div class="infox"></div>
+	</div>
+	
+	<div class="slidecontainerx">
+	<div class="titlex">
+	</div>
+	  <div class="sliderticksEmptyx">
+		<p></p>
+		<p></p>
+		<p></p>
+		<p></p>
+		<p></p>
+		<p></p>
+		<p></p>
+		<p></p>	
+	  </div>
+	  <div class="varvaluex"></div><div class="infox"></div>
+</div>
 <div class="slidecontainerx">
 <div class="titlex">
 _Num_brigh (0-32): 
@@ -1056,6 +1077,29 @@ _Wave BPM(br):
 </div>
 <br>
 <p class="sliderwindow"> SATURATION:</P>
+<div class="slidecontainerx">
+		<div class="titlex">
+		_Sat Mode (0-7):
+		</div>
+		<input id="SSTM" class="sliderx" type="range" min="0" max="7" step="1" value="0" onchange="updateSlider('SSTM', this.value)">
+		<div class="varvaluex" id="SSTMS"></div><div class="infox"></div>
+		</div>
+		
+		<div class="slidecontainerx">
+		<div class="titlex">
+		</div>
+		  <div class="sliderticksEmptyx">
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>	
+		  </div>
+		<div class="varvaluex"></div><div class="infox"></div>  
+</div>	
 <div class="slidecontainerx">
 <div class="titlex">
 _Num_sat (0-32): 
