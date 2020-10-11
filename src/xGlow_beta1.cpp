@@ -171,6 +171,7 @@ void demo100(void); // 25
 void palettes(void); // 27
 void pacifica(void); //
 void RGBmode(void); // 
+void snow_flakesR(void); // 4
 
 // webserver files defined in "websocket.h"
 void handleWebSocketMessage(void *arg, uint8_t *data, size_t len);
