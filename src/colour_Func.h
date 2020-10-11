@@ -17,8 +17,8 @@ LIB8STATIC uint8_t beattriwave8(accum88 beats_per_minute, uint8_t lowest = 0, ui
 
 
 void handleAdditionalVariables(){ // HANDLE ADDITIONAL DEVIATION OF THE LED COLOUR. IN HINDSIGHT A SIMPLE SINUS FUNCTION DOES THE SAME - another future code improvement.
-if (effect_function != *rainbow_4 && effect_function != *xmas_solid && num50 != 1){  
-  if (millis() - previousMillis >= 50) {
+if (effect_function != *rainbow_4 && effect_function != *xmas_solid){  
+  if (millis() - previousMillis >= FPS) {
     previousMillis = millis();
     diff1 = map(beattriwave8(diffbeat, 0, 255), 0, 255, -setDifference, setDifference+1); // triwave code below. Added to FastLed lib8tion.h -- library.
 
@@ -50,7 +50,7 @@ if (effect_function != *rainbow_4 && effect_function != *xmas_solid && num50 != 
 }
   
 else if (effect_function == *rainbow_4 || effect_function == *xmas_solid){  
-  if (millis() - previousMillis >= 50) {
+  if (millis() - previousMillis >= FPS) {
     previousMillis = millis();
     diff1=map(beattriwave8(diffbeat, 0, 255), 0, 255, -setDifference, setDifference+1); // triwave code below. Added to FastLed lib8tion.h -- library.
     diff2=map(beattriwave8(diffbeat2, 0, 255), 0, 255, -setDifference2, setDifference2+1);

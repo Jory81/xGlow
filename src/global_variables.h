@@ -201,7 +201,7 @@ struct presetBrighSat_pgm
 static const presetBrighSat_pgm selectPresetB_data[] PROGMEM = 
 {
   //BRIGH,    BrF,  glowON, offBr, numbrigh, BPMB, waveTimeBr,   S,      SF,    satON,    offS,   numsat,     BPMS,    waveTimeS  
-  {205,       45,   2,      40,    16,       30,   2000,         250,    0,     0,        145,    31,         60,      1000}, // basic glow
+  {205,       45,   2,      40,    16,       30,   2000,         250,    0,     0,        145,    31,         60,      1000}, // EEPROM values
   {205,       0,    5,      45,    13,       30,   2000,         200,    0,     3,        145,    31,         60,      1000}, // diamond
   {205,       205,  3,      45,    13,       10,   6000,         200,    0,     4,        145,    31,         60,      1000}, // slow_Twinkle
   {205,       205,  3,      45,    31,       48,   1250,         200,    0,     4,        145,    31,         60,      1000}, // fast_Twinkle
@@ -209,7 +209,7 @@ static const presetBrighSat_pgm selectPresetB_data[] PROGMEM =
   {80,        255,  5,      45,    13,       30,   2000,         200,    0,     4,        145,    31,         60,      1000}, // sparkle_1
   {205,       205,  4,      45,    13,       30,   2000,         200,    0,     4,        145,    31,         60,      1000}, // sparkle_2
   {205,       205,  7,      45,    11,       60,   2000,         200,    0,     4,        145,    31,         60,      1000}, // wave
-  {155,       50,   0,      45,    13,       30,   2000,         255,    0,     0,        145,    31,         60,      1000} // basic
+  {155,       50,   2,      45,    13,       30,   2000,         255,    0,     0,        145,    31,         60,      1000} // basic glow
 };
 
 
@@ -587,7 +587,8 @@ byte Green=0;
 byte Blue=0;
 int colourChangeDelay=0;
 int cyclesToFade=0;
-int num50=0; // variable that determines additional setDifference
+boolean sparking = false;
+//int num50=0; // variable that determines additional setDifference
 int partialArrayCounter=-1;
 int partialArraySize=0;
 byte memoryByte = 0;

@@ -672,7 +672,7 @@ if (readyToChange){
 if ((variant == 0 || variant == 1 || variant == 2) && (!readyToChange)){
     void ();{
     if (millis() - previousMillis36 >= INTERVAL7){ 
-      num50=1;
+      sparking = true;
       if (millis() - previousMillis37 >= (slingerSpeed+slowFactor)){
         previousMillis37 = millis();
         //longxArray[yy]=yval1+random(-7,7);
@@ -709,7 +709,7 @@ if ((variant == 0 || variant == 1 || variant == 2) && (!readyToChange)){
         previousMillis36 = millis();
         T=0;
         readyToChange = true;
-        num50=0;
+        sparking = false;
         num15=0;
         }
         }
@@ -758,7 +758,7 @@ if ((variant == 0 || variant == 1 || variant == 2) && (!readyToChange)){
    }
 else if ((variant==3 || variant ==4 || variant ==5) && (!readyToChange)){
      if (millis() - previousMillis36 >= INTERVAL7){ 
-      num50=1; 
+      sparking = true; 
         if (millis() - previousMillis37 >= (slingerSpeed+slowFactor)){ // 200 is slingerSpeed
           previousMillis37 = millis();
           //longxArray[hh]=yval1+random(-7,7);
@@ -794,7 +794,7 @@ else if ((variant==3 || variant ==4 || variant ==5) && (!readyToChange)){
           T=0;
           readyToChange = true;
           num15=0;
-          num50=0;
+          sparking - false;
           previousMillis36 = millis();
           }
           }
@@ -840,7 +840,7 @@ else if ((variant==3 || variant ==4 || variant ==5) && (!readyToChange)){
     }
     }
   
-  if (num50 == 0){  
+  if (!sparking){  
     if (millis() - previousMillis2 >= FPS) { 
     previousMillis2 = millis();  
       if (fadeIsActive){
@@ -889,7 +889,7 @@ else if ((variant==3 || variant ==4 || variant ==5) && (!readyToChange)){
        difflu=0;
        }
   }
-else if (num50 != 0){
+else if (sparking){
     if (millis() - previousMillis2 >= FPS) { 
     previousMillis2 = millis();  
 
@@ -943,7 +943,7 @@ void snow_storm(void){
         }
       }
       else if (!fadeIsActive){
-      num50=1;
+      sparking = true;
         for (int s=0; s < numsparks; s++){
           if (millis() - previousMillisLN[s] >= changeSpeedMA[s] && flakeCounter >= flakeListMode7[s] && flakeCounter <= cn) {
             previousMillisLN[s] = millis();
@@ -985,7 +985,7 @@ void snow_storm(void){
               INTERVAL7=interval7*timeArray2[random(0,6)]*timefactor3;
               updateOledFloat(88, 0, &INTERVAL7, 0); 
               T=0;
-              num50=0;
+              sparking = false;
               num15=0;
               for (int s=0; s < numsparks; s++){
               num17[s]=NUM_LEDS; // adjusted
@@ -1098,14 +1098,14 @@ if (millis() - previousMillis36 >= INTERVAL7 && ((num17[0] > 0) || (hh > 0 && hh
         }
     }
      
-  if (num50 == 0){  
+  if (!sparking){  
     if (millis() - previousMillis2 >= FPS) { 
     previousMillis2 = millis();  
     fillColourArray(colourR, yold, yvar, diff); 
     fillNUM_LEDS1(colourR, NUM_LEDS);       
     }
   }
-  else if (num50 != 0){
+  else if (sparking){
     if (millis() - previousMillis2 >= FPS) { 
     previousMillis2 = millis();  
 
@@ -1429,7 +1429,7 @@ if (millis() - previousMillis1 > INTERVAL7) {
     previousMillis36 = millis();
     if (yTrans == yval1) {
       yval1 = random(30, 226);
-      seedNumber = random(6, 18)*cfactor2;
+      seedNumber = random(7, 18)*cfactor2;
         for (int i = 0; i < seedNumber; i++){
          seedArray[i]=random(NUM_LEDS);
         }
@@ -1444,7 +1444,7 @@ if (millis() - previousMillis1 > INTERVAL7) {
   } 
 } 
 
-    if (millis() - previousMillis2 >= FPS) {
+    if (millis() - previousMillis2 >= changeSpeed) {
       //fillColourArray(colour, yTrans, yvar, diff);  
           for(int i = 0; i < NUM_LEDS; i++ ){
             for(int j = 0; j < seedNumber; j++){
@@ -1514,7 +1514,7 @@ else if (dir == 1 && (readyToChange)){
   
 if (variant==0 && (!readyToChange)){
     if (millis() - previousMillis36 >= INTERVAL7){ 
-      num50=1;
+      sparking = true;
       if (millis() - previousMillis37 >= (slingerSpeed+slowFactor)){
         previousMillis37 = millis();
         //longxArray[yy]=yval1+random(-7,7);
@@ -1537,7 +1537,7 @@ if (variant==0 && (!readyToChange)){
             previousMillis36 = millis();
             T=0;
             readyToChange = true;
-            num50=0;
+            sparking = false;
             num15=0;
         }
        }
@@ -1621,7 +1621,7 @@ if (variant==0 && (!readyToChange)){
 }
 else if (variant==3 && (!readyToChange)){
      if (millis() - previousMillis36 >= INTERVAL7){ 
-      num50=1; 
+      sparking = true; 
         if (millis() - previousMillis37 >= (slingerSpeed+slowFactor)){
           previousMillis37 = millis();
           //longxArray[hh]=yval1+random(-7,7);
@@ -1644,7 +1644,7 @@ else if (variant==3 && (!readyToChange)){
               previousMillis36 = millis();
               T=0;
               readyToChange = true;
-              num50=0;
+              sparking = false;
               num15=0;
           }
         }
@@ -1726,14 +1726,14 @@ else if (variant==3 && (!readyToChange)){
   }
 }
 
-if (num50 == 0){  
+if (!sparking){  
     if (millis() - previousMillis1 >= FPS) { 
         previousMillis1 = millis();  
         fillColourArray(colourR, yold, yvar, diff); 
         fillNUM_LEDS1(colourR, NUM_LEDS);    
         }
   }
-else if (num50 != 0){
+else if (sparking){
     if (millis() - previousMillis1 >= FPS) { 
     previousMillis1 = millis();  
 
@@ -1776,7 +1776,6 @@ else if (num50 != 0){
 
 void meteor(void){
 if (millis() - previousMillis36 >= INTERVAL7){
-      num50=1;  
         for (int s=0; s<numsparks; s++){  
         if (millis() - previousMillisAM[s] >= rtAM[s]/df){  
         if (millis() - previousMillisLN[s] >= changeSpeed && flakeCounter >= flakeListMode16[s] && flakeCounter <= cn) {
@@ -1857,7 +1856,6 @@ if (millis() - previousMillis36 >= INTERVAL7){
           T=0;
 //          Serial.println("does it enter here?");
 //          Serial.println(num15);
-          num50=0;
           num15=0;
           for (int s=0; s<numsparks;s++){
           num17[s]=NUM_LEDS;
