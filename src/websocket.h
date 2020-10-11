@@ -106,7 +106,7 @@ void processWebSocketMessage(String str, int dataVar){
       else if (str == "SBRI"){BRIGH = dataVar; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, BRIGH), BRIGH);  EEPROM.commit();};}
       else if (str == "SSAT"){S = dataVar; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, S), S);  EEPROM.commit();};}
       else if (str == "SPGM"){programMode = dataVar; cycleT=0;  previousMillis44 = millis();  previousMillis45 = millis(); if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, programMode), programMode);  EEPROM.commit();}; strcpy_P(buffer, (char*)pgm_read_dword(&(string_table[programMode]))); str=String(buffer);  ws.textAll("0"+str); changeState();} 
-      else if (str == "SBSM"){BriSMode = dataVar; readBriSData(BrisMode);}
+      else if (str == "SBSM"){uint8_t BriSPreset = dataVar; readBriSData(BriSPreset);}
       else if (str == "SGLO"){glowON = dataVar; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, glowON), glowON);  EEPROM.commit();};}
       else if (str == "SSTM"){satON = dataVar; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, satON), satON);  EEPROM.commit();};}
       else if (str == "SSTN"){numsat = dataVar; if (maintainWaveForm){convSat=waveTimeS/numsat;}; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, numsat), numsat);  EEPROM.commit();};}
@@ -345,32 +345,18 @@ void enableMode(){
   #endif
 }
 
-void readBrisData(uint8_t BriSMode){
-
-  BRIGH = pgm_read_byte(&selectPresetB_data[BriSMode].BRIGH);
-  
+void readBrisData(uint8_t BriSPreset)
+{
+  BRIGH = pgm_read_byte(&selectPresetB_data[BriSPreset].BRIGH);
+  glowON = pgm_read_byte(&selectPresetB_data[BriSPreset].glowON);
+  offBr = pgm_read_byte(&selectPresetB_data[BriSPreset].offBr);
+  numbrigh = pgm_read_byte(&selectPresetB_data[BriSPreset].numbrigh);
+  BPMB = pgm_read_dword(&selectPresetB_data[BriSPreset].BPMB);
+  waveTimeBr = pgm_read_dword(&selectPresetB_data[BriSPreset].waveTimeBr);
+  S = pgm_read_byte(&selectPresetB_data[BriSPreset].S);
+  satON = pgm_read_byte(&selectPresetB_data[BriSPreset].satON);
+  offS = pgm_read_byte(&selectPresetB_data[BriSPreset].offS);
+  numsat = pgm_read_byte(&selectPresetB_data[BriSPreset].numsat);
+  BPMS = pgm_read_dword(&selectPresetB_data[BriSPreset].BPMS);
+  waveTimeS = pgm_read_dword(&selectPresetB_data[BriSPreset].waveTimeS);
 }
-
-
-struct presetBrighSat_pgm
-{
-  byte BRIGH;
-  byte glowON;
-  byte offBr;
-  byte numbrigh; // numBrigh
-  int BPMB;
-  uint32_t waveTimeBr;
-  byte S; 
-  byte satON;
-  byte offS;
-  byte numsat; // numSat
-  int BPMS;
-  uint32_t waveTimeS;
-};
-
-static const presetBrighSat_pgm selectPresetB_data[] PROGMEM = 
-{
-  //BRIGH, glowON, offBr, numbrigh, BPMB, waveTimeBr,   S,    satON,    offS,   numsat,     BPMS,    waveTimeS  
-  {205,    4,      45,    13,       30,   2000,         200,  4,        145,    31,         60,      1000}
-
-};

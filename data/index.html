@@ -139,7 +139,7 @@ function onMessage(event) {
 	k = k + 1;
 	//console.log(k);
 		if (k < 67){ //54
-		doSend("GETS"+k);
+		setTimeout(function(){ doSend("GETS"+k); }, 33);
 		}
 		else if (k >= 67){ //54
 		//k = 0;
