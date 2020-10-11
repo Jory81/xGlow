@@ -110,7 +110,7 @@ void processWebSocketMessage(String str, int dataVar){
       else if (str == "SSTM"){satON = dataVar; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, satON), satON);  EEPROM.commit();};}
       else if (str == "SSTN"){numsat = dataVar; if (maintainWaveForm){convSat=waveTimeS/numsat;}; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, numsat), numsat);  EEPROM.commit();};}
       else if (str == "SCOM"){colorMode = dataVar-1; procesColourMode();} // memoryByte = 'c'; processChange();} // THIS ONE
-      else if (str == "SVAR"){varON = dataVar; for (int p=0; p<14; p++){if (varON == 0){yvar[p]= 0; yvarg[p]= 0;} else {yvar[p]=yvarC[p]; yvarg[p]=yvargC[p];};} if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, varON), varON);  EEPROM.commit();};}
+      else if (str == "SVAR"){varON = dataVar; for (int p=0; p<10; p++){if (varON == 0){yvar[p]= 0; yvarg[p]= 0;} else {yvar[p]=yvarC[p]; yvarg[p]=yvargC[p];};} if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, varON), varON);  EEPROM.commit();};}
       else if (str == "SNBR"){numbrigh = dataVar; if (maintainWaveForm){convBrigh=waveTimeBr/numbrigh;}; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, numbrigh), numbrigh);  EEPROM.commit();};}
       else if (str == "SNSP"){numsparks = dataVar;}
       else if (str == "SSBR"){BrF = dataVar; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, BrF), BrF);  EEPROM.commit();};}

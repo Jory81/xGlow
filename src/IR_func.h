@@ -366,7 +366,7 @@ else if (memoryByte == 'n'){
     if (varON > 2){
       varON=0;
     }
-    for (int p=0; p<14; p++){
+    for (int p=0; p<10; p++){
       if (varON == 0){
           yvar[p]= 0;
           yvarg[p]= 0;

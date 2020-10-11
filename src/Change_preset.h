@@ -72,7 +72,7 @@ if (changeModus){
                       for (int k=0; k<21; k++){i[k] = NUM_LEDS-1;}                                                                                                                            } break;
         
     case 8: {        effect_function = s7_strings;     changeSpeed=110;       colorMode=4;        setDifference=15;       arrayn=0;     num50=1;       selectcolorArray();        i[0]=NUM_LEDS-1;        numsparks=1;        previousMillis9=millis();        previousMillis10=millis();        previousMillis12=millis();     rainbowON = true; } break;                    
-    case 9: {        effect_function = snow_flakes;        changeSpeed=125;          colorMode=4;           setDifference=7;    offdis = offdisC;                arrayn=0;  selectcolorArray();     num50=1;            sF=1;           previousMillis8=millis();     numsparks=7*cfactor2;       rainbowON=false;
+    case 9: {        effect_function = snow_flakes;        changeSpeed=125;          colorMode=4;           setDifference=7;    offdis = offdisC;                arrayn=0;  selectcolorArray();     num50=1;            sF=1;           previousMillis8=millis();     numsparks=7*cfactor2;
                       for (int k=0; k<21; k++){i[k]=NUM_LEDS-1; a[k]=NUM_LEDS-1;}} break;         
 
     case 10: {       effect_function = snow_flakes_2;        changeSpeed=125;        setDifference=7;        colorMode=1;        sF=1;      offdis = offdisC;       num50=0;        partialArrayCounter=0;     forcedColourChange = true;     numsparks=7*cfactor2; 
@@ -112,7 +112,7 @@ if (changeModus){
                       for (int s=0; s<30; s++){rr[s]=-1;        pos[s]=NUM_LEDS-1;}        } break;
     
     case 34: {       effect_function = gradient;    changeSpeed=200;       setDifference=1;         BRIGH=205;       S=200;       glowON=4;       satON=4;      colorMode=0;     num50=1;     if((random(10)>5)){selectColor = 2;} else {selectColor = 8;} memoryByte = 'h';   processChange();        numsparks=0;} break;
-    case 35: {       effect_function = snow_flakes;        changeSpeed=125;          varON=2;       rainbowON=true;     BRIGH=95;    S=205;     glowON=2;     satON=2;        BrF=180;           setDifference=7;     num50=1;            sF=1;           previousMillis8=millis();     numsparks=7*cfactor2; 
+    case 35: {       effect_function = snow_flakesR;        changeSpeed=125;         setDifference=7;      offdis = offdisC;         num50=1;           sF=1;         previousMillis8=millis();     numsparks=7*cfactor2;
                       for (int k=0; k<21; k++){i[k]=NUM_LEDS-1; a[k]=NUM_LEDS-1;}} break;      
     case 36: {       effect_function = pacifica;   changeSpeed=20;          } break; 
     case 37: {       effect_function = RGBmode;   changeSpeed=50;          } break;     

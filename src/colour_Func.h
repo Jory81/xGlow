@@ -134,6 +134,7 @@ void fillLongxArray(uint8_t colour){
       for (int i = 0; i < NUM_LEDS; i++){
         longxArray[i]=colour+random(-10,10);
       }
+      return;
 }
 
 void fillColourArray (uint8_t colour[], uint8_t mainColour, int var[], int diff[]){
@@ -235,7 +236,7 @@ if (millis() - previousMillis36 > INTERVAL7 && varON == 2 && colorMode == 4) {
       arrayn = random(arrayCount);
       updateOled(24, 40, &arrayn);
       selectcolorArray();
-      INTERVAL7=(interval9/7)*timeArray2[random(0,6)]*timefactor3;
+      INTERVAL7=(interval9/5)*timeArray2[random(0,6)]*timefactor3;
       updateOledFloat(88, 0, &INTERVAL7, 0); 
       previousMillis36 = millis();
       T=0;        

@@ -335,9 +335,142 @@ if (millis() - previousMillis6 >= INTERVAL7){
     previousMillis6 = millis();
 }
 
-if ((rainbowON) && varON == 2){
-//  if (millis() - previousMillis36 >= (INTERVALf[0]*timeSpeed[0]*interRun[0])){
-  if (millis() - previousMillis36 >= 500){    
+for (int k=0 ; k<numsparks; k++){
+if (millis() - previousMillisLN[k] >= rtAM[k]/df){
+  if ((millis() - previousMillisAM[k] >= (INTERVALf[k]*timeSpeed[k]*interRun[k])) && (sF <= sFtab[k])) {
+    previousMillisAM[k] = millis();
+    
+    if (varON == 2){
+      z[k] = random(256);
+      while (z[k] >= yval1 - 30 && z[k] <= yval1 + 30){
+        z[k] = random(256);}
+    }
+
+    blockArray[a[k]]=yval1+random(-ydiff,ydiff);
+    blockArray[i[k]]=(z[k]);  
+    a[k]=i[k];
+        if ((tower) && (!Bees)){
+            if((random(10)>5)) {
+              i[k]=i[k]-offdis;
+            }
+            else { 
+              i[k]=i[k]-offdis-1;
+          }
+        }
+        else if ((tower) && (Bees)){
+          byte RouteOfBee = random(6);
+          if (RouteOfBee == 0){
+          i[k]=i[k]-1;  
+          }
+          else if (RouteOfBee == 1){
+          i[k]=i[k]+1;  
+          }
+          else if (RouteOfBee == 2){
+          i[k]=i[k]-offdis;  
+          }
+          else if (RouteOfBee == 3){
+          i[k]=i[k]-offdis-1;  
+          }
+          else if (RouteOfBee == 4){
+          i[k]=i[k]+offdis;    
+          }
+          else if (RouteOfBee == 5){
+          i[k]=i[k]+offdis+1;  
+        }                             
+        }
+        else {
+          i[k]=i[k]-1;
+          if (i[k] == 80*cfactor2 || i[k] == 60*cfactor2 || i[k] == 40*cfactor2 || i[k] == 20*cfactor2){
+          int chance = random(15);
+            if (chance > 9){
+              interRun[k]=1.1;
+            }
+            else if (chance < 5){
+              interRun[k]=0.9;
+            }
+            else {interRun[k] = 1;}
+          }
+        }    
+    if (i[k]<0 || i[k] >= NUM_LEDS){
+      if ((tower) && (!Bees)){
+        blockArray[i[k]+offdis]=yval1+random(-ydiff,ydiff);
+        blockArray[i[k]+offdis+1]=yval1+random(-ydiff,ydiff);
+        i[k]=random(NUM_LEDS-offdis, NUM_LEDS);
+      }
+      else if ((tower) && (Bees)){
+        if (i[k]<0){
+        blockArray[0]=yval1+random(-ydiff,ydiff);  
+        i[k]=NUM_LEDS+i[k];   
+        }
+        else if (i[k] >= NUM_LEDS){
+        i[k]=i[k]-NUM_LEDS;  
+        }
+      }
+      else {
+        i[k]=NUM_LEDS-1;
+        blockArray[0]=yval1+random(-ydiff,ydiff);
+      }
+    interRun[k]=1.1;
+    previousMillisLN[k] = millis();
+    if ((tower) && (Bees)){
+    rtAM[k] = 80;  
+    }
+    else {
+    rtAM[k]= random(65536);
+    }
+    if (k == 0){
+      num6=num6+1;
+      if (num6 == xnum){
+        num6=0;
+        INTERVALf[0]=changeSpeed*sF*timeArray3[random(0,6)];
+        updateOledFloat(72, 56, &INTERVALf[0], 0);
+    }
+    }
+    else if (k > 0){
+          INTERVALf[k]=INTERVALf[0];
+    }
+    }
+    }  
+}
+}
+
+if (millis() - previousMillis2 >= FPS) { 
+previousMillis2 = millis();  
+
+   for(int i = 0; i < NUM_LEDS; i++ ){
+//   if (longxArray[i] == z[0] && varON != 2){
+   if (blockArray[i] == z[0] || blockArray[i] == z[1] || blockArray[i] == z[2] || blockArray[i] == z[3] || blockArray[i] == z[4] || blockArray[i] == z[5] || blockArray[i] == z[6] || blockArray[i] == z[7] || blockArray[i] == z[8] || blockArray[i] == z[9] || blockArray[i] == z[10] || blockArray[i] == z[11] || blockArray[i] == z[12] || blockArray[i] == z[13] || blockArray[i] == z[14] || blockArray[i] == z[15] || blockArray[i] == z[16] || blockArray[i] == z[17] || blockArray[i] == z[18] || blockArray[i] == z[19] || blockArray[i] == z[20]){
+   leds[i] = CHSV(blockArray[i],qadd8(S,SF),qadd8(BRIGH,BrF));    
+   }
+   else {
+   leds[i] = CHSV(blockArray[i],satval[satlu],brigh[brighlu]);
+   }
+    
+   brighlu++;
+   if (brighlu >= numbrigh){brighlu = 0;}
+
+   satlu++;
+   if (satlu >= numsat){satlu = 0;}
+   } 
+    
+   handleGlitter(); 
+   FastLED.show();
+   brighlu=0;
+   satlu=0;
+   }
+}
+
+
+void snow_flakesR(void){
+if (millis() - previousMillis11 >= interval8) {
+    previousMillis11 = millis();
+    sF= sF+0.0675;
+      if (sF >= 2.0){
+        sF=1.00;
+    }
+}  
+
+if (millis() - previousMillis36 >= 500){    
     previousMillis36 = millis();
     y0r++;
     hue=y0r;
@@ -346,34 +479,24 @@ if ((rainbowON) && varON == 2){
      longxArray[i]=hue;    
      }
   }
-}
 
 for (int k=0 ; k<numsparks; k++){
 if (millis() - previousMillisLN[k] >= rtAM[k]/df){
   if ((millis() - previousMillisAM[k] >= (INTERVALf[k]*timeSpeed[k]*interRun[k])) && (sF <= sFtab[k])) {
     previousMillisAM[k] = millis();
-    
-    if (varON == 2){
-      if (!rainbowON){
-      z[k] = random(256);
-      while (z[k] >= yval1 - 30 && z[k] <= yval1 + 30){
-        z[k] = random(256);}
-      }
-      else {
+    if (varON == 0 || varON == 1){
+        z[k] = blockArray[i[k]]+90;
+    }
+    else if (varON == 2){
         z[k] = random(256);
         while (z[k] >= blockArray[i[k]] - 30 && z[k] <= blockArray[i[k]] + 30){
           z[k] = random(256);
-        }
-      }        
+        }   
     }
-    if ((rainbowON) && varON == 2){
-    blockArray[a[k]]=longxArray[a[k]];    
-    }
-    else{
-    blockArray[a[k]]=yval1+random(-ydiff,ydiff);
-    }
+    blockArray[a[k]]=longxArray[a[k]]+yvar[random(10)];    
     blockArray[i[k]]=(z[k]);  
     a[k]=i[k];
+
     if ((tower) && (!Bees)){
         if((random(10)>5)) {
           i[k]=i[k]-offdis;
@@ -433,7 +556,7 @@ if (millis() - previousMillisLN[k] >= rtAM[k]/df){
         i[k]=NUM_LEDS-1;
       }
     interRun[k]=1.1;
-    blockArray[0]=yval1+random(-ydiff,ydiff);
+    blockArray[0]=longxArray[a[k]]; 
     previousMillisLN[k] = millis();
     if ((tower) && (Bees)){
     rtAM[k] = 80;  
@@ -482,6 +605,11 @@ previousMillis2 = millis();
    satlu=0;
    }
 }
+
+
+
+
+
 
 void rainbow_4(void){
 if (millis() - previousMillis1 >= changeSpeed) {
@@ -547,7 +675,8 @@ if ((variant == 0 || variant == 1 || variant == 2) && (!readyToChange)){
       num50=1;
       if (millis() - previousMillis37 >= (slingerSpeed+slowFactor)){
         previousMillis37 = millis();
-        longxArray[yy]=yval1+random(-7,7);
+        //longxArray[yy]=yval1+random(-7,7);
+        longxArray[yy]=yval1;
         yy=yy+=offdis;
         if (yy>NUM_LEDS-(15*cfactor2)){
           slowFactor+=2;
@@ -593,10 +722,12 @@ if ((variant == 0 || variant == 1 || variant == 2) && (!readyToChange)){
 
         for (int s=0; s<numsparks; s++){
         if (rr[s] > yy){
-          longxArray[rr[s]] = yold+random(-7,7);  
+          //longxArray[rr[s]] = yold+random(-7,7);  
+          longxArray[rr[s]] = yold;
         }
         else if (rr[s] <= yy){
-         longxArray[rr[s]] = yval1+random(-7,7);
+         //longxArray[rr[s]] = yval1+random(-7,7);
+         longxArray[rr[s]] = yval1;
         }          
         
         if (pos[s] < yy){
@@ -618,9 +749,10 @@ if ((variant == 0 || variant == 1 || variant == 2) && (!readyToChange)){
     if (yy == 0 && num15 <1){
     num15++;
     for (int s=0; s<numsparks; s++){
-      longxArray[rr[s]] = yold+random(-7,7);  
-      rr[s]=NUM_LEDS-1;
-      pos[s]=NUM_LEDS-1;
+      //longxArray[rr[s]] = yold+random(-7,7);  
+      longxArray[rr[s]] = yold;
+      rr[s]=NUM_LEDS;
+      pos[s]=NUM_LEDS;
       }          
    }
    }
@@ -629,7 +761,8 @@ else if ((variant==3 || variant ==4 || variant ==5) && (!readyToChange)){
       num50=1; 
         if (millis() - previousMillis37 >= (slingerSpeed+slowFactor)){ // 200 is slingerSpeed
           previousMillis37 = millis();
-          longxArray[hh]=yval1+random(-7,7);
+          //longxArray[hh]=yval1+random(-7,7);
+          longxArray[hh]=yval1;
           hh=hh-=offdis; 
           if (hh < (15*cfactor2)){
             slowFactor+=2;
@@ -673,10 +806,12 @@ else if ((variant==3 || variant ==4 || variant ==5) && (!readyToChange)){
 
         for (int s=0; s<numsparks; s++){   
         if (rr[s] < hh){
-          longxArray[rr[s]]=yold+random(-7,7);  
+          //longxArray[rr[s]]=yold+random(-7,7);  
+          longxArray[rr[s]]=yold; 
         }
         else if (rr[s] >= hh){
-          longxArray[rr[s]]=yval1+random(-7,7);
+          //longxArray[rr[s]]=yval1+random(-7,7);
+          longxArray[rr[s]]=yval1;
           }
           
         if (pos[s] > hh){
@@ -697,9 +832,10 @@ else if ((variant==3 || variant ==4 || variant ==5) && (!readyToChange)){
     if (hh == NUM_LEDS-1 && num15 <2){
         num15++;
         for (int s=0; s<numsparks; s++){
-         longxArray[rr[s]] = yold+random(-7,7);
-        rr[s]=NUM_LEDS-1;
-        pos[s]=NUM_LEDS-1;  
+         //longxArray[rr[s]] = yold+random(-7,7);
+         longxArray[rr[s]] = yold;
+        rr[s]=NUM_LEDS;
+        pos[s]=NUM_LEDS;  
         }   
     }
     }
@@ -721,7 +857,7 @@ else if ((variant==3 || variant ==4 || variant ==5) && (!readyToChange)){
         
        for(int i = 0; i < NUM_LEDS; i++ ){
          if ((fadeIsActive) && longxArray[i] == yold1){
-         leds[i] = CHSV(longxArray[i],satval[satlu],brigh[brighlu]);
+         leds[i] = CHSV((longxArray[i]+yvar[varlu]+diff[difflu]),satval[satlu],brigh[brighlu]);
          }
          else {
          leds[i] = CHSV(colourR[colourlu],satval[satlu],brigh[brighlu]);
@@ -735,13 +871,22 @@ else if ((variant==3 || variant ==4 || variant ==5) && (!readyToChange)){
 
        satlu++;
        if (satlu >= numsat){satlu=0;}
-       } 
+
+       varlu++;
+       if (varlu >= 10){varlu = 0;}
+
+       difflu++;
+       if (difflu >= 10){difflu = 0;}
+       }
+
        handleGlitter();
        FastLED.show();
     
        brighlu=0;
        colourlu=0;
        satlu=0;
+       varlu=0;
+       difflu=0;
        }
   }
 else if (num50 != 0){
@@ -753,7 +898,8 @@ else if (num50 != 0){
          leds[i] = CHSV(longxArray[i],qadd8(S,SF),qadd8(BRIGH,BrF));    
          }
          else {         
-         leds[i] = CHSV(longxArray[i],satval[satlu],brigh[brighlu]);
+        // leds[i] = CHSV(longxArray[i],satval[satlu],brigh[brighlu]); // adjusted varlu + difflu
+         leds[i] = CHSV((longxArray[i]+yvar[varlu]+diff[difflu]),satval[satlu],brigh[brighlu]); // adjusted varlu + difflu
          }
           
          brighlu++;
@@ -761,12 +907,20 @@ else if (num50 != 0){
 
          satlu++;
          if (satlu >= numsat){satlu = 0;}
-         }  
+
+         varlu++;
+         if (varlu >= 10){varlu = 0;}
+
+         difflu++;
+         if (difflu >= 10){difflu = 0;}
+         }
          
          handleGlitter(); 
          FastLED.show();
          brighlu=0; 
          satlu=0;  
+         varlu=0;
+         difflu=0;
   }
 }
 }
@@ -795,7 +949,7 @@ void snow_storm(void){
             previousMillisLN[s] = millis();
             num17[s]-=offdis;}
             if (num17[s] < rn[s] && flakeCounter <= cn){
-              num17[s]=NUM_LEDS-1;
+              num17[s]=NUM_LEDS; // adjusted
               flakeCounter++;
               if (flakeCounter <= 10 && s == 0){
                 rn[0]= random(55,75);}
@@ -807,16 +961,18 @@ void snow_storm(void){
             }
             if (flakeCounter > cn && num26[s] < 1){  // CHANGED_HERE
               num26[s]=num26[s]+1;   
-              num17[s]= NUM_LEDS-1;
+              num17[s]= NUM_LEDS; // adjusted
               num23[s]=0;
             }
           }
 
         if (millis() - previousMillis37 >= changeSpeed/cfactor2 && flakeCounter > cn-(3*cfactor2)){
           previousMillis37 = millis();
-          longxArray[hh]=yval1+random(-setDifference,setDifference);
+          //longxArray[hh]=yval1+random(-setDifference,setDifference);
+          longxArray[hh]=yval1;;
           if (hh < NUM_LEDS-1){
-          longxArray[hh+1]=yval1+random(-setDifference,setDifference);
+          //longxArray[hh+1]=yval1+random(-setDifference,setDifference);
+          longxArray[hh+1]=yval1;
           }
           hh=hh-1;
           if (hh<0){
@@ -832,7 +988,7 @@ void snow_storm(void){
               num50=0;
               num15=0;
               for (int s=0; s < numsparks; s++){
-              num17[s]=NUM_LEDS-1;
+              num17[s]=NUM_LEDS; // adjusted
               num26[s]=0;
               rn[s]=random(randomNumberMinimum[s], randomNumberMaximum[s]);
               }
@@ -857,10 +1013,12 @@ if (millis() - previousMillis36 >= INTERVAL7 && ((num17[0] > 0) || (hh > 0 && hh
 
         if (hh < NUM_LEDS-1){
           if (rrhh < hh){
-          longxArray[rrhh]=yold+random(-7,7);  
+          //longxArray[rrhh]=yold+random(-7,7);  
+          longxArray[rrhh]=yold; 
           }
           else if (rrhh >= hh){
-          longxArray[rrhh]=yval1+random(-7,7); 
+          //longxArray[rrhh]=yval1+random(-7,7); 
+          longxArray[rrhh]=yval1;
           }
 
           if (poshh > hh){
@@ -881,10 +1039,12 @@ if (millis() - previousMillis36 >= INTERVAL7 && ((num17[0] > 0) || (hh > 0 && hh
     for (int s=0; s < numsparks; s++){
         if (num17[s] < NUM_LEDS-1){  
             if (rr[s] <= hh){
-            longxArray[rr[s]]=yold+random(-7,7);   
+            //longxArray[rr[s]]=yold+random(-7,7); 
+            longxArray[rr[s]]=yold;  
             }
             else if (rr[s] > hh){
-            longxArray[rr[s]]=yval1+random(-7,7);  
+            //longxArray[rr[s]]=yval1+random(-7,7);  
+            longxArray[rr[s]]=yval1;
             }
        
             if (pos[s] > hh){
@@ -916,22 +1076,25 @@ if (millis() - previousMillis36 >= INTERVAL7 && ((num17[0] > 0) || (hh > 0 && hh
         if (num17[s] == NUM_LEDS-1 && num23[s] < 1){  // CHANGED_HERE
         num23[s]=num23[s]+1;
         if (rr[s] < hh){
-        longxArray[rr[s]]=yold+random(-7,7);  
+        //longxArray[rr[s]]=yold+random(-7,7);   
+        longxArray[rr[s]]=yold;
         }
         else if (rr[s] >= hh){
-        longxArray[rr[s]]=yval1+random(-7,7);            
+        //longxArray[rr[s]]=yval1+random(-7,7);
+        longxArray[rr[s]]=yval1;            
         }
         }
     }
        
     if (hh == NUM_LEDS-1 && num15 <1){ // CHANGED_HERE
         num15++;
-        longxArray[rrhh]=yold+random(-7,7);     // yval1 --> yold                  
+        //longxArray[rrhh]=yold+random(-7,7);     // yval1 --> yold         
+        longxArray[rrhh]=yold;     // yval1 --> yold            
         rrhh=NUM_LEDS-1;
         poshh=NUM_LEDS-1;
         for (int s=0; s < numsparks; s++){
-          rr[s]=NUM_LEDS-1;
-          pos[s]=NUM_LEDS-1;
+          rr[s]=NUM_LEDS; // adjusted
+          pos[s]=NUM_LEDS; // adjusted
         }
     }
      
@@ -952,7 +1115,8 @@ if (millis() - previousMillis36 >= INTERVAL7 && ((num17[0] > 0) || (hh > 0 && hh
        leds[i] = CHSV(longxArray[i],qadd8(S,SF),qadd8(BRIGH,BrF));    
        }
        else {         
-       leds[i] = CHSV(longxArray[i],satval[satlu],brigh[brighlu]);
+       // leds[i] = CHSV(longxArray[i],satval[satlu],brigh[brighlu]);  
+       leds[i] = CHSV((longxArray[i]+yvar[varlu]+diff[difflu]),satval[satlu],brigh[brighlu]);
        }
         
        brighlu++;
@@ -960,12 +1124,20 @@ if (millis() - previousMillis36 >= INTERVAL7 && ((num17[0] > 0) || (hh > 0 && hh
 
        satlu++;
        if (satlu >= numsat){satlu = 0;}
+
+       varlu++;
+       if (varlu >= 10){varlu = 0;}
+
+       difflu++;
+       if (difflu >= 10){difflu = 0;}
        }
        
        handleGlitter();   
        FastLED.show();
        brighlu=0;    
        satlu=0; 
+       varlu=0;
+       difflu=0;
   }
 }
 } 
@@ -1251,19 +1423,54 @@ void static_glow_2(void){
 }
 
 void blendEffect(void){ 
-if (millis() - previousMillis36 >= changeSpeed) {
-  previousMillis36 = millis();
-   if (yTrans == yval1 ) {
-     yval1 = random(256);
-     }
-  yTrans = fadeFnc(yTrans, yval1);   
-  fillColourArray(colour, yTrans, yvar, diff);   
-}
-    
-if (millis() - previousMillis2 >= FPS) { 
-previousMillis2 = millis();  
-fillNUM_LEDS1(colour, NUM_LEDS);   
-   }
+
+if (millis() - previousMillis1 > INTERVAL7) {
+  if (millis() - previousMillis36 >= FPS) {
+    previousMillis36 = millis();
+    if (yTrans == yval1) {
+      yval1 = random(256);
+      seedNumber = random(3, 10)*cfactor2;
+        for (int i = 0; i < seedNumber; i++){
+         seedArray[i]=random(NUM_LEDS);
+        }
+    }
+    yTrans = fadeFnc(yTrans, yval1);   
+    fillColourArray(colour, yTrans, yvar, diff);   
+      if (yTrans == yval1) {
+        INTERVAL7=(interval9/4)*timeArray2[random(0,6)]*timefactor3;
+        updateOledFloat(88, 0, &INTERVAL7, 0); 
+        previousMillis1 = millis();
+        T=0;        
+      }
+  } 
+} 
+
+    if (millis() - previousMillis2 >= FPS) { 
+          for(int i = 0; i < NUM_LEDS; i++ ){
+          leds[i] = CHSV(colour[colourlu],satval[satlu],brigh[brighlu]);
+            
+          brighlu++;
+          if (brighlu >= numbrigh){brighlu = 0;}
+          
+          colourlu++;
+          if (colourlu > 9){colourlu = 0;}
+
+          satlu++;
+          if (satlu >= numsat){satlu = 0;}
+          } 
+
+          for (int i = 0; i < seedNumber; i++){
+          leds[seedArray[i]]=CHSV(yval1,satval[satlu],brigh[brighlu]);
+          }
+
+          handleGlitter();
+          FastLED.show();
+
+          satlu=0;
+          brighlu=0;
+          colourlu=0;
+          previousMillis2 = millis();    
+    }
 }
 
 void sparkling_2(void){
@@ -1299,7 +1506,8 @@ if (variant==0 && (!readyToChange)){
       num50=1;
       if (millis() - previousMillis37 >= (slingerSpeed+slowFactor)){
         previousMillis37 = millis();
-        longxArray[yy]=yval1+random(-7,7);
+        //longxArray[yy]=yval1+random(-7,7);
+        longxArray[yy]=yval1;
         yy=yy+=offdis;
         if (yy>NUM_LEDS-50){
           slowFactor+=4;
@@ -1330,10 +1538,12 @@ if (variant==0 && (!readyToChange)){
 
         for (int s=0; s<numsparks;s++){
         if (rr[s] > yy){
-        longxArray[rr[s]]=yold+random(-7,7);  
+        //longxArray[rr[s]]=yold+random(-7,7);  
+        longxArray[rr[s]]=yold;  
         }
         else if (rr[s] <= yy){
-        longxArray[rr[s]]=yval1+random(-7,7); 
+        //longxArray[rr[s]]=yval1+random(-7,7); 
+        longxArray[rr[s]]=yval1;
         }
 
         longxArray[pos[s]]=colour[4];
@@ -1379,20 +1589,22 @@ if (variant==0 && (!readyToChange)){
         num15++;
 
         for (int s=0; s<numsparks;s++){
-        longxArray[rr[s]]=yold+random(-7,7);
-        longxArray[pos[s]]=yold+random(-7,7);
+        //longxArray[rr[s]]=yold+random(-7,7);
+        //longxArray[pos[s]]=yold+random(-7,7);
+        longxArray[rr[s]]=yold;
+        longxArray[pos[s]]=yold;
 
         if (numcolor > 1){longxArray[pos1[s]]=yold+random(-7,7);}  //  leds[pos1[s]] = CHSV((yold+random(-7,7)),S,BRIGH);}       
         if (numcolor > 2){longxArray[pos2[s]]=yold+random(-7,7);}  //  leds[pos2[s]] = CHSV((yold+random(-7,7)),S,BRIGH);}
         if (numcolor > 3){longxArray[pos3[s]]=yold+random(-7,7);}  //  leds[pos3[s]] = CHSV((yold+random(-7,7)),S,BRIGH);}
         if (numcolor > 4){longxArray[pos4[s]]=yold+random(-7,7);}  //  leds[pos4[s]] = CHSV((yold+random(-7,7)),S,BRIGH);}
 
-        rr[s]=NUM_LEDS-1;
-        pos[s]=NUM_LEDS-1;
-        pos1[s]=NUM_LEDS-1;
-        pos2[s]=NUM_LEDS-1;
-        pos3[s]=NUM_LEDS-1;
-        pos4[s]=NUM_LEDS-1;      
+        rr[s]=NUM_LEDS; // adjusted
+        pos[s]=NUM_LEDS; // adjusted
+        pos1[s]=NUM_LEDS; // adjusted
+        pos2[s]=NUM_LEDS; // adjusted
+        pos3[s]=NUM_LEDS; // adjusted
+        pos4[s]=NUM_LEDS; // adjusted     
         }
         }
 }
@@ -1401,7 +1613,8 @@ else if (variant==3 && (!readyToChange)){
       num50=1; 
         if (millis() - previousMillis37 >= (slingerSpeed+slowFactor)){
           previousMillis37 = millis();
-          longxArray[hh]=yval1+random(-7,7);
+          //longxArray[hh]=yval1+random(-7,7);
+          longxArray[hh]=yval1;
           hh=hh-=offdis;
           if (hh<50){
           slowFactor+=4;
@@ -1432,10 +1645,12 @@ else if (variant==3 && (!readyToChange)){
 
         for (int s=0; s<numsparks;s++){
         if (rr[s] < hh){
-          longxArray[rr[s]]=yold+random(-7,7);
+          //longxArray[rr[s]]=yold+random(-7,7);
+          longxArray[rr[s]]=yold;
         }
         else if (rr[s] >= hh){
-          longxArray[rr[s]]=yval1+random(-7,7);
+          //longxArray[rr[s]]=yval1+random(-7,7);
+          longxArray[rr[s]]=yval1;
         }            
 
         longxArray[pos[s]]=colour[4];
@@ -1481,19 +1696,21 @@ else if (variant==3 && (!readyToChange)){
       num15++;
   
       for (int s=0; s<numsparks;s++){
-      longxArray[rr[s]]=yold+random(-7,7);
-      longxArray[pos[s]]=yold+random(-7,7);
+      //longxArray[rr[s]]=yold+random(-7,7);
+      //longxArray[pos[s]]=yold+random(-7,7);
+      longxArray[rr[s]]=yold;
+      longxArray[pos[s]]=yold;
       if (numcolor > 1){longxArray[pos1[s]]=yold+random(-7,7);}  //  leds[pos1[s]] = CHSV((yold+random(-7,7)),S,BRIGH);}       
       if (numcolor > 2){longxArray[pos2[s]]=yold+random(-7,7);}  //  leds[pos2[s]] = CHSV((yold+random(-7,7)),S,BRIGH);}
       if (numcolor > 3){longxArray[pos3[s]]=yold+random(-7,7);}  //  leds[pos3[s]] = CHSV((yold+random(-7,7)),S,BRIGH);}
       if (numcolor > 4){longxArray[pos4[s]]=yold+random(-7,7);}  //  leds[pos4[s]] = CHSV((yold+random(-7,7)),S,BRIGH);}
 
-      rr[s]=NUM_LEDS-1;
-      pos[s]=NUM_LEDS-1;
-      pos1[s]=NUM_LEDS-1;
-      pos2[s]=NUM_LEDS-1;
-      pos3[s]=NUM_LEDS-1;
-      pos4[s]=NUM_LEDS-1;      
+      rr[s]=NUM_LEDS; // adjusted
+      pos[s]=NUM_LEDS; // adjusted
+      pos1[s]=NUM_LEDS; // adjusted
+      pos2[s]=NUM_LEDS; // adjusted
+      pos3[s]=NUM_LEDS; // adjusted
+      pos4[s]=NUM_LEDS; // adjusted     
       }
   }
 }
@@ -1519,7 +1736,8 @@ else if (num50 != 0){
          leds[i] = CHSV(longxArray[i],qadd8(S,SF),qadd8(BRIGH,BrF));    
          }
          else {         
-         leds[i] = CHSV(longxArray[i],satval[satlu],brigh[brighlu]);
+         //leds[i] = CHSV(longxArray[i],satval[satlu],brigh[brighlu]);
+         leds[i] = CHSV((longxArray[i]+yvar[varlu]+diff[difflu]),satval[satlu],brigh[brighlu]);
          }
           
          brighlu++;
@@ -1527,12 +1745,20 @@ else if (num50 != 0){
 
          satlu++;
          if (satlu >= numsat){satlu = 0;}
-         }  
+        
+         varlu++;
+         if (varlu >= 10){varlu = 0;}
+
+         difflu++;
+         if (difflu >= 10){difflu = 0;}
+         }
           
          handleGlitter();
          FastLED.show();
          brighlu=0; 
          satlu=0; 
+         varlu=0;
+         difflu=0;
   }
 }
 }     
@@ -1653,17 +1879,13 @@ if (millis() - previousMillis36 >= INTERVAL7 && ((num17[0] > 0) || (hh > 0 && hh
         }
 
         if (hh == NUM_LEDS-1){
-          if (varON == 2){
             for(int j=0; j<NUM_LEDS; j++) {
               if((random(10)>5)) {
                 leds[j].fadeToBlackBy(60);       
               }
             }
-          }
-          else{
-            fadeToBlackBy(leds, NUM_LEDS, fadeOutSpeed);           
-          }
-        }        
+        }
+       
         else if (hh > 0 && hh < NUM_LEDS-1){
           if (colorMode == 1){
               for (int s=0; s<numsparks;s++){
@@ -1739,30 +1961,8 @@ if (millis() - previousMillis5 >= 70 && hh == NUM_LEDS-1 && num15 <75){
         poshh=NUM_LEDS-1;
 //        Serial.print("num15 "); Serial.println(num15);        
         for (int s=0; s<numsparks; s++){
-          pos[s]=NUM_LEDS-1;
-        }
-/*        
-        if (num15 < numsparks){
-            if (colorMode == 4){
-               if (num15 == 0){ yMA[0]=yMA[0]+random8(50,200);
-               }
-               yMA[num15]=yMA[0];      
-            }
-            else if (colorMode == 5){
-               if (num15 == 0){ yMA[0]=yMA[0]+random8(50,200);
-               while ((yMA[0] >= ymin && yMA[0] <= ymax) || (yMA[0] >= ymin1 && yMA[0] <= ymax1)){yMA[0]=yMA[0]+random8(50,200);}
-               }
-               yMA[num15]=yMA[0];          
-            }
-            else {
-//            Serial.print("num15 "); Serial.println(num15);
-//            Serial.print("yMA: "); Serial.println(yMA[num15]);  
-            yMA[num15] = changeColourFcn2(colorMode, yMA[num15], yMA[num15], 40, 220);
-//            Serial.print("yMA: "); Serial.println(yMA[num15]); 
-//            Serial.print("num15 "); Serial.println(num15);            
-            }  
-          }
-*/          
+          pos[s]=NUM_LEDS;
+        } 
         num15++;        
         
         if (num15 > 25){
