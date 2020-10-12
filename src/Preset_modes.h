@@ -1098,35 +1098,17 @@ if (millis() - previousMillis1 >= changeSpeed){
     
      if (colorMode == 5){
           ig3=random(NUM_LEDS);
-            if (varON == 0){
-            longxArray[ig3]=yval1+random(-10,10);        
-            }
-            else{
-            leds[ig3]=CHSV((yval1+random(-10,10)), S, BRIGH);
-            handleGlitter();
-            if (!fadeIsActive){
-            FastLED.show(); 
-            }
-          }
+          longxArray[ig3]=yval1+random(-10,10);        
           previousMillis1 = millis();
      }
      else {
           ig3=random(NUM_LEDS);
-            if (varON == 0){
-            longxArray[ig3]=yval1;  
-            }
-            else{
-            leds[ig3]=CHSV(yval1, S, BRIGH);
-            handleGlitter();
-            if (!fadeIsActive){
-            FastLED.show(); 
-            }  
-          }
+          longxArray[ig3]=yval1;  
           previousMillis1 = millis();
       }   
 }
 
-   if (varON == 0 && millis() - previousMillis2 >= FPS){ 
+   if (millis() - previousMillis2 >= FPS){ 
         previousMillis2 = millis();  
         
            for(int i = 0; i < NUM_LEDS; i++ ){
@@ -1142,42 +1124,127 @@ if (millis() - previousMillis1 >= changeSpeed){
        FastLED.show();
        brighlu=0;
        satlu=0;
-   } 
-   else if (varON == 1 && millis() - previousMillis36 > rn14){
-        if (num30 < 1){
-        fadeIsActive = true;
-        num30++;
-        }
-        if (millis() - previousMillis5 > FPS){
-            if (changeSpeed > 30){
+   }  
+}   
+
+void splash(void){  
+if (!fadeIsActive){
+if (millis() - previousMillis1 >= changeSpeed){
+     if (colorMode == 5){
+         colourChangeDelay++;
+         if (colourChangeDelay >= setDifference*cfactor2){
+         yval1+=10;
+         colourChangeDelay=0;}
+     }
+     else{
+     yval1 = changeColourFcn(colorMode, yval1, 0, 255);  
+     }
+    
+     if (colorMode == 5){
+          ig3=random(NUM_LEDS);
+          leds[ig3]=CHSV((yval1+random(-10,10)), S, BRIGH);
+     }
+     else {
+          ig3=random(NUM_LEDS);
+          leds[ig3]=CHSV(yval1, S, BRIGH);
+
+      }
+      cyclesToFade++;
+      if (cyclesToFade > rn14){
+          cyclesToFade=0;
+          rn14=random(100, 500)*NUM_LEDS/100;
+          fadeIsActive = true;
+      }
+      handleGlitter();
+      previousMillis1 = millis();
+      FastLED.show();
+    }
+}
+else if (fadeIsActive){
+    if (varON == 0){
+        if (millis() - previousMillis5 > changeSpeed){
             fadeOutSpeed=16;
-            fadeToBlackBy(leds, 250, fadeOutSpeed);
-            }
-            else if (changeSpeed <= 30){
-            fadeOutSpeed=35;
-            fadeToBlackBy(leds, 250, fadeOutSpeed);
-            }
+            fadeToBlackBy(leds, NUM_LEDS, fadeOutSpeed);
+        cyclesToFade++;
+        if (cyclesToFade > 150){
+          cyclesToFade=0;
+          rn14=random(100, 500)*NUM_LEDS/100;
+          fadeIsActive = false;
+        }
         FastLED.show();
         previousMillis5 = millis();
+        }
+    }
+    else if (varON == 1){
+      if (millis() - previousMillis5 > changeSpeed){
+        ig3=random(NUM_LEDS);
+        leds[ig3]=CRGB::Black;
         cyclesToFade++;
-        }
-        if (cyclesToFade > 250){
+
+        if (cyclesToFade > rn14){
           cyclesToFade=0;
-          previousMillis36 = millis();
-          rn14=(random(18000, 30000)/cfactor1);
+          rn14=random(100, 500)*NUM_LEDS/100;
           fadeIsActive = false;
-          num30=0;
+          }
+        FastLED.show();
+        previousMillis5 = millis();
+      }
+    }
+    else if (varON == 2){
+      if (millis() - previousMillis5 > changeSpeed){
+      for(int j=0; j<NUM_LEDS; j++) {
+        if((random(10)>3)) {
+          leds[j].fadeToBlackBy(28);       
         }
-    }   
-    else if (varON == 2 && millis() - previousMillis5 > FPS){
-        fadeIsActive = true;
+      }
+      cyclesToFade++;
+      if (cyclesToFade > 100){
+        cyclesToFade=0;
+        rn14=random(100, 500)*NUM_LEDS/100;
+        fadeIsActive = false;
+      }
+      FastLED.show();
+      previousMillis5 = millis();
+      }
+    }
+}
+}    
+
+
+void strobe(void){  
+if (millis() - previousMillis1 >= changeSpeed){
+     if (colorMode == 5){
+         colourChangeDelay++;
+         if (colourChangeDelay >= setDifference*cfactor2){
+         yval1+=10;
+         colourChangeDelay=0;}
+     }
+     else{
+     yval1 = changeColourFcn(colorMode, yval1, 0, 255);  
+     }
+    
+     if (colorMode == 5){
+          ig3=random(NUM_LEDS);
+            leds[ig3]=CHSV((yval1+random(-10,10)), S, BRIGH);
+            handleGlitter();
+            previousMillis1 = millis();
+     }
+     else {
+        ig3=random(NUM_LEDS);
+        leds[ig3]=CHSV(yval1, S, BRIGH);
+        handleGlitter();  
+        previousMillis1 = millis();
+      }   
+}
+
+    if (millis() - previousMillis5 > FPS){
           if (changeSpeed > 30){  
           fadeOutSpeed=16;
-          fadeToBlackBy(leds, 250, fadeOutSpeed);
+          fadeToBlackBy(leds, NUM_LEDS, fadeOutSpeed);
           }
           else if (changeSpeed <= 30){
           fadeOutSpeed=35;
-          fadeToBlackBy(leds, 250, fadeOutSpeed);
+          fadeToBlackBy(leds, NUM_LEDS, fadeOutSpeed);
           }
           previousMillis5 = millis();
           FastLED.show();

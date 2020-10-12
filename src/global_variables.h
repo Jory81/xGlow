@@ -37,9 +37,9 @@ const char string_27[] PROGMEM = "splicing2";
 const char string_28[] PROGMEM = "colourSplash";
 const char string_29[] PROGMEM = "meteor"; 
 const char string_30[] PROGMEM = "palettes"; 
-const char string_31[] PROGMEM = "demo100";
+const char string_31[] PROGMEM = "splash";
 const char string_32[] PROGMEM = "demo_palette";
-const char string_33[] PROGMEM = "demo_hail";
+const char string_33[] PROGMEM = "strobe";
 const char string_34[] PROGMEM = "demo_gradient";
 const char string_35[] PROGMEM = "rainbow_snow";
 const char string_36[] PROGMEM = "pacifica";
@@ -201,13 +201,24 @@ struct presetBrighSat_pgm
 static const presetBrighSat_pgm selectPresetB_data[] PROGMEM = 
 {
   //BRIGH,    BrF,  glowON, offBr, numbrigh, BPMB, waveTimeBr,   S,      SF,    satON,    offS,   numsat,     BPMS,    waveTimeS  
-  {205,       45,   2,      40,    16,       30,   2000,         250,    0,     0,        145,    31,         60,      1000}, // EEPROM values
-  {205,       0,    5,      45,    13,       30,   2000,         200,    0,     3,        145,    31,         60,      1000}, // diamond
+  {205,       50,   2,      45,    16,       30,   2000,         250,    0,     0,        145,    31,         60,      1000}, // EEPROM values
+  {205,       0,    5,      40,    12,       30,   2000,         200,    0,     3,        145,    31,         60,      1000}, // diamond
+  {205,       0,    5,      40,    12,       30,   2000,         200,    4,     3,        40,     32,         60,      1000}, // diamond
+  {205,       0,    5,      40,    12,       30,   2000,         200,    4,     6,        133,    28,         60,      30000}, // diamond  
+  {205,       0,    6,      35,    28,       60,   30000,        200,    4,     5,        133,    28,         60,      30000}, // diamond  
+  {205,       0,    5,      175,   28,       60,   30000,        200,    4,     5,        133,    28,         60,      30000}, // diamond  
+  {205,       0,    5,      175,   28,       60,   30000,        200,    4,     5,        28,     30,         60,      1000}, // diamond  
   {205,       205,  3,      45,    13,       10,   6000,         200,    0,     4,        145,    31,         60,      1000}, // slow_Twinkle
+  {205,       205,  3,      15,    31,       10,   6000,         200,    0,     0,        145,    31,         60,      1000}, // slow_Twinkle
   {205,       205,  3,      45,    31,       48,   1250,         200,    0,     4,        145,    31,         60,      1000}, // fast_Twinkle
+  {205,       205,  3,      45,    31,       48,   1250,         200,    50,    2,        45,     31,         20,      3000}, // fast_Twinkle
+  {205,       205,  3,      45,    31,       48,   1250,         200,    50,    2,        45,     31,         20,      3000}, // fast_Twinkle
+  {205,       205,  2,      35,    31,       51,   6000,         200,    50,    0,        45,     31,         20,      3000}, // fast_Twinkle
+  {205,       205,  7,      35,    29,       51,   6000,         200,    50,    0,        45,     31,         20,      3000}, // fast_Twinkle
   {205,       205,  4,      45,    13,       30,   2000,         200,    0,     4,        145,    31,         60,      1000}, // small wave
-  {80,        255,  5,      45,    13,       30,   2000,         200,    0,     4,        145,    31,         60,      1000}, // sparkle_1
-  {205,       205,  4,      45,    13,       30,   2000,         200,    0,     4,        145,    31,         60,      1000}, // sparkle_2
+  {80,        80,   5,      45,    13,       30,   2000,         200,    0,     4,        145,    31,         60,      1000}, // sparkle_1
+  {120,       81,   4,      45,    13,       30,   2000,         200,    0,     4,        145,    31,         60,      1000}, // sparkle_2
+  {106,       150,  2,      30,    13,       30,   2000,         180,    0,     0,        145,    31,         60,      1000}, // sparkle_3
   {205,       205,  7,      45,    11,       60,   2000,         200,    0,     4,        145,    31,         60,      1000}, // wave
   {155,       50,   2,      45,    13,       30,   2000,         255,    0,     0,        145,    31,         60,      1000} // basic glow
 };

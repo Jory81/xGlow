@@ -168,6 +168,8 @@ void xmas_string(void); // 22
 void xmas_singles(void); // 23
 void xmas_solid(void); // 24
 void demo100(void); // 25
+void splash(void);
+void strobe(void);
 void palettes(void); // 27
 void pacifica(void); //
 void RGBmode(void); // 
