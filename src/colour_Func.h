@@ -132,7 +132,7 @@ void selectcolorArray(){
 
 void fillLongxArray(uint8_t colour){
       for (int i = 0; i < NUM_LEDS; i++){
-        longxArray[i]=colour+random(-10,10);
+        longxArray[i]=colour;
       }
       return;
 }

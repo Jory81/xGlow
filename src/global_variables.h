@@ -318,7 +318,7 @@ int       dirArray[10]={1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
 uint8_t   blockArray[750]={0};
 uint16_t  longxArray[NUM_SET]={0};
 byte      seedNumber=10;
-uint16_t  seedArray[30]={0};
+uint16_t  seedArray[100]={0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 40};
 
 const uint8_t brivalbpm[16] = {12, 23, 7, 63, 37, 14, 24, 26, 58, 32, 11, 62, 43, 13, 53, 31};
 const uint8_t brivalmin[16] = {135, 75, 75, 175, 75, 95, 105, 125, 135, 175, 75, 175, 75, 95, 135, 175};
