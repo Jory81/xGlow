@@ -1151,7 +1151,7 @@ if (millis() - previousMillis36 >= INTERVAL7 && ((num17[0] > 0) || (hh > 0 && hh
 
        for(int i = 0; i < NUM_LEDS; i++ ){
          for(int j = 0; j < numsparks; j++){
-              if ((i == pos[j]) || (i == poshh)){
+              if (((i == pos[j]) || (i == poshh)) && longxArray[i] == yval1){
     //       if (i == poshh || i == pos[0] || i == pos[1] || i == pos[2] || i == pos[3] || i == pos[4] || i == pos[5] || i == pos[6] || i == pos[7] || i == pos[8] || i == pos[9] || i == pos[10] || i == pos[11] || i == pos[12]  || i == pos[13] ||  i == pos[14] || i == pos[15] || i == pos[16] || i == pos[17] || i == pos[18] || i == pos[19] || i == pos[20] || i == pos[21] || i == pos[22] || i == pos[23] || i == pos[24] || i == pos[25] || i == pos[26] || i == pos[27]  || i == pos[28] || i == pos[29]){
               leds[i] = CHSV(longxArray[i],qadd8(S,SF),qadd8(BRIGH,BrF));
               break;    
