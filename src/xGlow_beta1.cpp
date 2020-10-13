@@ -120,11 +120,14 @@ void enableMode();
 // functions: inilizes arrays or modifies variables. colour_Func.h
 void changePColors();
 void fillxmasArray ();
-void selectcolorArray();
-void handleAdditionalVariables();
+void fillArrayRainbow(uint8_t fillcase);
+void fillArrayGradient(uint8_t fillcase, uint8_t y0r, int setDifference);
+//void fillArrayRainbow(uint8_t blockArray[], uint16_t longxArray[]);
 void fillLongxArray(uint8_t colour);
 void fillColourArray (uint8_t colour[], uint8_t mainColour, int var[], int diff[]);
 void fillNUM_LEDS1(uint8_t arrayType, int NUM_LEDS);
+void selectcolorArray();
+void handleAdditionalVariables();
 uint8_t changeColourFcn(int colorMode, uint8_t* yvIn, uint8_t yvalmin, uint8_t yvalmax);
 uint8_t changeColourFcn2(int colorMode, uint8_t* yvIn, uint8_t* yvMem, uint8_t yvalmin, uint8_t yvalmax);
 uint8_t fadeFnc(uint8_t* value, uint8_t* valueTo);

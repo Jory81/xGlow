@@ -115,11 +115,7 @@ if (changeModus){
    fill_solid(leds, NUM_SET, CRGB::Black);
    FastLED.show();
    if (effect_function != *xmas_string && effect_function != *xmas_singles){
-   for (int i = 0; i < NUM_LEDS; i++){
-   hue++;
-   longxArray[i]=hue;
-   blockArray[i]=hue;    
-   }
+     fillArrayRainbow(2);
    }
    selectColor=-1;
    slowFactor=0;

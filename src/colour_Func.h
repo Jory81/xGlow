@@ -144,6 +144,64 @@ void fillColourArray (uint8_t colour[], uint8_t mainColour, int var[], int diff[
         return;
 }
 
+void fillArrayRainbow(uint8_t fillcase){  
+  y0r++;
+  hue=y0r;
+  for (int i = 0; i < NUM_LEDS; i++){
+    hue++;
+      switch(fillcase){
+        case 1: {
+          longxArray[i]=hue; 
+        } break;
+        case 2: {
+          blockArray[i]=hue; 
+          longxArray[i]=hue; 
+        } break;
+      }
+  }
+  return;
+}
+
+    
+void fillArrayGradient(uint8_t fillcase, uint8_t y0r, int setDifference){
+    dir0=1;
+  
+    for(int i = 0; i < NUM_LEDS; i++ ){
+      switch (fillcase){
+        case 1:{
+          longxArray[i] = y0r;
+        } break;
+        case 2: {
+          longxArray[i] = y0r;
+          blockArray[i] = y0r;
+        } break;
+      }            
+    
+    y0r+=setDifference*dir0;
+
+    if (((y0r > ymax4 && y0r <= ymax4+setDifference) || (y0r <= setDifference && ymax4 >= 255-setDifference)) && dir0 == 1){
+      dir0 = -1;
+      y0r=ymax4-(y0r-ymax4);
+    }
+
+    else if (((y0r < ymin4 && y0r >= ymin4-setDifference) || (y0r >= 255-setDifference && ymin4 <= setDifference)) && dir0 == -1){ 
+      dir0 = 1;
+      y0r=ymin4+(ymin4-y0r);
+    }
+    }
+}
+
+// void fillArrayRainbow(uint8_t blockArray[], uint16_t longxArray[]){
+//         y0r++;
+//         hue=y0r;
+//         for (int i = 0; i < NUM_LEDS; i++){
+//         hue++;
+//         blockArray[i]=hue;
+//         longxArray[i]=hue;    
+//         }
+// }
+
+
 void fillNUM_LEDS1(uint8_t arrayType[], int NUM_LEDS){
        for(int i = 0; i < NUM_LEDS; i++ ){
        leds[i] = CHSV(arrayType[colourlu],satval[satlu],brigh[brighlu]);
