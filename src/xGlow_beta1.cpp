@@ -136,9 +136,6 @@ bool getPixelDirection( uint16_t i);
 void setPixelDirection( uint16_t i, bool dir);
 void brightenOrDarkenEachPixel( fract8 fadeUpAmount, fract8 fadeDownAmount);
 void colortwinkles();
-void pacifica_one_layer( CRGBPalette16& p, uint16_t cistart, uint16_t wavescale, uint8_t BRIGH, uint16_t ioff);
-void pacifica_add_whitecaps();
-void pacifica_deepen_colors();
 
 //all the effectFunctions
 void static_glow(void); // 0
@@ -171,7 +168,7 @@ void demo100(void); // 25
 void splash(void);
 void strobe(void);
 void palettes(void); // 27
-void pacifica(void); //
+void sparklingR(void); //
 void RGBmode(void); // 
 void snow_flakesR(void); // 4
 
