@@ -437,7 +437,7 @@ previousMillis2 = millis();
 
    for(int i = 0; i < NUM_LEDS; i++ ){
       for (int j = 0; j < numsparks; j++ ){
-        if (i == z[j]){
+        if (blockArray[i] == z[j]){
           leds[i] = CHSV(blockArray[i],qadd8(S,SF),qadd8(BRIGH,BrF));    
           break;
         }
@@ -585,7 +585,7 @@ previousMillis2 = millis();
 
    for(int i = 0; i < NUM_LEDS; i++ ){
       for (int j = 0; j < numsparks; j++ ){
-        if (i == z[j]){
+        if (blockArray[i] == z[j]){
           leds[i] = CHSV(blockArray[i],qadd8(S,SF),qadd8(BRIGH,BrF));    
           break;
         }

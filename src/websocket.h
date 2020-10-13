@@ -388,4 +388,6 @@ void readBriSData(byte preset)
   //Serial.print("wavetimeBR :"); Serial.println(waveTimeBr);
   //Serial.print("wavetimeS :"); Serial.println(waveTimeS);
   }
+  convBrigh = waveTimeBr/numbrigh;
+  convSat = waveTimeS/numsat;
 }

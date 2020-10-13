@@ -143,7 +143,7 @@ storeInEEPROM customVar = {
       5, // programMode      
       0, // tower
       205,// BRIGH
-      120,// offBr
+      90,// offBr
       5, // glowON
       70, // BrF
       92, // z5
