@@ -2491,7 +2491,8 @@ if (millis() - previousMillis38 >= 500){
     hue=y0r;
      for (int i = 0; i < NUM_LEDS; i++){
      hue++;
-     blockArray[i]=hue;    
+     blockArray[i]=hue; 
+     longxArray[i]=hue;   
      }
   }
 
@@ -2574,7 +2575,7 @@ if ((variant == 0 || variant == 1 || variant == 2) && (!readyToChange)){
 
         for (int s=0; s<numsparks; s++){
           longxArray[rr[s]]=blockArray[rr[s]]; 
-          longxArray[pos[s]]=blockArray[pos[s]+random(80,120)];           
+          longxArray[pos[s]]=blockArray[pos[s]]+random(80,120);           
 
         rr[s]=pos[s];
 
@@ -2627,7 +2628,7 @@ else if ((variant==3 || variant ==4 || variant ==5) && (!readyToChange)){
 
         for (int s=0; s<numsparks; s++){   
         longxArray[rr[s]]=blockArray[rr[s]];
-        longxArray[pos[s]]=blockArray[pos[s]+random(80,120)];
+        longxArray[pos[s]]=blockArray[pos[s]]+random(80,120);
     
         rr[s]=pos[s];
         
