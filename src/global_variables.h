@@ -93,8 +93,8 @@ struct storeInEEPROM {
   byte varON;  
   byte numsat;
   byte numbrigh;
-  int BPMB;
-  int BPMS;
+  byte BPMB;
+  byte BPMS;
   uint32_t waveTimeBr;
   uint32_t waveTimeS;
   float timefactor3;
@@ -117,7 +117,7 @@ struct storeInEEPROM {
 byte RGBCOLOR = 0;
 
 storeInEEPROM customVar = {
-      54321, // code to check
+      45231, // code to check
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, // ssid storage
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, // pass storage
       42, // ymin
@@ -187,40 +187,46 @@ struct presetBrighSat_pgm
   byte glowON;
   byte offBr;
   byte numbrigh; // numBrigh
-  int BPMB;
+  byte BPMB;
   uint32_t waveTimeBr;
   byte S; 
   byte SF;
   byte satON;
   byte offS;
   byte numsat; // numSat
-  int BPMS;
+  byte BPMS;
   uint32_t waveTimeS;
 };
 
 static const presetBrighSat_pgm selectPresetB_data[] PROGMEM = 
 {
   //BRIGH,    BrF,  glowON, offBr, numbrigh, BPMB, waveTimeBr,   S,      SF,    satON,    offS,   numsat,     BPMS,    waveTimeS  
-  {205,       50,   2,      45,    16,       30,   2000,         250,    0,     0,        145,    31,         60,      1000}, // EEPROM values 0
-  {205,       0,    5,      40,    12,       30,   2000,         200,    0,     3,        160,    31,         45,      1333}, // diamond 1
-  {205,       0,    7,      35,    32,       15,   4000,        200,    40,     5,        56,     28,         60,      1000}, // diamond  4
-  {205,       0,    5,      175,   28,       60,   30000,        200,    4,     5,        133,    28,         60,      30000}, // diamond  5 fast twinkle
-  {205,       0,    5,      175,   28,       60,   30000,        200,    4,     5,        28,     30,         60,      1000}, // diamond 6 better than 5
-  {205,       205,  3,      55,    13,       10,   6000,         200,    0,     4,        145,    31,         60,      1000}, // slow_Twinkle keeper
-  {205,       205,  3,      15,    31,       10,   6000,         200,    0,     0,        145,    31,         60,      1000}, // slow_Twinkle slow but nice
-  {205,       205,  3,      45,    31,       48,   1250,         200,    0,     4,        145,    31,         60,      1000}, // fast_Twinkle better than 10
-  {205,       205,  3,      45,    31,       48,   1250,         200,    50,    2,        45,     31,         20,      3000}, // fast_Twinkle too fast, optimize
-  {205,       205,  3,      45,    31,       48,   1250,         200,    50,    2,        45,     31,         20,      3000}, // fast_Twinkle xx
-  {205,       205,  2,      35,    31,       51,   6000,         200,    50,    0,        45,     31,         20,      3000}, // fast_Twinkle nicee
-  {205,       205,  7,      35,    29,       51,   6000,         200,    50,    0,        45,     31,         20,      3000}, // fast_Twinkle suepr fast
-  {205,       205,  4,      45,    13,       30,   2000,         200,    0,     4,        145,    31,         60,      1000}, // small wave ok
-  {205,        55,  4,      40,    12,       30,   2000,         200,    0,     4,        133,    28,         60,      1000}, // small wave ok
-  {80,        80,   5,      28,    13,       30,   2000,         200,    0,     4,        145,    31,         60,      1000}, // sparkle_1 doubt
-  {120,       81,   4,      28,    13,       30,   2000,         200,    0,     4,        145,    31,         60,      1000}, // sparkle_2 16
-  {106,       150,  2,      18,    13,       30,   2000,         180,    0,     0,        145,    31,         60,      1000}, // sparkle_3 17
-  {205,       205,  7,      45,    11,       60,   2000,         200,    0,     4,        145,    31,         60,      1000}, // wave fast twinkle 18
-  {155,       50,   2,      34,    13,       30,   2000,         255,    0,     0,        145,    31,         60,      1000} // basic glow nice glow 19
+  {205,       50,   2,      45,    16,       30,   2000,         250,    0,     0,        145,    31,         60,      1000}, // 0 EEPROM values
+  {155,       50,   2,      34,    13,       30,   2000,         255,    0,     0,          0,    10,          0,         0}, // 1 basic glow nice glow 19
+  {205,       50,   2,      35,    31,       51,   6000,         255,    0,     0,          0,    10,          0,         0}, // 2 subtle glow
+  {205,       50,   4,      45,    13,       30,   2000,         200,    0,     4,        145,    31,         60,      1000}, // 3 small wave ok
+  {205,       55,   4,      40,    12,       30,   2000,         200,    0,     4,         24,     9,         60,      1000}, // 4 small wave ok
+  {205,       50,   4,      65,    13,       20,   2000,         200,    50,    4,        145,    31,         60,      1000}, // 5 gradient
+  {205,       0,    5,      40,    12,       30,   2000,         200,    0,     3,        160,    31,         45,      1333}, // 6 diamond perfect  
+  {205,       50,   3,      55,    13,       10,   6000,         200,    0,     4,        145,    31,         60,      1000}, // 7 slow_Twinkle (baseline)
+  {205,       50,   3,      15,    31,       10,   6000,         205,    0,     0,          0,    10,          0,         0}, // 8 slow_Twinkle (black))
+  {80,        110,   5,      28,    13,       30,   2000,         200,    0,     4,        145,    31,         60,      1000}, // 9 sparkle_1 doubt
+  {120,       110,   4,      28,    13,       30,   2000,         200,    0,     4,        145,    31,         60,      1000}, // 10 sparkle_2 16
+  {106,       110,  2,      18,    13,       30,   2000,         255,    0,     0,          0,    10,          0,         0}, // 11 sparkle_3 17 
+  {205,       0,    7,      35,    32,       20,   3000,         200,    40,    5,         56,    28,         60,      1000}, // 12 long wave
+  {205,       0,    5,      175,   28,       60,   30000,        200,    0,     5,         28,    30,         60,      1000}, // 13 diamond  better than 5 not nice?  
+  {205,       0,    5,      90,    13,       30,   2000,         200,    40,    3,        142,    31,         60,      1000}, // 14 diamond tower NEW
+  {205,       0,    5,      175,   31,       60,   30000,        200,    0,     5,         85,    28,         60,     30000}, // 15 diamond  fast twinkle (EEPROM?)
+  {205,       50,   3,      74,    31,       42,   3000,         200,    0,     4,        145,    31,         60,      1000}, // 16 fast_Twinkle (baseline)
+  {205,       50,   3,      79,    31,       48,   11000,        200,    50,    2,         45,    31,         20,      3000}, // 17 fast_Twinkle too fast, optimize not better than 8?
+  {205,       50,   7,      45,    11,       60,   2000,         200,    0,     4,        145,    31,         60,      1000}, // 18 wave fast twinkle 18
+  {205,       50,   7,      35,    29,       51,   6000,         255,    0,     0,          0,    10,          0,         0}, // 19 fast_Twinkle fullcolor
+  {255,       0,    0,      0,     10,        0,    0,            255,    0,     0,          0,   10,          0,         0} // 20 no glow
+
+
 };
+
+//  {205,        55,  4,      120,    12,      30,   2000,         200,    0,     4,        145,    31,         60,      1000}, // 15 small wave ok
 
 
 //const byte rgbcolor = 1;
@@ -369,7 +375,7 @@ uint16_t rn[21]={70, 60, 50, 40, 40, 50, 60, 180, 170, 160, 150, 140, 50, 60, 70
 int yvarC[10]={0, 9, 4, -11, -3, -6, 7, 10, 0, -6};
 int yvargC[10]={-3, -9, 4, 16, 0, 11, 7, 19, 0, -3};
 int yvar[10]={0, 9, 4, -11, -3, -6, 7, 10, 0, -6};
-int yvarb[16]={0, 3, 1, 0, -1, 0, -2, 0, 0, 3, -2, 0, 2, 0, -1, 0};
+int yvarb[16]={0, 3, 1, 0, -1, 0, -4, 0, 0, 3, -2, 0, 2, 0, -3, 0};
 int yvarg[10]={-3, -9, 4, 16, 0, 11, 7, 19, 0, -3};
 byte varlu = 0;
 byte difflu = 0;
@@ -535,8 +541,8 @@ byte colorNumber = 0;
 int slowFactor=0;
 byte numsparks=3;
 //byte BPS = 8;
-int BPMB = 30;
-int BPMS = 30;
+byte BPMB = 30;
+byte BPMS = 30;
 byte offBr = 30;
 byte m20delay = 1;
 byte m20offset = 1;
@@ -695,8 +701,8 @@ CRGBPalette16 gTargetPalette( gGradientPalettes[1] );
 void initializeEEPROMvariables(){  
 #ifdef ESP8266  
 EEPROM.get(offsetof(storeInEEPROM, NUM_LEDS), NUM_LEDS);
-EEPROM.get(offsetof(storeInEEPROM, BPMB), BPMB);
-EEPROM.get(offsetof(storeInEEPROM, BPMS), BPMS);
+//EEPROM.get(offsetof(storeInEEPROM, BPMB), BPMB);
+//EEPROM.get(offsetof(storeInEEPROM, BPMS), BPMS);
 EEPROM.get(offsetof(storeInEEPROM, waveTimeBr), waveTimeBr);
 EEPROM.get(offsetof(storeInEEPROM, waveTimeS), waveTimeS);
 EEPROM.get(offsetof(storeInEEPROM, timefactor3), timefactor3);
@@ -704,14 +710,13 @@ EEPROM.get(offsetof(storeInEEPROM, cycleTime), cycleTime);
 //Serial.print("NUM_LEDS: "); Serial.println(NUM_LEDS);
 #else
 NUM_LEDS = EEPROM.readInt(offsetof(storeInEEPROM, NUM_LEDS));
-BPMB = EEPROM.readInt(offsetof(storeInEEPROM, BPMB));
-BPMS = EEPROM.readInt(offsetof(storeInEEPROM, BPMS));
 waveTimeBr = EEPROM.readLong(offsetof(storeInEEPROM, waveTimeBr));
 waveTimeS = EEPROM.readLong(offsetof(storeInEEPROM, waveTimeS));
 timefactor3 = EEPROM.readFloat(offsetof(storeInEEPROM, timefactor3));
 cycleTime = EEPROM.readLong(offsetof(storeInEEPROM, cycleTime));
 #endif
-
+BPMB = EEPROM.read(offsetof(storeInEEPROM, BPMB));
+BPMS = EEPROM.read(offsetof(storeInEEPROM, BPMS));
 ymin  = EEPROM.read(offsetof(storeInEEPROM, ymin));
 ymax = EEPROM.read(offsetof(storeInEEPROM, ymax));
 ymin1 = EEPROM.read(offsetof(storeInEEPROM, ymin1));

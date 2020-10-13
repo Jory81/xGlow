@@ -354,12 +354,11 @@ void readBriSData(byte preset)
     EEPROM.get(offsetof(storeInEEPROM, waveTimeBr), waveTimeBr);
     EEPROM.get(offsetof(storeInEEPROM, waveTimeS), waveTimeS);
     #else
-    BPMB = EEPROM.readInt(offsetof(storeInEEPROM, BPMB));
-    BPMS = EEPROM.readInt(offsetof(storeInEEPROM, BPMS));
     waveTimeBr = EEPROM.readLong(offsetof(storeInEEPROM, waveTimeBr));
     waveTimeS = EEPROM.readLong(offsetof(storeInEEPROM, waveTimeS));
     #endif
-
+    BPMB = EEPROM.read(offsetof(storeInEEPROM, BPMB));
+    BPMS = EEPROM.read(offsetof(storeInEEPROM, BPMS));
     BRIGH = EEPROM.read(offsetof(storeInEEPROM, BRIGH));
     offBr = EEPROM.read(offsetof(storeInEEPROM, offBr));
     glowON = EEPROM.read(offsetof(storeInEEPROM, glowON));
@@ -377,14 +376,16 @@ void readBriSData(byte preset)
   glowON = pgm_read_byte(&selectPresetB_data[preset].glowON);
   offBr = pgm_read_byte(&selectPresetB_data[preset].offBr);
   numbrigh = pgm_read_byte(&selectPresetB_data[preset].numbrigh);
-  BPMB = pgm_read_dword(&selectPresetB_data[preset].BPMB);
+  BPMB = pgm_read_byte(&selectPresetB_data[preset].BPMB);
   waveTimeBr = pgm_read_dword(&selectPresetB_data[preset].waveTimeBr);
   S = pgm_read_byte(&selectPresetB_data[preset].S);
   SF = pgm_read_byte(&selectPresetB_data[preset].SF);
   satON = pgm_read_byte(&selectPresetB_data[preset].satON);
   offS = pgm_read_byte(&selectPresetB_data[preset].offS);
   numsat = pgm_read_byte(&selectPresetB_data[preset].numsat);
-  BPMS = pgm_read_dword(&selectPresetB_data[preset].BPMS);
+  BPMS = pgm_read_byte(&selectPresetB_data[preset].BPMS);
   waveTimeS = pgm_read_dword(&selectPresetB_data[preset].waveTimeS);
+  //Serial.print("wavetimeBR :"); Serial.println(waveTimeBr);
+  //Serial.print("wavetimeS :"); Serial.println(waveTimeS);
   }
 }
