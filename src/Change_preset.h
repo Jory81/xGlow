@@ -94,7 +94,7 @@ if (changeModus){
     case 30: {       effect_function = palettes;        changeSpeed=50;         setDifference=1;         y0r=0;     gCurrentPaletteNumber=7;     gCurrentPalette =( gGradientPalettes[gCurrentPaletteNumber] );   numsparks=0;} break;                          
     case 31: {       effect_function = splash;        rn14=random(100, 300)*NUM_LEDS/100;        changeSpeed=30;        colorMode=5;        setDifference=40;           cfactor1=300/NUM_LEDS;   numsparks=0;} break;
     case 32: {       effect_function = palettes;        changeSpeed=50;         setDifference=45;         y0r=0;    gCurrentPaletteNumber=11;     gCurrentPalette =( gGradientPalettes[gCurrentPaletteNumber] );   numsparks=0;} break;    
-    case 33: {       effect_function = strobe;        changeSpeed=20;        colorMode=5;        setDifference=40;           cfactor1=300/NUM_LEDS;   numsparks=0;} break;
+    case 33: {       effect_function = strobe;        changeSpeed=20;        colorMode=1;        setDifference=40;           cfactor1=300/NUM_LEDS;   numsparks=0;} break;
     case 34: {       effect_function = gradient;    changeSpeed=200;       setDifference=1;         BRIGH=205;       S=200;       glowON=4;       satON=4;      colorMode=0; if((random(10)>5)){selectColor = 2;} else {selectColor = 8;} memoryByte = 'h';   processChange();        numsparks=0;} break;
     case 35: {       effect_function = snow_flakesR;        changeSpeed=125;         setDifference=7;      offdis = offdisC;           sF=1;         previousMillis8=millis();     numsparks=7*cfactor2; } break;      
     case 36: {       effect_function = pacifica;   changeSpeed=20;          } break; 

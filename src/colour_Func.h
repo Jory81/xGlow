@@ -193,14 +193,15 @@ uint8_t changeColourFcn2(int selectMode, uint8_t yvIn, uint8_t yvMem, uint8_t yv
 }
 
 void procesColourMode(){
-      if ((effect_function == *static_glow && colorMode <= 3) ||  (effect_function == *s7_strings && colorMode <= 3) || (effect_function == *snow_flakes && colorMode <= 4) || (effect_function == *sparkling && colorMode <= 4) || (effect_function == *snow_storm && colorMode <= 4) || (effect_function == *random_led && colorMode <= 4) || (effect_function == *random_string && colorMode <= 3) || (effect_function == *twinkle && colorMode <= 4) || (effect_function == *static_glow_2 && colorMode <= 3) || (effect_function == *sparkling_2 && colorMode <=4) || (effect_function == *meteor && colorMode <=4) || (effect_function == *snow_flakes_2 && colorMode <=4)){
+      if ((effect_function == *pers_color || effect_function == *pers_block) && numcolor <= 14){
+      numcolor++;
+      newColors++;
+      }
+      else {
+  //      if ((effect_function == *static_glow && colorMode <= 3) ||  (effect_function == *s7_strings && colorMode <= 3) || (effect_function == *snow_flakes && colorMode <= 4) || (effect_function == *sparkling && colorMode <= 4) || (effect_function == *snow_storm && colorMode <= 4) || (effect_function == *random_led && colorMode <= 4) || (effect_function == *random_string && colorMode <= 3) || (effect_function == *twinkle && colorMode <= 4) || (effect_function == *static_glow_2 && colorMode <= 3) || (effect_function == *sparkling_2 && colorMode <=4) || (effect_function == *meteor && colorMode <=4) || (effect_function == *snow_flakes_2 && colorMode <=4)){
         colorMode++;
         forcedColourChange = true;
         INTERVAL7=5000;  
-      }
-      else if ((effect_function == *pers_color || effect_function == *pers_block) && numcolor <= 14){
-      numcolor++;
-      newColors++;
       }
 return;      
 }
