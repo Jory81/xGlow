@@ -699,9 +699,9 @@ if ((variant == 0 || variant == 1 || variant == 2) && (!readyToChange)){
               arraypos++;  
             }
           }
-        } 
+        }
+        updateOled(44, 40, &yold); 
         yold=yval1;
-        updateOled(44, 40, &yold);
         INTERVAL7=interval9*timeArray2[random(0,6)]*timefactor3;
         updateOledFloat(88, 0, &INTERVAL7, 0); 
         fillLongxArray(yold);
@@ -783,9 +783,9 @@ else if ((variant==3 || variant ==4 || variant ==5) && (!readyToChange)){
                 arraypos++;  
                 }
             }
-          }          
+          } 
+          updateOled(44, 40, &yold);         
           yold=yval1;  
-          updateOled(44, 40, &yold);
           INTERVAL7=interval9*timeArray2[random(0,6)]*timefactor3;
           updateOledFloat(88, 0, &INTERVAL7, 0); 
           fillLongxArray(yold);
@@ -936,9 +936,9 @@ void snow_storm(void){
           hh=hh-1;
           if (hh<0){
               hh=NUM_LEDS-1;
-              evenOddCounter++; 
-              yold=yval1;   
-              updateOled(44, 40, &yold);           
+              evenOddCounter++;
+              updateOled(44, 40, &yold);  
+              yold=yval1;           
               INTERVAL7=interval7*timeArray2[random(0,6)]*timefactor3;
               updateOledFloat(88, 0, &INTERVAL7, 0); 
               T=0;
@@ -1539,8 +1539,8 @@ if (variant==0 && (!readyToChange)){
             yy=0;
             slowFactor=0;
             evenOddCounter++;  
-            yold=yval1;
             updateOled(44, 40, &yold);
+            yold=yval1;
             fillLongxArray(yold);      
             INTERVAL7=interval9*timeArray2[random(0,6)]*timefactor3;
             updateOledFloat(88, 0, &INTERVAL7, 0); 
@@ -1638,9 +1638,9 @@ else if (variant==3 && (!readyToChange)){
               hh=NUM_LEDS-1;
               slowFactor=0;
               evenOddCounter++; 
-              yold=yval1;         
-              fillLongxArray(yold);   
               updateOled(44, 40, &yold);
+              yold=yval1;         
+              fillLongxArray(yold);  
               INTERVAL7=interval9*timeArray2[random(0,6)]*timefactor3;
               updateOledFloat(88, 0, &INTERVAL7, 0); 
               previousMillis36 = millis();

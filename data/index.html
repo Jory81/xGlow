@@ -413,6 +413,35 @@ _Cycle time (s):
   </div>
   <div class="varvaluex"></div><div class="infox"></div>
 </div>
+<div class="slidecontainerx">
+	<div class="titlex">
+	_Effect speedfactor:
+	</div>
+	<input id="SLPS" class="sliderx" type="range" min="25" max="400" step="25" value="100" onchange="updateSlider('SLPS', this.value)">
+	<div class="varvalueh"><span id="SLPSS"></span> &nbsp /100</div>
+	</div>
+	<div class="slidecontainerx">
+		<div class="titlex">(relative)</div>
+	  <div class="sliderticksx">
+		<p>0.25(fast)</p>
+		<p>0.5</p>
+		<p>0.75</p>
+		<p>1(default)</p>
+		<p></p>
+		<p></p>
+		<p></p>
+		<p>2</p>
+		<p></p>
+		<p></p>
+		<p></p>
+		<p>3</p>
+		<p></p>
+		<p></p>
+		<p></p>
+		<p>4.0(slow)</p>	
+	  </div>
+	  <div class="varvaluex"></div><div class="infox"></div>  
+	</div>
 </div>
 <hr/>
 
@@ -538,7 +567,7 @@ _Prog. Mode (0-36):
 
 <div class="slidecontainerx">
 	<div class="titlex">
-	_BriS preset (0-7):
+	_BriSat preset (0-20):
 	</div>
 	<input id="SBSM" class="sliderx" type="range" min="0" max="20" step="1" value="0" onchange="updateSlider('SBSM', this.value)">
 	<div class="varvaluex" id="SBSMS"></div><div class="infox">
@@ -573,27 +602,27 @@ _Prog. Mode (0-36):
 <div class="slidecontainerx">
 	<div class="titlex"></div>
 	  <div class="sliderticksx">
-		<p></p>
-		<p></p>
-		<p></p>
-		<p></p>
-		<p></p>
-		<p></p>
-		<p></p>
-		<p></p>	
-		<p></p>
-		<p></p>
-		<p></p>
-		<p></p>
-		<p></p>
-		<p></p>	
-		<p></p>
-		<p></p>
-		<p></p>
-		<p></p>
-		<p></p>
-		<p></p>	
-		<p></p>
+		<p>0</p>	  
+		<p>1</p>
+		<p>2</p>
+		<p>3</p>
+		<p>4</p>
+		<p>5</p>
+		<p>6</p>
+		<p>7</p>
+		<p>8</p>	
+		<p>9</p>
+		<p>10</p>
+		<p>11</p>
+		<p>12</p>
+		<p>13</p>
+		<p>14</p>	
+		<p>15</p>
+		<p>16</p>
+		<p>17</p>
+		<p>18</p>
+		<p>19</p>
+		<p>20</p>	
 	  </div>
 	  <div class="varvaluex"></div><div class="infox"></div>
 	</div>
@@ -606,8 +635,7 @@ Color Mode (0-5):
 <div class="varvaluex" id="SCOMS"></div><div class="infox"></div>
 </div>
 <div class="slidecontainerx">
-<div class="titlex">
-</div>
+<div class="titlex"></div>
   <div class="sliderticksEmptyx">
     <p></p>
     <p></p>
@@ -636,6 +664,13 @@ _Add.modeVar(0-2):
     <p></p>
   </div>
   <div class="varvaluex"></div><div class="infox"></div>  
+</div>
+<div class="slidecontainerx">
+	<div class="titlex">
+	Preset speed (ms):
+	</div>
+	<input id="SLSP" class="sliderx" type="range" min="0" max="60" step="1" value="10" onchange="updateSlider('SLSP', this.value)">
+	<div class="varvalueh"><span id="SLSPS"></span> &nbsp | &nbsp  <span id='HSPES'></span></div>
 </div>
 </div>
 <hr/>
@@ -838,44 +873,6 @@ Add.offset (1-15):
 <input id="SOFF" class="sliderx" type="range" min="1" max="15" step="1" value="7" onchange="updateSlider('SOFF', this.value)">
 <div class="varvaluex" id="SOFFS"></div> <div class="infox"></div>
 </div>
-
-<div class="slidecontainerx">
-<div class="titlex">
-LED_speed (ms):
-</div>
-<input id="SLSP" class="sliderx" type="range" min="0" max="60" step="1" value="10" onchange="updateSlider('SLSP', this.value)">
-<div class="varvalueh"><span id="SLSPS"></span> &nbsp | &nbsp  <span id='HSPES'></span></div>
-</div>
-<div class="slidecontainerx">
-<div class="titlex">
-_Program timing:
-</div>
-<input id="SLPS" class="sliderx" type="range" min="25" max="400" step="25" value="100" onchange="updateSlider('SLPS', this.value)">
-<div class="varvalueh"><span id="SLPSS"></span> &nbsp /100</div>
-</div>
-<div class="slidecontainerx">
-	<div class="titlex">
-	</div>
-  <div class="sliderticksx">
-    <p>0.25(fast)</p>
-    <p>0.5</p>
-    <p>0.75</p>
-    <p>1(default)</p>
-    <p></p>
-    <p></p>
-	<p></p>
-    <p>2</p>
-    <p></p>
-    <p></p>
-    <p></p>
-    <p>3</p>
-    <p></p>
-    <p></p>
-	<p></p>
-    <p>4.0(slow)</p>	
-  </div>
-  <div class="varvaluex"></div><div class="infox"></div>  
-</div>
 </div>
 
 <hr/>
@@ -947,8 +944,22 @@ _Bees
 	_Glow Mode (0-7):
 	</div>
 	<input id="SGLO" class="sliderx" type="range" min="0" max="7" step="1" value="0" onchange="updateSlider('SGLO', this.value)">
-	<div class="varvaluex" id="SGLOS"></div><div class="infox"></div>
+	<div class="varvaluex" id="SGLOS"></div><div class="infox">
+	<div class="dropdown">
+		<button class="dropbtn">info list:</button>
+		<div class="dropdown-content">
+		  <li value="0">0: static</li>
+		  <li value="1">1: fixed glow</li>
+		  <li value="2">2: variable glow</li>
+		  <li value="3">3: twinkle</li>
+		  <li value="4">4: dimmed wave</li>
+		  <li value="5">5: offset glow</li>
+		  <li value="6">6: half wave</li>	
+		  <li value="7">7: full wave</li>
+		</div>
+	  </div>
 	</div>
+</div>
 	
 	<div class="slidecontainerx">
 	<div class="titlex">
@@ -1105,8 +1116,22 @@ _Wave BPM(br):
 		_Sat Mode (0-7):
 		</div>
 		<input id="SSTM" class="sliderx" type="range" min="0" max="7" step="1" value="0" onchange="updateSlider('SSTM', this.value)">
-		<div class="varvaluex" id="SSTMS"></div><div class="infox"></div>
+		<div class="varvaluex" id="SSTMS"></div><div class="infox">
+		<div class="dropdown">
+			<button class="dropbtn">info list:</button>
+			<div class="dropdown-content">
+			  <li value="0">0: static</li>
+			  <li value="1">1: fixed glow</li>
+			  <li value="2">2: variable glow</li>
+			  <li value="3">3: twinkle</li>
+			  <li value="4">4: dimmed wave</li>
+			  <li value="5">5: offset glow</li>
+			  <li value="6">6: half wave</li>	
+			  <li value="7">7: full wave</li>
+			</div>
+		  </div>
 		</div>
+	</div>
 		
 		<div class="slidecontainerx">
 		<div class="titlex">
