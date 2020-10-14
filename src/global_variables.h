@@ -140,7 +140,7 @@ storeInEEPROM customVar = {
       1, // random
       1, // excludemodes
       600000, // CycleTime
-      5, // programMode      
+      0, // programMode      
       0, // tower
       205,// BRIGH
       90,// offBr
@@ -150,7 +150,7 @@ storeInEEPROM customVar = {
       145, // offS
       205, // S
       0, // Sf
-      3, // satOn
+      0, // satOn was 3
       62, // red
       25, // green
       6, // blue
