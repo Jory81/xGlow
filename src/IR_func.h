@@ -313,11 +313,8 @@ else if (memoryByte == 'i'){
   
 else if (memoryByte == 'j'){
   glowON++; 
-  if (glowON > 7){
+  if (glowON > 8){
     glowON = 0;
-    }
-  if (glowON == 3){
-    glitterON = false;
     }
 }
         

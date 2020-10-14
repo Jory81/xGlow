@@ -54,24 +54,44 @@ else if (glowON == 3){
 } 
 
 else if (glowON == 4){
+ for (int i=0 ; i<numbrigh ; i++){
+ if (millis() - previousMillisGlow3[i] >= rtGlow3[i]/2){ // BPS 2 is timer modifier
+  if (numGlow3[i] == 0){
+    timeFactorGlow3[i] = millis(); 
+    numGlow3[i]=1;  
+    cycleGlow3[i] = 0;
+    }
+  brigh[i] = map(sin16((millis()-timeFactorGlow3[i])*BPMB),0,32767,BRIGH, offBr); // glowfactor 16 is speed setting
+  if (brigh[i] <= offBr+5){cycleGlow3[i] = 1;} 
+  if (brigh[i] >= BRIGH-5 && cycleGlow3[i] == 1){
+    rtGlow3[i]=random(waveTimeBr);
+    previousMillisGlow3[i] = millis();
+    numGlow3[i]=0;
+  }  
+ }
+ else{brigh[i] = BRIGH;} // making this offbr makes it sparkly
+ }
+}
+
+else if (glowON == 5){
   for (int i = 0; i < numbrigh; i++){
     brigh[i]=beatsin8(BPMB, qsub8(BRIGH,offBr), qadd8(BRIGH,offBr), ((i+1)*convBrigh));
   }
 }
 
-else if (glowON == 5){
+else if (glowON == 6){
   for (int i = 0; i < numbrigh; i++){
     brigh[i]=beatsin8(BPMB, qsub8(BRIGH,offBr), qadd8(BRIGH,offBr),0, (100+(i*100)));
   }
 }
 
-else if (glowON == 6){
+else if (glowON == 7){
   for (int i = 0; i < numbrigh; i++){
     brigh[i]=beatsin8(BPMB, 0, qadd8(BRIGH,offBr), ((i+1)*(convBrigh/2)));
   }
 }  
 
-else if (glowON == 7){
+else if (glowON == 8){
   for (int i = 0; i < numbrigh; i++){
     brigh[i]=beatsin8(BPMB, 0, qadd8(BRIGH,offBr), ((i+1)*convBrigh));
   }
@@ -136,24 +156,44 @@ else if (satON == 3){
 }
 
 else if (satON == 4){
-  for (int i = 0; i < numsat; i++){
-    satval[i]=beatsin8(BPMS, qsub8(S,2*offS), qadd8(S,offS), ((i+1)*convSat));
-  }
-}
+ for (int i=0 ; i<numsat ; i++){
+ if (millis() - previousMillisSat3[i] >= rtSat3[i]/2){ // BPS 8 is timer modifier
+  if (numSat3[i] == 0){
+    timeFactorSat3[i] = millis(); 
+    numSat3[i]=1;  
+    cycleSat3[i] = 0;
+    }
+  satval[i] = map(sin16((millis()-timeFactorSat3[i])*BPMS),0,32767,S,offS); // glowfactor 16 is speed setting
+  if (satval[i] <= offS+5){cycleSat3[i] = 1;} 
+  if (satval[i] >= S-5 && cycleSat3[i] == 1){
+    rtSat3[i]=random(waveTimeS);
+    previousMillisSat3[i] = millis();
+    numSat3[i]=0;
+  }  
+ }
+ else{satval[i] = S;}
+ }
+} 
 
 else if (satON == 5){
   for (int i = 0; i < numsat; i++){
-    satval[i]=beatsin8(BPMS, qsub8(S,offS), qadd8(S,offS),0, (100+(i*100)));
+    satval[i]=beatsin8(BPMS, qsub8(S,offS), qadd8(S,offS), ((i+1)*convSat));
   }
 }
 
 else if (satON == 6){
   for (int i = 0; i < numsat; i++){
+    satval[i]=beatsin8(BPMS, qsub8(S,offS), qadd8(S,offS),0, (100+(i*100)));
+  }
+}
+
+else if (satON == 7){
+  for (int i = 0; i < numsat; i++){
     satval[i]=beatsin8(BPMS, qsub8(S,offS), qadd8(S,offS), ((i+1)*(convSat/2)));
   }
 }  
 
-else if (satON == 7){
+else if (satON == 8){
   for (int i = 0; i < numsat; i++){
     satval[i]=beatsin8(BPMS, 0, qadd8(S,offS), ((i+1)*convSat));
   }
