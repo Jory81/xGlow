@@ -122,10 +122,10 @@ void changePColors();
 void fillxmasArray ();
 void fillArrayRainbow(uint8_t fillcase);
 void fillArrayGradient(uint8_t fillcase, uint8_t y0r, int setDifference);
-//void fillArrayRainbow(uint8_t blockArray[], uint16_t longxArray[]);
 void fillLongxArray(uint8_t colour);
 void fillColourArray (uint8_t colour[], uint8_t mainColour, int var[], int diff[]);
 void fillNUM_LEDS1(uint8_t arrayType, int NUM_LEDS);
+void receivedSignal();
 void selectcolorArray();
 void handleAdditionalVariables();
 uint8_t changeColourFcn(int colorMode, uint8_t* yvIn, uint8_t yvalmin, uint8_t yvalmax);
@@ -141,39 +141,40 @@ void brightenOrDarkenEachPixel( fract8 fadeUpAmount, fract8 fadeDownAmount);
 void colortwinkles();
 
 //all the effectFunctions
-void static_glow(void); // 0
-void rainbow_1(void); // 1
-void rainbow_2(void); // 2
-void s7_strings(void); // 3
-void snow_flakes(void); // 4
-void rainbow_4(void); // 5
-void sparkling(void); // 6
-void snow_storm(void) ; // 7
-void rainbow_3(void); // 26
-void random_led(void); // 8
-void pers_color(void); // 9
-void random_string(void); // 10
-void rainbow_5(void); // 11
-void twinkle(void); // 12
-void static_glow_2(void); //13
-void colourSplash(void); // 14
-void sparkling_2(void); // 15
-void meteor(void); // 16
-void snow_flakes_2(void); // 17
-void flowercolors(void); // 18
-void gradient(void); // 19
-void rainbow_6(void); // 20
-void pers_block(void); // 21
-void xmas_string(void); // 22
-void xmas_singles(void); // 23
-void xmas_solid(void); // 24
-void demo100(void); // 25
+void static_glow(void); 
+void rainbow_1(void); 
+void rainbow_2(void); 
+void s7_strings(void);
+void snow_flakes(void); 
+void rainbow_4(void); 
+void sparkling(void); 
+void snow_storm(void);
+void rainbow_3(void); 
+void random_led(void);
+void pers_color(void);
+void random_string(void); 
+void rainbow_5(void); 
+void twinkle(void); 
+void static_glow_2(void); 
+void colourSplash(void); 
+void sparkling_2(void); 
+void meteor(void); 
+void snow_flakes_2(void); 
+void rainbow_7(void);
+void gradient(void); 
+void rainbow_6(void); 
+void pers_block(void); 
+void xmas_string(void);
+void xmas_singles(void); 
+void xmas_solid(void); 
+void demo100(void); 
 void splash(void);
 void strobe(void);
-void palettes(void); // 27
-void sparklingR(void); //
-void RGBmode(void); // 
-void snow_flakesR(void); // 4
+void palettes(void); 
+void palettes_2(void); 
+void sparklingR(void); 
+void RGBmode(void); 
+void snow_flakesR(void); 
 
 // webserver files defined in "websocket.h"
 void handleWebSocketMessage(void *arg, uint8_t *data, size_t len);

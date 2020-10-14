@@ -7,42 +7,42 @@ typedef void (*effect_f) (void);  // This is type definition for the pointertype
 effect_f effect_function = NULL; // This is the pointer variable used to remember pointer to function()
 
 const char string_0[] PROGMEM = "static_glow"; 
-const char string_1[] PROGMEM = "rainbow_1";
-const char string_2[] PROGMEM = "rainbow_2";
-const char string_3[] PROGMEM = "rainbow_3";
-const char string_4[] PROGMEM = "rainbow_4";
-const char string_5[] PROGMEM = "rainbow_5";
-const char string_6[] PROGMEM = "rainbow_6";
-const char string_7[] PROGMEM = "s7_strings";
-const char string_8[] PROGMEM = "1color_string";
-const char string_9[] PROGMEM = "snow_flakes";
-const char string_10[] PROGMEM = "snow_flakes_2";
-const char string_11[] PROGMEM = "sparkling";
-const char string_12[] PROGMEM = "sparkling2";
-const char string_13[] PROGMEM = "snow_storm";
-const char string_14[] PROGMEM = "twinkle";
-const char string_15[] PROGMEM = "random_led";
-const char string_16[] PROGMEM = "random_string";
-const char string_17[] PROGMEM = "flowercolors";
-const char string_18[] PROGMEM = "gradient";
-const char string_19[] PROGMEM = "pers_color";
-const char string_20[] PROGMEM = "pers_block"; 
-const char string_21[] PROGMEM = "xmas_string"; 
-const char string_22[] PROGMEM = "xmas_singles"; 
-const char string_23[] PROGMEM = "xmas_solid";
-const char string_24[] PROGMEM = "static_glow_2"; 
-const char string_25[] PROGMEM = "splicing_1";
-const char string_26[] PROGMEM = "zigzag";
-const char string_27[] PROGMEM = "splicing2";
-const char string_28[] PROGMEM = "colourSplash";
-const char string_29[] PROGMEM = "meteor"; 
-const char string_30[] PROGMEM = "palettes"; 
-const char string_31[] PROGMEM = "splash";
-const char string_32[] PROGMEM = "demo_palette";
-const char string_33[] PROGMEM = "strobe";
-const char string_34[] PROGMEM = "demo_gradient";
-const char string_35[] PROGMEM = "rainbow_snow";
-const char string_36[] PROGMEM = "pacifica";
+const char string_1[] PROGMEM = "varying_glow"; 
+const char string_2[] PROGMEM = "warm_glow";
+const char string_3[] PROGMEM = "reflection"; 
+const char string_4[] PROGMEM = "deflection";
+const char string_5[] PROGMEM = "coloursplash";
+const char string_6[] PROGMEM = "palette"; 
+const char string_7[] PROGMEM = "colourwash"; 
+const char string_8[] PROGMEM = "rainbow_1";
+const char string_9[] PROGMEM = "rainbow_2";
+const char string_10[] PROGMEM = "rainbow_3";
+const char string_11[] PROGMEM = "rainbow_4";
+const char string_12[] PROGMEM = "rainbow_5";
+const char string_13[] PROGMEM = "rainbow_6";
+const char string_14[] PROGMEM = "rainbow_7"; 
+const char string_15[] PROGMEM = "gradient";
+const char string_16[] PROGMEM = "lucky7";
+const char string_17[] PROGMEM = "goldstrike";
+const char string_18[] PROGMEM = "halcyon"; 
+const char string_19[] PROGMEM = "snow_melt";
+const char string_20[] PROGMEM = "snow_pile";
+const char string_21[] PROGMEM = "snow_storm";
+const char string_22[] PROGMEM = "snow_rainbow"; 
+const char string_23[] PROGMEM = "sparkle";
+const char string_24[] PROGMEM = "sparkle_storm";
+const char string_25[] PROGMEM = "sparkle_rainbow"; 
+const char string_26[] PROGMEM = "twinkle";
+const char string_27[] PROGMEM = "gambler";
+const char string_28[] PROGMEM = "casino";
+const char string_29[] PROGMEM = "fine_canvas";
+const char string_30[] PROGMEM = "rough_canvas"; 
+const char string_31[] PROGMEM = "xmas_1"; 
+const char string_32[] PROGMEM = "xmas_2"; 
+const char string_33[] PROGMEM = "xmas_3";
+const char string_34[] PROGMEM = "splash";
+const char string_35[] PROGMEM = "strobe";
+const char string_36[] PROGMEM = "meteor"; 
 const char string_37[] PROGMEM = "RGBmode";
 
 const char *const string_table[] PROGMEM = {string_0, string_1, string_2, string_3, string_4, string_5, string_6, string_7, string_8, string_9, string_10, 
@@ -130,10 +130,10 @@ storeInEEPROM customVar = {
       115,// ymaxgroen
       145, // yminblauw
       180, // ymaxblauw
-      0, 0, 0, 0, 1, 1, 0, 0, 0, 0, // cmodes (1 = active)
-      0, 1, 0, 0, 0, 1, 0, 1, 1, 0,
-      0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 
-      0, 0, 0, 0, 0, 1, 0, 0,
+      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, // cmodes (1 = active)
+      1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+      1, 1, 1, 1, 1, 0, 0, 0,
       0, // rgb
       1, // cycle
       1, // fade 

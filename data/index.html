@@ -191,7 +191,7 @@ function updateButton(fixedVariable) {
 			//console.log("enter mode here STARTS ALL OVER");
 			k = 0;
 			doSend("GETS"+k);
-		} 
+		}
 	}
 	 else {
 		doSend(fixedVariable+0);
@@ -472,7 +472,7 @@ load settings
 
 <div class="slidecontainerx">
 <div class="titlex">
-_Prog. Mode (0-36):
+_Prog. Mode (0-37):
 </div>
 <input id="SPGM" class="sliderx" type="range" min="0" max="37" step="1" value="0" onchange="updateSlider('SPGM', this.value)">
 <div class="varvaluex" id="SPGMS"></div><div class="infox">
@@ -480,42 +480,42 @@ _Prog. Mode (0-36):
   <button class="dropbtn">Modes:</button>
   <div class="dropdown-content">
     <li value="0"  onclick="updateProgSlider(this.value)">0: static_glow</li>
-    <li value="1"  onclick="updateProgSlider(this.value)">1: rainbow_1</li>
-    <li value="2"  onclick="updateProgSlider(this.value)">2: rainbow_2</li>
-    <li value="3"  onclick="updateProgSlider(this.value)">3: rainbow_3</li>
-    <li value="4"  onclick="updateProgSlider(this.value)">4: rainbow_4</li>
-    <li value="5"  onclick="updateProgSlider(this.value)">5: rainbow_5</li>
-    <li value="6"  onclick="updateProgSlider(this.value)">6: rainbow_6</li>	
-    <li value="7"  onclick="updateProgSlider(this.value)">7: s7_strings</li>
-    <li value="8"  onclick="updateProgSlider(this.value)">8: 1color_string</li>	
-    <li value="9"  onclick="updateProgSlider(this.value)">9: snow_flakes</li>
-    <li value="10"  onclick="updateProgSlider(this.value)">10: snow_flakes_2</li>
-    <li value="11"  onclick="updateProgSlider(this.value)">11: sparkling</li>
-    <li value="12"  onclick="updateProgSlider(this.value)">12: sparkling2</li>	
-    <li value="13"  onclick="updateProgSlider(this.value)">13: snow_storm</li>
-    <li value="14"  onclick="updateProgSlider(this.value)">14: twinkle</li>	
-    <li value="15"  onclick="updateProgSlider(this.value)">15: random_led</li>
-    <li value="16"  onclick="updateProgSlider(this.value)">16: random_string</li>
-    <li value="17"  onclick="updateProgSlider(this.value)">17: flowercolors</li>
-    <li value="18"  onclick="updateProgSlider(this.value)">18: gradient</li>	
-    <li value="19"  onclick="updateProgSlider(this.value)">19: pers_color</li>	
-    <li value="20"  onclick="updateProgSlider(this.value)">20: pers_block</li>	
-    <li value="21"  onclick="updateProgSlider(this.value)">21: xmas_string</li>
-    <li value="22"  onclick="updateProgSlider(this.value)">22: xmas_singles</li>
-    <li value="23"  onclick="updateProgSlider(this.value)">23: xmas_solid</li>
-    <li value="24"  onclick="updateProgSlider(this.value)">24: static_glow_2</li>
-    <li value="25"  onclick="updateProgSlider(this.value)">25: splicing_1</li>
-    <li value="26"  onclick="updateProgSlider(this.value)">26: zagging</li>
-    <li value="27"  onclick="updateProgSlider(this.value)">27: splicing2</li>
-    <li value="28"  onclick="updateProgSlider(this.value)">28: colourSplash</li>
-    <li value="29"  onclick="updateProgSlider(this.value)">29: meteor</li>
-    <li value="30"  onclick="updateProgSlider(this.value)">30: palettes</li>
-    <li value="31"  onclick="updateProgSlider(this.value)">31: splash</li>
-    <li value="32"  onclick="updateProgSlider(this.value)">32: demo_palette</li>	
-	<li value="33"  onclick="updateProgSlider(this.value)">33: strobe</li>
-    <li value="34"  onclick="updateProgSlider(this.value)">34: demo_gradient</li>
-    <li value="35"  onclick="updateProgSlider(this.value)">35: rainbow_snow</li>	
-	<li value="36"  onclick="updateProgSlider(this.value)">36: pacifica</li>
+	<li value="1"  onclick="updateProgSlider(this.value)">1: varying_glow</li>
+	<li value="2"  onclick="updateProgSlider(this.value)">2: warm_glow</li>
+	<li value="3"  onclick="updateProgSlider(this.value)">3: reflection</li>
+    <li value="4"  onclick="updateProgSlider(this.value)">4: deflection</li>
+    <li value="5"  onclick="updateProgSlider(this.value)">5: coloursplash</li>
+	<li value="6"  onclick="updateProgSlider(this.value)">6: palette</li>
+	<li value="7"  onclick="updateProgSlider(this.value)">7: colourwash</li>
+	<li value="8"  onclick="updateProgSlider(this.value)">8: rainbow_1</li>
+    <li value="9"  onclick="updateProgSlider(this.value)">9: rainbow_2</li>
+    <li value="10"  onclick="updateProgSlider(this.value)">10: rainbow_3</li>
+    <li value="11"  onclick="updateProgSlider(this.value)">11: rainbow_4</li>
+    <li value="12"  onclick="updateProgSlider(this.value)">12: rainbow_5</li>
+	<li value="13"  onclick="updateProgSlider(this.value)">13: rainbow_6</li>
+	<li value="14"  onclick="updateProgSlider(this.value)">14: rainbow_7</li>
+	<li value="15"  onclick="updateProgSlider(this.value)">15: gradient</li>
+    <li value="16"  onclick="updateProgSlider(this.value)">16: lucky7</li>
+	<li value="17"  onclick="updateProgSlider(this.value)">17: goldstrike</li>	
+	<li value="18"  onclick="updateProgSlider(this.value)">18: halcyon</li>
+    <li value="19"  onclick="updateProgSlider(this.value)">19: snow_melt</li>
+	<li value="20"  onclick="updateProgSlider(this.value)">20: snow_pile</li>
+	<li value="21"  onclick="updateProgSlider(this.value)">21: snow_storm</li>
+	<li value="22"  onclick="updateProgSlider(this.value)">22: snow_rainbow</li>
+    <li value="23"  onclick="updateProgSlider(this.value)">23: sparkle</li>
+    <li value="24"  onclick="updateProgSlider(this.value)">24: sparkle_storm</li>	
+	<li value="25"  onclick="updateProgSlider(this.value)">25: sparkle_rainbow</li> 
+    <li value="26"  onclick="updateProgSlider(this.value)">26: twinkle</li>	
+    <li value="27"  onclick="updateProgSlider(this.value)">27: gambler</li>
+    <li value="28"  onclick="updateProgSlider(this.value)">28: casino</li>
+    <li value="29"  onclick="updateProgSlider(this.value)">29: fine_canvas</li>	
+    <li value="30"  onclick="updateProgSlider(this.value)">30: rough_canvas</li>	
+    <li value="31"  onclick="updateProgSlider(this.value)">31: xmas_1</li>
+    <li value="32"  onclick="updateProgSlider(this.value)">32: xmas_2</li>
+    <li value="33"  onclick="updateProgSlider(this.value)">33: xmas_3</li>
+    <li value="34"  onclick="updateProgSlider(this.value)">34: splash</li>
+	<li value="35"  onclick="updateProgSlider(this.value)">35: strobe</li>
+	<li value="36"  onclick="updateProgSlider(this.value)">36: meteor</li>	
 	<li value="37"  onclick="updateProgSlider(this.value)">37: RGBmode</li>
   </div>
 </div>
@@ -568,9 +568,9 @@ _Prog. Mode (0-36):
 
 <div class="slidecontainerx">
 	<div class="titlex">
-	_BriSat preset (0-20):
+	_BriSat preset (0-19):
 	</div>
-	<input id="SBSM" class="sliderx" type="range" min="0" max="20" step="1" value="0" onchange="updateSlider('SBSM', this.value)">
+	<input id="SBSM" class="sliderx" type="range" min="0" max="19" step="1" value="0" onchange="updateSlider('SBSM', this.value)">
 	<div class="varvaluex" id="SBSMS"></div><div class="infox">
 		<div class="dropdown">
 			<button class="dropbtn">Modes:</button>
@@ -771,11 +771,11 @@ _gaps CM 2&3:
 </section>
 </div>
 
-<p class="infowindow">span 'rainbow_3': <span id="SMI2S"></span>-<span id="SMA2S"></span>
+<p class="infowindow">span rainbow_3: <span id="SMI2S"></span>-<span id="SMA2S"></span>
 </p>
 <div class="slidecontainerx">
 <div class="titlex">
-_mode 3:
+_mode 10:
 </div>
 <!-- This block can be reused as many times as needed -->
 <section class="range-slider3">
@@ -785,11 +785,11 @@ _mode 3:
 </section>
 </div>
 
-<p class="infowindow">span 'flowercolors': <span id="SMI3S"></span>-<span id="SMA3S"></span>&nbsp &nbsp &nbsp <span class="textinfo">range: </span> <span class="textinfo" id="SM3RS"></span>
+<p class="infowindow">span rainbow_7: <span id="SMI3S"></span>-<span id="SMA3S"></span>&nbsp &nbsp &nbsp <span class="textinfo">range: </span> <span class="textinfo" id="SM3RS"></span>
 </p>
 <div class="slidecontainerx">
 <div class="titlex">
-_mode 17: 
+_mode 14: 
 </div>
 <!-- This block can be reused as many times as needed -->
 <section class="range-slider2">
@@ -800,11 +800,11 @@ _mode 17:
 </section>
 </div>
 
-<p class="infowindow">span 'gradient': <span id="SMI4S"></span>-<span id="SMA4S"></span>
+<p class="infowindow">span gradient: <span id="SMI4S"></span>-<span id="SMA4S"></span>
 </p>
 <div class="slidecontainerx">
 <div class="titlex">
-_mode 18:
+_mode 15 (&22, 25):
 </div>
 <!-- This block can be reused as many times as needed -->
 <section class="range-slider3">
@@ -894,17 +894,17 @@ Glitter
   <input type="checkbox" id="TGLI" onclick="updateButton('TGLI')"> 
   <span class="sliderround"></span>
 </label>
-Rainbow (mode 7)
+Rainbow (mode 16-18)
 <label class="switch">
   <input type="checkbox" id="TRBO" onclick="updateButton('TRBO')"> 
   <span class="sliderround"></span> 
 </label>
-Reverse (mode 7)
+Reverse (mode 16-18)
 <label class="switch">
   <input type="checkbox" id="TRVO" onclick="updateButton('TRVO')"> 
   <span class="sliderround"></span> 
 </label>
-white (mode 19)
+white (mode 29)
 <label class="switch">
   <input type="checkbox" id="TWHO" onclick="updateButton('TWHO')"> 
   <span class="sliderround"></span> 
@@ -1346,12 +1346,12 @@ Save All settings to EEPROM
 </label>
 </div>
 <div class="switchcontainer">
-ACTIVATE first 30 presets in EEPROM
+ACTIVATE all presets in EEPROM
 <label class="switch">
   <input type="checkbox" id="TAAM" onclick="updateButton('TAAM')"> 
   <span class="sliderround"></span>
 </label>
-DEACTIVATE first 30 presets in EEPROM
+DEACTIVATE all presets in EEPROM
 <label class="switch">
   <input type="checkbox" id="TDAM" onclick="updateButton('TDAM')"> 
   <span class="sliderround"></span>

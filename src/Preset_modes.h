@@ -515,9 +515,7 @@ if (millis() - previousMillisLN[k] >= rtAM[k]/df){
   if ((millis() - previousMillisAM[k] >= (INTERVALf[k]*timeSpeed[k]*interRun[k])) && (sF <= sFtab[k])) {
     previousMillisAM[k] = millis();
     if (varON == 0 || varON == 1){
-        if (z[k] != blockArray[i[k]]+90){
         z[k] = blockArray[i[k]]+90;
-        }
     }
     else if (varON == 2){
         z[k] = random(256);
@@ -2122,7 +2120,7 @@ if (millis() - previousMillis2 >= FPS) {
        } 
 }
 
-void flowercolors(void){
+void rainbow_7(void){
     if (millis() - previousMillis1 >= changeSpeed + rn15) {
     previousMillis1 = millis();
     y0r+=1*dir1;
@@ -2526,11 +2524,43 @@ previousMillis2 = millis();
 }
 }
 
+void palettes_2(void){
+if (millis() - previousMillis1 >= changeSpeed) {
+  previousMillis1 = millis();  
+  y0r++;
+  y01m=y0r;
+}
+
+if (millis() - previousMillis36 > INTERVAL7) {
+  gCurrentPaletteNumber = random(gGradientPaletteCount);
+  gTargetPalette = gGradientPalettes[gCurrentPaletteNumber];
+  INTERVAL7=interval9/5*timeArray2[random(0,6)]*timefactor3;
+  previousMillis36 = millis(); 
+  T=0;
+}
+ 
+if (millis() - previousMillis2 >= FPS) { 
+previousMillis2 = millis(); 
+
+  nblendPaletteTowardPalette( gCurrentPalette, gTargetPalette, 32);
+
+  for( int i = 0; i < NUM_LEDS; i++) {
+    leds[i] = ColorFromPalette(gCurrentPalette, y0r, brigh[brighlu], LINEARBLEND);
+    y0r+=setDifference;
+    brighlu++;
+    if (brighlu >= numbrigh){brighlu = 0;}
+  }
+  handleGlitter();
+  FastLED.show();
+  brighlu=0; 
+  y0r=y01m;  
+}
+}
+
 void sparklingR(void){
 
 if (millis() - previousMillis38 >= 500){    
     previousMillis38 = millis();
-    //fillArrayRainbow(blockArray, longxArray);
     if (varON == 1){
     fillArrayRainbow(2);
   }

@@ -80,7 +80,8 @@ void processWebSocketMessageS(String str, int stringLength, String dataString){
           EEPROM.write(n,stringStorage[arrayPos]);
           arrayPos++;
         }
-        EEPROM.write((stringLength+EEPROMposition),NULL);
+        //EEPROM.write((stringLength+EEPROMposition),NULL);
+        EEPROM.write((stringLength+EEPROMposition), false);
         EEPROM.commit();
         String mergedString = "HSID"+String(dataString); 
         //Serial.print("SSID "); Serial.println(mergedString);
@@ -93,7 +94,8 @@ void processWebSocketMessageS(String str, int stringLength, String dataString){
           EEPROM.write(n,stringStorage[arrayPos]);
           arrayPos++;
         } 
-      EEPROM.write((stringLength+EEPROMposition),NULL);    
+      //EEPROM.write((stringLength+EEPROMposition),NULL); 
+      EEPROM.write((stringLength+EEPROMposition), false);   
       EEPROM.commit();
       String mergedString = "HPAS"+String(dataString); 
       //Serial.print("PASS "); Serial.println(mergedString);
@@ -157,10 +159,10 @@ void processWebSocketMessage(String str, int dataVar){
       else if (str == "THSV"){updateHSV = dataVar;}
       else if (str == "TBEE"){Bees = dataVar; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, Bees), Bees);  EEPROM.commit();};} // EEPROM
       else if (str == "TMWF"){maintainWaveForm = dataVar;}
-      else if (str == "TSET"){saveEverythingToEEPROM(); ws.textAll("GTSET0");}
+      else if (str == "TSET"){saveEverythingToEEPROM(); receivedSignal(); ws.textAll("GTSET0");}
       else if (str == "SETT"){EEPROM.put((offsetof(storeInEEPROM, rgbcolor)), dataVar); EEPROM.commit(); Serial.println(dataVar);}
-      else if (str == "TAAM"){ActiveModesToEEPROM(); ws.textAll("GTAAM0");}
-      else if (str == "TDAM"){DeactiveModesToEEPROM(); ws.textAll("GTDAM0");}
+      else if (str == "TAAM"){ActiveModesToEEPROM(); receivedSignal(); ws.textAll("GTAAM0");}
+      else if (str == "TDAM"){DeactiveModesToEEPROM(); receivedSignal(); ws.textAll("GTDAM0");}
       else if (str == "SRMI"){yminrood = dataVar; fillxmasArray(); ysr=0; for (int i = 0; i < 10; i++){colour[i]=(numAmax/10*i);} if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, yminrood), yminrood);  EEPROM.commit();};}
       else if (str == "SRMA"){ymaxrood = dataVar; fillxmasArray(); ysr=0; for (int i = 0; i < 10; i++){colour[i]=(numAmax/10*i);} if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, ymaxrood), ymaxrood);  EEPROM.commit();};}
       else if (str == "SGMI"){ymingroen = dataVar; fillxmasArray(); ysr=0; for (int i = 0; i < 10; i++){colour[i]=(numAmax/10*i);} if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, ymingroen), ymingroen);  EEPROM.commit();};}
@@ -307,7 +309,7 @@ EEPROM.commit();
 
 void ActiveModesToEEPROM(){
 int offsetPosition = offsetof(storeInEEPROM, cmode[0]); 
-for (int m = 0; m <= 30; m++){
+for (int m = 0; m < modeCount; m++){
 EEPROM.put((offsetPosition+m), 1);
 cmode[m]=true;    
 }
@@ -317,7 +319,7 @@ EEPROM.commit();
 void DeactiveModesToEEPROM(){
 programMode = EEPROM.read(offsetof(storeInEEPROM, programMode));  
 int offsetPosition = offsetof(storeInEEPROM, cmode[0]); 
-for (int m = 0; m <= 30; m++){
+for (int m = 0; m < modeCount; m++){
   if (m == programMode){
   EEPROM.put(offsetPosition, 1); 
   cmode[m]=true;   
