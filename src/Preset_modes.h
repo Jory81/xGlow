@@ -1270,12 +1270,10 @@ if (millis() - previousMillis1 >= changeSpeed){
 
     if (millis() - previousMillis5 > FPS){
           if (changeSpeed > 30){  
-          fadeOutSpeed=16;
-          fadeToBlackBy(leds, NUM_LEDS, fadeOutSpeed);
+          fadeToBlackBy(leds, NUM_LEDS, 16);
           }
           else if (changeSpeed <= 30){
-          fadeOutSpeed=35;
-          fadeToBlackBy(leds, NUM_LEDS, fadeOutSpeed);
+          fadeToBlackBy(leds, NUM_LEDS, 64);
           }
           previousMillis5 = millis();
           FastLED.show();
@@ -2534,7 +2532,7 @@ if (millis() - previousMillis1 >= changeSpeed) {
 if (millis() - previousMillis36 > INTERVAL7) {
   gCurrentPaletteNumber = random(gGradientPaletteCount);
   gTargetPalette = gGradientPalettes[gCurrentPaletteNumber];
-  INTERVAL7=interval9/5*timeArray2[random(0,6)]*timefactor3;
+  INTERVAL7=interval9/7*timeArray2[random(0,6)]*timefactor3;
   previousMillis36 = millis(); 
   T=0;
 }

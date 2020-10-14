@@ -119,7 +119,7 @@ if (changeModus){
    slowFactor=0;
    INTERVAL7=5000;
    dir1 = 1;
-   if ((effect_function == *static_glow && programMode == 26)  || effect_function == colourSplash){
+   if ((effect_function == *static_glow && programMode == 3)  || effect_function == colourSplash){
     dir = 1; xdir = 0;
    }
    else {

@@ -125,7 +125,7 @@ void fillArrayGradient(uint8_t fillcase, uint8_t y0r, int setDifference);
 void fillLongxArray(uint8_t colour);
 void fillColourArray (uint8_t colour[], uint8_t mainColour, int var[], int diff[]);
 void fillNUM_LEDS1(uint8_t arrayType, int NUM_LEDS);
-void receivedSignal();
+//void receivedSignal();
 void selectcolorArray();
 void handleAdditionalVariables();
 uint8_t changeColourFcn(int colorMode, uint8_t* yvIn, uint8_t yvalmin, uint8_t yvalmax);
