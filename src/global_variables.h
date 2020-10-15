@@ -389,10 +389,11 @@ int rr[30]  ={-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
 
 uint16_t randomNumberMinimum[21]={25, 10, 25, 10, 25, 60,  100, 125, 115, 125, 145, 145, 145, 155, 200, 60, 125, 150, 175, 25, 120};
 uint16_t randomNumberMaximum[21]={50, 50, 50, 50, 50, 140, 140, 140, 180, 180, 240, 240, 240, 240, 250, 140, 250, 200, 250, 175, 200};
+boolean  rainbowPossibility[30]={0};
 
 uint8_t  flakeListMode7[21]={0, 4, 8, 12, 12, 0, 8, 12, 16, 16, 8, 6, 16, 20, 24, 28, 30, 35, 35, 35, 40};
 uint8_t  flakeListMode16[21]={0, 2, 6, 12, 8, 12, 12, 12, 12, 16, 16, 16, 16, 24, 0, 4, 8, 12, 16, 24, 12};
-int      num17[21]={NUM_LEDS-1, NUM_LEDS-1, NUM_LEDS-1, NUM_LEDS-1, NUM_LEDS-1, NUM_LEDS-1, NUM_LEDS-1, NUM_LEDS-1, NUM_LEDS-1, NUM_LEDS-1, NUM_LEDS-1, NUM_LEDS-1, NUM_LEDS-1, NUM_LEDS-1, NUM_LEDS-1, NUM_LEDS-1, NUM_LEDS-1, NUM_LEDS-1, NUM_LEDS-1, NUM_LEDS-1, NUM_LEDS-1};
+int      num17[21]={NUM_LEDS, NUM_LEDS, NUM_LEDS, NUM_LEDS, NUM_LEDS, NUM_LEDS, NUM_LEDS, NUM_LEDS, NUM_LEDS, NUM_LEDS, NUM_LEDS, NUM_LEDS, NUM_LEDS, NUM_LEDS, NUM_LEDS, NUM_LEDS, NUM_LEDS, NUM_LEDS, NUM_LEDS, NUM_LEDS, NUM_LEDS};
 int      num26[21]={0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 int      num23[21]={0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
@@ -614,13 +615,13 @@ enum { GETTING_DARKER = 0, GETTING_BRIGHTER = 1 };
 
 int num30 =0;
 int yy = 0;
-int hh = NUM_LEDS-1;
+int hh = NUM_LEDS;
 int xp=2;
 int xp2=2;
 int w = NUM_LEDS-1;
 int p = NUM_LEDS-1;
-int poshh=NUM_LEDS-1;
-int rrhh=NUM_LEDS-1;
+int poshh=NUM_LEDS;
+int rrhh=NUM_LEDS;
 int p1=0;
 int p2=0;
 int p3=0;
