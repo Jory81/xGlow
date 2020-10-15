@@ -390,6 +390,7 @@ int rr[30]  ={-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
 uint16_t randomNumberMinimum[21]={25, 10, 25, 10, 25, 60,  100, 125, 115, 125, 145, 145, 145, 155, 200, 60, 125, 150, 175, 25, 120};
 uint16_t randomNumberMaximum[21]={50, 50, 50, 50, 50, 140, 140, 140, 180, 180, 240, 240, 240, 240, 250, 140, 250, 200, 250, 175, 200};
 boolean  rainbowPossibility[30]={0};
+boolean endFlag = true;
 
 uint8_t  flakeListMode7[21]={0, 4, 8, 12, 12, 0, 8, 12, 16, 16, 8, 6, 16, 20, 24, 28, 30, 35, 35, 35, 40};
 uint8_t  flakeListMode16[21]={0, 2, 6, 12, 8, 12, 12, 12, 12, 16, 16, 16, 16, 24, 0, 4, 8, 12, 16, 24, 12};
@@ -586,6 +587,7 @@ int diff[10]={0};
 uint8_t diffbeat=15;
 uint8_t diffbeat2=15;
 int setDifference = 1;
+int setDifferenceMem = 1;
 int setDifference2 = setDifference+5;
 int num1=0;
 int r = 0;

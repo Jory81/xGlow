@@ -95,7 +95,7 @@ if (changeModus){
     case 33: {       effect_function = xmas_solid;        changeSpeed=200;        setDifference=7;                      offdis=5;        ysr=0; numsparks=0;} break;                            
     case 34: {       effect_function = splash;            changeSpeed=30;         setDifference=40;     colorMode=5;    rn14=random(100, 300)*NUM_LEDS/100;                 cfactor1=300/NUM_LEDS; } break;   
     case 35: {       effect_function = strobe;            changeSpeed=20;         setDifference=40;     colorMode=1;    cfactor1=300/NUM_LEDS; } break;
-    case 36: {       effect_function = meteor;            changeSpeed=50;         setDifference=10;     colorMode=2;    flakeCounter=0;               offmin=13;        offmax=13;     offdis = offdisC;       hh=NUM_LEDS;      numsparks=cfactor2*5;    for (int s=0;s<30; s++){y[s]=offdisC;}    poshh=NUM_LEDS;   if (tower){slingerSpeed=45/cfactor2;} else {slingerSpeed = changeSpeed;};} break;
+    case 36: {       effect_function = meteor;            changeSpeed=50;         setDifference=10;     colorMode=2;    flakeCounter=0;               offmin=13;        offmax=13;     offdis = offdisC;       hh=NUM_LEDS;      numsparks=cfactor2*5;    endFlag=true;    for (int s=0;s<30; s++){y[s]=offdisC;}    poshh=NUM_LEDS;   if (tower){slingerSpeed=45/cfactor2;} else {slingerSpeed = changeSpeed;};} break;
     case 37: {       effect_function = RGBmode;   changeSpeed=50;          } break;     
    }
    for (int k=0; k<21; k++){

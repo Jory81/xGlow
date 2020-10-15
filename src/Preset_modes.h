@@ -1845,7 +1845,12 @@ if (millis() - previousMillis36 >= INTERVAL7){
               pos[s]=NUM_LEDS;
               flakeCounter++;
                if (s == 0){
-                rtAM[0]= random(5000);
+                  if (numsparks == 1){
+                    rtAM[0]= random(4000, 8000);
+                  }
+                  else {
+                    rtAM[0]= random(5000);
+                  }
                 if ((colorMode != 5) && (colorMode != 4)){
                 yMA[s] = changeColourFcn2(colorMode, yMA[s], yMA[s], 40, 220); 
                 }
@@ -1853,7 +1858,7 @@ if (millis() - previousMillis36 >= INTERVAL7){
               else{
                 rtAM[s]= random(40000);
               }
-              rn[s] = random(0, NUM_LEDS/2);
+              rn[s] = random(0, (NUM_LEDS/2+setDifference));
               changeSpeedMA[s]=(changeSpeed*timeArray[random(1,5)])/4;
               previousMillisAM[s] = millis();        
               }
@@ -1862,10 +1867,17 @@ if (millis() - previousMillis36 >= INTERVAL7){
           }
         }
              
-        if (millis() - previousMillis37 >= changeSpeed && flakeCounter > cn-4){ // cn-4 //cn-(4*cfactor2)
+        if (millis() - previousMillis37 >= FPS && flakeCounter >= cn){ // cn-4 //cn-(4*cfactor2)
           previousMillis37 = millis();
+          if (endFlag){
+          setDifferenceMem = setDifference;
+          setDifference = 25;
+          endFlag = false;
+          }
           hh=hh-1;
           if (hh <= 0){
+          endFlag = true;
+          setDifference = setDifferenceMem;
           hh=NUM_LEDS;
           evenOddCounter++;
           for (int s=0; s<numsparks;s++){
@@ -1919,10 +1931,17 @@ if (millis() - previousMillis35 >= FPS && hh == NUM_LEDS) {
             }
           break;   
           }
-          else {   
-            if(random(21)<(3/cfactor2)) {
-            leds[i].fadeToBlackBy(random(setDifference));      
-            }      
+          else {
+            if (numsparks == 1 && setDifference <= 5){
+              if(random(12)<(6/cfactor2)) {
+              leds[i].fadeToBlackBy(random(setDifference*2));      
+              }
+            }
+            else {
+              if(random(21)<(3/cfactor2)) {
+              leds[i].fadeToBlackBy(random(setDifference));      
+              }   
+            }   
           }
       }
       }
@@ -1930,46 +1949,46 @@ if (millis() - previousMillis35 >= FPS && hh == NUM_LEDS) {
     previousMillis35 = millis();
 }
                  
-  if (millis() - previousMillis35 >= changeSpeed && hh < NUM_LEDS) {
-  previousMillis35 = millis();
+//   if (millis() - previousMillis35 >= changeSpeed && hh < NUM_LEDS) {
+//   previousMillis35 = millis();
   
-    if (colorMode == 1){
-        yMA[0]=random(256);                    
-    }              
-    else if (colorMode == 2){
-        yMA[0]=yMA[0]+random(256);
-          while ((yMA[0] >= ymin && yMA[0] <= ymax) || (yMA[0] >= ymin1 && yMA[0] <= ymax1)){
-            yMA[0]=yMA[0]+random(256);
-          }            
-    }
+//     if (colorMode == 1){
+//         yMA[0]=random(256);                    
+//     }              
+//     else if (colorMode == 2){
+//         yMA[0]=yMA[0]+random(256);
+//           while ((yMA[0] >= ymin && yMA[0] <= ymax) || (yMA[0] >= ymin1 && yMA[0] <= ymax1)){
+//             yMA[0]=yMA[0]+random(256);
+//           }            
+//     }
 
-    longxArray[random(NUM_LEDS)]=yMA[0];
-    longxArray[random(NUM_LEDS)]=yMA[0];
-    longxArray[random(NUM_LEDS)]=yMA[0];
+//     longxArray[random(NUM_LEDS)]=yMA[0];
+//     longxArray[random(NUM_LEDS)]=yMA[0];
+//     longxArray[random(NUM_LEDS)]=yMA[0];
 
-    longxArray[hh]=yMA[0];
+//     longxArray[hh]=yMA[0];
 
-      for(int i = 0; i < NUM_LEDS; i++){
-        for (int j = 0; j < numsparks; j++ ){
-            leds[i] = CHSV(longxArray[i],S,BRIGH); 
-          }
-      }
-    FastLED.show(); 
-    previousMillis35 = millis();
-}       
+//       for(int i = 0; i < NUM_LEDS; i++){
+//         for (int j = 0; j < numsparks; j++ ){
+//             leds[i] = CHSV(longxArray[i],S,BRIGH); 
+//           }
+//       }
+//     FastLED.show(); 
+//     previousMillis35 = millis();
+// }       
              
-if (millis() - previousMillis5 >= 70 && hh == NUM_LEDS && num15 <75){
-        previousMillis5 = millis();   
-        for (int s=0; s<numsparks; s++){
-          pos[s]=NUM_LEDS;
-        } 
-        num15++;        
+// if (millis() - previousMillis5 >= 70 && hh == NUM_LEDS && num15 <75){
+//         previousMillis5 = millis();   
+//         for (int s=0; s<numsparks; s++){
+//           pos[s]=NUM_LEDS;
+//         } 
+//         num15++;        
         
-        if (num15 > 25){
-            fadeToBlackBy(leds, NUM_LEDS, fadeOutSpeed);
-            FastLED.show();
-            }
-}       
+//         if (num15 > 25){
+//             fadeToBlackBy(leds, NUM_LEDS, fadeOutSpeed);
+//             FastLED.show();
+//             }
+// }       
 } 
 
 void snow_flakes_2(void){ 
