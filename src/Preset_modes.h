@@ -1846,6 +1846,9 @@ if (millis() - previousMillis36 >= INTERVAL7){
               flakeCounter++;
                if (s == 0){
                 rtAM[0]= random(5000);
+                if ((colorMode != 5) && (colorMode != 4)){
+                yMA[s] = changeColourFcn2(colorMode, yMA[s], yMA[s], 40, 220); 
+                }
                }
               else{
                 rtAM[s]= random(40000);
