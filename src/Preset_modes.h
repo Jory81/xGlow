@@ -1829,18 +1829,18 @@ if (millis() - previousMillis36 >= INTERVAL7){
             flakeCounter++;
             if (s == 0){
                 if (numsparks == 1){
-                  rtAM[0]= random(3500, 8000);
+                  rtAM[0]= random(3500, 8000)*timefactor3;
                 }
                 else {
-                  rtAM[0]= random(5000);
+                  rtAM[0]= random(5000)*timefactor3;
                 }
             }
             else{
               if (endFlag){
-              rtAM[s]= random(4000);
+              rtAM[s]= random(4000)*timefactor3;
               }
               else {
-              rtAM[s]= random(40000);
+              rtAM[s]= random(40000)*timefactor3;
               }
             }
             rn[s] = random(0, (NUM_LEDS/2+setDifference));
@@ -1855,20 +1855,19 @@ if (millis() - previousMillis36 >= INTERVAL7){
           }
       }
   if (flakeCounter >= (cn-numsparks*2)){
-      if (endFlag){
+      endFlag=true;
       setDifferenceMem = setDifference;
       setDifference = (int)(S/10);
-      endFlag = false;
     }
   }
-  }
+
           
   if (millis() - previousMillis37 >= FPS && flakeCounter > cn){ // cn-4 //cn-(4*cfactor2)
     previousMillis37 = millis();
     hh=hh-1;
     if (hh <= 0){
-      endFlag = true;
       readyToChange = true;
+      endFlag=false;
       setDifference = setDifferenceMem;
       hh=NUM_LEDS;
       evenOddCounter++;
@@ -1903,7 +1902,8 @@ if (millis() - previousMillis36 >= INTERVAL7){
           changeSpeedMA[s]=100;
           }  
       }   
-      INTERVAL7=random(20000);
+      INTERVAL7=random(20000)*timefactor3;
+      updateOledFloat(88, 0, &INTERVAL7, 0);
       T=0;
       num15=0;        
       flakeCounter=0;
@@ -2091,7 +2091,7 @@ void rainbow_7(void){
     rn15=0;
     if (y0r > ymax3 && y0r < ymax3+2 && dir1 == 1){ 
       dir1 = -1;
-      rn15=random(5000,25000);
+      rn15=random(5000,25000)*timefactor3;
       }
     else if (y0r < ymin3 && y0r > ymin3-2 && dir1 == -1){ 
       dir1 = 1;
@@ -2136,11 +2136,11 @@ if (varON == 1){
 
     if (yval1 == ymax4-setDifference && dir1 == 1){
      dir1 = -1;
-     rn15 = random(65536)/2;
+     rn15 = random(65536)/2*timefactor3;
      }
     else if (yval1 == ymin4 && dir1 == -1){
      dir1 = 1;
-     rn15 = random(65536)/2;
+     rn15 = random(65536)/2*timefactor3;
      }
     }
 }
@@ -2460,6 +2460,7 @@ if (millis() - previousMillis36 > INTERVAL7 && varON == 2) {
   gCurrentPaletteNumber = random(gGradientPaletteCount);
   gTargetPalette = gGradientPalettes[gCurrentPaletteNumber];
   INTERVAL7=interval9*timeArray2[random(0,6)]*timefactor3;
+  updateOledFloat(88, 0, &INTERVAL7, 0);
   previousMillis36 = millis(); 
   T=0;
 }
@@ -2498,6 +2499,7 @@ if (millis() - previousMillis36 > INTERVAL7) {
   gCurrentPaletteNumber = random(gGradientPaletteCount);
   gTargetPalette = gGradientPalettes[gCurrentPaletteNumber];
   INTERVAL7=interval9/7*timeArray2[random(0,6)]*timefactor3;
+  updateOledFloat(88, 0, &INTERVAL7, 0);
   previousMillis36 = millis(); 
   T=0;
 }
