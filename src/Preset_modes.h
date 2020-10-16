@@ -1854,7 +1854,7 @@ if (millis() - previousMillis36 >= INTERVAL7){
             }
           }
       }
-  if (flakeCounter >= (cn-numsparks*2)){
+  if (!endFlag) && flakeCounter >= (cn-numsparks)){
       endFlag=true;
       setDifferenceMem = setDifference;
       setDifference = (int)(S/10);
@@ -1893,7 +1893,7 @@ if (millis() - previousMillis36 >= INTERVAL7){
         if (random(75)<(9/cfactor2)){ rainbowPossibility[s]=true; }
         else { rainbowPossibility[s]=false; }
 
-        if (random(27)<(9)){ 
+        if (random(36)<(9)){ 
           revPossibility[s]=true;
           changeSpeedMA[s]=random(60, (90+(15*cfactor2)));
           }
