@@ -1791,136 +1791,136 @@ else if (variant==3 && (!readyToChange)){
 
 void meteor(void){
 if (millis() - previousMillis36 >= INTERVAL7){
-        for (int s=0; s<numsparks; s++){  
-        if (millis() - previousMillisAM[s] >= rtAM[s]){  
+  for (int s=0; s<numsparks; s++){  
+    if (millis() - previousMillisAM[s] >= rtAM[s]){  
         if (millis() - previousMillisLN[s] >= changeSpeedMA[s] && flakeCounter >= flakeListMode16[s] && flakeCounter <= cn) {
           previousMillisLN[s] = millis();
-          // if ((tower) && pos[s] != NUM_LEDS){
-          // pos[s]=pos[s]-y[s];
-          // longxArray[pos[s]]=yMA[s];
-          // }       
-          // else if ((tower) && pos[s] == NUM_LEDS){
-          //    pos[s]=random(NUM_LEDS-offdis, NUM_LEDS);
-          //    longxArray[pos[s]]=yMA[s];            
-          // }
-          // else{
           pos[s]=pos[s]-1;
           num6++;
-            if (rainbowPossibility[s] == true){
-                longxArray[pos[s]]=yMA[s]+pos[s];
-            }
-            else {
-                longxArray[pos[s]]=yMA[s];
-            }
+          if (rainbowPossibility[s] == true){
+              longxArray[pos[s]]=yMA[s]+pos[s];
+          }
+          else {
+              longxArray[pos[s]]=yMA[s];
+          }
+            
           if (num6 >= cfactor2){
-            if (pos[s] < rn[s]+(25*cfactor2)){ // 20
-              //if (random(10)>=5){
-              changeSpeedMA[s] += (int)(3/cfactor2); //6
-              //}
-            //Serial.print("time "); Serial.println(changeSpeedMA[s]);
-            num6=0;
-            }
-          }
-         // }
-
-          // if (tower){
-          //     if (pos[s] < 0 && flakeCounter <= cn){
-          //     pos[s]=NUM_LEDS;
-          //     flakeCounter++;
-          //     rtAM[s]= random(40000);
-          //     previousMillisAM[s] = millis();
-          //       if(random(10)>5) {
-          //         y[s]=offdis;
-          //       }
-          //       else { 
-          //         y[s]=offdis+1;
-          //       }           
-          //   }
-          // }  
-          // else if (!tower) {
-            if (pos[s] < rn[s] && flakeCounter <= cn){
-              if (rainbowPossibility[s] == true){
-                yMA[s]=random(256);
-              }
-              pos[s]=NUM_LEDS;
-              flakeCounter++;
-               if (s == 0){
-                  if (numsparks == 1){
-                    rtAM[0]= random(4000, 8000);
-                  }
-                  else {
-                    rtAM[0]= random(5000);
-                  }
-                if ((colorMode != 5) && (colorMode != 4)){
-                yMA[s] = changeColourFcn2(colorMode, yMA[s], yMA[s], 40, 220); 
+            if (revPossibility[s]){
+                if (changeSpeedMA[s] >= FPS+3){  
+                changeSpeedMA[s] -= (int)(3/cfactor2); //6
                 }
-               }
-              else{
-                rtAM[s]= random(40000);
+            }
+            else {
+              if (pos[s] < rn[s]+(25*cfactor2)){ // 20
+              changeSpeedMA[s] += (int)(3/cfactor2); //6
               }
-              rn[s] = random(0, (NUM_LEDS/2+setDifference));
+            }
+          num6=0;
+          }
+
+          if (pos[s] < rn[s] && flakeCounter <= cn){
+            if ((colorMode != 5) && (colorMode != 4)){
+            yMA[s] = changeColourFcn2(colorMode, yMA[s], yMA[s], 40, 220); 
+            }            
+            if (rainbowPossibility[s] == true){
+              yMA[s]=random(256);
+            }
+            pos[s]=NUM_LEDS;
+            flakeCounter++;
+            if (s == 0){
+                if (numsparks == 1){
+                  rtAM[0]= random(3500, 8000);
+                }
+                else {
+                  rtAM[0]= random(5000);
+                }
+            }
+            else{
+              if (endFlag){
+              rtAM[s]= random(4000);
+              }
+              else {
+              rtAM[s]= random(40000);
+              }
+            }
+            rn[s] = random(0, (NUM_LEDS/2+setDifference));
+            if (revPossibility[s]){
+              changeSpeedMA[s]=random(60, (90+(15*cfactor2)));
+            }
+            else {
               changeSpeedMA[s]=(changeSpeed*timeArray[random(1,5)])/4;
-              previousMillisAM[s] = millis();        
-              }
-           // }
+            }
+            previousMillisAM[s] = millis();        
+            }
           }
+      }
+  if (flakeCounter >= (cn-numsparks*2)){
+      if (endFlag){
+      setDifferenceMem = setDifference;
+      setDifference = (int)(S/10);
+      endFlag = false;
+    }
+  }
+  }
+          
+  if (millis() - previousMillis37 >= FPS && flakeCounter > cn){ // cn-4 //cn-(4*cfactor2)
+    previousMillis37 = millis();
+    hh=hh-1;
+    if (hh <= 0){
+      endFlag = true;
+      readyToChange = true;
+      setDifference = setDifferenceMem;
+      hh=NUM_LEDS;
+      evenOddCounter++;
+      for (int s=0; s<numsparks;s++){
+        if (colorMode == 4){
+          if (s == 0){
+            yMA[0]=yMA[0]+random(50,200);
           }
+          yMA[s]=yMA[0];      
         }
-             
-        if (millis() - previousMillis37 >= FPS && flakeCounter >= cn){ // cn-4 //cn-(4*cfactor2)
-          previousMillis37 = millis();
-          if (endFlag){
-          setDifferenceMem = setDifference;
-          setDifference = 25;
-          endFlag = false;
+        else if (colorMode == 5){
+          if (s == 0){ yMA[0]=yMA[0]+random(50,200);
+            while ((yMA[0] >= ymin && yMA[0] <= ymax) || (yMA[0] >= ymin1 && yMA[0] <= ymax1)){yMA[0]=yMA[0]+random(50,200);}
+            }
+          yMA[s]=yMA[0];          
+        }
+        else {
+        yMA[s] = changeColourFcn2(colorMode, yMA[s], yMA[s], 40, 220);       
+        }
+      pos[s]=NUM_LEDS;
+      rn[s]= random(randomNumberMinimum[s], randomNumberMaximum[s]);
+
+        if (random(75)<(9/cfactor2)){ rainbowPossibility[s]=true; }
+        else { rainbowPossibility[s]=false; }
+
+        if (random(27)<(9)){ 
+          revPossibility[s]=true;
+          changeSpeedMA[s]=random(60, (90+(15*cfactor2)));
           }
-          hh=hh-1;
-          if (hh <= 0){
-          endFlag = true;
-          setDifference = setDifferenceMem;
-          hh=NUM_LEDS;
-          evenOddCounter++;
-          for (int s=0; s<numsparks;s++){
-            if (colorMode == 4){
-               if (s == 0){ yMA[0]=yMA[0]+random(50,200);
-               }
-               yMA[s]=yMA[0];      
-            }
-            else if (colorMode == 5){
-               if (s == 0){ yMA[0]=yMA[0]+random(50,200);
-               while ((yMA[0] >= ymin && yMA[0] <= ymax) || (yMA[0] >= ymin1 && yMA[0] <= ymax1)){yMA[0]=yMA[0]+random(50,200);}
-               }
-               yMA[s]=yMA[0];          
-            }
-            else {
-            yMA[s] = changeColourFcn2(colorMode, yMA[s], yMA[s], 40, 220);       
-            }
-          pos[s]=NUM_LEDS;
-          rn[s]= random(randomNumberMinimum[s], randomNumberMaximum[s]);  
-            if (random(25)<(3/cfactor2)){
-              rainbowPossibility[s]=true;
-            }
-            else {
-              rainbowPossibility[s]=false;
-            }
-          }   
-          INTERVAL7=random(20000);
-          T=0;
-          num15=0;        
-          flakeCounter=0;
-          if (NUM_LEDS <= 100){
-          cn=random(55,85);
-          }
-          else if (NUM_LEDS > 100){
-          cn=random(55,125);
-          }                      
-          previousMillis36 = millis();
-          }
-          }
+        else { 
+          revPossibility[s]=false; 
+          changeSpeedMA[s]=100;
+          }  
+      }   
+      INTERVAL7=random(20000);
+      T=0;
+      num15=0;        
+      flakeCounter=0;
+      if (NUM_LEDS <= 100){
+      cn=random(55,85);
+      }
+      else if (NUM_LEDS > 100){
+      cn=random(55,125);
+      }                      
+      previousMillis36 = millis();
+    }
+    }
 }
 
 //if (millis() - previousMillis35 >= FPS && (hh == NUM_LEDS || flakeCounter < cn)) {
-if (millis() - previousMillis35 >= FPS && hh == NUM_LEDS) {
+//if (millis() - previousMillis35 >= FPS && hh == NUM_LEDS) {
+if (millis() - previousMillis35 >= FPS) {
       for(int i = 0; i < NUM_LEDS; i++){
         for (int j = 0; j < numsparks; j++ ){
           if (i == pos[j]) {
@@ -1933,12 +1933,12 @@ if (millis() - previousMillis35 >= FPS && hh == NUM_LEDS) {
           }
           else {
             if (numsparks == 1 && setDifference <= 5){
-              if(random(12)<(6/cfactor2)) {
+              if(random(18)<(9/cfactor2)) {
               leds[i].fadeToBlackBy(random(setDifference*2));      
               }
             }
             else {
-              if(random(21)<(3/cfactor2)) {
+              if(random(63)<(9/cfactor2)) {
               leds[i].fadeToBlackBy(random(setDifference));      
               }   
             }   
@@ -1947,48 +1947,7 @@ if (millis() - previousMillis35 >= FPS && hh == NUM_LEDS) {
       }
     FastLED.show(); 
     previousMillis35 = millis();
-}
-                 
-//   if (millis() - previousMillis35 >= changeSpeed && hh < NUM_LEDS) {
-//   previousMillis35 = millis();
-  
-//     if (colorMode == 1){
-//         yMA[0]=random(256);                    
-//     }              
-//     else if (colorMode == 2){
-//         yMA[0]=yMA[0]+random(256);
-//           while ((yMA[0] >= ymin && yMA[0] <= ymax) || (yMA[0] >= ymin1 && yMA[0] <= ymax1)){
-//             yMA[0]=yMA[0]+random(256);
-//           }            
-//     }
-
-//     longxArray[random(NUM_LEDS)]=yMA[0];
-//     longxArray[random(NUM_LEDS)]=yMA[0];
-//     longxArray[random(NUM_LEDS)]=yMA[0];
-
-//     longxArray[hh]=yMA[0];
-
-//       for(int i = 0; i < NUM_LEDS; i++){
-//         for (int j = 0; j < numsparks; j++ ){
-//             leds[i] = CHSV(longxArray[i],S,BRIGH); 
-//           }
-//       }
-//     FastLED.show(); 
-//     previousMillis35 = millis();
-// }       
-             
-// if (millis() - previousMillis5 >= 70 && hh == NUM_LEDS && num15 <75){
-//         previousMillis5 = millis();   
-//         for (int s=0; s<numsparks; s++){
-//           pos[s]=NUM_LEDS;
-//         } 
-//         num15++;        
-        
-//         if (num15 > 25){
-//             fadeToBlackBy(leds, NUM_LEDS, fadeOutSpeed);
-//             FastLED.show();
-//             }
-// }       
+}     
 } 
 
 void snow_flakes_2(void){ 
