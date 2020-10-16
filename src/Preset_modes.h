@@ -1818,7 +1818,7 @@ if (millis() - previousMillis36 >= INTERVAL7){
           num6=0;
           }
 
-          if (pos[s] < rn[s] && flakeCounter <= cn){
+          if (pos[s] < rn[s]){
             if ((colorMode != 5) && (colorMode != 4)){
             yMA[s] = changeColourFcn2(colorMode, yMA[s], yMA[s], 40, 220); 
             }            
