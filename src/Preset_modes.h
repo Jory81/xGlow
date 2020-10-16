@@ -1866,6 +1866,13 @@ if (millis() - previousMillis36 >= INTERVAL7){
     previousMillis37 = millis();
     hh=hh-1;
     if (hh <= 0){
+      if (NUM_LEDS <= 100){
+      cn=random(55,85);
+      }
+      else if (NUM_LEDS > 100){
+      cn=random(55,125);
+      }
+      flakeCounter=0;
       readyToChange = true;
       endFlag=false;
       setDifference = setDifferenceMem;
@@ -1905,14 +1912,7 @@ if (millis() - previousMillis36 >= INTERVAL7){
       INTERVAL7=random(20000)*timefactor3;
       updateOledFloat(88, 0, &INTERVAL7, 0);
       T=0;
-      num15=0;        
-      flakeCounter=0;
-      if (NUM_LEDS <= 100){
-      cn=random(55,85);
-      }
-      else if (NUM_LEDS > 100){
-      cn=random(55,125);
-      }                      
+      num15=0;                              
       previousMillis36 = millis();
     }
     }

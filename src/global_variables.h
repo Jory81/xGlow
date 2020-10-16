@@ -391,7 +391,7 @@ uint16_t randomNumberMinimum[21]={25, 10, 25, 10, 25, 60,  100, 125, 115, 125, 1
 uint16_t randomNumberMaximum[21]={50, 50, 50, 50, 50, 140, 140, 140, 180, 180, 240, 240, 240, 240, 250, 140, 250, 200, 250, 175, 200};
 boolean  rainbowPossibility[30]={0};
 boolean  revPossibility[30]={1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0};
-boolean  endFlag = true;
+boolean  endFlag = false;
 
 uint8_t  flakeListMode7[21]={0, 4, 8, 12, 12, 0, 8, 12, 16, 16, 8, 6, 16, 20, 24, 28, 30, 35, 35, 35, 40};
 uint8_t  flakeListMode16[21]={0, 2, 6, 12, 8, 12, 12, 12, 12, 16, 16, 16, 16, 24, 0, 4, 8, 12, 16, 24, 12};
