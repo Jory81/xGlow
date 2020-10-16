@@ -1854,7 +1854,7 @@ if (millis() - previousMillis36 >= INTERVAL7){
             }
           }
       }
-  if (!endFlag) && flakeCounter >= (cn-numsparks)){
+  if ((endFlag == false) && (flakeCounter >= cn-numsparks)){
       endFlag=true;
       setDifferenceMem = setDifference;
       setDifference = (int)(S/10);
