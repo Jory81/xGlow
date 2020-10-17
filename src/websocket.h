@@ -268,26 +268,26 @@ void sendMessageToClient (int dataVar){
 
 void saveEverythingToEEPROM(){
 EEPROM.put(offsetof(storeInEEPROM, yval), yval);
-EEPROM.put(offsetof(storeInEEPROM, BRIGH), BRIGH);
-EEPROM.put(offsetof(storeInEEPROM, S), S);
+EEPROM.put(offsetof(storeInEEPROM, BRIGH[0]), BRIGH);
+EEPROM.put(offsetof(storeInEEPROM, S[0]), S);
 EEPROM.put(offsetof(storeInEEPROM, programMode), programMode);
-EEPROM.put(offsetof(storeInEEPROM, glowON), glowON);
-EEPROM.put(offsetof(storeInEEPROM, satON), satON);
-EEPROM.put(offsetof(storeInEEPROM, numsat), numsat);
+EEPROM.put(offsetof(storeInEEPROM, glowON[0]), glowON);
+EEPROM.put(offsetof(storeInEEPROM, satON[0]), satON);
+EEPROM.put(offsetof(storeInEEPROM, numsat[0]), numsat);
 EEPROM.put(offsetof(storeInEEPROM, varON), varON);
-EEPROM.put(offsetof(storeInEEPROM, numbrigh), numbrigh);
-EEPROM.put(offsetof(storeInEEPROM, BrF), BrF);
-EEPROM.put(offsetof(storeInEEPROM, SF), SF);
+EEPROM.put(offsetof(storeInEEPROM, numbrigh[0]), numbrigh);
+EEPROM.put(offsetof(storeInEEPROM, BrF[0]), BrF);
+EEPROM.put(offsetof(storeInEEPROM, SF[0]), SF);
 //EEPROM.put(offsetof(storeInEEPROM, colorlength), colorlength);
 EEPROM.put(offsetof(storeInEEPROM, z5), z5);
 EEPROM.put(offsetof(storeInEEPROM, cycleTime), cycleTime);
-EEPROM.put(offsetof(storeInEEPROM, waveTimeBr), waveTimeBr);
-EEPROM.put(offsetof(storeInEEPROM, waveTimeS), waveTimeS);  
+EEPROM.put(offsetof(storeInEEPROM, waveTimeBr[0]), waveTimeBr);
+EEPROM.put(offsetof(storeInEEPROM, waveTimeS[0]), waveTimeS);  
 EEPROM.put(offsetof(storeInEEPROM, timefactor3), timefactor3);
-EEPROM.put(offsetof(storeInEEPROM, BPMB), BPMB); 
-EEPROM.put(offsetof(storeInEEPROM, BPMS), BPMS);
-EEPROM.put(offsetof(storeInEEPROM, offBr), offBr);
-EEPROM.put(offsetof(storeInEEPROM, offS), offS);
+EEPROM.put(offsetof(storeInEEPROM, BPMB[0]), BPMB); 
+EEPROM.put(offsetof(storeInEEPROM, BPMS[0]), BPMS);
+EEPROM.put(offsetof(storeInEEPROM, offBr[0]), offBr);
+EEPROM.put(offsetof(storeInEEPROM, offS[0]), offS);
 EEPROM.put(offsetof(storeInEEPROM, fadeFirst), fadeFirst);
 EEPROM.put(offsetof(storeInEEPROM, randomCycle), randomCycle);
 EEPROM.put(offsetof(storeInEEPROM, excludeModes), excludeModes);
@@ -328,21 +328,20 @@ void handleWebsocketUpdate(){
   }
 }
 
-
-
 void saveCurrentModeToEEPROM(){
 int offsetPosition = offsetof(storeInEEPROM, BriSPreset[0]);
 EEPROM.put((offsetPosition+programMode), BriSPreset); 
 offsetPosition = offsetof(storeInEEPROM, changeSpeed[0]);
-EEPROM.put((offsetPosition+programMode), changeSpeed); 
+EEPROM.put((offsetPosition+(programMode*sizeof(unsigned long))), changeSpeed); 
 offsetPosition = offsetof(storeInEEPROM, setDifference[0]);
-EEPROM.put((offsetPosition+programMode), setDifference);
+EEPROM.put((offsetPosition+(programMode*sizeof(int))), setDifference);
 offsetPosition = offsetof(storeInEEPROM, colorMode[0]);
-EEPROM.put((offsetPosition+programMode), colorMode); 
+EEPROM.put((offsetPosition+(programMode*sizeof(int))), colorMode); 
 offsetPosition = offsetof(storeInEEPROM, arrayn[0]);
 EEPROM.put((offsetPosition+programMode), arrayn); 
 offsetPosition = offsetof(storeInEEPROM, varON[0]);
 EEPROM.put((offsetPosition+programMode), varON);
+
 if (effect_function == pers_color){
 EEPROM.put(offsetof(storeInEEPROM, numcolor1), numcolor); 
 }
@@ -354,6 +353,45 @@ EEPROM.put(offsetof(storeInEEPROM, yvalm2), yval1);
 }
 else if (effect_function == static_glow && programMode == 3){
 EEPROM.put(offsetof(storeInEEPROM, yvalm3), yval1);
+}
+
+if (BriSPreset > 20 && BriSPreset <=25){
+uint8_t offsetInArray = BriSPreset - 20;
+
+offsetPosition = offsetof(storeInEEPROM, waveTimeBr[0]);
+EEPROM.put((offsetPosition+(offsetInArray*sizeof(unsigned long))), waveTimeBr); 
+offsetPosition = offsetof(storeInEEPROM, waveTimeS[0]);
+EEPROM.put((offsetPosition+(offsetInArray*sizeof(unsigned long))), waveTimeS);
+
+offsetPosition = offsetof(storeInEEPROM, BPMB[0]);
+EEPROM.put((offsetPosition+offsetInArray), BPMB);
+offsetPosition = offsetof(storeInEEPROM, BPMS[0]);
+EEPROM.put((offsetPosition+offsetInArray), BPMS);
+
+offsetPosition = offsetof(storeInEEPROM, BRIGH[0]);
+EEPROM.put((offsetPosition+offsetInArray), BRIGH);
+offsetPosition = offsetof(storeInEEPROM, S[0]);
+EEPROM.put((offsetPosition+offsetInArray), S);
+
+offsetPosition = offsetof(storeInEEPROM, offBr[0]);
+EEPROM.put((offsetPosition+offsetInArray), offBr);
+offsetPosition = offsetof(storeInEEPROM, offS[0]);
+EEPROM.put((offsetPosition+offsetInArray), offS);
+
+offsetPosition = offsetof(storeInEEPROM, glowON[0]);
+EEPROM.put((offsetPosition+offsetInArray), glowON);
+offsetPosition = offsetof(storeInEEPROM, satON[0]);
+EEPROM.put((offsetPosition+offsetInArray), satON);
+
+offsetPosition = offsetof(storeInEEPROM, BrF[0]);
+EEPROM.put((offsetPosition+offsetInArray), BrF);
+offsetPosition = offsetof(storeInEEPROM, SF[0]);
+EEPROM.put((offsetPosition+offsetInArray), SF);
+
+offsetPosition = offsetof(storeInEEPROM, numbrigh[0]);
+EEPROM.put((offsetPosition+offsetInArray), numbrigh);
+offsetPosition = offsetof(storeInEEPROM, numsat[0]);
+EEPROM.put((offsetPosition+offsetInArray), numsat);
 }
 EEPROM.commit();
 }
@@ -398,45 +436,16 @@ void enableMode(){
   #endif
 }
 
-// void loadPersonalSettings(){
-// //int offsetPosition = offsetof(storeInEEPROM, BriSPreset[0]);
-// BriSPreset = EEPROM.read(offsetof(storeInEEPROM, BriSPreset[programMode]));
-// //int offsetPosition = offsetof(storeInEEPROM, arrayn[0]);
-// arrayn = EEPROM.read(offsetof(storeInEEPROM, arrayn[programMode]));
-// //int offsetPosition = offsetof(storeInEEPROM, varON[0]);
-// varON = EEPROM.read(offsetof(storeInEEPROM, varON[programMode]));
-// #ifdef ESP8266 
-// //int offsetPosition = offsetof(storeInEEPROM, changeSpeed[0]); // unsigned long
-// EEPROM.get(offsetof(storeInEEPROM, changeSpeed[programMode]), changeSpeed);
-// //int offsetPosition = offsetof(storeInEEPROM, setDifference[0]); // int
-// EEPROM.get(offsetof(storeInEEPROM, setDifference[programMode]), setDifference);
-// //int offsetPosition = offsetof(storeInEEPROM, colorMode[0]); // int
-// EEPROM.get(offsetof(storeInEEPROM, colorMode[programMode]), colorMode);
-// #else
-// //int offsetPosition = offsetof(storeInEEPROM, changeSpeed[0]); // unsigned long
-// changeSpeed = EEPROM.readLong(offsetof(storeInEEPROM, BriSPreset[programMode])); 
-// //int offsetPosition = offsetof(storeInEEPROM, setDifference[0]); // int
-// setDifference = EEPROM.readInt(offsetof(storeInEEPROM, setDifference[programMode]));
-// //int offsetPosition = offsetof(storeInEEPROM, colorMode[0]); // int
-// colorMode = EEPROM.readInt(offsetof(storeInEEPROM, colorMode[programMode]));
-// #endif
-// }
 
 void loadPersonalSettings(){
 int offsetPosition = (offsetof(storeInEEPROM, BriSPreset[0])) + programMode;  
-//Serial.println(offsetPosition);
 BriSPreset = EEPROM.read(offsetPosition);
-//Serial.println(BriSPreset);
 
-offsetPosition = (offsetof(storeInEEPROM, arrayn[0])) + programMode;
-//Serial.println(offsetPosition);  
+offsetPosition = (offsetof(storeInEEPROM, arrayn[0])) + programMode; 
 arrayn = EEPROM.read(offsetPosition);
-//Serial.println(arrayn);
 
 offsetPosition = (offsetof(storeInEEPROM, varON[0])) + programMode; 
-//Serial.println(offsetPosition); 
 varON = EEPROM.read(offsetPosition);
-//Serial.println(varON);
 #ifdef ESP8266 
 offsetPosition = offsetof(storeInEEPROM, changeSpeed[0]) + (programMode*sizeof(unsigned long));  
 EEPROM.get(offsetPosition, changeSpeed);
@@ -446,19 +455,13 @@ offsetPosition = offsetof(storeInEEPROM, colorMode[0]) + (programMode*sizeof(int
 EEPROM.get(offsetPosition, colorMode);
 #else
 offsetPosition = offsetof(storeInEEPROM, changeSpeed[0]) + (programMode*sizeof(unsigned long));  
-//Serial.println(offsetPosition);
 changeSpeed = EEPROM.readLong(offsetPosition); 
-//Serial.println(changeSpeed);
 
 offsetPosition = offsetof(storeInEEPROM, setDifference[0]) + (programMode*sizeof(int));
-//Serial.println(offsetPosition);  
 setDifference = EEPROM.readInt(offsetPosition);
-//Serial.println(setDifference);
 
 offsetPosition = offsetof(storeInEEPROM, colorMode[0]) + (programMode*sizeof(int));  
-//Serial.println(offsetPosition);
 colorMode = EEPROM.readInt(offsetPosition);
-//Serial.println(colorMode);
 #endif
 if (effect_function == pers_color){
 numcolor = EEPROM.read(offsetof(storeInEEPROM, numcolor1));
@@ -479,47 +482,81 @@ readBriSData(BriSPreset);
 
 void readBriSData(byte preset)
 {
-  if (preset == 0){
-    #ifdef ESP8266  
-    EEPROM.get(offsetof(storeInEEPROM, BPMB), BPMB);
-    EEPROM.get(offsetof(storeInEEPROM, BPMS), BPMS);
-    EEPROM.get(offsetof(storeInEEPROM, waveTimeBr), waveTimeBr);
-    EEPROM.get(offsetof(storeInEEPROM, waveTimeS), waveTimeS);
-    #else
-    waveTimeBr = EEPROM.readLong(offsetof(storeInEEPROM, waveTimeBr));
-    waveTimeS = EEPROM.readLong(offsetof(storeInEEPROM, waveTimeS));
-    #endif
-    BPMB = EEPROM.read(offsetof(storeInEEPROM, BPMB));
-    BPMS = EEPROM.read(offsetof(storeInEEPROM, BPMS));
-    BRIGH = EEPROM.read(offsetof(storeInEEPROM, BRIGH));
-    offBr = EEPROM.read(offsetof(storeInEEPROM, offBr));
-    glowON = EEPROM.read(offsetof(storeInEEPROM, glowON));
-    BrF = EEPROM.read(offsetof(storeInEEPROM, BrF));
-    offS = EEPROM.read(offsetof(storeInEEPROM, offS));
-    S = EEPROM.read(offsetof(storeInEEPROM, S));
-    SF = EEPROM.read(offsetof(storeInEEPROM, SF));
-    satON = EEPROM.read(offsetof(storeInEEPROM, satON));
-    numsat = EEPROM.read(offsetof(storeInEEPROM, numsat));
-    numbrigh = EEPROM.read(offsetof(storeInEEPROM, numbrigh));
-  }
-  else {
-  BRIGH = pgm_read_byte(&selectPresetB_data[preset].BRIGH);
-  BrF = pgm_read_byte(&selectPresetB_data[preset].BrF);
-  glowON = pgm_read_byte(&selectPresetB_data[preset].glowON);
-  offBr = pgm_read_byte(&selectPresetB_data[preset].offBr);
-  numbrigh = pgm_read_byte(&selectPresetB_data[preset].numbrigh);
-  BPMB = pgm_read_byte(&selectPresetB_data[preset].BPMB);
-  waveTimeBr = pgm_read_dword(&selectPresetB_data[preset].waveTimeBr);
-  S = pgm_read_byte(&selectPresetB_data[preset].S);
-  SF = pgm_read_byte(&selectPresetB_data[preset].SF);
-  satON = pgm_read_byte(&selectPresetB_data[preset].satON);
-  offS = pgm_read_byte(&selectPresetB_data[preset].offS);
-  numsat = pgm_read_byte(&selectPresetB_data[preset].numsat);
-  BPMS = pgm_read_byte(&selectPresetB_data[preset].BPMS);
-  waveTimeS = pgm_read_dword(&selectPresetB_data[preset].waveTimeS);
-  //Serial.print("wavetimeBR :"); Serial.println(waveTimeBr);
-  //Serial.print("wavetimeS :"); Serial.println(waveTimeS);
-  }
-  convBrigh = waveTimeBr/numbrigh;
-  convSat = waveTimeS/numsat;
+    if (preset == 0){
+      #ifdef ESP8266  
+      // EEPROM.get(offsetof(storeInEEPROM, BPMB), BPMB);
+      // EEPROM.get(offsetof(storeInEEPROM, BPMS), BPMS);
+      EEPROM.get(offsetof(storeInEEPROM, waveTimeBr[0]), waveTimeBr);
+      EEPROM.get(offsetof(storeInEEPROM, waveTimeS[0]), waveTimeS);
+      #else
+      waveTimeBr = EEPROM.readLong(offsetof(storeInEEPROM, waveTimeBr[0]));
+      waveTimeS = EEPROM.readLong(offsetof(storeInEEPROM, waveTimeS[0]));
+      #endif
+      BPMB = EEPROM.read(offsetof(storeInEEPROM, BPMB[0]));
+      BPMS = EEPROM.read(offsetof(storeInEEPROM, BPMS[0]));
+      BRIGH = EEPROM.read(offsetof(storeInEEPROM, BRIGH[0]));
+      offBr = EEPROM.read(offsetof(storeInEEPROM, offBr[0]));
+      glowON = EEPROM.read(offsetof(storeInEEPROM, glowON[0]));
+      BrF = EEPROM.read(offsetof(storeInEEPROM, BrF[0]));
+      offS = EEPROM.read(offsetof(storeInEEPROM, offS[0]));
+      S = EEPROM.read(offsetof(storeInEEPROM, S[0]));
+      SF = EEPROM.read(offsetof(storeInEEPROM, SF[0]));
+      satON = EEPROM.read(offsetof(storeInEEPROM, satON[0]));
+      numsat = EEPROM.read(offsetof(storeInEEPROM, numsat[0]));
+      numbrigh = EEPROM.read(offsetof(storeInEEPROM, numbrigh[0]));
+    }
+    else if (preset <= 20) {
+      BRIGH = pgm_read_byte(&selectPresetB_data[preset].BRIGH);
+      BrF = pgm_read_byte(&selectPresetB_data[preset].BrF);
+      glowON = pgm_read_byte(&selectPresetB_data[preset].glowON);
+      offBr = pgm_read_byte(&selectPresetB_data[preset].offBr);
+      numbrigh = pgm_read_byte(&selectPresetB_data[preset].numbrigh);
+      BPMB = pgm_read_byte(&selectPresetB_data[preset].BPMB);
+      waveTimeBr = pgm_read_dword(&selectPresetB_data[preset].waveTimeBr);
+      S = pgm_read_byte(&selectPresetB_data[preset].S);
+      SF = pgm_read_byte(&selectPresetB_data[preset].SF);
+      satON = pgm_read_byte(&selectPresetB_data[preset].satON);
+      offS = pgm_read_byte(&selectPresetB_data[preset].offS);
+      numsat = pgm_read_byte(&selectPresetB_data[preset].numsat);
+      BPMS = pgm_read_byte(&selectPresetB_data[preset].BPMS);
+      waveTimeS = pgm_read_dword(&selectPresetB_data[preset].waveTimeS);
+      //Serial.print("wavetimeBR :"); Serial.println(waveTimeBr);
+      //Serial.print("wavetimeS :"); Serial.println(waveTimeS);
+    }
+    else if (preset > 20 && preset <= 25){
+      uint8_t offsetInArray = preset - 20;
+      int offsetPosition = (offsetof(storeInEEPROM, BRIGH[0])) + offsetInArray; 
+      BRIGH = EEPROM.read(offsetPosition);
+      offsetPosition = (offsetof(storeInEEPROM, S[0])) + offsetInArray; 
+      S = EEPROM.read(offsetPosition);
+      offsetPosition = (offsetof(storeInEEPROM, BrF[0])) + offsetInArray; 
+      BrF = EEPROM.read(offsetPosition);   
+      offsetPosition = (offsetof(storeInEEPROM, SF[0])) + offsetInArray; 
+      SF = EEPROM.read(offsetPosition);  
+      offsetPosition = (offsetof(storeInEEPROM, glowON[0])) + offsetInArray; 
+      glowON = EEPROM.read(offsetPosition);    
+      offsetPosition = (offsetof(storeInEEPROM, satON[0])) + offsetInArray; 
+      satON = EEPROM.read(offsetPosition);    
+      offsetPosition = (offsetof(storeInEEPROM, numbrigh[0])) + offsetInArray; 
+      numbrigh = EEPROM.read(offsetPosition);       
+      offsetPosition = (offsetof(storeInEEPROM, numsat[0])) + offsetInArray; 
+      numsat = EEPROM.read(offsetPosition);  
+      offsetPosition = (offsetof(storeInEEPROM, BPMB[0])) + offsetInArray; 
+      BPMB = EEPROM.read(offsetPosition); 
+      offsetPosition = (offsetof(storeInEEPROM, BPMS[0])) + offsetInArray; 
+      BPMS = EEPROM.read(offsetPosition);      
+      #ifdef ESP8266  
+      offsetPosition = offsetof(storeInEEPROM, waveTimeBr[0]) + (offsetInArray*sizeof(unsigned long));
+      EEPROM.get(offsetPosition, waveTimeBr);  
+      offsetPosition = offsetof(storeInEEPROM, waveTimeS[0]) + (offsetInArray*sizeof(unsigned long)); 
+      EEPROM.get(offsetPosition, waveTimeS);
+      #else
+      offsetPosition = offsetof(storeInEEPROM, waveTimeBr[0]) + (offsetInArray*sizeof(unsigned long));  
+      waveTimeBr = EEPROM.readLong(offsetof(storeInEEPROM, waveTimeBr[0]));
+      offsetPosition = offsetof(storeInEEPROM, waveTimeS[0]) + (offsetInArray*sizeof(unsigned long)); 
+      waveTimeS = EEPROM.readLong(offsetof(storeInEEPROM, waveTimeBr[0]));
+      #endif        
+    }
+    convBrigh = waveTimeBr/numbrigh;
+    convSat = waveTimeS/numsat;
 }

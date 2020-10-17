@@ -78,28 +78,28 @@ struct storeInEEPROM {
   uint32_t cycleTime;
   byte programMode;
   boolean tower;
-  byte BRIGH;
-  byte offBr;
-  byte glowON;
-  byte BrF;
   byte z5;
-  byte offS;
-  byte S; 
-  byte SF;
-  byte satON;
   byte Red;
   byte Green;
   byte Blue;
   byte yval;
   byte yvalm2;
   byte yvalm3;
-  byte varONglobal;  
-  byte numsat;
-  byte numbrigh;
-  byte BPMB;
-  byte BPMS;
-  uint32_t waveTimeBr;
-  uint32_t waveTimeS;
+  byte varONglobal; 
+  byte BRIGH[6];
+  byte offBr[6];
+  byte glowON[6];
+  byte BrF[6];
+  byte offS[6];
+  byte S[6]; 
+  byte SF[6];
+  byte satON[6];
+  byte numsat[6];
+  byte numbrigh[6];
+  byte BPMB[6];
+  byte BPMS[6];
+  uint32_t waveTimeBr[6];
+  uint32_t waveTimeS[6];
   float timefactor3;
   boolean Bees; 
   boolean varNumbrigh;
@@ -128,7 +128,7 @@ struct storeInEEPROM {
 byte RGBCOLOR = 0;
 
 storeInEEPROM customVar = {
-      43434, // code to check
+      45132, // code to check
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, // ssid storage
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, // pass storage
       42, // ymin
@@ -154,15 +154,7 @@ storeInEEPROM customVar = {
       600000, // CycleTime
       0, // programMode      
       0, // tower
-      205,// BRIGH
-      90,// offBr
-      5, // glowON
-      70, // BrF
       92, // z5
-      145, // offS
-      205, // S
-      0, // Sf
-      0, // satOn was 3
       62, // red
       25, // green
       6, // blue
@@ -170,12 +162,20 @@ storeInEEPROM customVar = {
       5, // yvalm2
       217, // yvalm3
       1, // varON 
-      31, // numsat
-      13, // numbrigh
-      30, // BPMB
-      60, // BPMS
-      2000, // waveTimeBr
-      1000, // waveTimeS
+      205, 175, 150, 125, 100, 75,// BRIGH
+      90, 50, 50, 50, 50, 50,// offBr
+      5, 0, 0, 0, 0, 0, // glowON
+      70, 50, 50, 50, 50, 50, // BrF
+      145, 30, 30, 30, 30, 30,// offS
+      205, 250, 250, 250, 250, 250, // S
+      0, 0, 0, 0, 0, 0,  // Sf
+      0, 0, 0, 0, 0, 0, // satOn was 3
+      31, 31, 31, 31, 31, 31,// numsat
+      13, 13, 13, 13, 13, 13,// numbrigh
+      30, 20, 20, 20, 20, 20, // BPMB
+      60, 20, 20, 20, 20, 20,// BPMS
+      2000, 3000, 3000, 3000, 3000, 3000, // waveTimeBr
+      1000, 3000, 3000, 3000, 3000, 3000,// waveTimeS
       1.00, // timefactor3 
       0, // Bees
       0, // varNumbrigh 
@@ -759,13 +759,13 @@ EEPROM.get(offsetof(storeInEEPROM, cycleTime), cycleTime);
 //Serial.print("NUM_LEDS: "); Serial.println(NUM_LEDS);
 #else
 NUM_LEDS = EEPROM.readInt(offsetof(storeInEEPROM, NUM_LEDS));
-waveTimeBr = EEPROM.readLong(offsetof(storeInEEPROM, waveTimeBr));
-waveTimeS = EEPROM.readLong(offsetof(storeInEEPROM, waveTimeS));
+waveTimeBr = EEPROM.readLong(offsetof(storeInEEPROM, waveTimeBr[0]));
+waveTimeS = EEPROM.readLong(offsetof(storeInEEPROM, waveTimeS[0]));
 timefactor3 = EEPROM.readFloat(offsetof(storeInEEPROM, timefactor3));
 cycleTime = EEPROM.readLong(offsetof(storeInEEPROM, cycleTime));
 #endif
-BPMB = EEPROM.read(offsetof(storeInEEPROM, BPMB));
-BPMS = EEPROM.read(offsetof(storeInEEPROM, BPMS));
+BPMB = EEPROM.read(offsetof(storeInEEPROM, BPMB[0]));
+BPMS = EEPROM.read(offsetof(storeInEEPROM, BPMS[0]));
 ymin  = EEPROM.read(offsetof(storeInEEPROM, ymin));
 ymax = EEPROM.read(offsetof(storeInEEPROM, ymax));
 ymin1 = EEPROM.read(offsetof(storeInEEPROM, ymin1));
@@ -788,22 +788,22 @@ randomCycle = EEPROM.read(offsetof(storeInEEPROM, randomCycle));
 excludeModes = EEPROM.read(offsetof(storeInEEPROM, excludeModes));
 programMode = EEPROM.read(offsetof(storeInEEPROM, programMode));
 tower = EEPROM.read(offsetof(storeInEEPROM, tower));
-BRIGH = EEPROM.read(offsetof(storeInEEPROM, BRIGH));
-offBr = EEPROM.read(offsetof(storeInEEPROM, offBr));
-glowON = EEPROM.read(offsetof(storeInEEPROM, glowON));
-BrF = EEPROM.read(offsetof(storeInEEPROM, BrF));
+BRIGH = EEPROM.read(offsetof(storeInEEPROM, BRIGH[0]));
+offBr = EEPROM.read(offsetof(storeInEEPROM, offBr[0]));
+glowON = EEPROM.read(offsetof(storeInEEPROM, glowON[0]));
+BrF = EEPROM.read(offsetof(storeInEEPROM, BrF[0]));
 z5 = EEPROM.read(offsetof(storeInEEPROM, z5));
-offS = EEPROM.read(offsetof(storeInEEPROM, offS));
-S = EEPROM.read(offsetof(storeInEEPROM, S));
-SF = EEPROM.read(offsetof(storeInEEPROM, SF));
-satON = EEPROM.read(offsetof(storeInEEPROM, satON));
+offS = EEPROM.read(offsetof(storeInEEPROM, offS[0]));
+S = EEPROM.read(offsetof(storeInEEPROM, S[0]));
+SF = EEPROM.read(offsetof(storeInEEPROM, SF[0]));
+satON = EEPROM.read(offsetof(storeInEEPROM, satON[0]));
 Red = EEPROM.read(offsetof(storeInEEPROM, Red));
 Green = EEPROM.read(offsetof(storeInEEPROM, Green));
 Blue = EEPROM.read(offsetof(storeInEEPROM, Blue));
 yval = EEPROM.read(offsetof(storeInEEPROM, yval));
 varON = EEPROM.read(offsetof(storeInEEPROM, varONglobal));
-numsat = EEPROM.read(offsetof(storeInEEPROM, numsat));
-numbrigh = EEPROM.read(offsetof(storeInEEPROM, numbrigh));
+numsat = EEPROM.read(offsetof(storeInEEPROM, numsat[0]));
+numbrigh = EEPROM.read(offsetof(storeInEEPROM, numbrigh[0]));
 Bees = EEPROM.read(offsetof(storeInEEPROM, Bees));
 range = EEPROM.read(offsetof(storeInEEPROM, range));
 offdisC = EEPROM.read(offsetof(storeInEEPROM, offdisC));
