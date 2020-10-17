@@ -138,10 +138,10 @@ function onMessage(event) {
 	if (prefixChars == "G"){
 	k = k + 1;
 	//console.log(k);
-		if (k < 67){ //54
+		if (k < 69){ //54
 		setTimeout(function(){ doSend("GETS"+k); }, 20);
 		}
-		else if (k >= 67){ //54
+		else if (k >= 69){ //54
 		//k = 0;
 		//doSend(k);
 		//console.log(k);
@@ -182,7 +182,25 @@ function updateBriSSlider(slideAmount){
 	document.getElementById('SBSM').value = slideAmount;
 	document.getElementById('SBSMS').innerHTML = slideAmount;
 	doSend('SBSM'+slideAmount);
+	}
+	
+function updateCArray(slideAmount){
+	document.getElementById('SCAR').value = slideAmount;
+	document.getElementById('SCARS').innerHTML = slideAmount;
+	doSend('SCAR'+slideAmount);
 	}	
+
+function updateVarSlider(slideAmount){
+	document.getElementById('SVAR').value = slideAmount;
+	document.getElementById('SVARS').innerHTML = slideAmount;
+	doSend('SVAR'+slideAmount);
+	}	
+
+function updateCMode(slideAmount){
+	document.getElementById('SCOM').value = slideAmount;
+	document.getElementById('SCOMS').innerHTML = slideAmount;
+	doSend('SCOM'+slideAmount);
+	}		
 
 function updateButton(fixedVariable) { 
 	 if (document.getElementById(fixedVariable).checked == true){
@@ -456,6 +474,34 @@ _Cycle time (s):
 	<div id="importantSettings">
 
 </p> 
+
+<div class="switchcontainer">
+	_Personalized modes ON/OFF
+	<label class="switch">
+	  <input type="checkbox" id="TPMO" onclick="updateButton('TPMO')"> 
+	  <span class="sliderround"></span>
+	</label>
+	&nbsp; &nbsp;
+	Save (Current) Personalized mode:
+	<label class="switch">
+	  <input type="checkbox" id="TSCM" onclick="updateButton('TSCM')"> 
+	  <span class="sliderround"></span>
+	</label>
+	<div class="dropdown">
+		<button class="dropbtn">info list:</button>
+		<div class="dropdown-content">
+		  <li>PER MODE ADJUSTABLE</li>
+		  <li>saves to EEPROM:</li>
+		  <li>- Bri_Sat Preset</li>
+		  <li>- Color Mode</li>
+		  <li>- Preset speed</li>
+		  <li>- Mode variant</li>
+		  <li>- Color array (CM4)</li>
+		</div>
+	  </div>
+</div>	
+
+
 <div class="slidecontainerx">
 <div class="titles">
 <p class="progwindows"> <span id="progn"></span><span>  (prog: </span><span id="SPGMS">___</span><span>)</span></p>
@@ -477,7 +523,7 @@ _Prog. Mode (0-37):
 <input id="SPGM" class="sliderx" type="range" min="0" max="37" step="1" value="0" onchange="updateSlider('SPGM', this.value)">
 <div class="varvaluex" id="SPGMS"></div><div class="infox">
 <div class="dropdown">
-  <button class="dropbtn">Modes:</button>
+  <button class="dropbtn">preset modes:</button>
   <div class="dropdown-content">
     <li value="0"  onclick="updateProgSlider(this.value)">0: static_glow</li>
 	<li value="1"  onclick="updateProgSlider(this.value)">1: varying_glow</li>
@@ -568,12 +614,12 @@ _Prog. Mode (0-37):
 
 <div class="slidecontainerx">
 	<div class="titlex">
-	_BriSat preset (0-19):
+	*BriSat preset (0-20):
 	</div>
-	<input id="SBSM" class="sliderx" type="range" min="0" max="19" step="1" value="0" onchange="updateSlider('SBSM', this.value)">
+	<input id="SBSM" class="sliderx" type="range" min="0" max="20" step="1" value="0" onchange="updateSlider('SBSM', this.value)">
 	<div class="varvaluex" id="SBSMS"></div><div class="infox">
 		<div class="dropdown">
-			<button class="dropbtn">Modes:</button>
+			<button class="dropbtn">Bri_Sat modes:</button>
 			<div class="dropdown-content">
 			  <li value="0"  onclick="updateBriSSlider(this.value)">0: EEPROM vals</li>
 			  <li value="1"  onclick="updateBriSSlider(this.value)">1: basic glow_1</li>
@@ -630,10 +676,23 @@ _Prog. Mode (0-37):
 
 <div class="slidecontainerx">
 <div class="titlex">
-Color Mode (0-5):
+*Color Mode (0-5):
 </div>
 <input id="SCOM" class="sliderx" type="range" min="0" max="5" step="1" value="2" onchange="updateSlider('SCOM', this.value)">
-<div class="varvaluex" id="SCOMS"></div><div class="infox"></div>
+<div class="varvaluex" id="SCOMS"></div><div class="infox">
+	<div class="dropdown">
+		<button class="dropbtn">color modes:</button>
+		<div class="dropdown-content">
+		  <li >Pick color from:</li>
+		  <li value="0"  onclick="updateCMode(this.value)">- Hue color</li>
+		  <li value="1"  onclick="updateCMode(this.value)">- rainbow (all colors possible)</li>
+		  <li value="2"  onclick="updateCMode(this.value)">- selection 1 (slider CM 2&3)</li>
+		  <li value="3"  onclick="updateCMode(this.value)">- selection 2 (slider CM 2&3)</li>
+		  <li value="4"  onclick="updateCMode(this.value)">- selected color array (0-58)</li>
+		  <li value="5"  onclick="updateCMode(this.value)">- special mode (hue + spark)</li>
+		</div>
+	  </div>
+</div>
 </div>
 <div class="slidecontainerx">
 <div class="titlex"></div>
@@ -645,15 +704,25 @@ Color Mode (0-5):
     <p></p>
     <p></p>	
   </div>
-  <div class="varvaluex"></div><div class="infox"></div>  
+  <div class="varvaluex"></div><div class="infox">
+  </div>  
 </div>
 
 <div class="slidecontainerx">
 <div class="titlex">
-_Add.modeVar(0-2):
+_*Add.modeVar(0-2):
 </div>
 <input id="SVAR" class="sliderx" type="range" min="0" max="2" step="1" value="1" onchange="updateSlider('SVAR', this.value)">
-<div class="varvaluex" id="SVARS"></div><div class="infox"></div>
+<div class="varvaluex" id="SVARS"></div><div class="infox">
+	<div class="dropdown">
+		<button class="dropbtn">var. modes:</button>
+		<div class="dropdown-content">
+		  <li value="0"  onclick="updateVarSlider(this.value)">0: most basic variant</li>
+		  <li value="1"  onclick="updateVarSlider(this.value)">1: standard variant</li>
+		  <li value="2"  onclick="updateVarSlider(this.value)">2: colourful variant</li>
+		</div>
+	  </div>
+</div>
 </div>
 <div class="slidecontainerx">
 <div class="titlex">
@@ -668,7 +737,7 @@ _Add.modeVar(0-2):
 </div>
 <div class="slidecontainerx">
 	<div class="titlex">
-	Preset speed (ms):
+	*Preset speed (ms):
 	</div>
 	<input id="SLSP" class="sliderx" type="range" min="0" max="60" step="1" value="10" onchange="updateSlider('SLSP', this.value)">
 	<div class="varvalueh"><span id="SLSPS"></span> &nbsp | &nbsp  <span id='HSPES'></span></div>
@@ -684,14 +753,78 @@ _Add.modeVar(0-2):
 	</span> 
 
 	<div id="colorSettings">
-<p>
+	</p>
 
 <div class="slidecontainerx">
 <div class="titlex">
-Color Array (0-58):
+*Color Array (0-58):
 </div>
 <input id="SCAR" class="sliderx" type="range" min="0" max="58" step="1" value="8" onchange="updateSlider('SCAR', this.value)">
-<div class="varvaluex"><span  id="SCARS"></span></div> <div class="infox">CM 4</div>
+<div class="varvaluex"><span  id="SCARS"></span></div> <div class="infox">		<div class="dropdown">
+	<button class="dropbtn">color arrays:</button>
+	<div class="dropdown-content">
+	  <li>first color is main Hue</li>
+	  <li value="0"  onclick="updateCArray(this.value)">0: little green !!</li>
+	  <li value="1"  onclick="updateCArray(this.value)">1: personal best</li>
+	  <li value="2"  onclick="updateCArray(this.value)">2: orange</li>
+	  <li value="3"  onclick="updateCArray(this.value)">3: pink, blue</li>
+	  <li value="4"  onclick="updateCArray(this.value)">4: blue, pink</li>
+	  <li value="5"  onclick="updateCArray(this.value)">5: blue, orange, pink </li>
+	  <li value="6"  onclick="updateCArray(this.value)">6: no purple/pink</li>	
+	  <li value="7"  onclick="updateCArray(this.value)">7: rainbow</li>	
+	  <li value="8"  onclick="updateCArray(this.value)">8: fine canvas</li>	
+	  <li value="9"  onclick="updateCArray(this.value)">9: rainbow_2</li>
+	  <li value="10"  onclick="updateCArray(this.value)">10: no green</li>
+	  <li value="11"  onclick="updateCArray(this.value)">11: yellow, red</li>
+	  <li value="12"  onclick="updateCArray(this.value)">12: rainbow_3</li>
+	  <li value="13"  onclick="updateCArray(this.value)">13: no red</li>
+	  <li value="14"  onclick="updateCArray(this.value)">14: rainbow_4</li>
+	  <li value="15"  onclick="updateCArray(this.value)">15: RGB + yel</li>
+	  <li value="16"  onclick="updateCArray(this.value)">16: 4 colour_1</li>
+	  <li value="17"  onclick="updateCArray(this.value)">17: 4_colour_2</li>
+	  <li value="18"  onclick="updateCArray(this.value)">18: RGB</li>
+	  <li value="19"  onclick="updateCArray(this.value)">19: blue, orange, pink</li>
+	  <li value="20"  onclick="updateCArray(this.value)">20: yellow, orange, red</li>
+	  <li value="21"  onclick="updateCArray(this.value)">21: pink, orange, gr</li>
+	  <li value="22"  onclick="updateCArray(this.value)">22: pink, orange, yel</li>
+	  <li value="23"  onclick="updateCArray(this.value)">23: yellow, orange, green</li>
+	  <li value="24"  onclick="updateCArray(this.value)">24: blue, orange, purple</li>
+	  <li value="25"  onclick="updateCArray(this.value)">25: red, orange, pink</li>
+	  <li value="26"  onclick="updateCArray(this.value)">26: red, orange, salmon</li>	
+	  <li value="27"  onclick="updateCArray(this.value)">27: red, orange, turqoise</li>	
+	  <li value="28"  onclick="updateCArray(this.value)">28: blue, purple, turqoise</li>	
+	  <li value="29"  onclick="updateCArray(this.value)">29: purp, orange, turqoise</li>
+	  <li value="30"  onclick="updateCArray(this.value)">30: red, green</li>
+	  <li value="31"  onclick="updateCArray(this.value)">31: lemon, red</li>
+	  <li value="32"  onclick="updateCArray(this.value)">32: cyan, lemon</li>
+	  <li value="33"  onclick="updateCArray(this.value)">33: pink, lemon</li>
+	  <li value="34"  onclick="updateCArray(this.value)">34: purp, green</li>
+	  <li value="35"  onclick="updateCArray(this.value)">35: yel, green</li>
+	  <li value="36"  onclick="updateCArray(this.value)">36: cyan, yellow</li>
+	  <li value="37"  onclick="updateCArray(this.value)">37: cyan, orange</li>
+	  <li value="38"  onclick="updateCArray(this.value)">38: orange, pink</li>
+	  <li value="39"  onclick="updateCArray(this.value)">39: orange, salmon</li>
+	  <li value="40"  onclick="updateCArray(this.value)">40: yellow, red</li>	
+	  <li value="41"  onclick="updateCArray(this.value)">41: red, pink</li>
+	  <li value="42"  onclick="updateCArray(this.value)">42: yellow, pink</li>
+	  <li value="43"  onclick="updateCArray(this.value)">43: cyan, turqoise</li>
+	  <li value="44"  onclick="updateCArray(this.value)">44: cyan, pink</li>
+	  <li value="45"  onclick="updateCArray(this.value)">45: turqoise, purp</li>
+	  <li value="46"  onclick="updateCArray(this.value)">46: purple, orange</li>	
+	  <li value="47"  onclick="updateCArray(this.value)">47: purple, red</li>	
+	  <li value="48"  onclick="updateCArray(this.value)">48: cyan, red</li>	
+	  <li value="49"  onclick="updateCArray(this.value)">49: cyan, pink</li>
+	  <li value="50"  onclick="updateCArray(this.value)">50: red to yellow</li>
+	  <li value="51"  onclick="updateCArray(this.value)">51: blue to yellow</li>
+	  <li value="52"  onclick="updateCArray(this.value)">52: blue to yellow + green</li>
+	  <li value="53"  onclick="updateCArray(this.value)">53: red to yellow + green</li>
+	  <li value="54"  onclick="updateCArray(this.value)">54: red to yellow + green</li>
+	  <li value="55"  onclick="updateCArray(this.value)">55: red to yellow + blue</li>
+	  <li value="56"  onclick="updateCArray(this.value)">56: green to blue + red</li>
+	  <li value="57"  onclick="updateCArray(this.value)">57: green to blue + red</li>
+	  <li value="58"  onclick="updateCArray(this.value)">58: rainbow_5</li>	    	  
+	</div>
+  </div></div>
 </div>
 
 <div class="slidecontainerx">
@@ -1343,26 +1476,31 @@ Maintain complete waveforms
 <p class="sliderwindow">SPECIAL EEPROM FUNCTIONS</P>
 <br>
 <div class="switchcontainer">
-Save All settings to EEPROM
-<label class="switch">
-  <input type="checkbox" id="TSET" onclick="updateButton('TSET')"> 
-  <span class="sliderround"></span>
-</label>
+	Save All SETTINGS to GLOBAL EEPROM
+	<label class="switch">
+	  <input type="checkbox" id="TSET" onclick="updateButton('TSET')"> 
+	  <span class="sliderround"></span>
+	</label>
 </div>
 <div class="switchcontainer">
-ACTIVATE all presets in EEPROM
+ACTIVATE all PRESETS in EEPROM
 <label class="switch">
   <input type="checkbox" id="TAAM" onclick="updateButton('TAAM')"> 
   <span class="sliderround"></span>
 </label>
-DEACTIVATE all presets in EEPROM
+DEACTIVATE all PRESETS in EEPROM
 <label class="switch">
   <input type="checkbox" id="TDAM" onclick="updateButton('TDAM')"> 
   <span class="sliderround"></span>
 </label>
 </div>
-
-
+<div class="switchcontainer">
+	Clear EEPROM - SET TO DEFAULT
+		<label class="switch">
+		  <input type="checkbox" id="TSED" onclick="updateButton('TSED')"> 
+		  <span class="sliderround"></span>
+		</label>
+	</div>
 </div>
 
 <hr/>

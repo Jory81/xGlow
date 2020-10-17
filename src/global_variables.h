@@ -74,6 +74,7 @@ struct storeInEEPROM {
   boolean fadeFirst;
   boolean randomCycle;
   boolean excludeModes;
+  boolean personalizedModes;
   uint32_t cycleTime;
   byte programMode;
   boolean tower;
@@ -90,7 +91,9 @@ struct storeInEEPROM {
   byte Green;
   byte Blue;
   byte yval;
-  byte varON;  
+  byte yvalm2;
+  byte yvalm3;
+  byte varONglobal;  
   byte numsat;
   byte numbrigh;
   byte BPMB;
@@ -110,14 +113,22 @@ struct storeInEEPROM {
   uint8_t ymin4;
   uint8_t ymax4;  
   uint8_t range;
-  byte offdisC; 
+  byte offdisC;
+  byte numcolor1;
+  byte numcolor2; 
+  uint8_t BriSPreset[modeCount];
+  unsigned long changeSpeed[modeCount];
+  int setDifference[modeCount];
+  int colorMode[modeCount];
+  byte arrayn[modeCount];
+  byte varON[modeCount];
   int NUM_LEDS;   
 };
 
 byte RGBCOLOR = 0;
 
 storeInEEPROM customVar = {
-      45231, // code to check
+      43434, // code to check
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, // ssid storage
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, // pass storage
       42, // ymin
@@ -139,6 +150,7 @@ storeInEEPROM customVar = {
       1, // fade 
       1, // random
       1, // excludemodes
+      0, // personalizedModes
       600000, // CycleTime
       0, // programMode      
       0, // tower
@@ -155,6 +167,8 @@ storeInEEPROM customVar = {
       25, // green
       6, // blue
       217, // yval
+      5, // yvalm2
+      217, // yvalm3
       1, // varON 
       31, // numsat
       13, // numbrigh
@@ -176,6 +190,32 @@ storeInEEPROM customVar = {
       40, // ymax4
       60, // range
       14, // offdisC
+      5, //numcolor1 pers_color
+      10, //numcolor2 pers_block
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // uint8_t BriSpreset
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+      0, 0, 0, 0, 0, 0, 0, 0,
+      100, 100, 100, 100, 100, 35, 50, 50, 100, 100, // unsigned long changeSpeed
+      100, 200, 30, 200, 100, 200, 110, 110, 110, 125, 
+      125, 130, 125, 130, 135, 130, 30, 30, 2000, 2000, 
+      1000, 200, 100, 200, 30, 20, 50, 50,
+      7, 7, 25, 80, 80, 7, 1, 45, 1, 4, // int setDifference
+      4, 7, 1, 25, 1, 1, 10, 15, 95, 7, 
+      7, 7, 7, 7, 7, 7, 1, 40, 1, 1, 
+      1, 1, 1, 7, 40, 40, 10, 1,
+      0, 2, 2, 0, 1, 2, 1, 1, 0, 0, // int colorMode
+      0, 0, 0, 0, 0, 0, 4, 4, 4, 4,
+      1, 1, 0, 2, 1, 0, 1, 5, 1, 1, 
+      1, 1, 1, 1, 5, 1, 2, 0,
+      1, 1, 1, 1, 1, 1, 1, 1, 7, 7, // byte arrayn
+      1, 1, 1, 1, 1, 1, 0, 0, 0, 0,
+      1, 1, 1, 1, 1, 1, 1, 1, 1, 8, 
+      9, 1, 1, 1, 1, 0, 0, 0,
+      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, // int byte
+      1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+      1, 1, 1, 1, 1, 1, 1, 1,
       300 // NUM_LEDS      
     };
 
@@ -209,7 +249,7 @@ static const presetBrighSat_pgm selectPresetB_data[] PROGMEM =
   {205,       50,   5,      65,    13,       20,   2000,         200,    50,    5,         45,    31,         60,      1000}, // 5 gradient
   {205,       0,    6,      40,    12,       30,   2000,         200,    0,     3,        160,    31,         45,      1333}, // 6 diamond perfect  
   {205,       50,   3,      55,    13,       10,   6000,         200,    0,     5,         45,    31,         60,      1000}, // 7 slow_Twinkle (baseline)
-  {205,       50,   3,      15,    31,       10,   6000,         205,    0,     0,         35,    31,         30,      2000}, // 8 slow_Twinkle (black))
+  {205,       50,   3,      15,    31,       10,   6000,         255,    0,     0,         35,    31,         30,      2000}, // 8 slow_Twinkle (black))
   {80,        110,  6,      28,    13,       30,   2000,         200,    0,     5,         45,    31,         60,      1000}, // 9 sparkle_1 doubt
   {120,       110,  4,      28,    13,       30,   2000,         200,    0,     5,         45,    31,         60,      1000}, // 10 sparkle_2 16
   {106,       110,  2,      18,    13,       30,   2000,         145,    0,     0,         35,    31,         30,      2000}, // 11 sparkle_3 17 sat 255 to 145
@@ -326,6 +366,8 @@ static const selectColorMod19_Mod26_pgm selectColor_data[14] PROGMEM =
 
 uint8_t   brigh[32]={0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 uint8_t   colour[15]={};
+
+uint8_t   colourS[6]={217, 164, 0, 96, 55, 140}; //  colourS[0]=217;        colourS[1]=164;        colourS[2]=0;        colourS[3]=96;        colourS[4]=55;            colour[5]=140;
 uint8_t   newColour[15]={};
 uint8_t   colourR[10]={0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 int       dirArray[10]={1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
@@ -481,9 +523,13 @@ boolean     varBPMB = false;
 boolean     varNumsat = false;
 boolean     varBPMS = false;
 boolean     colourTimerActive = true;
+boolean     personalizedModes = false;
+boolean     sendDelayWSMessage=false;
+byte        message = 0;
 
 uint16_t    dataVar=0;
 
+uint8_t BriSPreset=0;
 byte glowON = 2; // glow is ON
 byte satON = 0;
 byte varON = 1; // standard variance is ON
@@ -662,6 +708,7 @@ unsigned long previousMillis10 = 0;
 unsigned long previousMillis11 = 0;
 unsigned long previousMillis12 = 0;
 unsigned long previousMillis13 = 0;
+unsigned long previousMillis14 = 0;
 unsigned long previousMillis20 = 0;
 unsigned long previousMillis35 = 0;
 unsigned long previousMillis36 = 0;
@@ -754,12 +801,13 @@ Red = EEPROM.read(offsetof(storeInEEPROM, Red));
 Green = EEPROM.read(offsetof(storeInEEPROM, Green));
 Blue = EEPROM.read(offsetof(storeInEEPROM, Blue));
 yval = EEPROM.read(offsetof(storeInEEPROM, yval));
-varON = EEPROM.read(offsetof(storeInEEPROM, varON));
+varON = EEPROM.read(offsetof(storeInEEPROM, varONglobal));
 numsat = EEPROM.read(offsetof(storeInEEPROM, numsat));
 numbrigh = EEPROM.read(offsetof(storeInEEPROM, numbrigh));
 Bees = EEPROM.read(offsetof(storeInEEPROM, Bees));
 range = EEPROM.read(offsetof(storeInEEPROM, range));
 offdisC = EEPROM.read(offsetof(storeInEEPROM, offdisC));
+personalizedModes = EEPROM.read(offsetof(storeInEEPROM, personalizedModes));
 
 #ifdef ESP8266 
       for (int m = 0; m < modeCount; m++){
@@ -805,7 +853,5 @@ offdisC = EEPROM.read(offsetof(storeInEEPROM, offdisC));
       }
       wifiPASS = String(passStorage);
       Serial.print("wifiPASS "); Serial.println(wifiPASS);
-
 #endif
-
 } 

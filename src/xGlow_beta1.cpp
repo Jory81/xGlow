@@ -115,11 +115,14 @@ void handleGlitter();
 void handleModeSwitch();
 void changeState();
 void handleModeInitialization();
+void handleWebsocketUpdate();
 void enableMode();
 
 // functions: inilizes arrays or modifies variables. colour_Func.h
 void changePColors();
 void fillxmasArray ();
+void loadPersonalSettings();
+void saveCurrentModeToEEPROM();
 void fillArrayRainbow(uint8_t fillcase);
 void fillArrayGradient(uint8_t fillcase, uint8_t y0r, int setDifference);
 void fillLongxArray(uint8_t colour);
@@ -225,4 +228,5 @@ handleSaturationSettings();
 handleAdditionalVariables();
 handleLEDSettings();
 handleIR(); 
+handleWebsocketUpdate();
 }

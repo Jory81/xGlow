@@ -23,7 +23,7 @@ void spiffs(){
 }
 
 void eeprom(){
-      EEPROM.begin(200);
+      EEPROM.begin(1000);
 }
 
 void initializeEEPROM(){
@@ -34,12 +34,13 @@ void initializeEEPROM(){
     int check  = EEPROM.readInt(0);
     #endif
     
-    if (check == 45231){
+    if (check == 43434){
     display.print(F("code: ")); display.println(check);
     display.println(F("EEPROM SET"));
     display.display();
     initializeEEPROMvariables(); // functio in global_variables.h at the bottom.    
     cfactor2=NUM_LEDS/100; 
+    cfactor1=300/NUM_LEDS;
     convBrigh=waveTimeBr/numbrigh;
     convSat=waveTimeS/numsat;
       if (cfactor2 > 3){cfactor2 = 3;} 
@@ -48,7 +49,7 @@ void initializeEEPROM(){
     FastLED.delay(1000);
     }
     
-    else if (check != 45231){
+    else if (check != 43434){
     display.println(F("EEPROM not initialized"));
     display.println(F("Writing to EEPROM...."));
     display.display();

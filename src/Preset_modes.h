@@ -1594,11 +1594,11 @@ if (variant==0 && (!readyToChange)){
         longxArray[rr[s]]=yval1;
         }
 
-        longxArray[pos[s]]=colour[4];
-        if (numcolor > 1){longxArray[pos1[s]]=colour[0];} 
-        if (numcolor > 2){longxArray[pos2[s]]=colour[1];} 
-        if (numcolor > 3){longxArray[pos3[s]]=colour[2];}     
-        if (numcolor > 4){longxArray[pos4[s]]=colour[3];}              
+        longxArray[pos[s]]=colourS[4];
+        if (numcolor > 1){longxArray[pos1[s]]=colourS[0];} 
+        if (numcolor > 2){longxArray[pos2[s]]=colourS[1];} 
+        if (numcolor > 3){longxArray[pos3[s]]=colourS[2];}     
+        if (numcolor > 4){longxArray[pos4[s]]=colourS[3];}              
     
         if (numcolor == 1){
           rr[s]=pos[s];
@@ -1820,7 +1820,7 @@ if (millis() - previousMillis36 >= INTERVAL7){
 
           if (pos[s] < rn[s]){
             if ((colorMode != 5) && (colorMode != 4)){
-            yMA[s] = changeColourFcn2(colorMode, yMA[s], yMA[s], 40, 220); 
+            yMA[s] = changeColourFcn2(colorMode, yMA[s], yMA[s], 40, 210); 
             }            
             if (rainbowPossibility[s] == true){
               yMA[s]=random(256);
@@ -1892,7 +1892,7 @@ if (millis() - previousMillis36 >= INTERVAL7){
           yMA[s]=yMA[0];          
         }
         else {
-        yMA[s] = changeColourFcn2(colorMode, yMA[s], yMA[s], 40, 220);       
+        yMA[s] = changeColourFcn2(colorMode, yMA[s], yMA[s], 40, 210);       
         }
       pos[s]=NUM_LEDS;
       rn[s]= random(randomNumberMinimum[s], randomNumberMaximum[s]);
