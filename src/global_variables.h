@@ -69,6 +69,7 @@ struct storeInEEPROM {
   uint8_t yminblauw;
   uint8_t ymaxblauw;
   boolean cmode[modeCount];
+  boolean glitterON[modeCount];
   const byte rgbcolor;
   boolean cycle;
   boolean fadeFirst;
@@ -85,6 +86,7 @@ struct storeInEEPROM {
   byte yval;
   byte yvalm2;
   byte yvalm3;
+  byte colorlengthm[3];
   byte varONglobal; 
   byte BRIGH[6];
   byte offBr[6];
@@ -113,6 +115,7 @@ struct storeInEEPROM {
   uint8_t ymin4;
   uint8_t ymax4;  
   uint8_t range;
+  byte gCurrentPaletteNumber; 
   byte offdisC;
   byte numcolor1;
   byte numcolor2; 
@@ -128,7 +131,7 @@ struct storeInEEPROM {
 byte RGBCOLOR = 0;
 
 storeInEEPROM customVar = {
-      45132, // code to check
+      55522, // code to check
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, // ssid storage
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, // pass storage
       42, // ymin
@@ -145,6 +148,10 @@ storeInEEPROM customVar = {
       1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
       1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
       1, 1, 1, 1, 1, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // glitterON (1 = active)
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+      0, 1, 1, 1, 0, 0, 0, 0,
       0, // rgb
       1, // cycle
       1, // fade 
@@ -161,6 +168,7 @@ storeInEEPROM customVar = {
       217, // yval
       5, // yvalm2
       217, // yvalm3
+      10, 16, 10, // colorLength rainbow_6, random_string, pers_block
       1, // varON 
       205, 175, 150, 125, 100, 75,// BRIGH
       90, 50, 50, 50, 50, 50,// offBr
@@ -189,6 +197,7 @@ storeInEEPROM customVar = {
       212, // ymin4
       40, // ymax4
       60, // range
+      7, // FastLDPalet;
       14, // offdisC
       5, //numcolor1 pers_color
       10, //numcolor2 pers_block
@@ -509,7 +518,7 @@ boolean     rainbowON = true;
 boolean     reverseON = true;
 boolean     glitterON = false;
 boolean     whiteON = false;
-boolean     glitter = false;
+//boolean     glitter = false;
 boolean     irEnabled = true;
 boolean     fadeIsActive = false;
 boolean     saveToEEPROM = false;
@@ -617,7 +626,7 @@ byte SF=0;
 int offdis = 1;
 byte offdisC = 1;
 byte numcolor = 5;
-int colorlength = 10;
+byte colorlength = 10;
 float timefactor3 = 1.00f;
 
 int sparkSpeed = 98; // 78
