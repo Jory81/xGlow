@@ -144,7 +144,7 @@ void processWebSocketMessage(String str, int dataVar){
       else if (str == "TCRA"){randomCycle = dataVar; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, randomCycle), randomCycle);  EEPROM.commit();};} // EEPROM
       else if (str == "TCEX"){excludeModes = dataVar; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, excludeModes), excludeModes);  EEPROM.commit();};} // EEPROM
       else if (str == "TCAC"){enableMode();}  // THIS ONE
-      else if (str == "TGLI"){glitterON = dataVar; if (glitterON == true){FPS = 30;} else {FPS = 20;};}
+      else if (str == "TGLI"){glitterON = dataVar; initializeGlitter();}
       else if (str == "TCAC"){enableMode();} 
 //      else if (str == "TVNB"){varNumbrigh = dataVar; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, varNumbrigh), varNumbrigh);  EEPROM.commit();};} // EEPROM
 //      else if (str == "TVBB"){varBPMB = dataVar; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, varBPMB), varBPMB);  EEPROM.commit();};} // EEPROM

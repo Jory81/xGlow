@@ -98,43 +98,56 @@ if (changeModus){
     case 36: {       effect_function = meteor;            if (personalizedModes == true){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=50;         setDifference=10;     colorMode=2;                      }; flakeCounter=0;               offmin=13;        offmax=13;     offdis = offdisC;       hh=NUM_LEDS;      numsparks=cfactor2*5;    endFlag=false;    for (int s=0;s<30; s++){y[s]=offdisC;}    poshh=NUM_LEDS;   if (tower){slingerSpeed=45/cfactor2;} else {slingerSpeed = changeSpeed;} ;} break;
     case 37: {       effect_function = RGBmode;           changeSpeed=50;          } break;     
    }
-   for (int k=0; k<21; k++){
-     i[k]=NUM_LEDS; 
-     a[k]=NUM_LEDS; 
-     pos1[k]=NUM_LEDS;        
-     pos2[k]=NUM_LEDS;        
-     pos3[k]=NUM_LEDS;        
-     pos4[k]=NUM_LEDS;
-     num17[k]=NUM_LEDS;
-     }
-   for (int s=0; s<30; s++){
+  for (int k=0; k<21; k++){
+    i[k]=NUM_LEDS; 
+    a[k]=NUM_LEDS; 
+    pos1[k]=NUM_LEDS;        
+    pos2[k]=NUM_LEDS;        
+    pos3[k]=NUM_LEDS;        
+    pos4[k]=NUM_LEDS;
+    num17[k]=NUM_LEDS;
+    }
+  for (int s=0; s<30; s++){
     rr[s]=-1;       
     pos[s]=NUM_LEDS;
     }
-   fill_solid(leds, NUM_SET, CRGB::Black);
-   FastLED.show();
-   if (effect_function != *xmas_string && effect_function != *xmas_singles){
-     fillArrayRainbow(2);
-   }
-   readBriSData(BriSPreset);
-   selectColor=-1;
-   slowFactor=0;
-   INTERVAL7=5000;
-   dir1 = 1;
-   if ((effect_function == *static_glow && programMode == 3)  || effect_function == colourSplash){
-    dir = 1; xdir = 0;
-   }
-   else {
-    dir = 2; xdir = 1;
-   }
-   diffbeat=60000/(setDifference*4*100);
-   diffbeat2=diffbeat/2;            
-   setDifference2 = setDifference+5;
-   changeModus=false;
-   executeScript=true;
-   mergedString = "HSPE "; ws.textAll(mergedString);
-   mergedString = "HY1N "; ws.textAll(mergedString);
-   mergedString = "HY1O "; ws.textAll(mergedString);   
-   displayOled();                            
+  fill_solid(leds, NUM_SET, CRGB::Black);
+  FastLED.show();
+
+  if (!personalizedModes){
+    if (effect_function == xmas_string || effect_function == xmas_singles || effect_function == xmas_solid){
+      glitterON == true;
+    }
+    else {
+      glitterON == false;
+    }
+    initializeGlitter();
+    String mergedString = "GTGLI"+String(glitterON);
+    ws.textAll(mergedString);
   }
+
+  if (effect_function != *xmas_string && effect_function != *xmas_singles){
+    fillArrayRainbow(2);
+  }
+  readBriSData(BriSPreset);
+  selectColor=-1;
+  slowFactor=0;
+  INTERVAL7=5000;
+  dir1 = 1;
+  if ((effect_function == *static_glow && programMode == 3)  || effect_function == colourSplash){
+  dir = 1; xdir = 0;
+  }
+  else {
+  dir = 2; xdir = 1;
+  }
+  diffbeat=60000/(setDifference*4*100);
+  diffbeat2=diffbeat/2;            
+  setDifference2 = setDifference+5;
+  changeModus=false;
+  executeScript=true;
+  mergedString = "HSPE "; ws.textAll(mergedString);
+  mergedString = "HY1N "; ws.textAll(mergedString);
+  mergedString = "HY1O "; ws.textAll(mergedString);   
+  displayOled();                            
+}
 }

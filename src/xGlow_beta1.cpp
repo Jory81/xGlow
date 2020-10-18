@@ -120,7 +120,8 @@ void enableMode();
 
 // functions: inilizes arrays or modifies variables. colour_Func.h
 void changePColors();
-void fillxmasArray ();
+void fillxmasArray();
+void initializeGlitter();
 void loadPersonalSettings();
 void saveCurrentModeToEEPROM();
 void fillArrayRainbow(uint8_t fillcase);

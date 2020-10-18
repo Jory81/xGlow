@@ -277,88 +277,6 @@ $(document).ready(function() {
 </p>
 <p class="infowindow">time to next effect: <span id='HCTIS'></span> &nbsp </span></p>
 <p class="infowindow">time to colour change: <span id='HPTIS'></span> / <span id='HPTTS'></span> </span></p>
-<hr/>
-<p class="sliderwindow"> HUE, BRIGHTNESS AND SATURATION: 
-
-	<span id="checkbox1">
-	<input class="ckeckbox-element" type="checkbox" id="1M1" onclick="setTab('generalSettings')"/>  
-	<i class="glyphicon glyphicon-menu-down"></i>
-	</span> 
-
-	<div id="generalSettings">
-
-</p>
-
-<div class="slidecontainerx">
-<div class="titlex">
-_Hue Value (0-255):
-</div>
-<input id="SHUE" class="sliderhue" type="range" min="0" max="255" step="1" value="128" onchange="updateSlider('SHUE', this.value)">
-<div class="varvalueh"><span id="SHUES"></span> &nbsp | &nbsp   <span id="HY1OS"></span>>><span id="HY1NS"></span></div>
-</div>
-
-<div class="slidecontainerx">
-<div class="titlex">
-_Bri Value (0-255) :
-</div>
-<input id="SBRI" class="sliderbri" type="range" min="0" max="255" step="1" value="128" onchange="updateSlider('SBRI', this.value)">
-<div class="varvaluex" id="SBRIS"></div><div class="infox"></div>
-</div>
-
-<div class="slidecontainerx">
-<div class="titlex">
-_Sat Value (0-255) :
-</div>
-<input id="SSAT" class="slidersat" type="range" min="0" max="255" step="1" value="128" onchange="updateSlider('SSAT', this.value)">
-<div class="varvaluex" id="SSATS"></div><div class="infox"></div>
-</div>
-</div>
-
-<p class="sliderwindow"> RGB mode: 
-
-	<span id="checkbox1">
-	<input class="ckeckbox-element" type="checkbox" id="1M1" onclick="setTab('RGBSettings')"/>  
-	<i class="glyphicon glyphicon-menu-down"></i>
-	</span> 
-
-	<div id="RGBSettings">
-
-</p>
-
-<div class="slidecontainerx">
-<div class="titlex">
-_RED (0-255):
-</div>
-<input id="SRED" class="sliderred" type="range" min="0" max="255" step="1" value="128" onchange="updateSlider('SRED', this.value)">
-<div class="varvaluex" id="SREDS"></div><div class="infox"></div>
-</div>
-
-<div class="slidecontainerx">
-<div class="titlex">
-_GREEN (0-255) :
-</div>
-<input id="SGRE" class="slidergreen" type="range" min="0" max="255" step="1" value="128" onchange="updateSlider('SGRE', this.value)">
-<div class="varvaluex" id="SGRES"></div><div class="infox"></div>
-</div>
-
-<div class="slidecontainerx">
-<div class="titlex">
-_BLUE (0-255) :
-</div>
-<input id="SBLU" class="sliderblues" type="range" min="0" max="255" step="1" value="128" onchange="updateSlider('SBLU', this.value)">
-<div class="varvaluex" id="SBLUS"></div><div class="infox"></div>
-</div>
-
-<span class="titlez"> approximated HSV values:&nbsp &nbsp &nbsp &nbsp &nbsp Hue:<span id="HHHHS"></span> &nbsp Bri:<span id="HVVVS"></span> &nbsp Sat:<span id="HSSSS"></span>
-</span>
-<div class="switchcontainer">
-update & display HSV values:
-<label class="switch">
-  <input type="checkbox" id="THSV" onclick="updateButton('THSV')"> 
-  <span class="sliderround"></span>
-</label>
-</div>
-</div>
 
 <hr/>
 
@@ -476,13 +394,13 @@ _Cycle time (s):
 </p> 
 
 <div class="switchcontainer">
-	_Personalized modes ON/OFF
+	_Personalized presets ON/OFF
 	<label class="switch">
 	  <input type="checkbox" id="TPMO" onclick="updateButton('TPMO')"> 
 	  <span class="sliderround"></span>
 	</label>
 	&nbsp; &nbsp;
-	Save (Current) Personalized mode:
+	Save personalized mode as preset:
 	<label class="switch">
 	  <input type="checkbox" id="TSCM" onclick="updateButton('TSCM')"> 
 	  <span class="sliderround"></span>
@@ -490,7 +408,7 @@ _Cycle time (s):
 	<div class="dropdown">
 		<button class="dropbtn">info list:</button>
 		<div class="dropdown-content">
-		  <li>PER MODE ADJUSTABLE</li>
+		  <li>PER MODE ADJUSTABLE (*)</li>
 		  <li>saves to EEPROM:</li>
 		  <li>- Bri_Sat Preset</li>
 		  <li>- color Mode</li>
@@ -526,7 +444,7 @@ _Prog. Mode (0-37):
 <input id="SPGM" class="sliderx" type="range" min="0" max="37" step="1" value="0" onchange="updateSlider('SPGM', this.value)">
 <div class="varvaluex" id="SPGMS"></div><div class="infox">
 <div class="dropdown">
-  <button class="dropbtn">preset modes:</button>
+  <button class="dropbtn">program modes:</button>
   <div class="dropdown-content">
     <li value="0"  onclick="updateProgSlider(this.value)">0: static_glow</li>
 	<li value="1"  onclick="updateProgSlider(this.value)">1: varying_glow</li>
@@ -617,12 +535,12 @@ _Prog. Mode (0-37):
 
 <div class="slidecontainerx">
 	<div class="titlex">
-	*BriSat preset (0-20):
+	*Bri_Sat preset (0-20):
 	</div>
 	<input id="SBSM" class="sliderx" type="range" min="0" max="25" step="1" value="0" onchange="updateSlider('SBSM', this.value)">
 	<div class="varvaluex" id="SBSMS"></div><div class="infox">
 		<div class="dropdown">
-			<button class="dropbtn">Bri_Sat modes:</button>
+			<button class="dropbtn">Bri_Sat presets:</button>
 			<div class="dropdown-content">
 			  <li value="0"  onclick="updateBriSSlider(this.value)">0: EEPROM vals</li>
 			  <li value="1"  onclick="updateBriSSlider(this.value)">1: basic glow_1</li>
@@ -685,6 +603,34 @@ _Prog. Mode (0-37):
 		<p>25</p>	
 	  </div>
 	  <div class="varvaluex"></div><div class="infox"></div>
+</div>
+
+<div class="slidecontainerx">
+	<div class="titlex">
+	_*Mode variant(0-2):
+	</div>
+	<input id="SVAR" class="sliderx" type="range" min="0" max="2" step="1" value="1" onchange="updateSlider('SVAR', this.value)">
+	<div class="varvaluex" id="SVARS"></div><div class="infox">
+		<div class="dropdown">
+			<button class="dropbtn">var. modes:</button>
+			<div class="dropdown-content">
+				<li value="0"  onclick="updateVarSlider(this.value)">0: most basic variant</li>
+				<li value="1"  onclick="updateVarSlider(this.value)">1: standard variant</li>
+				<li value="2"  onclick="updateVarSlider(this.value)">2: colourful variant</li>
+			</div>
+			</div>
+	</div>
+	</div>
+	<div class="slidecontainerx">
+	<div class="titlex">
+	
+	</div>
+		<div class="sliderticksEmptyx">
+		<p></p>
+		<p></p>
+		<p></p>
+		</div>
+		<div class="varvaluex"></div><div class="infox"></div>  
 	</div>
 
 <div class="slidecontainerx">
@@ -722,32 +668,13 @@ _Prog. Mode (0-37):
 </div>
 
 <div class="slidecontainerx">
-<div class="titlex">
-_*Add.modeVar(0-2):
-</div>
-<input id="SVAR" class="sliderx" type="range" min="0" max="2" step="1" value="1" onchange="updateSlider('SVAR', this.value)">
-<div class="varvaluex" id="SVARS"></div><div class="infox">
-	<div class="dropdown">
-		<button class="dropbtn">var. modes:</button>
-		<div class="dropdown-content">
-		  <li value="0"  onclick="updateVarSlider(this.value)">0: most basic variant</li>
-		  <li value="1"  onclick="updateVarSlider(this.value)">1: standard variant</li>
-		  <li value="2"  onclick="updateVarSlider(this.value)">2: colourful variant</li>
-		</div>
-	  </div>
-</div>
-</div>
-<div class="slidecontainerx">
-<div class="titlex">
+	<div class="titlex">
+	*LED_dif (0-255):
+	</div>
+	<input id="SDIF" class="sliderx" type="range" min="1" max="255" step="1" value="7" onchange="updateSlider('SDIF', this.value)">
+	<div class="varvaluex" id="SDIFS"></div> <div class="infox"></div>
+	</div>
 
-</div>
-  <div class="sliderticksEmptyx">
-    <p></p>
-    <p></p>
-    <p></p>
-  </div>
-  <div class="varvaluex"></div><div class="infox"></div>  
-</div>
 <div class="slidecontainerx">
 	<div class="titlex">
 	*Preset speed (ms):
@@ -758,7 +685,7 @@ _*Add.modeVar(0-2):
 </div>
 <hr/>
 
-<p class="sliderwindow"> ADDITIONAL COLOR SETTINGS: 
+<p class="sliderwindow"> COLOR SETTINGS: 
 
 	<span id="checkbox1">
 	<input class="ckeckbox-element" type="checkbox" id="1M1" onclick="setTab('colorSettings')"/>  
@@ -767,6 +694,14 @@ _*Add.modeVar(0-2):
 
 	<div id="colorSettings">
 	</p>
+
+<div class="slidecontainerx">
+	<div class="titlex">
+	_Hue Value (0-255):
+	</div>
+	<input id="SHUE" class="sliderhue" type="range" min="0" max="255" step="1" value="128" onchange="updateSlider('SHUE', this.value)">
+	<div class="varvalueh"><span id="SHUES"></span> &nbsp | &nbsp   <span id="HY1OS"></span>>><span id="HY1NS"></span></div>
+</div>	
 
 <div class="slidecontainerx">
 <div class="titlex">
@@ -798,21 +733,21 @@ _*Add.modeVar(0-2):
 	  <li value="18"  onclick="updateCArray(this.value)">18: RGB</li>
 	  <li value="19"  onclick="updateCArray(this.value)">19: blue, orange, pink</li>
 	  <li value="20"  onclick="updateCArray(this.value)">20: yellow, orange, red</li>
-	  <li value="21"  onclick="updateCArray(this.value)">21: pink, orange, gr</li>
-	  <li value="22"  onclick="updateCArray(this.value)">22: pink, orange, yel</li>
+	  <li value="21"  onclick="updateCArray(this.value)">21: pink, orange, green</li>
+	  <li value="22"  onclick="updateCArray(this.value)">22: pink, orange, yellow</li>
 	  <li value="23"  onclick="updateCArray(this.value)">23: yellow, orange, green</li>
 	  <li value="24"  onclick="updateCArray(this.value)">24: blue, orange, purple</li>
 	  <li value="25"  onclick="updateCArray(this.value)">25: red, orange, pink</li>
 	  <li value="26"  onclick="updateCArray(this.value)">26: red, orange, salmon</li>	
 	  <li value="27"  onclick="updateCArray(this.value)">27: red, orange, turqoise</li>	
 	  <li value="28"  onclick="updateCArray(this.value)">28: blue, purple, turqoise</li>	
-	  <li value="29"  onclick="updateCArray(this.value)">29: purp, orange, turqoise</li>
+	  <li value="29"  onclick="updateCArray(this.value)">29: purple, orange, turqoise</li>
 	  <li value="30"  onclick="updateCArray(this.value)">30: red, green</li>
 	  <li value="31"  onclick="updateCArray(this.value)">31: lemon, red</li>
 	  <li value="32"  onclick="updateCArray(this.value)">32: cyan, lemon</li>
 	  <li value="33"  onclick="updateCArray(this.value)">33: pink, lemon</li>
-	  <li value="34"  onclick="updateCArray(this.value)">34: purp, green</li>
-	  <li value="35"  onclick="updateCArray(this.value)">35: yel, green</li>
+	  <li value="34"  onclick="updateCArray(this.value)">34: purple, green</li>
+	  <li value="35"  onclick="updateCArray(this.value)">35: yellow, green</li>
 	  <li value="36"  onclick="updateCArray(this.value)">36: cyan, yellow</li>
 	  <li value="37"  onclick="updateCArray(this.value)">37: cyan, orange</li>
 	  <li value="38"  onclick="updateCArray(this.value)">38: orange, pink</li>
@@ -822,7 +757,7 @@ _*Add.modeVar(0-2):
 	  <li value="42"  onclick="updateCArray(this.value)">42: yellow, pink</li>
 	  <li value="43"  onclick="updateCArray(this.value)">43: cyan, turqoise</li>
 	  <li value="44"  onclick="updateCArray(this.value)">44: cyan, pink</li>
-	  <li value="45"  onclick="updateCArray(this.value)">45: turqoise, purp</li>
+	  <li value="45"  onclick="updateCArray(this.value)">45: turqoise, purple</li>
 	  <li value="46"  onclick="updateCArray(this.value)">46: purple, orange</li>	
 	  <li value="47"  onclick="updateCArray(this.value)">47: purple, red</li>	
 	  <li value="48"  onclick="updateCArray(this.value)">48: cyan, red</li>	
@@ -842,10 +777,26 @@ _*Add.modeVar(0-2):
 
 <div class="slidecontainerx">
 <div class="titlex">
-FastLED.Palet (20):
+*Num_colors (1-15):
+</div>
+<input id="SNCO" class="sliderx" type="range" min="0" max="15" step="1" value="0" onchange="updateSlider('SNCO', this.value)">
+<div class="varvaluex" id="SNCOS"></div> <div class="infox"></div>
+</div>
+
+<div class="slidecontainerx">
+<div class="titlex">
+*ColorLength (1-50):
+</div>
+<input id="SNCL" class="sliderx" type="range" min="0" max="50" step="1" value="10" onchange="updateSlider('SNCL', this.value)">
+<div class="varvaluex" id="SNCLS"></div> <div class="infox"></div>
+</div>
+
+<div class="slidecontainerx">
+<div class="titlex">
+*FastLED.Palet (20):
 </div>
 <input id="SPAL" class="sliderx" type="range" min="0" max="20" step="1" value="2" onchange="updateSlider('SPAL', this.value)">
-<div class="varvaluex" id="SPALS"></div> <div class="infox"></div>
+<div class="varvaluex" id="SPALS"></div> <div class="infox">prog. 6</div>
 </div>
 
 <div class="slidecontainerx">
@@ -855,24 +806,8 @@ Prog.Gradient (14):
 <input id="SGRA" class="sliderx" type="range" min="0" max="14" step="1" value="0" onchange="updateSlider('SGRA', this.value)">
 <div class="varvaluex" id="SGRAS"></div> <div class="infox"></div>
 </div>
-
-<div class="slidecontainerx">
-<div class="titlex">
-Num_colors (1-15):
-</div>
-<input id="SNCO" class="sliderx" type="range" min="0" max="15" step="1" value="0" onchange="updateSlider('SNCO', this.value)">
-<div class="varvaluex" id="SNCOS"></div> <div class="infox"></div>
-</div>
-
-<div class="slidecontainerx">
-<div class="titlex">
-ColorLength (1-50):
-</div>
-<input id="SNCL" class="sliderx" type="range" min="0" max="50" step="1" value="10" onchange="updateSlider('SNCL', this.value)">
-<div class="varvaluex" id="SNCLS"></div> <div class="infox"></div>
-</div>
 <hr/>
-<p class="sliderwindowsmall"> VARIOUS (EEPROM STORED) COLOR SETTINGS:
+<p class="sliderwindowsmall"> VARIOUS OTHER COLOR SLIDERS:
 
 	<span id="checkbox1">
 	<input class="ckeckbox-element" type="checkbox" id="1O1" onclick="setTab('EEPROMcolorSettings')"/>  
@@ -887,7 +822,7 @@ ColorLength (1-50):
 </p>	
 <div class="slidecontainerx">
 <div class="titlex">
-_gaps xmas modes:
+_gaps xmas modes (31-33):
 </div>
 <section class="range-slider">
   <span class="rangeValues"></span>
@@ -958,122 +893,57 @@ _mode 15 (&22, 25):
   <input id="SMI4" value="0" min="0" max="255" step="1" type="range" class="sliderorange" onchange="updateSlider('SMI4', this.value)">  
   <input id="SMA4" value="40" min="0" max="255" step="1" type="range" class="sliderpink" onchange="updateSlider('SMA4', this.value)">
 </section>
+</div>
 </div>	
-</div>
-</div>
 <hr/>
-
-<p class="sliderwindow"> ADDITIONAL OTHER SETTINGS: 
+<p class="sliderwindowsmall"> RGB mode (program 37): 
 
 	<span id="checkbox1">
-	<input class="ckeckbox-element" type="checkbox" id="1M1" onclick="setTab('otherSettings')"/>  
+	<input class="ckeckbox-element" type="checkbox" id="1M1" onclick="setTab('RGBSettings')"/>  
 	<i class="glyphicon glyphicon-menu-down"></i>
 	</span> 
 
-	<div id="otherSettings">
+	<div id="RGBSettings">
 
 </p>
-<div class="slidecontainerx">
-<div class="titlex">
-Num_spark (0-30):
-</div>
-<input id="SNSP" class="sliderx" type="range" min="1" max="30" step="1" value="20" onchange="updateSlider('SNSP', this.value)">
-<div class="varvaluex" id="SNSPS"></div> <div class="infox">(21)</div>
-</div>
 
 <div class="slidecontainerx">
 <div class="titlex">
-_Spark_bri (0-255):
+_RED (0-255):
 </div>
-<input id="SSBR" class="sliderx" type="range" min="0" max="255" step="1" value="0" onchange="updateSlider('SSBR', this.value)">
-<div class="varvaluex" id="SSBRS"></div><div class="infox"></div>
+<input id="SRED" class="sliderred" type="range" min="0" max="255" step="1" value="128" onchange="updateSlider('SRED', this.value)">
+<div class="varvaluex" id="SREDS"></div><div class="infox"></div>
 </div>
 
 <div class="slidecontainerx">
 <div class="titlex">
-_Spark_sat (0-255):
+_GREEN (0-255) :
 </div>
-<input id="SSSF" class="sliderx" type="range" min="0" max="255" step="1" value="0" onchange="updateSlider('SSSF', this.value)">
-<div class="varvaluex" id="SSSFS"></div><div class="infox"></div>
-</div>
-
-<div class="slidecontainerx">
-<div class="titlex">
-_Spark_color (0-255):
-</div>
-<input id="SSCO" class="sliderx" type="range" min="0" max="255" step="1" value="0" onchange="updateSlider('SSCO', this.value)">
-<div class="varvaluex" id="SSCOS"></div> <div class="infox"></div>
+<input id="SGRE" class="slidergreen" type="range" min="0" max="255" step="1" value="128" onchange="updateSlider('SGRE', this.value)">
+<div class="varvaluex" id="SGRES"></div><div class="infox"></div>
 </div>
 
 <div class="slidecontainerx">
 <div class="titlex">
-LED_dif (0-255):
+_BLUE (0-255) :
 </div>
-<input id="SDIF" class="sliderx" type="range" min="1" max="255" step="1" value="7" onchange="updateSlider('SDIF', this.value)">
-<div class="varvaluex" id="SDIFS"></div> <div class="infox"></div>
-</div>
-
-<div class="slidecontainerx">
-<div class="titlex">
-Add.offset (1-15):
-</div>
-<input id="SOFF" class="sliderx" type="range" min="1" max="15" step="1" value="7" onchange="updateSlider('SOFF', this.value)">
-<div class="varvaluex" id="SOFFS"></div> <div class="infox"></div>
-</div>
+<input id="SBLU" class="sliderblues" type="range" min="0" max="255" step="1" value="128" onchange="updateSlider('SBLU', this.value)">
+<div class="varvaluex" id="SBLUS"></div><div class="infox"></div>
 </div>
 
-<hr/>
-<p class="sliderwindow"> ADDITIONAL TOGGLES: 
-
-	<span id="checkbox1">
-	<input class="ckeckbox-element" type="checkbox" id="1M1" onclick="setTab('otherToggleSettings')"/>  
-	<i class="glyphicon glyphicon-menu-down"></i>
-	</span> 
-
-	<div id="otherToggleSettings">
-
-<p>
-
+<span class="titlez"> approximated HSV values:&nbsp &nbsp &nbsp &nbsp &nbsp Hue:<span id="HHHHS"></span> &nbsp Bri:<span id="HVVVS"></span> &nbsp Sat:<span id="HSSSS"></span>
+</span>
 <div class="switchcontainer">
-Glitter
+update & display HSV values:
 <label class="switch">
-  <input type="checkbox" id="TGLI" onclick="updateButton('TGLI')"> 
-  <span class="sliderround"></span>
-</label>
-Rainbow (mode 16-18)
-<label class="switch">
-  <input type="checkbox" id="TRBO" onclick="updateButton('TRBO')"> 
-  <span class="sliderround"></span> 
-</label>
-Reverse (mode 16-18)
-<label class="switch">
-  <input type="checkbox" id="TRVO" onclick="updateButton('TRVO')"> 
-  <span class="sliderround"></span> 
-</label>
-white (mode 29)
-<label class="switch">
-  <input type="checkbox" id="TWHO" onclick="updateButton('TWHO')"> 
-  <span class="sliderround"></span> 
-</label>
-direction
-<label class="switch">
-  <input type="checkbox" id="TDIR" onclick="updateButton('TDIR')"> 
-  <span class="sliderround"></span>
-</label>
-_Tower
-<label class="switch">
-  <input type="checkbox" id="TTWO" onclick="updateButton('TTWO')"> 
-  <span class="sliderround"></span>
-</label>
-_Bees
-<label class="switch">
-  <input type="checkbox" id="TBEE" onclick="updateButton('TBEE')"> 
+  <input type="checkbox" id="THSV" onclick="updateButton('THSV')"> 
   <span class="sliderround"></span>
 </label>
 </div>
 </div>
-
+</div>
 <hr/>
+
 <p class="sliderwindow"> ADVANCED WAVEFORM SETTINGS: 
 
 	<span id="checkbox1">
@@ -1084,46 +954,56 @@ _Bees
 	<div id="waveSettings">
 
 <p>
+<p class="sliderwindowsmall">adjust to fine tune twinkle, wave or glow settings	</p>
 
 <p class="sliderwindow"> BRIGHTNESS:</p>
 <div class="slidecontainerx">
-	<div class="titlex">
-	_Glow Mode (0-8):
-	</div>
-	<input id="SGLO" class="sliderx" type="range" min="0" max="8" step="1" value="0" onchange="updateSlider('SGLO', this.value)">
-	<div class="varvaluex" id="SGLOS"></div><div class="infox">
-	<div class="dropdown">
-		<button class="dropbtn">info list:</button>
-		<div class="dropdown-content">
-		  <li value="0">0: static</li>
-		  <li value="1">1: fixed glow</li>
-		  <li value="2">2: variable glow</li>
-		  <li value="3">3: twinkle</li>
-		  <li value="4">4: rev-twinkle</li>
-		  <li value="5">5: dimmed wave</li>
-		  <li value="6">6: offset glow</li>
-		  <li value="7">7: half wave</li>	
-		  <li value="8">8: full wave</li>
-		</div>
-	  </div>
-	</div>
+<div class="titlex">
+_Bri Value (0-255) :
+</div>
+<input id="SBRI" class="sliderbri" type="range" min="0" max="255" step="1" value="128" onchange="updateSlider('SBRI', this.value)">
+<div class="varvaluex" id="SBRIS"></div><div class="infox"></div>
 </div>
 	
-	<div class="slidecontainerx">
-	<div class="titlex">
+
+<div class="slidecontainerx">
+<div class="titlex">
+_Glow Mode (0-8):
+</div>
+<input id="SGLO" class="sliderx" type="range" min="0" max="8" step="1" value="0" onchange="updateSlider('SGLO', this.value)">
+<div class="varvaluex" id="SGLOS"></div><div class="infox">
+<div class="dropdown">
+	<button class="dropbtn">info list:</button>
+	<div class="dropdown-content">
+		<li value="0">0: static</li>
+		<li value="1">1: fixed glow</li>
+		<li value="2">2: variable glow</li>
+		<li value="3">3: twinkle</li>
+		<li value="4">4: rev-twinkle</li>
+		<li value="5">5: dimmed wave</li>
+		<li value="6">6: offset glow</li>
+		<li value="7">7: half wave</li>	
+		<li value="8">8: full wave</li>
 	</div>
-	  <div class="sliderticksEmptyx">
-		<p></p>
-		<p></p>
-		<p></p>
-		<p></p>
-		<p></p>
-		<p></p>
-		<p></p>
-		<p></p>	
-		<p></p>
-	  </div>
-	  <div class="varvaluex"></div><div class="infox"></div>
+	</div>
+</div>
+</div>
+	
+<div class="slidecontainerx">
+<div class="titlex">
+</div>
+	<div class="sliderticksEmptyx">
+	<p></p>
+	<p></p>
+	<p></p>
+	<p></p>
+	<p></p>
+	<p></p>
+	<p></p>
+	<p></p>	
+	<p></p>
+	</div>
+	<div class="varvaluex"></div><div class="infox"></div>
 </div>
 <div class="slidecontainerx">
 <div class="titlex">
@@ -1260,6 +1140,15 @@ _Wave BPM(br):
 </div>
 <br>
 <p class="sliderwindow"> SATURATION:</P>
+
+<div class="slidecontainerx">
+	<div class="titlex">
+	_Sat Value (0-255) :
+	</div>
+	<input id="SSAT" class="slidersat" type="range" min="0" max="255" step="1" value="128" onchange="updateSlider('SSAT', this.value)">
+	<div class="varvaluex" id="SSATS"></div><div class="infox"></div>
+</div>
+	
 <div class="slidecontainerx">
 		<div class="titlex">
 		_Sat Mode (0-8):
@@ -1444,6 +1333,111 @@ Maintain complete waveforms
 </div>
 
 <hr/>
+
+<p class="sliderwindow"> ADDITIONAL OTHER SETTINGS: 
+
+	<span id="checkbox1">
+	<input class="ckeckbox-element" type="checkbox" id="1M1" onclick="setTab('otherSettings')"/>  
+	<i class="glyphicon glyphicon-menu-down"></i>
+	</span> 
+
+	<div id="otherSettings">
+
+</p>
+<div class="slidecontainerx">
+<div class="titlex">
+Num_spark (0-30):
+</div>
+<input id="SNSP" class="sliderx" type="range" min="1" max="30" step="1" value="20" onchange="updateSlider('SNSP', this.value)">
+<div class="varvaluex" id="SNSPS"></div> <div class="infox">(21)</div>
+</div>
+
+<div class="slidecontainerx">
+<div class="titlex">
+_Spark_bri (0-255):
+</div>
+<input id="SSBR" class="sliderx" type="range" min="0" max="255" step="1" value="0" onchange="updateSlider('SSBR', this.value)">
+<div class="varvaluex" id="SSBRS"></div><div class="infox"></div>
+</div>
+
+<div class="slidecontainerx">
+<div class="titlex">
+_Spark_sat (0-255):
+</div>
+<input id="SSSF" class="sliderx" type="range" min="0" max="255" step="1" value="0" onchange="updateSlider('SSSF', this.value)">
+<div class="varvaluex" id="SSSFS"></div><div class="infox"></div>
+</div>
+
+<div class="slidecontainerx">
+<div class="titlex">
+_Spark_color (0-255):
+</div>
+<input id="SSCO" class="sliderx" type="range" min="0" max="255" step="1" value="0" onchange="updateSlider('SSCO', this.value)">
+<div class="varvaluex" id="SSCOS"></div> <div class="infox"></div>
+</div>
+
+<div class="slidecontainerx">
+<div class="titlex">
+Add.offset (1-15):
+</div>
+<input id="SOFF" class="sliderx" type="range" min="1" max="15" step="1" value="7" onchange="updateSlider('SOFF', this.value)">
+<div class="varvaluex" id="SOFFS"></div> <div class="infox"></div>
+</div>
+</div>
+
+<hr/>
+<p class="sliderwindow"> ADDITIONAL TOGGLES: 
+
+	<span id="checkbox1">
+	<input class="ckeckbox-element" type="checkbox" id="1M1" onclick="setTab('otherToggleSettings')"/>  
+	<i class="glyphicon glyphicon-menu-down"></i>
+	</span> 
+
+	<div id="otherToggleSettings">
+
+<p>
+
+<div class="switchcontainer">
+Glitter
+<label class="switch">
+  <input type="checkbox" id="TGLI" onclick="updateButton('TGLI')"> 
+  <span class="sliderround"></span>
+</label>
+Rainbow (mode 16-18)
+<label class="switch">
+  <input type="checkbox" id="TRBO" onclick="updateButton('TRBO')"> 
+  <span class="sliderround"></span> 
+</label>
+Reverse (mode 16-18)
+<label class="switch">
+  <input type="checkbox" id="TRVO" onclick="updateButton('TRVO')"> 
+  <span class="sliderround"></span> 
+</label>
+white (mode 29)
+<label class="switch">
+  <input type="checkbox" id="TWHO" onclick="updateButton('TWHO')"> 
+  <span class="sliderround"></span> 
+</label>
+direction
+<label class="switch">
+  <input type="checkbox" id="TDIR" onclick="updateButton('TDIR')"> 
+  <span class="sliderround"></span>
+</label>
+_Tower
+<label class="switch">
+  <input type="checkbox" id="TTWO" onclick="updateButton('TTWO')"> 
+  <span class="sliderround"></span>
+</label>
+_Bees
+<label class="switch">
+  <input type="checkbox" id="TBEE" onclick="updateButton('TBEE')"> 
+  <span class="sliderround"></span>
+</label>
+</div>
+</div>
+
+<hr/>
+
 <p class="sliderwindow"> LED (SYSTEM) SETTINGS:
 
 	<span id="checkbox1">

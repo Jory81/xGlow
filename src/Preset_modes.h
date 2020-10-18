@@ -2771,7 +2771,6 @@ void handleGlitter(){ // HANDLE GLITTER FUNCTION
 //  if ((glitterON) && (effect_function != *meteor)){
   if (glitterON){  
     rn13=beatsin88(150, 1000, 30000);
-    FPS=30;
   
     if (millis() - previousMillis52 >= 150) {
         previousMillis52 = millis();
@@ -2781,9 +2780,6 @@ void handleGlitter(){ // HANDLE GLITTER FUNCTION
           leds[ig] = CHSV(60, 0, 255); // qadd8(BRIGH,BrF)
          }
      }
-  }
-  else {
-    FPS=20;
   }
 //  leds[0] = CRGB::Black;  
   return;

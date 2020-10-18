@@ -280,13 +280,16 @@ uint8_t fadeFnc(uint8_t value, uint8_t valueTo){
   return value;
 }
 
-// void receivedSignal(){
-//   for (int i=0; i<NUM_LEDS; i++){ 
-//   leds[i]=CRGB::Red;
-//   FastLED.show();
-//   }
-//   return;
-// }
+
+void initializeGlitter(){
+  if (glitterON){
+  FPS = 30;
+  }
+  else {
+    FPS = 20;
+    }
+  return;  
+}
 /*
  * specifically handles the twinkles. Modified from Mark Kriegman's code. 
  * https://gist.github.com/kriegsman/5408ecd397744ba0393e
