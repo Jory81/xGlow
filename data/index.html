@@ -54,7 +54,6 @@ function initWebSocket() {
 function onOpen(event) {
  
     // Log connection state
-	document.getElementById("generalSettings").style.display = "block";
 	document.getElementById("RGBSettings").style.display = "none";
 	document.getElementById("cycleSettings").style.display = "block";
 	document.getElementById("importantSettings").style.display = "block";
@@ -400,7 +399,7 @@ _Cycle time (s):
 	  <span class="sliderround"></span>
 	</label>
 	&nbsp; &nbsp;
-	Save personalized mode as preset:
+	Save mode as personalized preset:
 	<label class="switch">
 	  <input type="checkbox" id="TSCM" onclick="updateButton('TSCM')"> 
 	  <span class="sliderround"></span>
@@ -410,12 +409,12 @@ _Cycle time (s):
 		<div class="dropdown-content">
 		  <li>PER MODE ADJUSTABLE (*)</li>
 		  <li>saves to EEPROM:</li>
-		  <li>- Bri_Sat Preset</li>
+		  <li>- Bri_Sat preset</li>
 		  <li>- color Mode</li>
 		  <li>- preset speed</li>
 		  <li>- mode variant</li>
 		  <li>- color array (CM4)</li>
-		  <li>- setDifference</li>
+		  <li>- LED difference</li>
 		  <li>- glitter</li>
 		  <li>- + some minorities</li>
 		</div>
@@ -612,7 +611,7 @@ _Prog. Mode (0-37):
 	<input id="SVAR" class="sliderx" type="range" min="0" max="2" step="1" value="1" onchange="updateSlider('SVAR', this.value)">
 	<div class="varvaluex" id="SVARS"></div><div class="infox">
 		<div class="dropdown">
-			<button class="dropbtn">var. modes:</button>
+			<button class="dropbtn">mode variant:</button>
 			<div class="dropdown-content">
 				<li value="0"  onclick="updateVarSlider(this.value)">0: most basic variant</li>
 				<li value="1"  onclick="updateVarSlider(this.value)">1: standard variant</li>
@@ -1395,7 +1394,7 @@ Add.offset (1-15):
 
 	<div id="otherToggleSettings">
 
-<p>
+	</p>
 
 <div class="switchcontainer">
 Glitter
@@ -1418,6 +1417,10 @@ white (mode 29)
   <input type="checkbox" id="TWHO" onclick="updateButton('TWHO')"> 
   <span class="sliderround"></span> 
 </label>
+</div>
+
+<div class="switchcontainer">
+<span class="sliderwindowsmall"> complex settings (default is advised): </span> &nbsp  &nbsp  &nbsp 
 direction
 <label class="switch">
   <input type="checkbox" id="TDIR" onclick="updateButton('TDIR')"> 

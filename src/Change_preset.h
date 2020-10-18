@@ -95,7 +95,7 @@ if (changeModus){
     case 33: {       effect_function = xmas_solid;        if (personalizedModes == true){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=200;        setDifference=7;                                        }; offdis=5;        ysr=0; numsparks=0 ;} break;                            
     case 34: {       effect_function = splash;            if (personalizedModes == true){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=30;         setDifference=40;     colorMode=5;                      }; rn14=(random(100, 300)*cfactor2); }break;   
     case 35: {       effect_function = strobe;            if (personalizedModes == true){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=20;         setDifference=40;     colorMode=1;                      };} break;
-    case 36: {       effect_function = meteor;            if (personalizedModes == true){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=50;         setDifference=10;     colorMode=2;                      }; flakeCounter=0;               offmin=13;        offmax=13;     offdis = offdisC;       hh=NUM_LEDS;      numsparks=cfactor2*5;    endFlag=false;    for (int s=0;s<30; s++){y[s]=offdisC;}    poshh=NUM_LEDS;   if (tower){slingerSpeed=45/cfactor2;} else {slingerSpeed = changeSpeed;} ;} break;
+    case 36: {       effect_function = meteor;            if (personalizedModes == true){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=50;         setDifference=10;     colorMode=2;                      }; flakeCounter=0;               offmin=13;        offmax=13;     offdis = offdisC;       hh=NUM_LEDS;      numsparks=cfactor2*5;    endFlag=false;    poshh=NUM_LEDS;   if (tower){slingerSpeed=45/cfactor2;} else {slingerSpeed = changeSpeed;} ;} break; // for (int s=0;s<30; s++){y[s]=offdisC;}   
     case 37: {       effect_function = RGBmode;           changeSpeed=50;          } break;     
    }
   for (int k=0; k<21; k++){
@@ -116,10 +116,10 @@ if (changeModus){
 
   if (!personalizedModes){
     if (effect_function == xmas_string || effect_function == xmas_singles || effect_function == xmas_solid){
-      glitterON == true;
+      glitterON = true;
     }
     else {
-      glitterON == false;
+      glitterON = false;
     }
     initializeGlitter();
     String mergedString = "GTGLI"+String(glitterON);
