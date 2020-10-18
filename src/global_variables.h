@@ -58,6 +58,7 @@ struct storeInEEPROM {
   int check;
   char ssidStorage[32];
   char passStorage[32]; 
+  uint8_t emptybyte; // secures ymin;
   uint8_t ymin;
   uint8_t ymax;
   uint8_t ymin1;
@@ -131,9 +132,10 @@ struct storeInEEPROM {
 byte RGBCOLOR = 0;
 
 storeInEEPROM customVar = {
-      55522, // code to check
+      33335, // code to check
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, // ssid storage
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, // pass storage
+      1, // empty byte so ymin load correctly
       42, // ymin
       85, // ymax
       87, // ymin1

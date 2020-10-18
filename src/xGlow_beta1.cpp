@@ -32,9 +32,10 @@ CRGB leds[NUM_SET];
 int NUM_LEDS = 100; //EEPROM.readInt(93); THIS ONE WILL BE RE-INITIALIZED DURING SETUP. HOWEVER SOME VARIABLES ARE CALCULATED BASED ON THIS NUMBER (NOT FULLY TESTED/OPTIMIZED YET).
 
 #ifdef ESP8266
-  const int DATA_PIN = 2; // with 33 ohm resistor
+  const int DATA_PIN = 2; // 
+  //const int DATA_PIN = 3; // 
 #else
-  const int DATA_PIN = 16; // with 33 ohm resistor
+  const int DATA_PIN = 16; // 
 #endif
 unsigned int FPS = 20; // Refresh time is 20 ms '20 FPS'. '20 FPS' is 50 FRAMES PER SECOND - sorry about the semantics.
 

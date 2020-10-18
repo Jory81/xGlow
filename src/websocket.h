@@ -353,11 +353,14 @@ else if (effect_function == pers_block){
 EEPROM.put(offsetof(storeInEEPROM, numcolor2), numcolor); 
 EEPROM.put(offsetof(storeInEEPROM, colorlengthm[2]), colorlength); 
 }
+else if (effect_function == static_glow && programMode == 0){
+EEPROM.put(offsetof(storeInEEPROM, yval), yval);
+}
 else if (effect_function == static_glow && programMode == 2){
-EEPROM.put(offsetof(storeInEEPROM, yvalm2), yval1);
+EEPROM.put(offsetof(storeInEEPROM, yvalm2), yval);
 }
 else if (effect_function == static_glow && programMode == 3){
-EEPROM.put(offsetof(storeInEEPROM, yvalm3), yval1);
+EEPROM.put(offsetof(storeInEEPROM, yvalm3), yval);
 }
 else if (effect_function == palettes){
 EEPROM.put(offsetof(storeInEEPROM, gCurrentPaletteNumber), gCurrentPaletteNumber);
@@ -480,11 +483,14 @@ else if (effect_function == pers_block){
 numcolor = EEPROM.read(offsetof(storeInEEPROM, numcolor2));
 colorlength = EEPROM.read(offsetof(storeInEEPROM, colorlengthm[2]));
 }
+else if (effect_function == static_glow && programMode == 0){
+yval = EEPROM.read(offsetof(storeInEEPROM, yval));
+}
 else if (effect_function == static_glow && programMode == 2){
-yval1 = EEPROM.read(offsetof(storeInEEPROM, yvalm2));
+yval = EEPROM.read(offsetof(storeInEEPROM, yvalm2));
 }
 else if (effect_function == static_glow && programMode == 3){
-yval1 = EEPROM.read(offsetof(storeInEEPROM, yvalm3));
+yval = EEPROM.read(offsetof(storeInEEPROM, yvalm3));
 }
 else if (effect_function == palettes){
 gCurrentPaletteNumber = EEPROM.read(offsetof(storeInEEPROM, gCurrentPaletteNumber));
