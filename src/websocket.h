@@ -539,6 +539,12 @@ void readBriSData(byte preset)
       offsetPosition = (offsetof(storeInEEPROM, S[0])) + offsetInArray; 
       S = EEPROM.read(offsetPosition);
 
+      offsetPosition = (offsetof(storeInEEPROM, offBr[0])) + offsetInArray; 
+      offBr = EEPROM.read(offsetPosition);   
+
+      offsetPosition = (offsetof(storeInEEPROM, offS[0])) + offsetInArray; 
+      offS = EEPROM.read(offsetPosition);        
+
       offsetPosition = (offsetof(storeInEEPROM, BrF[0])) + offsetInArray; 
       BrF = EEPROM.read(offsetPosition);   
 
