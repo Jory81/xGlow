@@ -1395,7 +1395,7 @@ previousMillis2 = millis();
 void rainbow_5(void){
     if (millis() - previousMillis1 >= changeSpeed) {
       previousMillis1 = millis();
-      yval1+=setDifference*dir1;
+      yval1+=offdis*dir1;
       ysr=yval1;
     }
 
@@ -1403,7 +1403,7 @@ void rainbow_5(void){
       previousMillis2 = millis();  
       for(int i = 0; i < NUM_LEDS; i++ ){
       leds[i] = CHSV(ysr+yvar[varlu],satval[satlu],brigh[brighlu]);
-      ysr+=offdis;
+      ysr+=setDifference;
        
       brighlu++;
       if (brighlu >= numbrigh){brighlu = 0;} 
