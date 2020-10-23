@@ -87,7 +87,7 @@ void fillxmasArray(){
           yxmas=yxmas+setDifference+offdis; 
         }
         else {
-          yxmas+=setDifference;
+          yxmas+=offdis;
         }
         if (yxmasold > yxmas && numfirstcycle == 0){
           numAmax=i;
