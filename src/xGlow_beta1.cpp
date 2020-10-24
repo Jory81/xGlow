@@ -32,8 +32,8 @@ CRGB leds[NUM_SET];
 int NUM_LEDS = 100; //EEPROM.readInt(93); THIS ONE WILL BE RE-INITIALIZED DURING SETUP. HOWEVER SOME VARIABLES ARE CALCULATED BASED ON THIS NUMBER (NOT FULLY TESTED/OPTIMIZED YET).
 
 #ifdef ESP8266
-  const int DATA_PIN = 2; // 
-  //const int DATA_PIN = 3; // 
+  //const int DATA_PIN = 2; // 
+  const int DATA_PIN = 3; // 
 #else
   const int DATA_PIN = 16; // 
 #endif
