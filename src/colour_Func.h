@@ -130,8 +130,8 @@ void selectcolorArray(){
   }                                                
 }
 
-void fillLongxArray(uint8_t colour){
-      for (int i = 0; i < NUM_LEDS; i++){
+void fillLongxArray(uint8_t colour, uint16_t num_leds){
+      for (int i = 0; i < num_leds; i++){
         longxArray[i]=colour;
       }
       return;

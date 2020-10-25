@@ -127,7 +127,7 @@ void loadPersonalSettings();
 void saveCurrentModeToEEPROM();
 void fillArrayRainbow(uint8_t fillcase);
 void fillArrayGradient(uint8_t fillcase, uint8_t y0r, int setDifference);
-void fillLongxArray(uint8_t colour);
+void fillLongxArray(uint8_t colour, uint16_t num_leds);
 void fillColourArray (uint8_t colour[], uint8_t mainColour, int var[], int diff[]);
 void fillNUM_LEDS1(uint8_t arrayType, int NUM_LEDS);
 //void receivedSignal();
