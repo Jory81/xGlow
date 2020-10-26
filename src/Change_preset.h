@@ -59,7 +59,7 @@ void changeState(){
 void handleModeInitialization(){ // HANDLE MODUS SETTINGS
 if (changeModus){
   switch (programMode){ 
-    case 0: {        effect_function = static_glow;       if (personalizedModes == true){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=100;        setDifference=7;      colorMode=0;      yval1=30;       }; forcedColourChange = true  ;} break;
+    case 0: {        effect_function = static_glow;       if (personalizedModes == true){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=100;        setDifference=7;      colorMode=0;      yval1=10;       }; forcedColourChange = true  ;} break;
     case 1: {        effect_function = static_glow_2;     if (personalizedModes == true){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=100;        setDifference=7;      colorMode=2;                      };  }  break; 
     case 2: {        effect_function = static_glow;       if (personalizedModes == true){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=100;        setDifference=25;     colorMode=0;      yval1=5;        }; forcedColourChange = false ;} break;
     case 3: {        effect_function = static_glow;       if (personalizedModes == true){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=100;        setDifference=80;     colorMode=0;      yval1=217;      }; forcedColourChange = true  ;} break;                                                             
