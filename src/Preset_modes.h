@@ -2095,10 +2095,10 @@ void rainbow_7(void){
     rn15=0;
     if (y0r > ymax3 && y0r < ymax3+2 && dir1 == 1){ 
       dir1 = -1;
-      rn15=random(5000,25000)*timefactor3;
       }
     else if (y0r < ymin3 && y0r > ymin3-2 && dir1 == -1){ 
       dir1 = 1;
+      rn15=random(5000,25000)*timefactor3;
       }
     }
 
