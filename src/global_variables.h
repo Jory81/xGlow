@@ -172,20 +172,21 @@ storeInEEPROM customVar = {
       217, // yvalm3
       20, 16, 10, // colorLength rainbow_6, random_string, pers_block
       1, // varON 
-      205,    194, 150, 202, 125, 100,// BRIGH
-      90,     43, 1, 53, 50, 50,// offBr
-      5,      5, 3, 3, 0, 0, // glowON
-      70,     70, 50, 50, 50, 50, // BrF
-      25,     45, 30, 30, 30, 30, // offS
-      205,    161, 250, 202, 250, 250,  // S
-      0,      0, 0, 0, 0, 0,  // Sf
-      0,      5, 0, 0, 0, 0, // satOn was 3
-      31,     32, 31, 31, 31, 31, // numsat
-      13,     13, 10, 29, 13, 13, // numbrigh
-      30,     30, 15, 12, 20, 20,  // BPMB
-      60,     39, 20, 20, 20, 20, // BPMS
-      2000,   2000, 4000, 5000, 3000, 3000, // waveTimeBr
-      1000,   1538, 3000, 3000, 3000, 3000, // waveTimeS
+      205,        200, 175, 150, 125, 100,// BRIGH          position 0 is global variable
+      80,         50, 50, 50, 50, 50,// offBr               position 0 is global variable
+      5,          0, 0, 0, 0, 0, // glowON                  position 0 is global variable
+      70,         50, 50, 50, 50, 50, // BrF                position 0 is global variable
+      25,         30, 30, 30, 30, 30, // offS               position 0 is global variable
+      205,        250, 250, 250, 250, 250,  // S            position 0 is global variable
+      0,          0, 0, 0, 0, 0,  // Sf                     position 0 is global variable
+      0,          0, 0, 0, 0, 0, // satOn was 3             position 0 is global variable
+      31,         31, 31, 31, 31, 31, // numsat             position 0 is global variable
+      13,         13, 13, 13, 13, 13, // numbrigh           position 0 is global variable
+      30,         20, 20, 20, 20, 20,  // BPMB              position 0 is global variable
+      60,         20, 20, 20, 20, 20, // BPMS               position 0 is global variable
+      2000,       3000, 3000, 3000, 3000, 3000, // waveTimeBr           position 0 is global variable
+      1000,       3000, 3000, 3000, 3000, 3000, // waveTimeS            position 0 is global variable
+
       1.00, // timefactor3 
       0, // Bees
       0, // varNumbrigh 
@@ -203,9 +204,9 @@ storeInEEPROM customVar = {
       14, // offdisC
       3, //numcolor1 pers_color
       15, //numcolor2 pers_block
-      21, 0, 0, 0, 0, 21, 0, 0, 22, 2, // uint8_t BriSpreset
+      3, 0, 0, 0, 0, 3, 9, 0, 8, 2, // uint8_t BriSpreset
       4, 0, 0, 0, 0, 6, 0, 0, 0, 0, 
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 23, 
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 
       0, 0, 0, 0, 0, 0, 0, 0,
       100, 100, 100, 100, 100, 35, 50, 50, 20, 30, // unsigned long changeSpeed
       100, 200, 30, 3578, 100, 200, 110, 110, 110, 125, 
@@ -215,7 +216,7 @@ storeInEEPROM customVar = {
       4, 7, 5, 25, 1, 1, 10, 15, 95, 7, 
       7, 7, 7, 7, 7, 7, 1, 40, 1, 1, 
       1, 7, 7, 7, 40, 40, 10, 1,
-      0, 2, 2, 0, 1, 2, 1, 1, 0, 0, // int colorMode
+      0, 0, 0, 0, 1, 2, 1, 1, 0, 0, // int colorMode
       0, 0, 0, 0, 0, 0, 4, 4, 4, 4,
       1, 1, 0, 2, 1, 0, 1, 5, 1, 1, 
       1, 1, 1, 1, 5, 1, 2, 0,
@@ -255,25 +256,30 @@ static const presetBrighSat_pgm selectPresetB_data[] PROGMEM =
   {205,       50,   2,      45,    16,       30,   2000,         250,    0,     0,         35,    31,         30,      2000}, // 0 EEPROM values
   {155,       50,   2,      34,    13,       30,   2000,         255,    0,     0,         35,    31,         30,      2000}, // 1 basic glow nice glow 19
   {205,       50,   2,      35,    31,       51,   6000,         255,    0,     0,         35,    31,         30,      2000}, // 2 subtle glow
-  {205,       50,   5,      45,    13,       30,   2000,         200,    0,     5,         45,    31,         60,      1000}, // 3 small wave ok
+  {194,       70,   5,      43,    13,       30,   2000,         161,    50,    5,         20,    32,         39,      1538}, // 3 NEW small wave less saturated
+  //{205,       50,   5,      45,    13,       30,   2000,         200,    0,     5,         45,    31,         60,      1000}, // 3 small wave ok
   {205,       55,   5,      40,    12,       30,   2000,         200,    0,     5,         54,     9,         60,      1000}, // 4 small wave ok
   {205,       50,   5,      65,    13,       20,   2000,         200,    50,    5,         45,    31,         60,      1000}, // 5 gradient
   {205,       0,    6,      40,    12,       30,   2000,         200,    0,     3,        160,    31,         45,      1333}, // 6 diamond perfect  
-  {205,       50,   3,      55,    13,       10,   6000,         200,    0,     5,         45,    31,         60,      1000}, // 7 slow_Twinkle (baseline)
-  {205,       50,   3,      15,    31,       10,   6000,         255,    0,     0,         35,    31,         30,      2000}, // 8 slow_Twinkle (black))
-  {80,        110,  6,      28,    13,       30,   2000,         200,    0,     5,         45,    31,         60,      1000}, // 9 sparkle_1 doubt
-  {120,       110,  4,      28,    13,       30,   2000,         200,    0,     5,         45,    31,         60,      1000}, // 10 sparkle_2 16
+  {202,       50,   3,      59,    29,       12,   5000,         202,    0,     0,         30,    31,         20,      5000}, // 7 NEW slow twinkle with baseine no saturation variation
+  //{205,       50,   3,      55,    13,       10,   6000,         200,    0,     5,         45,    31,         60,      1000}, // 7 slow_Twinkle (baseline)
+  {202,       50,   3,      1,     10,       12,   5000,         255,    0,     0,         30,    31,         20,      5000}, // 8 NEW rainbow 1 MODE num_color 10 for special effect
+  {205,       50,   3,      15,    31,       10,   6000,         255,    0,     0,         35,    31,         30,      2000}, // 9 slow_Twinkle (black))
+  //{80,        110,  6,      28,    13,       30,   2000,         200,    0,     5,         45,    31,         60,      1000}, // 9 sparkle_1 doubt
+  {136,       110,  4,      93,    13,       30,   2000,         200,    0,     5,         45,    31,         60,      1000}, // 10 sparkle_2 16
   {106,       110,  2,      18,    13,       30,   2000,         145,    50,    0,         35,    31,         30,      2000}, // 11 sparkle_3 17 sat 255 to 145
   {205,       0,    8,      35,    32,       20,   3000,         200,    40,    6,         56,    28,         60,      1000}, // 12 long wave
   {205,       0,    6,      175,   28,       60,   30000,        200,    0,     6,         28,    30,         60,      1000}, // 13 diamond  better than 5 not nice?  
   {205,       0,    6,      90,    13,       30,   2000,         200,    40,    4,        142,    31,         60,      1000}, // 14 diamond tower NEW
   {205,       0,    6,      175,   31,       60,   30000,        200,    0,     6,         85,    28,         60,     30000}, // 15 diamond  fast twinkle (EEPROM?)
   {205,       50,   3,      74,    31,       42,   3000,         200,    0,     5,         45,    31,         60,      1000}, // 16 fast_Twinkle (baseline)
-  {205,       50,   3,      79,    31,       48,   11000,        200,    50,    2,         45,    31,         20,      3000}, // 17 fast_Twinkle too fast, optimize not better than 8?
-  {205,       50,   8,      45,    11,       60,   2000,         200,    0,     5,         35,    31,         60,      1000}, // 18 wave fast twinkle 18
+  {205,       50,   3,      79,    31,       48,   11000,        200,    50,    2,         45,    31,         20,      3000}, // 17 fast_Twinkle too fast, optimize not better than 8? 
+  {205,       50,   8,      45,    11,       45,   1333,         200,    0,     5,         35,    31,         60,      1000}, // 18 wave fast twinkle 18 ROOM FOR NEW PRESET
   {205,       50,   8,      35,    29,       51,   6000,         255,    0,     0,         35,    31,         30,      2000}, // 19 fast_Twinkle fullcolor
   {255,       0,    0,      0,     10,        0,    0,            255,    0,    0,         35,    31,         30,      2000} // 20 no glow
 };
+
+
 
 //  {205,        55,  4,      120,    12,      30,   2000,         200,    0,     4,        145,    31,         60,      1000}, // 15 small wave ok
 
