@@ -2064,11 +2064,11 @@ if (millis() - previousMillis2 >= FPS) {
       leds[i] = CHSV((longxArray[i]+yvar[varlu]+diff[difflu]),S,BRIGH); 
       }
         
-      brighlu++;
-      if (brighlu >= numbrigh){brighlu = 0;}
+      // brighlu++;
+      // if (brighlu >= numbrigh){brighlu = 0;}
 
-      satlu++;
-      if (satlu >= numsat){satlu = 0;}
+      // satlu++;
+      // if (satlu >= numsat){satlu = 0;}
 
       varlu++;
       if (varlu >= 10){varlu = 0;}
