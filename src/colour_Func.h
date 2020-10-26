@@ -116,7 +116,7 @@ for (int t=0; t<numcolor; t++){
 
 void selectcolorArray(){
   numcolor = pgm_read_byte(&selectColor_array[arrayn].numcolor);
-  if ((effect_function == *pers_color && varON == 2) || (effect_function == *rainbow_1 && varON == 2)){
+  if ((effect_function == *pers_color && varON == 2) || (effect_function == *rainbow_1 && varON == 2) || (effect_function == *pers_block && varON == 2 && colorMode != 4)){
     numcolor=15;  
     for (int i = 0; i < 15; i++){
       newColour[i] = pgm_read_byte(&selectColor_array[arrayn].colour[i]); 

@@ -2256,12 +2256,12 @@ else if (varON == 1){
 }
 
 void pers_block(void){
-if (millis() - previousMillis1 >= changeSpeed*m21delay) {
+if (millis() - previousMillis1 >= modeDelay) {
   previousMillis1 = millis();
 
   if (varON == 0){
     yint=0; 
-    m21delay=1;   
+    modeDelay = 1*changeSpeed;   
   }
   else if (varON == 1){
     yint++;
@@ -2269,11 +2269,42 @@ if (millis() - previousMillis1 >= changeSpeed*m21delay) {
     yint=0;
     }
     yintm=yint;
-    m21delay=1; 
-    }    
+    modeDelay = 1*changeSpeed;   
+  }
   else if (varON == 2){
-    changePColors();
-    m21delay=3;     
+    if (millis() - previousMillis36 > INTERVAL7 && colorMode != 4) {
+        modeDelay = changeSpeed/10;
+        newColors++;
+        for (int i = 0;  i < 15; i++){
+        if (colour[i] != newColour[i]) { 
+          changeColor = true;
+          break;}
+        else{
+          changeColor = false;}
+        } 
+            
+        if (changeColor) {
+            for (int i = 0; i < 15; i++){
+              if (colour[i] != newColour[i]){
+                colour[i] = fadeFnc(colour[i], newColour[i]); 
+              }
+            }      
+          }
+        else if (!changeColor){
+          oldArrayn = arrayn;
+          arrayn = random(arrayCount);
+          updateOled(24, 40, &oldArrayn);
+          selectcolorArray();
+          INTERVAL7=interval9*timeArray2[random(0,6)]*timefactor3;
+          updateOledFloat(88, 0, &INTERVAL7, 0); 
+          previousMillis36 = millis();
+          T=0;        
+        }
+      }
+    else if (colorMode == 4){
+      changePColors();
+      modeDelay = 3*changeSpeed;    
+    }
   }
 
   if (newColors >= 1){

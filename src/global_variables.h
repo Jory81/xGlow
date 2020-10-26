@@ -219,7 +219,7 @@ storeInEEPROM customVar = {
       0, 0, 0, 0, 1, 2, 1, 1, 0, 0, // int colorMode
       0, 0, 0, 0, 0, 0, 4, 4, 4, 4,
       1, 1, 0, 2, 1, 0, 4, 5, 1, 4, 
-      4, 1, 1, 1, 5, 1, 2, 0,
+      1, 1, 1, 1, 5, 1, 2, 0,
       1, 1, 1, 1, 1, 1, 1, 1, 7, 7, // byte arrayn
       1, 1, 1, 1, 1, 1, 0, 0, 0, 0,
       1, 1, 1, 1, 1, 1, 1, 1, 1, 27, 
@@ -227,7 +227,7 @@ storeInEEPROM customVar = {
       1, 1, 1, 1, 1, 1, 1, 1, 1, 1, // varON byte
       1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
       1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 
-      1, 1, 1, 1, 1, 1, 1, 1,
+      2, 1, 1, 1, 1, 1, 1, 1,
       300 // NUM_LEDS      
     };
 
@@ -738,6 +738,7 @@ unsigned long previousMillis52 = 0;
 unsigned long previousMillis54 = 0;
 
 unsigned long changeSpeed = 100; //100;
+unsigned long modeDelay = 100; //100;
 
 //unsigned long sparkSpeed = 100;
 uint32_t changeSpeedOld = 100;
