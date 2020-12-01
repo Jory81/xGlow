@@ -168,8 +168,8 @@ storeInEEPROM customVar = {
       25, // green
       6, // blue
       10, // yval
-      5, // yvalm2
-      24, // yvalm3
+      24, // yvalm2
+      217, // yvalm3
       20, 16, 10, // colorLength rainbow_6, random_string, pers_block
       1, // varON 
       205, 155, 205, 194, 205,         205, 205, 202, 255, 150,          202, 205, 136, 106, 205,         205, 205, 205, 205, 205,            205, 205, 194, 75, 255, 75,// BRIGH          position 0 is global variable
