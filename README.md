@@ -29,11 +29,11 @@ Layout with all tabs:
 
 ![](images/layout.jpg)
 
-Main settings that basically allow you to control everything:
+Main settings that basically allow you to control everything important:
 
 ![](images/Main_settings.jpg)
 
-Color_settings tab. An example tab which allows the used to personalize settings.
+Color_settings tab. An example tab which allows the used to personalize settings:
 
 ![](images/example_colorsettings.jpg)
 
