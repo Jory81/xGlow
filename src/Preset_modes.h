@@ -28,6 +28,8 @@ void static_glow(void){
      yval1 = changeColourFcn(colorMode, yval1, 0, 255);
      forcedColourChange = false; 
      updateOled(102, 56, &yval1); 
+     mergedString = "GSHUE"+String(yval);
+     ws.textAll(mergedString); 
   }
 
     if (millis() - previousMillis2 >= FPS) { 

@@ -12,24 +12,28 @@ if (glowON == 0 || lastBRIGH != BRIGH){
 }
 else if (glowON == 1){
   for (int i = 0; i < numbrigh; i++){
-    if (i < 16){
-    brigh[i] = beatsin8(brivalbpm[i], brivalmin[i], brivalmax[i]);
-    }
-    else{
-    brigh[i] = brigh[i-16];     
-    } 
+      int ii = i % 16;
+      brigh[i] = beatsin8(brivalbpm[ii], qsub8(BRIGH,offBr),qadd8(BRIGH,offBr)); 
+    // if (i < 16){
+    // brigh[i] = beatsin8(brivalbpm[i], brivalmin[i], brivalmax[i]);
+    // }
+    // else{
+    // brigh[i] = brigh[i-16];     
+    // } 
   }
 }
   
 else if (glowON == 2){   
 
     for (int i = 0; i < numbrigh; i++){
-    if (i < 16){
-    brigh[i] = beatsin8(brivalbpm[i], qsub8(BRIGH,offBr),qadd8(BRIGH,offBr));
-    }
-    else{
-    brigh[i] = brigh[i-16];    
-    } 
+      int ii = i % 16;
+      brigh[i] = beatsin8(brivalbpm[ii], qsub8(BRIGH,offBr),qadd8(BRIGH,offBr)); 
+    // if (i < 16){
+    // brigh[i] = beatsin8(brivalbpm[i], qsub8(BRIGH,offBr),qadd8(BRIGH,offBr));
+    // }
+    // else{
+    // brigh[i] = brigh[i-16];    
+    // } 
   }
 }
 
@@ -108,23 +112,27 @@ if (satON == 0 || lastS != S){
 
 else if (satON == 1){ 
   for (int i = 0; i < numsat; i++){
-    if (i < 16){
-    satval[i] = beatsin8(satvalbpm[i], satvalmin[i], 255);
-    }
-    else{
-    satval[i] = satval[i-16];     
-    } 
+      int ii = i % 16;
+      satval[i] = beatsin8(satvalbpm[ii], satvalmin[i], 255);
+    // if (i < 16){
+    // satval[i] = beatsin8(satvalbpm[i], satvalmin[i], 255);
+    // }
+    // else{
+    // satval[i] = satval[i-16];     
+    // } 
   }
 }
   
 else if (satON == 2){ 
   for (int i = 0; i < numsat; i++){
-    if (i < 16){
-    satval[i] = beatsin8(satvalbpm[i], qsub8(S,offS),qadd8(S,offS));
-    }
-    else{
-    satval[i] = satval[i-16];     
-    } 
+      int ii = i % 16;
+      satval[i] = beatsin8(satvalbpm[ii], satvalmin[i], 255);
+    // if (i < 16){
+    // satval[i] = beatsin8(satvalbpm[i], qsub8(S,offS),qadd8(S,offS));
+    // }
+    // else{
+    // satval[i] = satval[i-16];     
+    // } 
   }
 }
   

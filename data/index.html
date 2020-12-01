@@ -541,32 +541,32 @@ _Prog. Mode (0-37):
 		<div class="dropdown">
 			<button class="dropbtn">Bri_Sat presets:</button>
 			<div class="dropdown-content">
-			  <li value="0"  onclick="updateBriSSlider(this.value)">0: EEPROM vals</li>
+			  <li value="0"  onclick="updateBriSSlider(this.value)">0: global storage</li>
 			  <li value="1"  onclick="updateBriSSlider(this.value)">1: basic glow_1</li>
 			  <li value="2"  onclick="updateBriSSlider(this.value)">2: basic glow_2</li>
 			  <li value="3"  onclick="updateBriSSlider(this.value)">3: misty_1</li>
 			  <li value="4"  onclick="updateBriSSlider(this.value)">4: misty_2</li>
 			  <li value="5"  onclick="updateBriSSlider(this.value)">5: misty_3</li>
 			  <li value="6"  onclick="updateBriSSlider(this.value)">6: misty_4</li>	
-			  <li value="7"  onclick="updateBriSSlider(this.value)">7: S_twinkle_bsl</li>	
-			  <li value="8"  onclick="updateBriSSlider(this.value)">8: S_twinkle_b1</li>	
-			  <li value="9"  onclick="updateBriSSlider(this.value)">9: S_twinkle_b2</li> 
-			  <li value="10"  onclick="updateBriSSlider(this.value)">10: spark_1</li>
-			  <li value="11"  onclick="updateBriSSlider(this.value)">11: spark_2</li>
-			  <li value="12"  onclick="updateBriSSlider(this.value)">12: long_wave</li>
-			  <li value="13"  onclick="updateBriSSlider(this.value)">13: diamond_1</li>
-			  <li value="14"  onclick="updateBriSSlider(this.value)">14: diamond_2 (Df)</li>
-			  <li value="15"  onclick="updateBriSSlider(this.value)">15: diamond_3</li>
-			  <li value="16"  onclick="updateBriSSlider(this.value)">16: F_twinkle_bsl</li>
-			  <li value="17"  onclick="updateBriSSlider(this.value)">17: M_twinkle</li>
-			  <li value="18"  onclick="updateBriSSlider(this.value)">18: F_twinkle_s</li>
-			  <li value="19"  onclick="updateBriSSlider(this.value)">19: F_twinkle_fc</li>
-			  <li value="20"  onclick="updateBriSSlider(this.value)">20: default</li>
-			  <li value="21"  onclick="updateBriSSlider(this.value)">21: customizable slot 1</li>
-			  <li value="22"  onclick="updateBriSSlider(this.value)">22: customizable slot 2</li>
-			  <li value="23"  onclick="updateBriSSlider(this.value)">23: customizable slot 3</li>
-			  <li value="24"  onclick="updateBriSSlider(this.value)">24: customizable slot 4</li>
-			  <li value="25"  onclick="updateBriSSlider(this.value)">25: customizable slot 5</li>
+			  <li value="7"  onclick="updateBriSSlider(this.value)">7: S_twinkle_bsl_1</li>
+			  <li value="8"  onclick="updateBriSSlider(this.value)">8: S_twinkle_bsl_2</li>		
+			  <li value="9"  onclick="updateBriSSlider(this.value)">9: S_twinkle_rb1</li>	
+			  <li value="10"  onclick="updateBriSSlider(this.value)">10: S_twinkle_rb1</li>	
+			  <li value="11"  onclick="updateBriSSlider(this.value)">11: S_twinkle_b2</li> 
+			  <li value="12"  onclick="updateBriSSlider(this.value)">12: spark_1</li>
+			  <li value="13"  onclick="updateBriSSlider(this.value)">13: spark_2</li>
+			  <li value="14"  onclick="updateBriSSlider(this.value)">14: long_wave</li>
+			  <li value="15"  onclick="updateBriSSlider(this.value)">15: diamond_1</li>
+			  <li value="16"  onclick="updateBriSSlider(this.value)">16: diamond_2 (Df)</li>
+			  <li value="17"  onclick="updateBriSSlider(this.value)">17: diamond_3</li>
+			  <li value="18"  onclick="updateBriSSlider(this.value)">18: F_twinkle_bsl</li>
+			  <li value="19"  onclick="updateBriSSlider(this.value)">19: M_twinkle</li>
+			  <li value="20"  onclick="updateBriSSlider(this.value)">20: F_twinkle_s</li>
+			  <li value="21"  onclick="updateBriSSlider(this.value)">21: F_twinkle_fc</li>
+			  <li value="22"  onclick="updateBriSSlider(this.value)">22: neon_lights</li>
+			  <li value="23"  onclick="updateBriSSlider(this.value)">23: fire_glow</li>
+			  <li value="24"  onclick="updateBriSSlider(this.value)">24: no_glow_hiBr</li>
+			  <li value="25"  onclick="updateBriSSlider(this.value)">25: no_glow_loBr</li>
 			</div>
 		  </div>
 		  </div>
@@ -1006,9 +1006,9 @@ _Glow Mode (0-8):
 </div>
 <div class="slidecontainerx">
 <div class="titlex">
-_Num_brigh (0-32): 
+_Num_brigh (0-255): 
 </div>
-<input id="SNBR" class="sliderx" type="range" min="1" max="32" step="1" value="11" onchange="updateSlider('SNBR', this.value)">
+<input id="SNBR" class="sliderx" type="range" min="1" max="255" step="1" value="11" onchange="updateSlider('SNBR', this.value)">
 <div class="varvaluex" id="SNBRS"></div><div class="infox"></div>
 </div>
 <div class="slidecontainerx">
@@ -1189,9 +1189,9 @@ _Wave BPM(br):
 </div>	
 <div class="slidecontainerx">
 <div class="titlex">
-_Num_sat (0-32): 
+_Num_sat (0-255): 
 </div>
-<input id="SSTN" class="sliderx" type="range" min="1" max="32" step="1" value="13" onchange="updateSlider('SSTN', this.value)">
+<input id="SSTN" class="sliderx" type="range" min="1" max="255" step="1" value="13" onchange="updateSlider('SSTN', this.value)">
 <div class="varvaluex" id="SSTNS"></div><div class="infox"></div>
 </div>
 <div class="slidecontainerx">

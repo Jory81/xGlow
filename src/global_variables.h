@@ -89,20 +89,20 @@ struct storeInEEPROM {
   byte yvalm3;
   byte colorlengthm[3];
   byte varONglobal; 
-  byte BRIGH[6];
-  byte offBr[6];
-  byte glowON[6];
-  byte BrF[6];
-  byte offS[6];
-  byte S[6]; 
-  byte SF[6];
-  byte satON[6];
-  byte numsat[6];
-  byte numbrigh[6];
-  byte BPMB[6];
-  byte BPMS[6];
-  uint32_t waveTimeBr[6];
-  uint32_t waveTimeS[6];
+  byte BRIGH[26];
+  byte offBr[26];
+  byte glowON[26];
+  byte BrF[26];
+  byte offS[26];
+  byte S[26]; 
+  byte SF[26];
+  byte satON[26];
+  byte numsat[26];
+  byte numbrigh[26];
+  byte BPMB[26];
+  byte BPMS[26];
+  uint32_t waveTimeBr[26];
+  uint32_t waveTimeS[26];
   float timefactor3;
   boolean Bees; 
   boolean varNumbrigh;
@@ -132,10 +132,10 @@ struct storeInEEPROM {
 byte RGBCOLOR = 0;
 
 storeInEEPROM customVar = {
-      33335, // code to check
+      44445, // code to check
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, // ssid storage
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, // pass storage
-      1, // empty byte so ymin load correctly
+      1, // empty byte so ymin loads correctly
       42, // ymin
       85, // ymax
       87, // ymin1
@@ -169,24 +169,23 @@ storeInEEPROM customVar = {
       6, // blue
       10, // yval
       5, // yvalm2
-      217, // yvalm3
+      24, // yvalm3
       20, 16, 10, // colorLength rainbow_6, random_string, pers_block
       1, // varON 
-      205,        200, 175, 150, 125, 100,// BRIGH          position 0 is global variable
-      80,         50, 50, 50, 50, 50,// offBr               position 0 is global variable
-      5,          0, 0, 0, 0, 0, // glowON                  position 0 is global variable
-      70,         50, 50, 50, 50, 50, // BrF                position 0 is global variable
-      25,         30, 30, 30, 30, 30, // offS               position 0 is global variable
-      205,        250, 250, 250, 250, 250,  // S            position 0 is global variable
-      0,          0, 0, 0, 0, 0,  // Sf                     position 0 is global variable
-      0,          0, 0, 0, 0, 0, // satOn was 3             position 0 is global variable
-      31,         31, 31, 31, 31, 31, // numsat             position 0 is global variable
-      13,         13, 13, 13, 13, 13, // numbrigh           position 0 is global variable
-      30,         20, 20, 20, 20, 20,  // BPMB              position 0 is global variable
-      60,         20, 20, 20, 20, 20, // BPMS               position 0 is global variable
-      2000,       3000, 3000, 3000, 3000, 3000, // waveTimeBr           position 0 is global variable
-      1000,       3000, 3000, 3000, 3000, 3000, // waveTimeS            position 0 is global variable
-
+      205, 155, 205, 194, 205,         205, 205, 202, 255, 150,          202, 205, 136, 106, 205,         205, 205, 205, 205, 205,            205, 205, 194, 75, 255, 75,// BRIGH          position 0 is global variable
+      45, 34, 35, 43, 40,              65, 40, 59, 145, 50,              1, 1, 93, 18, 35,                175, 90, 175, 74, 79,               45, 35, 43, 17, 0, 0, // offBr               position 0 is global variable
+      2, 2, 2, 5, 5,                   5, 6, 3, 3, 3,                    3, 3, 4, 2, 8,                   6, 6, 6, 3, 3,                      8, 8, 5, 2, 0, 0,  // glowON                  position 0 is global variable
+      50, 50, 50, 70, 55,              50, 0, 50, 0, 0,                  50, 50, 110, 110, 0,             0, 0, 0, 50, 50,                    50, 50, 50, 82, 0, 0, // BrF                position 0 is global variable
+      35, 35, 35, 20, 54,              45, 160, 30, 31, 35,              30, 35, 45, 35, 56,              28, 142, 85, 45, 45,                35, 35, 20, 100, 35, 35,  // offS               position 0 is global variable
+      250, 255, 255, 162, 200,         200, 200, 202, 202, 250,          255, 255, 200, 145, 200,         200, 200, 200, 200, 200,            200, 255, 161, 255, 255, 255,  // S            position 0 is global variable
+      0, 0, 0, 50, 0,                  50, 0, 0, 0, 0,                   0, 0, 0, 50, 40,                 0, 40, 0, 0, 50,                    0, 0, 0, 0, 0, 0,  // Sf                     position 0 is global variable
+      0, 0, 0, 5, 5,                   5, 3, 0, 0, 0,                    0, 0, 5, 0, 6,                   6, 4, 6, 5, 2,                      5, 0, 5, 4, 0, 0,  // satOn was 3             position 0 is global variable
+      31, 31, 31, 32, 9,               31, 31, 31, 30, 31,               31, 31, 31, 31, 28,              30, 31, 28, 31, 31,                 31, 31, 32, 31, 31, 31, // numsat             position 0 is global variable
+      16, 13, 31, 13, 12,              13, 12, 29, 29, 10,               10, 31, 13, 13, 32,              28, 13, 31, 31, 31,                 11, 29, 13, 13, 10, 10, // numbrigh           position 0 is global variable
+      30, 30, 51, 30, 30,              20, 30, 12, 12, 20,               12, 10, 30, 30, 20,              60, 30, 60, 42, 48,                 45, 51, 30, 20, 0, 0,  // BPMB              position 0 is global variable
+      30, 30, 30, 39, 60,              60, 45, 20, 20, 30,               20, 30, 60, 30, 60,              60, 60, 60, 60, 20,                 60, 30, 39, 60, 30, 30,  // BPMS               position 0 is global variable
+      2000, 2000, 6000, 2000, 2000,    2000, 20000, 5000, 5000, 3000,    5000, 6000, 2000, 2000, 3000,    30000, 2000, 30000, 3000, 11000,    1333, 6000, 2000, 3000, 2000, 2000, // waveTimeBr           position 0 is global variable
+      2000, 2000, 2000, 1538, 1000,    1000, 1333, 5000, 3000, 2000,     5000, 2000, 1000, 2000, 1000,    1000, 1000, 30000, 1000, 3000,      1000, 2000, 1538, 20000, 2000, 2000, // waveTimeS            position 0 is global variable
       1.00, // timefactor3 
       0, // Bees
       0, // varNumbrigh 
@@ -204,7 +203,7 @@ storeInEEPROM customVar = {
       14, // offdisC
       3, //numcolor1 pers_color
       15, //numcolor2 pers_block
-      3, 0, 0, 0, 0, 3, 9, 0, 8, 2, // uint8_t BriSpreset
+      22, 23, 23, 0, 0, 3, 11, 0, 10, 2, // uint8_t BriSpreset
       4, 0, 0, 0, 0, 6, 0, 0, 0, 0, 
       0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 
       0, 0, 0, 0, 0, 0, 0, 0,
@@ -212,7 +211,7 @@ storeInEEPROM customVar = {
       100, 200, 30, 1500, 100, 200, 110, 110, 110, 125, 
       125, 130, 125, 130, 135, 130, 30, 30, 2000, 2000, 
       1000, 200, 100, 40, 30, 20, 50, 50,
-      7, 7, 25, 80, 80, 7, 1, 45, 1, 4, // int setDifference
+      7, 7, 9, 80, 80, 7, 1, 45, 1, 4, // int setDifference
       4, 7, 5, 25, 1, 1, 10, 15, 95, 7, 
       7, 7, 7, 7, 7, 7, 1, 40, 1, 1, 
       1, 7, 7, 7, 40, 40, 10, 1,
@@ -228,7 +227,7 @@ storeInEEPROM customVar = {
       1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
       1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 
       2, 1, 1, 1, 1, 1, 1, 1,
-      300 // NUM_LEDS      
+      50 // NUM_LEDS      
     };
 
 
@@ -253,30 +252,32 @@ struct presetBrighSat_pgm
 static const presetBrighSat_pgm selectPresetB_data[] PROGMEM = 
 {
   //BRIGH,    BrF,  glowON, offBr, numbrigh, BPMB, waveTimeBr,   S,      SF,    satON,    offS,   numsat,     BPMS,    waveTimeS  
-  {205,       50,   2,      45,    16,       30,   2000,         250,    0,     0,         35,    31,         30,      2000}, // 0 EEPROM values
+  {205,       50,   2,      45,    16,       30,   2000,         250,    0,     0,         35,    31,         30,      2000}, // 0 GLOBAL STORAGE
   {155,       50,   2,      34,    13,       30,   2000,         255,    0,     0,         35,    31,         30,      2000}, // 1 basic glow nice glow 19
   {205,       50,   2,      35,    31,       51,   6000,         255,    0,     0,         35,    31,         30,      2000}, // 2 subtle glow
   {194,       70,   5,      43,    13,       30,   2000,         161,    50,    5,         20,    32,         39,      1538}, // 3 NEW small wave less saturated
-  //{205,       50,   5,      45,    13,       30,   2000,         200,    0,     5,         45,    31,         60,      1000}, // 3 small wave ok
   {205,       55,   5,      40,    12,       30,   2000,         200,    0,     5,         54,     9,         60,      1000}, // 4 small wave ok
   {205,       50,   5,      65,    13,       20,   2000,         200,    50,    5,         45,    31,         60,      1000}, // 5 gradient
   {205,       0,    6,      40,    12,       30,   2000,         200,    0,     3,        160,    31,         45,      1333}, // 6 diamond perfect  
   {202,       50,   3,      59,    29,       12,   5000,         202,    0,     0,         30,    31,         20,      5000}, // 7 NEW slow twinkle with baseine no saturation variation
-  //{205,       50,   3,      55,    13,       10,   6000,         200,    0,     5,         45,    31,         60,      1000}, // 7 slow_Twinkle (baseline)
-  {202,       50,   3,      1,     10,       12,   5000,         255,    0,     0,         30,    31,         20,      5000}, // 8 NEW rainbow 1 MODE num_color 10 for special effect
-  {205,       50,   3,      15,    31,       10,   6000,         255,    0,     0,         35,    31,         30,      2000}, // 9 slow_Twinkle (black))
-  //{80,        110,  6,      28,    13,       30,   2000,         200,    0,     5,         45,    31,         60,      1000}, // 9 sparkle_1 doubt
-  {136,       110,  4,      93,    13,       30,   2000,         200,    0,     5,         45,    31,         60,      1000}, // 10 sparkle_2 16
-  {106,       110,  2,      18,    13,       30,   2000,         145,    50,    0,         35,    31,         30,      2000}, // 11 sparkle_3 17 sat 255 to 145
-  {205,       0,    8,      35,    32,       20,   3000,         200,    40,    6,         56,    28,         60,      1000}, // 12 long wave
-  {205,       0,    6,      175,   28,       60,   30000,        200,    0,     6,         28,    30,         60,      1000}, // 13 diamond  better than 5 not nice?  
-  {205,       0,    6,      90,    13,       30,   2000,         200,    40,    4,        142,    31,         60,      1000}, // 14 diamond tower NEW
-  {205,       0,    6,      175,   31,       60,   30000,        200,    0,     6,         85,    28,         60,     30000}, // 15 diamond  fast twinkle (EEPROM?)
-  {205,       50,   3,      74,    31,       42,   3000,         200,    0,     5,         45,    31,         60,      1000}, // 16 fast_Twinkle (baseline)
-  {205,       50,   3,      79,    31,       48,   11000,        200,    50,    2,         45,    31,         20,      3000}, // 17 fast_Twinkle too fast, optimize not better than 8? 
-  {205,       50,   8,      45,    11,       45,   1333,         200,    0,     5,         35,    31,         60,      1000}, // 18 wave fast twinkle 18 ROOM FOR NEW PRESET
-  {205,       50,   8,      35,    29,       51,   6000,         255,    0,     0,         35,    31,         30,      2000}, // 19 fast_Twinkle fullcolor
-  {255,       0,    0,      0,     10,        0,    0,            255,    0,    0,         35,    31,         30,      2000} // 20 no glow
+  {255,       0,    3,      145,   29,       12,   5000,         202,    0,     0,         31,    30,         20,      3000}, // 8 slow_Twinkle_2
+  {150,       0,    3,      50,    10,       20,   3000,         250,    0,     0,         35,    31,         30,      2000}, // 9 slow_Twinkle_r1
+  {202,       50,   3,      1,     10,       12,   5000,         255,    0,     0,         30,    31,         20,      5000}, // 10 NEW rainbow 1 MODE num_color 10 for special effect
+  {205,       50,   3,      1,     31,       10,   6000,         255,    0,     0,         35,    31,         30,      2000}, // 11 slow_Twinkle (black))
+  {136,       110,  4,      93,    13,       30,   2000,         200,    0,     5,         45,    31,         60,      1000}, // 12 sparkle_2 16
+  {106,       110,  2,      18,    13,       30,   2000,         145,    50,    0,         35,    31,         30,      2000}, // 13 sparkle_3 17 sat 255 to 145
+  {205,       0,    8,      35,    32,       20,   3000,         200,    40,    6,         56,    28,         60,      1000}, // 14 long wave
+  {205,       0,    6,      175,   28,       60,   30000,        200,    0,     6,         28,    30,         60,      1000}, // 15 diamond  better than 5 not nice?  
+  {205,       0,    6,      90,    13,       30,   2000,         200,    40,    4,        142,    31,         60,      1000}, // 16 diamond tower NEW
+  {205,       0,    6,      175,   31,       60,   30000,        200,    0,     6,         85,    28,         60,     30000}, // 17 diamond  fast twinkle (EEPROM?)
+  {205,       50,   3,      74,    31,       42,   3000,         200,    0,     5,         45,    31,         60,      1000}, // 18 fast_Twinkle (baseline)
+  {205,       50,   3,      79,    31,       48,   11000,        200,    50,    2,         45,    31,         20,      3000}, // 19 fast_Twinkle too fast, optimize not better than 8? 
+  {205,       50,   8,      45,    11,       45,   1333,         200,    0,     5,         35,    31,         60,      1000}, // 20 wave fast twinkle 18 ROOM FOR NEW PRESET
+  {205,       50,   8,      35,    29,       51,   6000,         255,    0,     0,         35,    31,         30,      2000}, // 21 fast_Twinkle fullcolor
+  {194,       50,   5,      43,    13,       30,   2000,         161,    0,     5,         20,    32,         39,      1538}, // 22 neon twinkle
+  {75,       82,    2,      17,    13,       20,   3000,         255,    0,     4,        100,    31,         60,     20000}, // 23 fire
+  {255,       0,    0,      0,     10,       0,    0,            255,    0,     0,         35,    31,         30,      2000}, // 24 no glow
+  {75,        0,    0,      0,     10,       0,    0,            255,    0,     0,         35,    31,         30,      2000} // 25 no glow low
 };
 
 
@@ -381,7 +382,7 @@ static const selectColorMod19_Mod26_pgm selectColor_data[14] PROGMEM =
   {60,  130,  1,}      
 };
 
-uint8_t   brigh[32]={0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+uint8_t   brigh[255]={0};
 uint8_t   colour[15]={};
 
 uint8_t   colourS[6]={217, 164, 0, 96, 55, 140}; //  colourS[0]=217;        colourS[1]=164;        colourS[2]=0;        colourS[3]=96;        colourS[4]=55;            colour[5]=140;
@@ -409,17 +410,17 @@ float timeArraySpark[5]={2, 6, 12, 18, 30};
 float timeArrayReverse[5]={1, 2, 4, 6, 10};
 float timeArrayRainbow[5]={2, 4, 8, 12, 15};
 
-byte cycleGlow3[32]={0};
-uint16_t rtGlow3[32] = {0};
-int     numGlow3[32]={0};
-unsigned long timeFactorGlow3[32]={0};
-unsigned long previousMillisGlow3[32]={0};
+byte cycleGlow3[255]={0};
+uint16_t rtGlow3[255] = {0};
+int     numGlow3[255]={0};
+unsigned long timeFactorGlow3[255]={0};
+unsigned long previousMillisGlow3[255]={0};
 
-byte cycleSat3[32]={0};
-uint16_t rtSat3[32] = {0};
-int     numSat3[32]={0};
-unsigned long timeFactorSat3[32]={0};
-unsigned long previousMillisSat3[32]={0};
+byte cycleSat3[255]={0};
+uint16_t rtSat3[255] = {0};
+int     numSat3[255]={0};
+unsigned long timeFactorSat3[255]={0};
+unsigned long previousMillisSat3[255]={0};
 
 unsigned long previousMillisLN[21]={0};
 unsigned long previousMillisAM[21]={0};
@@ -463,7 +464,7 @@ byte    y[30] = {0};
 int     ir[2] = {0,0};
 int     a[21] = {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
 
-uint8_t satval[32]={255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255};
+uint8_t satval[255]={255};
 byte    satlu=0;
 uint8_t z[21] = {88};
 uint8_t zmem = 99;

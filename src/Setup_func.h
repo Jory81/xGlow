@@ -23,7 +23,7 @@ void spiffs(){
 }
 
 void eeprom(){
-      EEPROM.begin(1000);
+      EEPROM.begin(2000);
 }
 
 void initializeEEPROM(){
@@ -34,7 +34,7 @@ void initializeEEPROM(){
     int check  = EEPROM.readInt(0);
     #endif
     
-    if (check == 33335){
+    if (check == 44445){
     display.print(F("code: ")); display.println(check);
     display.println(F("EEPROM SET"));
     display.display();
@@ -49,7 +49,7 @@ void initializeEEPROM(){
     FastLED.delay(1000);
     }
     
-    else if (check != 33335){
+    else if (check != 44445){
     display.println(F("EEPROM not initialized"));
     display.println(F("Writing to EEPROM...."));
     display.display();
