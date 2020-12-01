@@ -25,9 +25,15 @@ Developers from FastLED\
 Stephen Culley\
 and everyone who makes these libraries publicly available!
 
+Layout with all tabs:
+
 ![](images/layout.jpg)
 
+Main settings that basically allow you to control everything:
+
 ![](images/Main_settings.jpg)
+
+Color_settings tab. An example tab which allows the used to personalize settings.
 
 ![](images/example_colorsettings.jpg)
 
