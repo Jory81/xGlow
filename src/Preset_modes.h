@@ -1803,6 +1803,7 @@ else if (variant==3 && (!readyToChange)){
 
 void meteor(void){
 if (millis() - previousMillis36 >= INTERVAL7){
+  outOfModus=false;
   for (int s=0; s<numsparks; s++){  
     if (millis() - previousMillisAM[s] >= rtAM[s]){  
         if (millis() - previousMillisLN[s] >= changeSpeedMA[s] && flakeCounter >= flakeListMode16[s] && flakeCounter <= cn) {
@@ -1923,6 +1924,7 @@ if (millis() - previousMillis36 >= INTERVAL7){
       }   
       INTERVAL7=random(20000)*timefactor3;
       updateOledFloat(88, 0, &INTERVAL7, 0);
+      outOfModus=true;
       T=0;
       num15=0;                              
       previousMillis36 = millis();
@@ -1938,7 +1940,7 @@ if (millis() - previousMillis35 >= FPS) {
           if (i == pos[j]) {
             for (int k = 0; k < setDifference; k++){
               if (i-k >= 0){
-              leds[i-k] = CHSV(longxArray[i],qsub8(S,(k*10)),qadd8(BRIGH,(k*10))); 
+              leds[i-k] += CHSV(longxArray[i],qsub8(S,(k*10)),qadd8(BRIGH,(k*10))); // tryout
               }
             }
           break;   
