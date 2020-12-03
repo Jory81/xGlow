@@ -1940,7 +1940,15 @@ if (millis() - previousMillis35 >= FPS) {
           if (i == pos[j]) {
             for (int k = 0; k < setDifference; k++){
               if (i-k >= 0){
-              leds[i-k] += CHSV(longxArray[i],qsub8(S,(k*10)),qadd8(BRIGH,(k*10))); // tryout
+                if (varON == 0){
+                  leds[i-k] += CHSV(longxArray[i],S,qadd8(BRIGH,(k*10))); // tryout  
+                }
+                else if (varON == 1){
+                  leds[i-k] = CHSV(longxArray[i],qsub8(S,(k*10)),qadd8(BRIGH,(k*10))); // original
+                }
+                else{
+                  leds[i-k] += CHSV(longxArray[i],qsub8(S,(k*10)),qadd8(BRIGH,(k*10))); // tryout qsub8(S,(k*10))
+                }
               }
             }
           break;   
@@ -1953,7 +1961,7 @@ if (millis() - previousMillis35 >= FPS) {
             }
             else {
               if(random(63)<(9/cfactor2)) {
-              leds[i].fadeToBlackBy(random(setDifference));      
+              leds[i].fadeToBlackBy(random(setDifference+3));      
               }   
             }   
           }
