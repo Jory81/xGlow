@@ -29,7 +29,7 @@ void handleModeSwitch(){ // HANDLE SWITCHING MODUS
         if ((cmode[programMode]) || (!excludeModes)){
           changeState();} 
         else if (!cmode[programMode]){
-          while (!cmode[programMode]){programMode= random(0,modeCount);}
+          while (!cmode[programMode]){programMode= random(0,modeCount+1);}
        changeState();}
       }
   cycleT=0;
