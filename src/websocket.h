@@ -128,10 +128,10 @@ void processWebSocketMessage(String str, int dataVar){
       else if (str == "SNCL"){colorlength = dataVar; newColors++;}// if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, colorlength), colorlength);  EEPROM.commit();};}
       else if (str == "SSCO"){z5 = dataVar; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, z5), z5);  EEPROM.commit();};}
       else if (str == "SOFF"){offdis = dataVar; if (tower && (effect_function == *snow_flakes || effect_function == *snow_flakes_2)){offdisC = offdis; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, offdisC), offdisC);  EEPROM.commit();};};} //  || effect_function == *meteor
-      else if (str == "SCTM"){cycleTime = dataVar*1000; if (cycleTime == 0){cycleTime = 60000;} if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, cycleTime), cycleTime);  EEPROM.commit();};}
+      else if (str == "SCTM"){cycleTime = dataVar*1000; if (cycleTime == 0){cycleTime = 60000;} if (saveToEEPROM){saveCycleParamToEEPROM();};}
       else if (str == "SBWS"){waveTimeBr = dataVar; convBrigh = waveTimeBr/numbrigh; if (maintainWaveForm){BPMB=60000/waveTimeBr; mergedString = "GSSBS"+String(BPMB); ws.textAll(mergedString);}; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, waveTimeBr), waveTimeBr); EEPROM.put(offsetof(storeInEEPROM, BPMB), BPMB);  EEPROM.commit();};}
       else if (str == "SSWS"){waveTimeS = dataVar; convSat = waveTimeS/numsat; if (maintainWaveForm){BPMS=60000/waveTimeS; mergedString = "GSSSS"+String(BPMS); ws.textAll(mergedString);}; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, waveTimeS), waveTimeS); EEPROM.put(offsetof(storeInEEPROM, BPMS), BPMS);  EEPROM.commit();};}      
-      else if (str == "SLPS"){timefactor3 = dataVar; timefactor3 = timefactor3/100; Serial.println(timefactor3); if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, timefactor3), timefactor3);  EEPROM.commit();};}
+      else if (str == "SLPS"){timefactor3 = dataVar; timefactor3 = timefactor3/100; Serial.println(timefactor3); if (saveToEEPROM){saveCycleParamToEEPROM();};}
       else if (str == "SSBS"){BPMB = dataVar; if (maintainWaveForm){waveTimeBr=60000/BPMB; convBrigh=waveTimeBr/numbrigh; mergedString = "GSBWS"+String(waveTimeBr); ws.textAll(mergedString);}; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, BPMB), BPMB);  EEPROM.put(offsetof(storeInEEPROM, waveTimeBr), waveTimeBr); EEPROM.commit(); };}      
       else if (str == "SSSS"){BPMS = dataVar; if (maintainWaveForm){waveTimeS=60000/BPMS; convSat=waveTimeS/numsat; mergedString = "GSSWS"+String(waveTimeS); ws.textAll(mergedString);}; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, BPMS), BPMS); EEPROM.put(offsetof(storeInEEPROM, waveTimeS), waveTimeS);  EEPROM.commit();};} 
       else if (str == "SOBR"){offBr = dataVar; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, offBr), offBr);  EEPROM.commit();};}   
@@ -283,7 +283,7 @@ EEPROM.put(offsetof(storeInEEPROM, z5), z5);
 EEPROM.put(offsetof(storeInEEPROM, cycleTime), cycleTime);
 EEPROM.put(offsetof(storeInEEPROM, waveTimeBr[0]), waveTimeBr);
 EEPROM.put(offsetof(storeInEEPROM, waveTimeS[0]), waveTimeS);  
-EEPROM.put(offsetof(storeInEEPROM, timefactor3), timefactor3);
+// EEPROM.put(offsetof(storeInEEPROM, timefactor3[0]), timefactor3[0]);
 EEPROM.put(offsetof(storeInEEPROM, BPMB[0]), BPMB); 
 EEPROM.put(offsetof(storeInEEPROM, BPMS[0]), BPMS);
 EEPROM.put(offsetof(storeInEEPROM, offBr[0]), offBr);
@@ -328,6 +328,25 @@ void handleWebsocketUpdate(){
   }
 }
 
+void saveCycleParamToEEPROM(){
+if (saveForAllModes){
+  int offsetPositionCt = offsetof(storeInEEPROM, cycleTime[0]); 
+  int offsetPositionTf = offsetof(storeInEEPROM, timefactor3[0]); 
+  for (int m = 0; m < modeCount; m++){
+  EEPROM.put((offsetPositionCt+(m*sizeof(unsigned long))), cycleTime);
+  EEPROM.put((offsetPositionTf+(m*sizeof(float))), timefactor3); 
+  }
+}  
+else {
+uint8_t offsetInArray = programMode;
+int offsetPosition = offsetof(storeInEEPROM, cycleTime[0]);
+EEPROM.put((offsetPosition+(offsetInArray*sizeof(unsigned long))), cycleTime); 
+offsetPosition = offsetof(storeInEEPROM, timefactor3[0]);
+EEPROM.put((offsetPosition+(offsetInArray*sizeof(float))), timefactor3);
+}
+EEPROM.commit();
+}
+
 void saveCurrentModeToEEPROM(){
 int offsetPosition = offsetof(storeInEEPROM, BriSPreset[0]);
 EEPROM.put((offsetPosition+programMode), BriSPreset); 
@@ -339,6 +358,8 @@ offsetPosition = offsetof(storeInEEPROM, colorMode[0]);
 EEPROM.put((offsetPosition+(programMode*sizeof(int))), colorMode); 
 offsetPosition = offsetof(storeInEEPROM, arrayn[0]);
 EEPROM.put((offsetPosition+programMode), arrayn); 
+offsetPosition = offsetof(storeInEEPROM, numsparks[0]);
+EEPROM.put((offsetPosition+programMode), numsparks); 
 offsetPosition = offsetof(storeInEEPROM, varON[0]);
 EEPROM.put((offsetPosition+programMode), varON);
 offsetPosition = offsetof(storeInEEPROM, glitterON[0]);
@@ -450,12 +471,18 @@ offsetPosition = (offsetof(storeInEEPROM, arrayn[0])) + programMode;
 arrayn = EEPROM.read(offsetPosition);
 offsetPosition = (offsetof(storeInEEPROM, varON[0])) + programMode; 
 varON = EEPROM.read(offsetPosition);
+offsetPosition = (offsetof(storeInEEPROM, numsparks[0])) + programMode; 
+numsparks = EEPROM.read(offsetPosition);
 offsetPosition = (offsetof(storeInEEPROM, glitterON[0])) + programMode; 
 glitterON = EEPROM.read(offsetPosition);
 
 #ifdef ESP8266 
 offsetPosition = offsetof(storeInEEPROM, changeSpeed[0]) + (programMode*sizeof(unsigned long));  
 EEPROM.get(offsetPosition, changeSpeed);
+offsetPosition = offsetof(storeInEEPROM, cycleTime[0]) + (programMode*sizeof(unsigned long));  
+EEPROM.get(offsetPosition, cycleTime);
+offsetPosition = offsetof(storeInEEPROM, timefactor3[0]) + (programMode*sizeof(float));  
+EEPROM.get(offsetPosition, timefactor3);
 offsetPosition = offsetof(storeInEEPROM, setDifference[0]) + (programMode*sizeof(int));  
 EEPROM.get(offsetPosition, setDifference);
 offsetPosition = offsetof(storeInEEPROM, colorMode[0]) + (programMode*sizeof(int));  
@@ -463,6 +490,12 @@ EEPROM.get(offsetPosition, colorMode);
 #else
 offsetPosition = offsetof(storeInEEPROM, changeSpeed[0]) + (programMode*sizeof(unsigned long));  
 changeSpeed = EEPROM.readLong(offsetPosition); 
+
+offsetPosition = offsetof(storeInEEPROM, cycleTime[0]) + (programMode*sizeof(unsigned long));  
+cycleTime = EEPROM.readLong(offsetPosition); 
+
+offsetPosition = offsetof(storeInEEPROM, timefactor3[0]) + (programMode*sizeof(float));  
+timefactor3 = EEPROM.readFloat(offsetPosition); 
 
 offsetPosition = offsetof(storeInEEPROM, setDifference[0]) + (programMode*sizeof(int));
 setDifference = EEPROM.readInt(offsetPosition);

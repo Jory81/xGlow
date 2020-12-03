@@ -77,7 +77,7 @@ struct storeInEEPROM {
   boolean randomCycle;
   boolean excludeModes;
   boolean personalizedModes;
-  uint32_t cycleTime;
+  uint32_t cycleTime[modeCount];
   byte programMode;
   boolean tower;
   byte z5;
@@ -103,7 +103,8 @@ struct storeInEEPROM {
   byte BPMS[26];
   uint32_t waveTimeBr[26];
   uint32_t waveTimeS[26];
-  float timefactor3;
+  float timefactor3[modeCount];
+  byte numsparks[modeCount];
   boolean Bees; 
   boolean varNumbrigh;
   boolean varBPMB;
@@ -160,7 +161,10 @@ storeInEEPROM customVar = {
       1, // random
       1, // excludemodes
       0, // personalizedModes
-      600000, // CycleTime
+      300000, 300000, 300000, 300000, 300000, 300000, 300000, 300000, 300000, 300000, // cycleTime
+      300000, 300000, 300000, 300000, 300000, 300000, 300000, 300000, 300000, 300000,
+      300000, 300000, 300000, 300000, 300000, 300000, 300000, 300000, 300000, 300000, 
+      300000, 300000, 300000, 300000, 300000, 300000, 300000, 300000,
       0, // programMode      
       0, // tower
       92, // z5
@@ -186,7 +190,14 @@ storeInEEPROM customVar = {
       30, 30, 30, 39, 60,              60, 45, 20, 15, 30,               20, 30, 60, 30, 60,              60, 60, 60, 60, 20,                 60, 30, 39, 60, 30, 30,  // BPMS               position 0 is global variable
       2000, 2000, 6000, 2000, 2000,    2000, 20000, 5000, 5000, 3000,    5000, 6000, 2000, 2000, 3000,    30000, 2000, 30000, 3000, 11000,    1333, 6000, 2000, 3000, 2000, 2000, // waveTimeBr           position 0 is global variable
       2000, 2000, 2000, 1538, 1000,    1000, 1333, 5000, 15000, 2000,     5000, 2000, 1000, 2000, 1000,    1000, 1000, 30000, 1000, 3000,      1000, 2000, 1538, 20000, 2000, 2000, // waveTimeS            position 0 is global variable
-      1.00, // timefactor3 
+      1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, // timefactor3
+      1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00,
+      1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 
+      1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00,
+      10, 10, 10, 10, 10, 10, 10, 10, 10, 10, // numsparks
+      10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+      10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 
+      10, 10, 10, 10, 10, 10, 10, 10,
       0, // Bees
       0, // varNumbrigh 
       0, //varBPMB  
