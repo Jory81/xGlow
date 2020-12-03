@@ -137,10 +137,10 @@ function onMessage(event) {
 	if (prefixChars == "G"){
 	k = k + 1;
 	//console.log(k);
-		if (k < 69){ //54
+		if (k < 70){ //54
 		setTimeout(function(){ doSend("GETS"+k); }, 20);
 		}
-		else if (k >= 69){ //54
+		else if (k >= 70){ //54
 		//k = 0;
 		//doSend(k);
 		//console.log(k);
@@ -379,6 +379,14 @@ _Cycle time (s):
 	  <div class="varvaluex"></div><div class="infox"></div>  
 	</div>
 </div>
+<br>
+<div class="switchcontainer1">
+	save cycle param to all modes:
+	<label class="switch">
+	  <input type="checkbox" id="TCPM" onclick="updateButton('TCPM')"> 
+	  <span class="sliderround"></span>
+	</label>
+</div>
 <hr/>
 
 <p class="sliderwindows"> IMPORTANT PROGRAM MODES: 
@@ -415,6 +423,7 @@ _Cycle time (s):
 		  <li>- mode variant</li>
 		  <li>- color array (CM4)</li>
 		  <li>- LED difference</li>
+		  <li>- numsparks</li>
 		  <li>- glitter</li>
 		  <li>- + some minorities</li>
 		</div>
@@ -534,7 +543,7 @@ _Prog. Mode (0-37):
 
 <div class="slidecontainerx">
 	<div class="titlex">
-	*Bri_Sat preset (0-20):
+	_*Bri_S preset (0-25):
 	</div>
 	<input id="SBSM" class="sliderx" type="range" min="0" max="25" step="1" value="0" onchange="updateSlider('SBSM', this.value)">
 	<div class="varvaluex" id="SBSMS"></div><div class="infox">
@@ -634,7 +643,7 @@ _Prog. Mode (0-37):
 
 <div class="slidecontainerx">
 <div class="titlex">
-*Color Mode (0-5):
+_*Color Mode (0-5):
 </div>
 <input id="SCOM" class="sliderx" type="range" min="0" max="5" step="1" value="2" onchange="updateSlider('SCOM', this.value)">
 <div class="varvaluex" id="SCOMS"></div><div class="infox">
@@ -668,7 +677,7 @@ _Prog. Mode (0-37):
 
 <div class="slidecontainerx">
 	<div class="titlex">
-	*LED_dif (0-255):
+	_*LED_dif (0-255):
 	</div>
 	<input id="SDIF" class="sliderx" type="range" min="1" max="255" step="1" value="7" onchange="updateSlider('SDIF', this.value)">
 	<div class="varvaluex" id="SDIFS"></div> <div class="infox"></div>
@@ -676,7 +685,7 @@ _Prog. Mode (0-37):
 
 <div class="slidecontainerx">
 	<div class="titlex">
-	*Preset speed (ms):
+	_*Preset speed (ms):
 	</div>
 	<input id="SLSP" class="sliderx" type="range" min="0" max="60" step="1" value="10" onchange="updateSlider('SLSP', this.value)">
 	<div class="varvalueh"><span id="SLSPS"></span> &nbsp | &nbsp  <span id='HSPES'></span></div>
@@ -704,7 +713,7 @@ _Prog. Mode (0-37):
 
 <div class="slidecontainerx">
 <div class="titlex">
-*Color Array (0-58):
+_*Color Array (0-58):
 </div>
 <input id="SCAR" class="sliderx" type="range" min="0" max="58" step="1" value="8" onchange="updateSlider('SCAR', this.value)">
 <div class="varvaluex"><span  id="SCARS"></span></div> <div class="infox">		<div class="dropdown">
@@ -776,7 +785,7 @@ _Prog. Mode (0-37):
 
 <div class="slidecontainerx">
 <div class="titlex">
-*Num_colors (1-15):
+_*Num_colors (1-15):
 </div>
 <input id="SNCO" class="sliderx" type="range" min="0" max="15" step="1" value="0" onchange="updateSlider('SNCO', this.value)">
 <div class="varvaluex" id="SNCOS"></div> <div class="infox"></div>
@@ -784,7 +793,7 @@ _Prog. Mode (0-37):
 
 <div class="slidecontainerx">
 <div class="titlex">
-*ColorLength (1-50):
+_*ColorLength (1-50):
 </div>
 <input id="SNCL" class="sliderx" type="range" min="0" max="50" step="1" value="10" onchange="updateSlider('SNCL', this.value)">
 <div class="varvaluex" id="SNCLS"></div> <div class="infox"></div>
@@ -958,7 +967,7 @@ update & display HSV values:
 <p class="sliderwindow"> BRIGHTNESS:</p>
 <div class="slidecontainerx">
 <div class="titlex">
-_Bri Value (0-255) :
+_*Bri Value (0-255) :
 </div>
 <input id="SBRI" class="sliderbri" type="range" min="0" max="255" step="1" value="128" onchange="updateSlider('SBRI', this.value)">
 <div class="varvaluex" id="SBRIS"></div><div class="infox"></div>
@@ -967,7 +976,7 @@ _Bri Value (0-255) :
 
 <div class="slidecontainerx">
 <div class="titlex">
-_Glow Mode (0-8):
+_*Glow Mode (0-8):
 </div>
 <input id="SGLO" class="sliderx" type="range" min="0" max="8" step="1" value="0" onchange="updateSlider('SGLO', this.value)">
 <div class="varvaluex" id="SGLOS"></div><div class="infox">
@@ -1006,14 +1015,14 @@ _Glow Mode (0-8):
 </div>
 <div class="slidecontainerx">
 <div class="titlex">
-_Num_brigh (0-255): 
+_*Num_brigh (0-255): 
 </div>
 <input id="SNBR" class="sliderx" type="range" min="1" max="255" step="1" value="11" onchange="updateSlider('SNBR', this.value)">
 <div class="varvaluex" id="SNBRS"></div><div class="infox"></div>
 </div>
 <div class="slidecontainerx">
 <div class="titlex">
-_Offset_brigh (1-175): 
+_*Offset_brigh (1-175): 
 </div>
 <input id="SOBR" class="sliderx" type="range" min="1" max="175" step="1" value="30" onchange="updateSlider('SOBR', this.value)">
 <div class="varvaluex" id="SOBRS"></div><div class="infox"></div>
@@ -1021,7 +1030,7 @@ _Offset_brigh (1-175):
 <br>
 <div class="slidecontainerx">
 <div class="titlex">
-_Wave time(Sec) (br):
+_*Wave time(Sec) (br):
 </div>
 <input id="SBWS" class="sliderx" type="range" min="1000" max="30000" step="1000" value="2000" onchange="updateSlider('SBWS', this.value)">
 <div class="varvaluex" id="SBWSS"></div> <div class="infox"></div>
@@ -1066,7 +1075,7 @@ _Wave time(Sec) (br):
 
 <div class="slidecontainerx">
 <div class="titlex">
-_Wave BPM(br):
+_*Wave BPM(br):
 </div>
 <input id="SSBS" class="sliderx" type="range" min="2" max="60" step="1" value="30" onchange="updateSlider('SSBS', this.value)">
 <div class="varvaluex" id="SSBSS"></div> <div class="infox"></div>
@@ -1142,7 +1151,7 @@ _Wave BPM(br):
 
 <div class="slidecontainerx">
 	<div class="titlex">
-	_Sat Value (0-255) :
+	_*Sat Value (0-255) :
 	</div>
 	<input id="SSAT" class="slidersat" type="range" min="0" max="255" step="1" value="128" onchange="updateSlider('SSAT', this.value)">
 	<div class="varvaluex" id="SSATS"></div><div class="infox"></div>
@@ -1189,14 +1198,14 @@ _Wave BPM(br):
 </div>	
 <div class="slidecontainerx">
 <div class="titlex">
-_Num_sat (0-255): 
+_*Num_sat (0-255): 
 </div>
 <input id="SSTN" class="sliderx" type="range" min="1" max="255" step="1" value="13" onchange="updateSlider('SSTN', this.value)">
 <div class="varvaluex" id="SSTNS"></div><div class="infox"></div>
 </div>
 <div class="slidecontainerx">
 <div class="titlex">
-_Offset_sat (1-175): 
+_*Offset_sat (1-175): 
 </div>
 <input id="SOST" class="sliderx" type="range" min="1" max="175" step="1" value="50" onchange="updateSlider('SOST', this.value)">
 <div class="varvaluex" id="SOSTS"></div><div class="infox"></div>
@@ -1205,7 +1214,7 @@ _Offset_sat (1-175):
 
 <div class="slidecontainerx">
 <div class="titlex">
-_Wave time(Sec) (sat):
+_*Wave time(Sec) (sat):
 </div>
 <input id="SSWS" class="sliderx" type="range" min="1000" max="30000" step="1000" value="2000" onchange="updateSlider('SSWS', this.value)">
 <div class="varvaluex" id="SSWSS"></div> <div class="infox"></div>
@@ -1250,7 +1259,7 @@ _Wave time(Sec) (sat):
 
 <div class="slidecontainerx">
 <div class="titlex">
-_Wave BPM(sat):
+_*Wave BPM(sat):
 </div>
 <input id="SSSS" class="sliderx" type="range" min="2" max="60" step="1" value="30" onchange="updateSlider('SSSS', this.value)">
 <div class="varvaluex" id="SSSSS"></div> <div class="infox"></div>
@@ -1345,7 +1354,7 @@ Maintain complete waveforms
 </p>
 <div class="slidecontainerx">
 <div class="titlex">
-Num_spark (0-30):
+_*Num_spark (0-30):
 </div>
 <input id="SNSP" class="sliderx" type="range" min="1" max="30" step="1" value="20" onchange="updateSlider('SNSP', this.value)">
 <div class="varvaluex" id="SNSPS"></div> <div class="infox">(21)</div>
@@ -1353,7 +1362,7 @@ Num_spark (0-30):
 
 <div class="slidecontainerx">
 <div class="titlex">
-_Spark_bri (0-255):
+_*Spark_bri (0-255):
 </div>
 <input id="SSBR" class="sliderx" type="range" min="0" max="255" step="1" value="0" onchange="updateSlider('SSBR', this.value)">
 <div class="varvaluex" id="SSBRS"></div><div class="infox"></div>
@@ -1361,7 +1370,7 @@ _Spark_bri (0-255):
 
 <div class="slidecontainerx">
 <div class="titlex">
-_Spark_sat (0-255):
+_*Spark_sat (0-255):
 </div>
 <input id="SSSF" class="sliderx" type="range" min="0" max="255" step="1" value="0" onchange="updateSlider('SSSF', this.value)">
 <div class="varvaluex" id="SSSFS"></div><div class="infox"></div>
@@ -1397,7 +1406,7 @@ Add.offset (1-15):
 	</p>
 
 <div class="switchcontainer">
-Glitter
+_*Glitter
 <label class="switch">
   <input type="checkbox" id="TGLI" onclick="updateButton('TGLI')"> 
   <span class="sliderround"></span>

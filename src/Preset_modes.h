@@ -702,6 +702,7 @@ if (readyToChange){
 if ((variant == 0 || variant == 1 || variant == 2) && (!readyToChange)){
     void ();{
     if (millis() - previousMillis36 >= INTERVAL7){ 
+      outOfModus = false;
       if (forcedColourChange){
         yval1 = changeColourFcn2(colorMode, yval1, yold, 40, 210);               
         updateOled(102, 56, &yval1);
@@ -736,6 +737,7 @@ if ((variant == 0 || variant == 1 || variant == 2) && (!readyToChange)){
         updateOled(44, 40, &yold); 
         yold=yval1;
         INTERVAL7=interval9*timeArray2[random(0,6)]*timefactor3;
+        outOfModus = true;
         updateOledFloat(88, 0, &INTERVAL7, 0); 
         fillLongxArray(yold, NUM_LEDS);
         previousMillis36 = millis();
@@ -787,6 +789,7 @@ if ((variant == 0 || variant == 1 || variant == 2) && (!readyToChange)){
    }
 else if ((variant==3 || variant ==4 || variant ==5) && (!readyToChange)){
      if (millis() - previousMillis36 >= INTERVAL7){ 
+       outOfModus = false;
        if (forcedColourChange){
           yval1 = changeColourFcn2(colorMode, yval1, yold, 40, 210);  
           updateOled(102, 56, &yval1); 
@@ -820,6 +823,7 @@ else if ((variant==3 || variant ==4 || variant ==5) && (!readyToChange)){
           updateOled(44, 40, &yold);         
           yold=yval1;  
           INTERVAL7=interval9*timeArray2[random(0,6)]*timefactor3;
+          outOfModus = true;
           updateOledFloat(88, 0, &INTERVAL7, 0); 
           fillLongxArray(yold, NUM_LEDS);
           T=0;
@@ -916,6 +920,7 @@ else if ((variant==3 || variant ==4 || variant ==5) && (!readyToChange)){
 
 void snow_storm(void){
      if (millis() - previousMillis36 >= INTERVAL7){
+       outOfModus = false;
       if (forcedColourChange){
         yval1 = changeColourFcn2(colorMode, yval1, yold, 40, 210);         
         updateOled(102, 56, &yval1); 
@@ -973,6 +978,7 @@ void snow_storm(void){
               updateOled(44, 40, &yold);  
               yold=yval1;           
               INTERVAL7=interval7*timeArray2[random(0,6)]*timefactor3;
+              outOfModus = true;
               updateOledFloat(88, 0, &INTERVAL7, 0); 
               T=0;
               forcedColourChange = true;
@@ -990,7 +996,7 @@ void snow_storm(void){
               cn=random(34,60);
               }
               else if (NUM_LEDS > 100){
-              cn=random(60,111);
+              cn=random(60,93);
               }                                     
               previousMillis36 = millis();
           }
@@ -1553,6 +1559,7 @@ readyToChange = false;
   
 if (variant==0 && (!readyToChange)){
     if (millis() - previousMillis36 >= INTERVAL7){ 
+      outOfModus = false;
       if (forcedColourChange){
         yval1 = changeColourFcn2(colorMode, yval1, yold, 40, 210);
         updateOled(102, 56, &yval1);  
@@ -1574,6 +1581,7 @@ if (variant==0 && (!readyToChange)){
             yold=yval1;
             fillLongxArray(yold, NUM_LEDS);      
             INTERVAL7=interval9*timeArray2[random(0,6)]*timefactor3;
+            outOfModus = true;
             updateOledFloat(88, 0, &INTERVAL7, 0); 
             previousMillis36 = millis();
             T=0;
@@ -1658,6 +1666,7 @@ if (variant==0 && (!readyToChange)){
 }
 else if (variant==3 && (!readyToChange)){
      if (millis() - previousMillis36 >= INTERVAL7){ 
+       outOfModus = false;
         if (millis() - previousMillis37 >= (slingerSpeed+slowFactor)){
           previousMillis37 = millis();
           longxArray[hh]=yval1;
@@ -1673,6 +1682,7 @@ else if (variant==3 && (!readyToChange)){
               yold=yval1;         
               fillLongxArray(yold, NUM_LEDS);  
               INTERVAL7=interval9*timeArray2[random(0,6)]*timefactor3;
+              outOfModus = true;
               updateOledFloat(88, 0, &INTERVAL7, 0); 
               previousMillis36 = millis();
               T=0;
@@ -2001,11 +2011,15 @@ if (millis() - previousMillisLN[k] >= rtAM[k]/df){
         a[k]=NUM_LEDS-1;
         partialArrayCounter+=2;
       }
+    if (partialArrayCounter > numsparks){
+        outOfModus = false;
+    }  
       
     if (partialArrayCounter >= NUM_LEDS-1){
         for (int i = 0; i < NUM_LEDS; i++){
         longxArray[i]=yval1;//+random(-10,10);
         }
+      outOfModus = true;
       forcedColourChange = true; 
       partialArrayCounter=0;
     }
@@ -2629,6 +2643,7 @@ if (readyToChange){
 if ((variant == 0 || variant == 1 || variant == 2) && (!readyToChange)){
     void ();{
     if (millis() - previousMillis36 >= INTERVAL7){ 
+      outOfModus = false;
       if (millis() - previousMillis37 >= (slingerSpeed+slowFactor)){
         previousMillis37 = millis();
         longxArray[yy]=blockArray[yy];
@@ -2644,6 +2659,7 @@ if ((variant == 0 || variant == 1 || variant == 2) && (!readyToChange)){
         slowFactor=0;
         evenOddCounter++;
         INTERVAL7=interval9*timeArray2[random(0,6)]*timefactor3;
+        outOfModus = true;
         updateOledFloat(88, 0, &INTERVAL7, 0); 
         previousMillis36 = millis();
         T=0;
@@ -2683,6 +2699,7 @@ if ((variant == 0 || variant == 1 || variant == 2) && (!readyToChange)){
    }
 else if ((variant==3 || variant ==4 || variant ==5) && (!readyToChange)){
      if (millis() - previousMillis36 >= INTERVAL7){ 
+       outOfModus = false;
         if (millis() - previousMillis37 >= (slingerSpeed+slowFactor)){ // 200 is slingerSpeed
           previousMillis37 = millis();
           longxArray[hh]=blockArray[hh];
@@ -2698,6 +2715,7 @@ else if ((variant==3 || variant ==4 || variant ==5) && (!readyToChange)){
           slowFactor=0;
           evenOddCounter++;
           INTERVAL7=interval9*timeArray2[random(0,6)]*timefactor3;
+          outOfModus = true;
           updateOledFloat(88, 0, &INTERVAL7, 0); 
           T=0;
           readyToChange = true;

@@ -33,8 +33,10 @@ void initializeEEPROM(){
     #else
     int check  = EEPROM.readInt(0);
     #endif
+
+    Serial.print(F("size of EEPROM: ")); Serial.println(sizeof(customVar));
     
-    if (check == 44445){
+    if (check == 22225){
     display.print(F("code: ")); display.println(check);
     display.println(F("EEPROM SET"));
     display.display();
@@ -49,7 +51,7 @@ void initializeEEPROM(){
     FastLED.delay(1000);
     }
     
-    else if (check != 44445){
+    else if (check != 22225){
     display.println(F("EEPROM not initialized"));
     display.println(F("Writing to EEPROM...."));
     display.display();

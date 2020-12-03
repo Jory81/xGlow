@@ -125,6 +125,7 @@ void fillxmasArray();
 void initializeGlitter();
 void loadPersonalSettings();
 void saveCurrentModeToEEPROM();
+void saveCycleParamToEEPROM();
 void fillArrayRainbow(uint8_t fillcase);
 void fillArrayGradient(uint8_t fillcase, uint8_t y0r, int setDifference);
 void fillLongxArray(uint8_t colour, uint16_t num_leds);

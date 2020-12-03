@@ -125,6 +125,11 @@ p.progwindows {
 	color: white;
 }
 
+.switchcontainer1{
+	text-align: left;
+	color: white;
+}
+
 .sliderhue {
   -webkit-appearance: none;
   width: 75%;

@@ -140,6 +140,7 @@ void processWebSocketMessage(String str, int dataVar){
       else if (str == "SGRE"){Green = dataVar; loadHSV = true; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, Green), Green);  EEPROM.commit();};}   
       else if (str == "SBLU"){Blue = dataVar; loadHSV = true; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, Blue), Blue);  EEPROM.commit();};}    
       else if (str == "TCON"){cycle = dataVar; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, cycle), cycle);  EEPROM.commit();};} // EEPROM
+      else if (str == "TCPM"){saveForAllModes = dataVar;} // EEPROM
       else if (str == "TCFA"){fadeFirst = dataVar; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, fadeFirst), fadeFirst);  EEPROM.commit();};} // EEPROM
       else if (str == "TCRA"){randomCycle = dataVar; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, randomCycle), randomCycle);  EEPROM.commit();};} // EEPROM
       else if (str == "TCEX"){excludeModes = dataVar; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, excludeModes), excludeModes);  EEPROM.commit();};} // EEPROM
@@ -256,6 +257,7 @@ void sendMessageToClient (int dataVar){
             else if (dataVar == 66){mergedString = str+"SM3R"+String(range);}
             else if (dataVar == 67){mergedString = str+"SBSM"+String(BriSPreset);}   
             else if (dataVar == 68){mergedString = str+"TPMO"+String(personalizedModes);}   
+            else if (dataVar == 69){mergedString = str+"TCPM"+String(saveForAllModes);}
 
                                 
 //            else if (dataVar == 50){mergedString = str+"TVNB"+String(varNumbrigh);} 
