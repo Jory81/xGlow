@@ -26,11 +26,11 @@ void handleModeSwitch(){ // HANDLE SWITCHING MODUS
       }
       else if (randomCycle){
         uint8_t newProgramMode = random(0,modeCount+1);   
-        if (((cmode[newProgramMode]) && (newProgramMode =! programMode)) || (!excludeModes)){
+        if (((cmode[newProgramMode]) && (newProgramMode != programMode)) || (!excludeModes)){
           programMode = newProgramMode;
           changeState();} 
         else if ((!cmode[newProgramMode]) || (newProgramMode == programMode)){
-          while ((!cmode[newProgramMode]) || (newProgramMode == programMode)){ newProgramMode= random(0,modeCount+1); }
+          while ((!cmode[newProgramMode]) || (newProgramMode == programMode)){ newProgramMode = random(0,modeCount+1); }
        programMode = newProgramMode;
        changeState();}
       }
