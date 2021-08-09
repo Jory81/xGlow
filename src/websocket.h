@@ -472,7 +472,7 @@ BriSPreset = EEPROM.read(offsetPosition);
 offsetPosition = (offsetof(storeInEEPROM, arrayn[0])) + programMode; 
 arrayn = EEPROM.read(offsetPosition);
 offsetPosition = (offsetof(storeInEEPROM, varON[0])) + programMode; 
-varON = EEPROM.read(offsetPosition);
+varON = EEPROM.read(offsetPosition); for (int p=0; p<10; p++){if (varON == 0){yvar[p]= 0; yvarg[p]= 0;} else {yvar[p]=yvarC[p]; yvarg[p]=yvargC[p];};}
 offsetPosition = (offsetof(storeInEEPROM, numsparks[0])) + programMode; 
 numsparks = EEPROM.read(offsetPosition);
 offsetPosition = (offsetof(storeInEEPROM, glitterON[0])) + programMode; 
