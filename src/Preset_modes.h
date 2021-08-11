@@ -405,6 +405,7 @@ if (millis() - previousMillisLN[k] >= rtAM[k]/df){
       if ((tower) && (!Bees)){
         blockArray[i[k]+offdis]=yval1;//+random(-ydiff,ydiff);
         blockArray[i[k]+offdis+1]=yval1;//+random(-ydiff,ydiff);
+        a[k]=NUM_LEDS; // added to remove leds being lit in tower mode
         i[k]=random(NUM_LEDS-offdis, NUM_LEDS);
       }
       else if ((tower) && (Bees)){
