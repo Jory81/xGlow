@@ -118,7 +118,7 @@ void processWebSocketMessage(String str, int dataVar){
       else if (str == "SNSP"){numsparks = dataVar;}
       else if (str == "SSBR"){BrF = dataVar; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, BrF), BrF);  EEPROM.commit();};}
       else if (str == "SSSF"){SF = dataVar; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, SF), SF);  EEPROM.commit();};}
-      else if (str == "SDIF"){setDifference = dataVar; fillxmasArray(); diffbeat=60000/(setDifference*4*100); diffbeat2=diffbeat/2;  setDifference2 = setDifference+5; } // diff[0]=0;     x = 1;  num = 0;        diff[1]=0;     xn = 1;    num7 = 0; }
+      else if (str == "SDIF"){setDifference = dataVar; fillxmasArray(); diffbeat=60000/(setDifference*4*100); diffbeat2=diffbeat/2;  setDifference2 = setDifference+5;} // diff[0]=0;     x = 1;  num = 0;        diff[1]=0;     xn = 1;    num7 = 0; }
       else if (str == "SLSP"){changeSpeed = dataVar;}
       else if (str == "SNLD"){NUM_LEDS = dataVar; EEPROM.put(offsetof(storeInEEPROM, NUM_LEDS), NUM_LEDS);  EEPROM.commit();}
       else if (str == "SCAR"){arrayn = dataVar;     selectcolorArray();    newColors++;}  // THIS ONE
@@ -164,7 +164,7 @@ void processWebSocketMessage(String str, int dataVar){
       else if (str == "TMWF"){maintainWaveForm = dataVar;}
       else if (str == "TSET"){saveEverythingToEEPROM(); sendDelayWSMessage=true; message = 2; previousMillis14=millis();}
       else if (str == "TSED"){int eeAddress=0; EEPROM.put(eeAddress, customVar); EEPROM.commit(); FastLED.delay(1000); ESP.restart();}
-      else if (str == "SETT"){EEPROM.put((offsetof(storeInEEPROM, rgbcolor)), dataVar); EEPROM.commit(); Serial.println(dataVar);}
+      else if (str == "SETT"){EEPROM.put((offsetof(storeInEEPROM, rgbcolor)), dataVar); EEPROM.commit(); RGBCOLOR = dataVar; Serial.println(dataVar);}
       else if (str == "TAAM"){ActiveModesToEEPROM(); sendDelayWSMessage=true; message = 3; previousMillis14=millis();}
       else if (str == "TDAM"){DeactiveModesToEEPROM(); sendDelayWSMessage=true; message = 4; previousMillis14=millis();}
       else if (str == "SRMI"){yminrood = dataVar; fillxmasArray(); ysr=0; for (int i = 0; i < 10; i++){colour[i]=(numAmax/10*i);} if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, yminrood), yminrood);  EEPROM.commit();};}
@@ -258,6 +258,7 @@ void sendMessageToClient (int dataVar){
             else if (dataVar == 67){mergedString = str+"SBSM"+String(BriSPreset);}   
             else if (dataVar == 68){mergedString = str+"TPMO"+String(personalizedModes);}   
             else if (dataVar == 69){mergedString = str+"TCPM"+String(saveForAllModes);}
+            else if (dataVar == 70){mergedString = str+"HCOL"+String(RGBCOLOR);} 
 
                                 
 //            else if (dataVar == 50){mergedString = str+"TVNB"+String(varNumbrigh);} 

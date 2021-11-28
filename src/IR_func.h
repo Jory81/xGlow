@@ -325,18 +325,18 @@ else if (memoryByte == 'z'){
   }
 
 else if (memoryByte == 'y'){ // currently only affects twinkle program
-    density++;
-    if (density == 0){
-      DENSITY=setDifference;}
-    else if (density == 1){
-      DENSITY=85;}
-    else if (density == 2){
-      DENSITY=170;}
-    else if (density == 3){
-      DENSITY=255;}
-    else if (density == 4){
-    density=-1;
-    }
+    // density++;
+    // if (density == 0){
+    //   DENSITY=setDifference;}
+    // else if (density == 1){
+    //   DENSITY=85;}
+    // else if (density == 2){
+    //   DENSITY=170;}
+    // else if (density == 3){
+    //   DENSITY=255;}
+    // else if (density == 4){
+    // density=-1;
+    // }
 }
   
 else if (memoryByte == 'x'){ 

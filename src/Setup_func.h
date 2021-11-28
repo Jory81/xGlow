@@ -81,7 +81,7 @@ void wifi(){
   WiFi.begin(WIFI_SSID, WIFI_PASS);  
   Serial.printf("Trying to connect [%s] ", WiFi.macAddress().c_str());
   while (WiFi.status() != WL_CONNECTED) {
-      Serial.println(".");
+      Serial.print(".");
        display.clearDisplay();
       display.setCursor(0,0);
       display.println(F("connecting to wifi..."));
@@ -114,8 +114,10 @@ void LED_properties(){
     #ifdef ESP8266
     EEPROM.get(offsetof(storeInEEPROM, rgbcolor), RGBCOLOR);
     const byte rgbcolor = RGBCOLOR;
+    RGBCOLOR = rgbcolor;
     #else
     const byte rgbcolor =  EEPROM.readByte(offsetof(storeInEEPROM, rgbcolor)); 
+    RGBCOLOR = rgbcolor;
     #endif
 
     switch (rgbcolor){

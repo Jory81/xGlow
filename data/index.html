@@ -131,16 +131,39 @@ function onMessage(event) {
 	}
 	
 	else if (firstFourChars.charAt(0) == "H"){
-	document.getElementById(firstFiveChars).innerHTML = residu;
+		if (firstFiveChars == "HCOLS") {
+			if (residu == 0){
+				residu = "RGB";
+			}
+			else if (residu == 1){
+				residu = "GRB";
+			}
+			else if (residu == 2){
+				residu = "BRG";
+			}			
+			else if (residu == 3){
+				residu = "BGR";
+			}
+			else if (residu == 4){
+				residu = "RBG";
+			}	
+			else if (residu == 5){
+				residu = "GBR";
+			}						
+			document.getElementById(firstFiveChars).innerHTML = residu;
+		}
+	else {
+		document.getElementById(firstFiveChars).innerHTML = residu;
+	}	
     }	
 
 	if (prefixChars == "G"){
 	k = k + 1;
 	//console.log(k);
-		if (k < 70){ //54
+		if (k < 71){ //54
 		setTimeout(function(){ doSend("GETS"+k); }, 20);
 		}
-		else if (k >= 70){ //54
+		else if (k >= 71){ //54
 		//k = 0;
 		//doSend(k);
 		//console.log(k);
@@ -218,7 +241,7 @@ function updateButton(fixedVariable) {
 
 function changeColor(opt)
 {
-    document.getElementById("displaycolor").innerHTML = opt;
+    document.getElementById("HCOLS").innerHTML = opt;
     // document.getElementById("displaycolor1").innerHTML = opt[0];
     doSend("SETT"+opt[0]);
 	document.getElementById("reboot").innerHTML  = "reboot to activate";
@@ -1478,7 +1501,7 @@ _Bees
     <option value="5. GBR">GBR</option>
 </select>
 </span>&nbsp
-<span class="textinfo" id="displaycolor">___</span> 
+<span class="textinfo" id="HCOLS">___</span> 
 </p>
 <br>
 <p class="sliderwindow"> 

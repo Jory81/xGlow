@@ -32,10 +32,12 @@ CRGB leds[NUM_SET];
 int NUM_LEDS = 100; //EEPROM.readInt(93); THIS ONE WILL BE RE-INITIALIZED DURING SETUP. HOWEVER SOME VARIABLES ARE CALCULATED BASED ON THIS NUMBER (NOT FULLY TESTED/OPTIMIZED YET).
 
 #ifdef ESP8266
-  //const int DATA_PIN = 2; // 
-  const int DATA_PIN = 3; // 
+  //const int DATA_PIN = 2; // GPIO2 - jumper set to the left
+  const int DATA_PIN = 3; // This is GPIO3 jumper set to the right
 #else
-  const int DATA_PIN = 16; // 
+  const int DATA_PIN = 16; // GPIO2 - jumper set to the left
+  //const int DATA_PIN = 3; // This is GPIO3 jumper set to the right
+
 #endif
 unsigned int FPS = 20; // Refresh time is 20 ms '20 FPS'. '20 FPS' is 50 FRAMES PER SECOND - sorry about the semantics.
 

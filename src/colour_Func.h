@@ -337,16 +337,16 @@ if (colorMode == 0){
       
     brightenOrDarkenEachPixel(fadeInSpeed, fadeOutSpeed);
 
-  if (density == 0){
-    DENSITY=setDifference;}
-  else if (density == 1){
-    DENSITY=85;}
-  else if (density == 2){
-    DENSITY=170;}
-  else if (density == 3){
-    DENSITY=255;}    
+  // if (density == 0){
+  //   DENSITY=setDifference;}
+  // else if (density == 1){
+  //   DENSITY=85;}
+  // else if (density == 2){
+  //   DENSITY=170;}
+  // else if (density == 3){
+  //   DENSITY=255;}    
 
-  if( random(255) < DENSITY ) {
+  if( random(255) < setDifference ) {
     int pos = random(NUM_LEDS);
     if( !leds[pos]) {
       leds[pos] = CHSV(yval1,Stwinkle,150);

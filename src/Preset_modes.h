@@ -926,12 +926,13 @@ void snow_storm(void){
         yval1 = changeColourFcn2(colorMode, yval1, yold, 40, 210);         
         updateOled(102, 56, &yval1); 
         forcedColourChange = false;
+        //Serial.print("New colour is: "); Serial.println(yval1);
       } 
       if (fadeIsActive){
         if (varON == 2){
           if (millis() - previousMillis38 >= 2*changeSpeed) {
           previousMillis38 = millis();
-            if (yold == yval1 ) {
+            if (yold == yval1) {
                   fadeIsActive = false;
             }
             yold = fadeFnc(yold, yval1); 
@@ -947,14 +948,17 @@ void snow_storm(void){
           if (millis() - previousMillisLN[s] >= changeSpeedMA[s] && flakeCounter >= flakeListMode7[s] && flakeCounter <= cn) {
             previousMillisLN[s] = millis();
             num17[s]-=offdis;
+            //Serial.print("flakecounter: "); Serial.println(flakeCounter);
             }
             if (num17[s] < rn[s] && flakeCounter <= cn){
               num17[s]=NUM_LEDS; // adjusted
               flakeCounter++;
               if (flakeCounter <= 10 && s == 0){
-                rn[0]= random(55,75);}
+                rn[0]= random(NUM_LEDS*0.5),(NUM_LEDS*0.75);}
               else{
-                rn[s]= random(randomNumberMinimum[s], randomNumberMaximum[s]);             
+                //rn[s]=random(randomNumberMinimum[s], randomNumberMaximum[s]);
+                //rn[s]=random((NUM_LEDS/randomNumberMinimum[s]), (NUM_LEDS)/randomNumberMaximum[s]));
+                rn[s]=random(NUM_LEDS);            
               }
               num23[s]=0;
               changeSpeedMA[s]=changeSpeed*timeArray[random(0,5)];
@@ -963,10 +967,12 @@ void snow_storm(void){
               num26[s]=num26[s]+1;   
               num17[s]=NUM_LEDS; // adjusted
               num23[s]=0;
+              //pos[s]=NUM_LEDS; // extra line
             }
           }
 
         if (millis() - previousMillis37 >= changeSpeed/cfactor2 && flakeCounter > cn-(3*cfactor2)){
+          //Serial.println("counting down hh");
           previousMillis37 = millis();
           longxArray[hh]=yval1;;
           if (hh < NUM_LEDS-1){
@@ -975,10 +981,13 @@ void snow_storm(void){
           hh=hh-1;
           if (hh<0){
               hh=NUM_LEDS;
-              evenOddCounter++;
-              updateOled(44, 40, &yold);  
-              yold=yval1;           
+              evenOddCounter++; 
               INTERVAL7=interval7*timeArray2[random(0,6)]*timefactor3;
+
+              yold=yval1;  
+              yval1=yval1+1;
+              updateOled(44, 40, &yold);
+
               outOfModus = true;
               updateOledFloat(88, 0, &INTERVAL7, 0); 
               T=0;
@@ -988,7 +997,9 @@ void snow_storm(void){
               for (int s=0; s < numsparks; s++){
               num17[s]=NUM_LEDS; // adjusted
               num26[s]=0;
-              rn[s]=random(randomNumberMinimum[s], randomNumberMaximum[s]);
+              //rn[s]=random(randomNumberMinimum[s], randomNumberMaximum[s]);
+              //rn[s]=random((NUM_LEDS/randomNumberMinimum[s]), (NUM_LEDS)/randomNumberMaximum[s]));
+              rn[s]=random(NUM_LEDS);
               }
               fadeIsActive = true;
               flakeCounter=0;
@@ -1005,8 +1016,9 @@ void snow_storm(void){
     }
 } 
       
-if (millis() - previousMillis36 >= INTERVAL7 && ((num17[0] > 0) || (hh > 0 && hh <NUM_LEDS-1))){             
+if (millis() - previousMillis36 >= INTERVAL7 && ((num17[0] > 0) || (hh > 0 && hh < NUM_LEDS-1))){             
     if (millis() - previousMillis35 >= sparkSpeed) { // sparkSpeed = changeSpeed/DF
+    //Serial.println("does it spark in flake mode");
     previousMillis35 = millis();
 
         if (hh < NUM_LEDS-1){
@@ -1909,7 +1921,9 @@ if (millis() - previousMillis36 >= INTERVAL7){
         yMA[s] = changeColourFcn2(colorMode, yMA[s], yMA[s], 40, 210);       
         }
       pos[s]=NUM_LEDS;
-      rn[s]= random(randomNumberMinimum[s], randomNumberMaximum[s]);
+        //rn[s]=random(randomNumberMinimum[s], randomNumberMaximum[s]);
+        //rn[s]=random((NUM_LEDS/randomNumberMinimum[s]), (NUM_LEDS)/randomNumberMaximum[s]));
+        rn[s]=random(NUM_LEDS);
 
         if (random(75)<(9/cfactor2)){ rainbowPossibility[s]=true; }
         else { rainbowPossibility[s]=false; }
