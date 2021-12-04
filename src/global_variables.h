@@ -879,6 +879,7 @@ float INTERVAL9=interval7;
 float sF=1.000;
 float cfactor1=1;
 float cfactor2;
+float cfactor3;
 byte speedFact = 1;
 
 // gradient properties

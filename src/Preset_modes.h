@@ -390,7 +390,7 @@ if (millis() - previousMillisLN[k] >= rtAM[k]/df){
         }
         else {
           i[k]=i[k]-1;
-          if (i[k] == 80*cfactor2 || i[k] == 60*cfactor2 || i[k] == 40*cfactor2 || i[k] == 20*cfactor2){
+          if (i[k] == 80*cfactor3 || i[k] == 60*cfactor3 || i[k] == 40*cfactor3 || i[k] == 20*cfactor3){ 
           int chance = random(15);
             if (chance > 9){
               interRun[k]=1.1;
@@ -500,7 +500,7 @@ if (millis() - previousMillis36 >= 500){
     else{
     yval1+=1*dir1;
 
-    fillArrayGradient(1, yval1, 1);
+    fillArrayGradient(1, yval1, setDifference);
 
     if (yval1 == ymax4-1 && dir1 == 1){
      dir1 = -1;
@@ -561,7 +561,7 @@ if (millis() - previousMillisLN[k] >= rtAM[k]/df){
     }
     else {
       i[k]=i[k]-1;
-      if (i[k] == 80*cfactor2 || i[k] == 60*cfactor2 || i[k] == 40*cfactor2 || i[k] == 20*cfactor2){
+      if (i[k] == 80*cfactor3 || i[k] == 60*cfactor3 || i[k] == 40*cfactor3 || i[k] == 20*cfactor3){
       int chance = random(15);
         if (chance > 9){
           interRun[k]=1.1;
@@ -660,42 +660,42 @@ if (readyToChange){
   rn6=random(0,6);  
     if (rn6==0){
       variant=0;
-      offmin=13*cfactor2;
-      offmax=13*cfactor2;
-      slingerSpeed=changeSpeed/cfactor2;
+      offmin=13*cfactor3;
+      offmax=13*cfactor3;
+      slingerSpeed=changeSpeed/cfactor3;
       }
     else if (rn6==1){
       variant=1;   
       offmax=-1;
-      offmin=(30*cfactor2)+10; 
-      slingerSpeed=45/cfactor2;   
+      offmin=(30*cfactor3)+10; 
+      slingerSpeed=45/cfactor3;   
       }
     else if (rn6==2){
       variant=2;
       offmin=-1;
-      offmax=25*cfactor2;
-      slingerSpeed=changeSpeed/cfactor2;
+      offmax=25*cfactor3;
+      slingerSpeed=changeSpeed/cfactor3;
       }
     else if (rn6==3){
       variant=3;
-      offmin=13*cfactor2;
-      offmax=13*cfactor2;
-      slingerSpeed=changeSpeed/cfactor2;
+      offmin=13*cfactor3;
+      offmax=13*cfactor3;
+      slingerSpeed=changeSpeed/cfactor3;
       }
     else if (rn6==4){
       variant=4;
       offmax=-1;
-      offmin=(30*cfactor2)+10;; 
-      slingerSpeed=45/cfactor2;
+      offmin=(30*cfactor3)+10;; 
+      slingerSpeed=45/cfactor3;
       }
     else if (rn6==5){
       variant=5;
       offmin=-1;
-      offmax=25*cfactor2;
-      slingerSpeed=changeSpeed/cfactor2;
+      offmax=25*cfactor3;
+      slingerSpeed=changeSpeed/cfactor3;
       }
   if (tower){
-    slingerSpeed=45/cfactor2;    
+    slingerSpeed=45/cfactor3;    
   }
   readyToChange = false; 
 }   
@@ -751,7 +751,7 @@ if ((variant == 0 || variant == 1 || variant == 2) && (!readyToChange)){
         }
     } 
 
-    if (millis() - previousMillis36 >= INTERVAL7 && ((variant == 0 && yy > 0 && yy < NUM_LEDS-1) || (variant == 1 && yy > 1+cfactor2) || (variant == 2 && yy < NUM_LEDS-(1+cfactor2)))){
+    if (millis() - previousMillis36 >= INTERVAL7 && ((variant == 0 && yy > 0 && yy < NUM_LEDS-1) || (variant == 1 && yy > 1+cfactor3) || (variant == 2 && yy < NUM_LEDS-(1+cfactor3)))){
         if (millis() - previousMillis35 >= sparkSpeed+slowFactor) {        
         previousMillis35 = millis();
 
@@ -836,7 +836,7 @@ else if ((variant==3 || variant ==4 || variant ==5) && (!readyToChange)){
           }
     }
 
-    if (millis() - previousMillis36 >= INTERVAL7 && ((variant == 3&& hh > 0 && hh < NUM_LEDS-1) || (variant == 4 && hh < NUM_LEDS-(1+cfactor2)) || (variant == 5 && hh > 1+cfactor2))) {
+    if (millis() - previousMillis36 >= INTERVAL7 && ((variant == 3&& hh > 0 && hh < NUM_LEDS-1) || (variant == 4 && hh < NUM_LEDS-(1+cfactor3)) || (variant == 5 && hh > 1+cfactor3))) {
         if (millis() - previousMillis35 >= sparkSpeed+slowFactor) {
         previousMillis35 = millis();
 
@@ -971,7 +971,7 @@ void snow_storm(void){
             }
           }
 
-        if (millis() - previousMillis37 >= changeSpeed/cfactor2 && flakeCounter > cn-(3*cfactor2)){
+        if (millis() - previousMillis37 >= changeSpeed/cfactor3 && flakeCounter > cn-(3*cfactor3)){
           //Serial.println("counting down hh");
           previousMillis37 = millis();
           longxArray[hh]=yval1;;
@@ -1040,7 +1040,7 @@ if (millis() - previousMillis36 >= INTERVAL7 && ((num17[0] > 0) || (hh > 0 && hh
           
          poshh=random(hh-offmax-10, hh+offmin+10);
           while (poshh < 0 || poshh > NUM_LEDS-1){
-            poshh=random(hh-offmax-(12*cfactor2), hh+offmin+(12*cfactor2));
+            poshh=random(hh-offmax-(12*cfactor3), hh+offmin+(12*cfactor3));
           }       
        }
 
@@ -1140,7 +1140,7 @@ void random_led(void){
 if (millis() - previousMillis1 >= changeSpeed){
      if (colorMode == 5){
          colourChangeDelay++;
-         if (colourChangeDelay >= setDifference*cfactor2){
+         if (colourChangeDelay >= setDifference*cfactor3){
          yval1+=10;
          colourChangeDelay=0;}
      }
@@ -1184,7 +1184,7 @@ if (!fadeIsActive){
 if (millis() - previousMillis1 >= changeSpeed){
      if (colorMode == 5){
          colourChangeDelay++;
-         if (colourChangeDelay >= setDifference*cfactor2){
+         if (colourChangeDelay >= setDifference*cfactor3){
          yval1+=10;
          colourChangeDelay=0;}
      }
@@ -1267,7 +1267,7 @@ void strobe(void){
 if (millis() - previousMillis1 >= changeSpeed){
      if (colorMode == 5){
          colourChangeDelay++;
-         if (colourChangeDelay >= setDifference*cfactor2){
+         if (colourChangeDelay >= setDifference*cfactor3){
          yval1+=10;
          colourChangeDelay=0;}
      }
@@ -1424,8 +1424,16 @@ void rainbow_5(void){
       previousMillis2 = millis();  
       for(int i = 0; i < NUM_LEDS; i++ ){
       leds[i] = CHSV(ysr+yvar[varlu],satval[satlu],brigh[brighlu]);
+
+      if (NUM_LEDS > 300){
+        if (i % setDifference == 0){
+          ysr+=1;
+        }
+      }
+      else {
       ysr+=setDifference;
-       
+      }
+      
       brighlu++;
       if (brighlu >= numbrigh){brighlu = 0;} 
       
@@ -1487,7 +1495,7 @@ if (millis() - previousMillis1 > INTERVAL7) {
     previousMillis36 = millis();
     if (forcedColourChange) {
       yval1 = yval1+=random(60, 195);
-      seedNumber = (random(10, 25))*cfactor2;
+      seedNumber = (random(10, 25))*cfactor3;
         for (int i = 0; i < seedNumber; i++){
          seedArray[i]=random(NUM_LEDS);
         }
@@ -1546,18 +1554,18 @@ if (readyToChange){
       rn6=random(0,2);
         if (rn6==0){
           variant=0;
-          offmin=13*cfactor2;
-          offmax=13*cfactor2;
-          slingerSpeed=changeSpeed/cfactor2;
+          offmin=13*cfactor3;
+          offmax=13*cfactor3;
+          slingerSpeed=changeSpeed/cfactor3;
           }
         else if (rn6==1){
           variant=3;
-          offmin=13*cfactor2;
-          offmax=13*cfactor2;
-          slingerSpeed=changeSpeed/cfactor2;
+          offmin=13*cfactor3;
+          offmax=13*cfactor3;
+          slingerSpeed=changeSpeed/cfactor3;
         }
       if (tower){
-        slingerSpeed=45/cfactor2;    
+        slingerSpeed=45/cfactor3;    
       }
       readyToChange = false; 
       }
@@ -1565,7 +1573,7 @@ if (readyToChange){
       variant=variant;
     }
   if (tower){
-    slingerSpeed=45/cfactor2;    
+    slingerSpeed=45/cfactor3;    
   }
 readyToChange = false; 
 }   
@@ -2013,7 +2021,7 @@ if (millis() - previousMillisLN[k] >= rtAM[k]/df){
     }
     else {
       i[k]=i[k]-1;
-      if (i[k] == 80*cfactor2 || i[k] == 60*cfactor2 || i[k] == 40*cfactor2 || i[k] == 20*cfactor2){
+      if (i[k] == 80*cfactor3 || i[k] == 60*cfactor3 || i[k] == 40*cfactor3 || i[k] == 20*cfactor3){
       int chance = random(15);
         if (chance > 9){
           interRun[k]=1.1;
@@ -2411,7 +2419,11 @@ previousMillis2 = millis();
     
    for(int i = 0; i < NUM_LEDS; i++ ){
    leds[i] = CHSV(longxArray[y0r]+yvar[varlu],satval[satlu],brigh[brighlu]);
-   y0r++;
+    
+    if (i % setDifference == 0){
+          y0r++;
+    }
+
    if (y0r > numAmax){
    y0r=0;
    }
@@ -2601,14 +2613,14 @@ previousMillis2 = millis();
 void sparklingR(void){
 
 if (millis() - previousMillis38 >= 500){    
-    previousMillis38 = millis();
-    if (varON == 1){
+  previousMillis38 = millis();
+  if (varON == 1){
     fillArrayRainbow(2);
   }
   else {
     yval1+=1*dir1;
 
-    fillArrayGradient(2, yval1, 1);
+    fillArrayGradient(2, yval1, setDifference);
 
     if (yval1 == ymax4-1 && dir1 == 1){
      dir1 = -1;
@@ -2625,42 +2637,42 @@ if (readyToChange){
   rn6=random(0,6);  
     if (rn6==0){
       variant=0;
-      offmin=13*cfactor2;
-      offmax=13*cfactor2;
-      slingerSpeed=changeSpeed/cfactor2;
+      offmin=13*cfactor3;
+      offmax=13*cfactor3;
+      slingerSpeed=changeSpeed/cfactor3;
       }
     else if (rn6==1){
       variant=1;   
       offmax=-1;
-      offmin=(30*cfactor2)+10; 
-      slingerSpeed=45/cfactor2;   
+      offmin=(30*cfactor3)+10; 
+      slingerSpeed=45/cfactor3;   
       }
     else if (rn6==2){
       variant=2;
       offmin=-1;
-      offmax=25*cfactor2;
-      slingerSpeed=changeSpeed/cfactor2;
+      offmax=25*cfactor3;
+      slingerSpeed=changeSpeed/cfactor3;
       }
     else if (rn6==3){
       variant=3;
-      offmin=13*cfactor2;
-      offmax=13*cfactor2;
-      slingerSpeed=changeSpeed/cfactor2;
+      offmin=13*cfactor3;
+      offmax=13*cfactor3;
+      slingerSpeed=changeSpeed/cfactor3;
       }
     else if (rn6==4){
       variant=4;
       offmax=-1;
-      offmin=(30*cfactor2)+10;; 
-      slingerSpeed=45/cfactor2;
+      offmin=(30*cfactor3)+10;; 
+      slingerSpeed=45/cfactor3;
       }
     else if (rn6==5){
       variant=5;
       offmin=-1;
-      offmax=25*cfactor2;
-      slingerSpeed=changeSpeed/cfactor2;
+      offmax=25*cfactor3;
+      slingerSpeed=changeSpeed/cfactor3;
       }
   if (tower){
-    slingerSpeed=45/cfactor2;    
+    slingerSpeed=45/cfactor3;    
   }
   readyToChange = false; 
 }   
@@ -2696,7 +2708,7 @@ if ((variant == 0 || variant == 1 || variant == 2) && (!readyToChange)){
         }
     } 
 
-    if (millis() - previousMillis36 >= INTERVAL7 && ((variant == 0 && yy > 0 && yy < NUM_LEDS-1) || (variant == 1 && yy > 1+cfactor2) || (variant == 2 && yy < NUM_LEDS-(1+cfactor2)))){
+    if (millis() - previousMillis36 >= INTERVAL7 && ((variant == 0 && yy > 0 && yy < NUM_LEDS-1) || (variant == 1 && yy > 1+cfactor3) || (variant == 2 && yy < NUM_LEDS-(1+cfactor3)))){
         if (millis() - previousMillis35 >= sparkSpeed+slowFactor) {        
         previousMillis35 = millis();
 
@@ -2751,7 +2763,7 @@ else if ((variant==3 || variant ==4 || variant ==5) && (!readyToChange)){
           }
     }
 
-    if (millis() - previousMillis36 >= INTERVAL7 && ((variant == 3&& hh > 0 && hh < NUM_LEDS-1) || (variant == 4 && hh < NUM_LEDS-(1+cfactor2)) || (variant == 5 && hh > 1+cfactor2))) {
+    if (millis() - previousMillis36 >= INTERVAL7 && ((variant == 3&& hh > 0 && hh < NUM_LEDS-1) || (variant == 4 && hh < NUM_LEDS-(1+cfactor3)) || (variant == 5 && hh > 1+cfactor3))) {
         if (millis() - previousMillis35 >= sparkSpeed+slowFactor) {
         previousMillis35 = millis();
 

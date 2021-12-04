@@ -148,7 +148,11 @@ void fillArrayRainbow(uint8_t fillcase){
   y0r++;
   hue=y0r;
   for (int i = 0; i < NUM_LEDS; i++){
-    hue++;
+
+      if (i % (int)cfactor2 == 0){
+          hue++;
+      }
+    
       switch(fillcase){
         case 1: {
           longxArray[i]=hue; 
@@ -176,8 +180,15 @@ void fillArrayGradient(uint8_t fillcase, uint8_t y0r, int setDifference){
           blockArray[i] = y0r;
         } break;
       }            
-    
-    y0r+=setDifference*dir0;
+      
+      if (NUM_LEDS > 300){
+        if (i % setDifference == 0){
+          y0r+=(1*dir0);
+        }
+      }
+      else {
+      y0r+=setDifference*dir0;
+      }
 
     if (((y0r > ymax4 && y0r <= ymax4+setDifference) || (y0r <= setDifference && ymax4 >= 255-setDifference)) && dir0 == 1){
       dir0 = -1;

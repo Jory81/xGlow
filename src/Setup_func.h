@@ -41,8 +41,9 @@ void initializeEEPROM(){
     display.println(F("EEPROM SET"));
     display.display();
     initializeEEPROMvariables(); // functio in global_variables.h at the bottom.    
-    cfactor2=NUM_LEDS/100; 
-    cfactor1=300/NUM_LEDS;
+    cfactor2=NUM_LEDS/100;
+    cfactor3=NUM_LEDS/100;
+    cfactor1=300/NUM_LEDS;//
     convBrigh=waveTimeBr/numbrigh;
     convSat=waveTimeS/numsat;
       if (cfactor2 > 3){cfactor2 = 3;} 
