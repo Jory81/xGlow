@@ -529,13 +529,13 @@ float timeArrayReverse[5]={1, 2, 4, 6, 10};
 float timeArrayRainbow[5]={2, 4, 8, 12, 15};
 
 byte cycleGlow3[255]={0};
-uint16_t rtGlow3[255] = {0};
+uint32_t rtGlow3[255] = {0};
 int     numGlow3[255]={0};
 unsigned long timeFactorGlow3[255]={0};
 unsigned long previousMillisGlow3[255]={0};
 
 byte cycleSat3[255]={0};
-uint16_t rtSat3[255] = {0};
+uint32_t rtSat3[255] = {0};
 int     numSat3[255]={0};
 unsigned long timeFactorSat3[255]={0};
 unsigned long previousMillisSat3[255]={0};
