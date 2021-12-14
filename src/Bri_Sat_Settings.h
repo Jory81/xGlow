@@ -48,7 +48,7 @@ else if (glowON == 3){
   brigh[i] = map(sin16((millis()-timeFactorGlow3[i])*BPMB),0,32767,offBr,BRIGH); // glowfactor 16 is speed setting
   if (brigh[i] >= BRIGH-3){cycleGlow3[i] = 1;}
   if (brigh[i] <= offBr+3 && cycleGlow3[i] == 1){
-    rtGlow3[i]=random(waveTimeBr);
+    rtGlow3[i]=random(waveTimeBr*cfactor3);
     previousMillisGlow3[i] = millis();
     numGlow3[i]=0;
   }  
@@ -68,7 +68,7 @@ else if (glowON == 4){
   brigh[i] = map(sin16((millis()-timeFactorGlow3[i])*BPMB),0,32767,BRIGH, offBr); // glowfactor 16 is speed setting
   if (brigh[i] <= offBr+3){cycleGlow3[i] = 1;} 
   if (brigh[i] >= BRIGH-3 && cycleGlow3[i] == 1){
-    rtGlow3[i]=random(waveTimeBr);
+    rtGlow3[i]=random(waveTimeBr*cfactor3);
     previousMillisGlow3[i] = millis();
     numGlow3[i]=0;
   }  
@@ -153,7 +153,7 @@ else if (satON == 3){
   satval[i] = map(sin16((millis()-timeFactorSat3[i])*BPMS),0,32767,offS,S); // glowfactor 16 is speed setting
   if (satval[i] >= S-3){cycleSat3[i] = 1;}
   if (satval[i] <= offS+3 && cycleSat3[i] == 1){
-    rtSat3[i]=random(waveTimeS);
+    rtSat3[i]=random(waveTimeS*cfactor3);
     previousMillisSat3[i] = millis();
     numSat3[i]=0;
   }  
@@ -172,9 +172,9 @@ else if (satON == 4){
     cycleSat3[i] = 0;
     }
   satval[i] = map(sin16((millis()-timeFactorSat3[i])*BPMS),0,32767,S,offS); // glowfactor 16 is speed setting
-  if (satval[i] <= offS+3){cycleSat3[i] = 1;} 
-  if (satval[i] >= S-3 && cycleSat3[i] == 1){
-    rtSat3[i]=random(waveTimeS);
+  if (satval[i] <= offS+3){cycleSat3[i] = 1;} //+3
+  if (satval[i] >= S-3 && cycleSat3[i] == 1){ // -3
+    rtSat3[i]=random(waveTimeS*cfactor3);
     previousMillisSat3[i] = millis();
     numSat3[i]=0;
   }  
