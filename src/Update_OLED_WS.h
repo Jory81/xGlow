@@ -3,17 +3,21 @@
  */
 
 void handleProgramTimer(){ // HANDLE PROGRAM TIMER
-if (millis() - previousMillis20 >= 1000 && (INTERVAL7/1000-T > -100)) {
+if (millis() - previousMillis20 >= 1000 && ((INTERVAL7/1000)-T > -100)) {
     previousMillis20 = millis();
     T++;
-    int time0 = INTERVAL7/1000-T;
-    mergedString = "HPTI"+String(time0); ws.textAll(mergedString);
+
+    int32_t time0 = int32_t((INTERVAL7/1000)-T);
+    notifyClientsSingleObjectSignedInt("HPTI", time0);
+    //mergedString = "HPTI"+String(time0); ws.textAll(mergedString);
 //    display.setCursor (96,0);    display.print ("    ");   display.setCursor (96,0);    display.print((INTERVAL7/1000-T), 0); display.display();
     colourTimerActive = true;
     }
     else if (INTERVAL7/1000-T <= -100 && (colourTimerActive)){
-    colourTimerActive = false;  
-    mergedString = "HPTINA"; ws.textAll(mergedString);
+    colourTimerActive = false; 
+    String emptyString = " ";
+    notifyClientsSingleString("HPTI", emptyString);
+    //mergedString = "HPTINA"; ws.textAll(mergedString);
     }
 }
 
@@ -21,8 +25,9 @@ void handleCycleTimer(){ // HANDLE CYCLE TIMER
 if (millis() - previousMillis44 >= 1000 && (cycle)) { // 60000 for updating ever minute instead of every second.
     previousMillis44 = millis();
     cycleT+=1;
-    int time1 = cycleTime/1000-cycleT;
-    mergedString = "HCTI"+String(time1); ws.textAll(mergedString);
+    int32_t time1 = cycleTime/1000-cycleT;
+    notifyClientsSingleObjectSignedInt("HCTI", time1);
+    //mergedString = "HCTI"+String(time1); ws.textAll(mergedString);
 //    display.setCursor (0,56);    display.print ("    ");   display.setCursor (0,56);    display.print(cycleTime/1000-cycleT); display.display();
     }
  }   
@@ -68,13 +73,16 @@ return;
 
 void updateOled(byte xAxis, byte yAxis, uint8_t* variable){
     if (*variable == arrayn || *variable == oldArrayn){
-      mergedString = "SCAR"+String(*variable); ws.textAll(mergedString);
+      notifyClientsSingleObjectByte("SCAR", *variable);
+      //mergedString = "SCAR"+String(*variable); ws.textAll(mergedString);
     }
     else if (*variable == yval1){
-      mergedString = "HY1N"+String(*variable); ws.textAll(mergedString);
+      notifyClientsSingleObjectByte("HY1N", *variable);
+      //mergedString = "HY1N"+String(*variable); ws.textAll(mergedString);
     }
     else if (*variable == yold){
-      mergedString = "HY1O"+String(*variable); ws.textAll(mergedString);
+      notifyClientsSingleObjectByte("HY1O", *variable);
+      //mergedString = "HY1O"+String(*variable); ws.textAll(mergedString);
     }
 //  display.setCursor(xAxis,yAxis);
 //  if (*variable == arrayn){
@@ -90,10 +98,14 @@ void updateOled(byte xAxis, byte yAxis, uint8_t* variable){
 }
 void updateOledFloat(byte xAxis, byte yAxis, float* variable, int decimal){
      if (*variable == INTERVAL7){
-      mergedString = "HPTT"+String(*variable/1000, decimal); ws.textAll(mergedString);
+      uint32_t timeVar = *variable/1000;
+      notifyClientsSingleObjectInt("HPTT", timeVar);
+      //mergedString = "HPTT"+String(*variable/1000, decimal); ws.textAll(mergedString);
     }
     else if (*variable == INTERVALf[0]){
-      mergedString = "HSPE"+String(*variable, decimal); ws.textAll(mergedString);
+      uint32_t timeVar = *variable;
+      notifyClientsSingleObjectInt("HSPE", timeVar);
+      //mergedString = "HSPE"+String(*variable, decimal); ws.textAll(mergedString);
     } 
 //  display.setCursor(xAxis,yAxis);
 //  display.print("    ");

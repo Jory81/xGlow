@@ -30,7 +30,7 @@ console.log(gateway);
 window.addEventListener('load', onLoad);
 
 function onLoad(event) {
-	var k = 0;
+	//var k = 0;
     initWebSocket();
 //    initButton();
 //	initSliders();
@@ -63,9 +63,14 @@ function onOpen(event) {
 	document.getElementById("waveSettings").style.display = "none";		
 	document.getElementById("ledSettings").style.display = "none";
 	document.getElementById("EEPROMcolorSettings").style.display = "none";
+
+	var myJSON = JSON.stringify({TLSE:true});
+	websocket.send(myJSON);
+	//console.log(myJSON);
+		
     console.log("Connected");
-    k = 0;
-    doSend("GETS"+k);
+    // k = 0;
+    // doSend("GETS"+k);
 }
  
 // Called when the WebSocket connection is closed
@@ -74,194 +79,431 @@ function onClose(event) {
     setTimeout(initWebSocket, 2000);
 }
 
- 
-// Called when a message is received from the server
-function onMessage(event) {
- 
-    // Print out our received message
-    //console.log("Received: " + event.data);
-
-	var string = event.data;
-	if (string.charAt(0) == 0){
-		var rawProgramName = event.data;
-		var programName = rawProgramName.substr(1);
-		document.getElementById("progn").innerHTML = programName;
-		var firstFourChars = "xxxx";
-		k = 0;
-		//k = 32;
-		doSend("GETS"+k);
-		//console.log("sends program name");
-	}	
-	else if (string.charAt(0) == "G"){
-		var prefixChars = "G";
-		if (string.charAt(1) == 0){
-			var rawProgramName = event.data;
-			var programName = rawProgramName.substr(2);
-			document.getElementById("progn").innerHTML = programName;
-			var firstFourChars = "xxxx";
-			}
-		else {
-			var newString = string.substr(1);
-			var firstFourChars = newString.substring(0,4);
-			var firstFiveChars = firstFourChars+"S";
-			var residu = newString.slice(4, newString.length);
-		}
-	}
-	else {
-		var firstFourChars = string.substring(0,4);
-		var firstFiveChars = firstFourChars+"S";
-		var residu = string.slice(4, string.length);
-//	console.log(residu);
-	}
-
-	if (firstFourChars.charAt(0) == "S"){
-	document.getElementById(firstFourChars).value = residu;
-	document.getElementById(firstFiveChars).innerHTML = residu;
-    }
-	
-	
-    else if (firstFourChars.charAt(0) == "T"){
-		if (residu == 1){
-		document.getElementById(firstFourChars).checked = true;
-		}
-		else if (residu == 0){
-		document.getElementById(firstFourChars).checked = false;
-//		console.log("does it check off");
-		}
-	}
-	
-	else if (firstFourChars.charAt(0) == "H"){
-		if (firstFiveChars == "HCOLS") {
-			if (residu == 0){
-				residu = "RGB";
-			}
-			else if (residu == 1){
-				residu = "GRB";
-			}
-			else if (residu == 2){
-				residu = "BRG";
-			}			
-			else if (residu == 3){
-				residu = "BGR";
-			}
-			else if (residu == 4){
-				residu = "RBG";
-			}	
-			else if (residu == 5){
-				residu = "GBR";
-			}						
-			document.getElementById(firstFiveChars).innerHTML = residu;
-		}
-	else {
-		document.getElementById(firstFiveChars).innerHTML = residu;
-	}	
-    }	
-
-	if (prefixChars == "G"){
-	k = k + 1;
-	//console.log(k);
-		if (k < 71){ //54
-		setTimeout(function(){ doSend("GETS"+k); }, 20);
-		}
-		else if (k >= 71){ //54
-		//k = 0;
-		//doSend(k);
-		//console.log(k);
-		document.getElementById("TLSE").checked = false;
-		//console.log("exit here");
-		}
-	}
-}
- 
-// Sends a message to the server (and prints it to the console)
-function doSend(message) {
-	String(message);
-    //console.log("Sending: " + message);
-    websocket.send(message);
-}
-
-function updateSlider(fixedVariable, slideAmount){
-	var fourChars = fixedVariable+"S";
-	if (fixedVariable != "SLSP"){	
-		document.getElementById(fourChars).innerHTML = slideAmount;
-		doSend(fixedVariable+slideAmount)
-	}
-	else if (fixedVariable == "SLSP"){
-		var adjustedSpeed = Math.trunc(Math.exp(slideAmount*0.14)*10);
-		//console.log(adjustedSpeed);
-		document.getElementById(fourChars).innerHTML = adjustedSpeed;
-		doSend(fixedVariable+adjustedSpeed)
+function updateNumber(key, value) {
+		if (key == 'SNLD'){
+		document.getElementById("HNUMS").innerHTML  = value;
+		var field = key;
+		var obj = {};
+		obj[field] = value;
+		var myJSON = JSON.stringify(obj);
+		websocket.send(myJSON);  
+		//console.log(myJSON);
 	}
 }
 
-function updateProgSlider(slideAmount){
-	document.getElementById('SPGM').value = slideAmount;
-	document.getElementById('SPGMS').innerHTML = slideAmount;
-	doSend('SPGM'+slideAmount);
-	}
+function updateNumberS(key, value) {
 
-function updateBriSSlider(slideAmount){
-	document.getElementById('SBSM').value = slideAmount;
-	document.getElementById('SBSMS').innerHTML = slideAmount;
-	doSend('SBSM'+slideAmount);
-	}
+	var elongatedKey = key +"S";
+	//console.log(elongatedKey);
+	document.getElementById(key).value = value;
+	document.getElementById(elongatedKey).innerHTML = value;
+
+	var field = key;
+	var obj = {};
+	obj[field] = value;
+	var myJSON = JSON.stringify(obj);
+	websocket.send(myJSON);  
+	//console.log(myJSON);
+	}	
 	
-function updateCArray(slideAmount){
-	document.getElementById('SCAR').value = slideAmount;
-	document.getElementById('SCARS').innerHTML = slideAmount;
-	doSend('SCAR'+slideAmount);
-	}	
-
-function updateVarSlider(slideAmount){
-	document.getElementById('SVAR').value = slideAmount;
-	document.getElementById('SVARS').innerHTML = slideAmount;
-	doSend('SVAR'+slideAmount);
-	}	
-
-function updateCMode(slideAmount){
-	document.getElementById('SCOM').value = slideAmount;
-	document.getElementById('SCOMS').innerHTML = slideAmount;
-	doSend('SCOM'+slideAmount);
-	}		
-
-function updateButton(fixedVariable) { 
-	 if (document.getElementById(fixedVariable).checked == true){
-		doSend(fixedVariable+1);
-		if (fixedVariable == "TLSE"){
-			//console.log("enter mode here STARTS ALL OVER");
-			k = 0;
-			doSend("GETS"+k);
-		}
+	function updateText(key, value) {
+		//console.log(key);
+		//console.log(value);
+		var field = key;
+		var obj = {};
+		obj[field] = value;
+		var myJSON = JSON.stringify(obj);
+		websocket.send(myJSON);  
+		//console.log(myJSON);
 	}
-	 else {
-		doSend(fixedVariable+0);
-	 }
-	  
-}
 
-function changeColor(opt)
+	function changeColor(key, value)
 {
-    document.getElementById("HCOLS").innerHTML = opt;
-    // document.getElementById("displaycolor1").innerHTML = opt[0];
-    doSend("SETT"+opt[0]);
+    document.getElementById("HCOLS").innerHTML = value;
 	document.getElementById("reboot").innerHTML  = "reboot to activate";
+
+	var field = key;
+	var obj = {};
+	obj[field] = value[0];
+	var myJSON = JSON.stringify(obj);
+	websocket.send(myJSON);  
+	//console.log(myJSON);
+    // document.getElementById("displaycolor1").innerHTML = opt[0];
+    //doSend("SETT"+opt[0]);
+	
     
 }
+	
+	function updateSlider(key, value){
 
-function updateText() {
-  document.getElementById("reboot").innerHTML  = "reboot to activate";
-  doSend("ssid"+ssid.value);
-  doSend("pass"+pass.value);
-}
+	var fourChars = key+"S";
+	if (key != "SLSP"){	
+		document.getElementById(key).innerHTML = value;
+		document.getElementById(fourChars).innerHTML = value;
 
-function updateNumLeds() {
-  document.getElementById("HNUMS").innerHTML  = NUM_LEDS.value;
-  doSend("SNLD"+NUM_LEDS.value);
-}
+		var field = key;
+		var obj = {};
+		obj[field] = value;
+		var myJSON = JSON.stringify(obj);
+		websocket.send(myJSON);
+		//console.log(myJSON);	
+	}
+	else if (key == "SLSP"){
+		var adjustedSpeed = Math.trunc(Math.exp(value*0.14)*10);
+		//console.log(adjustedSpeed);
+		document.getElementById(fourChars).innerHTML = adjustedSpeed;
+		var field = key;
+		var obj = {};
+		obj[field] = adjustedSpeed;
+		var myJSON = JSON.stringify(obj);
+		websocket.send(myJSON);
+		//console.log(myJSON);	
 
-function rebootSystem() {
-doSend("BOOT");
+		//doSend(fixedVariable+adjustedSpeed)
+	}
 }
+	
+	function updateButton(key, value) {
+		var field = key;
+		var obj = {};
+		obj[field] = value;
+		var myJSON = JSON.stringify(obj);
+		websocket.send(myJSON);
+		//console.log(myJSON);
+	}
+
+function onMessage(event) {
+	let data = JSON.parse(event.data);
+	//console.log(data);
+	
+		var len = Object.keys(data).length;
+		//console.log("length ");
+		//console.log(len);
+	
+		for (var i = 0; i < len; i++) {
+		var variable = Object.keys(data)[i];
+		//console.log("this is the name "); console.log(variable);
+		if (variable == 'progn'){document.getElementById("progn").innerHTML = data.progn;}		
+
+		else if (variable == 'wifiID'){document.getElementById('HSIDS').innerHTML = data.wifiID;}
+		else if (variable == 'wifiPASS'){document.getElementById('HPASS').innerHTML = data.wifiPASS;}
+
+		else if (variable == 'SHUE'){document.getElementById('SHUE').value = data.SHUE; document.getElementById('SHUES').innerHTML = data.SHUE;}
+		else if (variable == 'SBRI'){document.getElementById('SBRI').value = data.SBRI; document.getElementById('SBRIS').innerHTML = data.SBRI;}
+		else if (variable == 'SSAT'){document.getElementById('SSAT').value = data.SSAT; document.getElementById('SSATS').innerHTML = data.SSAT;}
+		else if (variable == 'SGLO'){document.getElementById('SGLO').value = data.SGLO; document.getElementById('SGLOS').innerHTML = data.SGLO;}
+		else if (variable == 'SCOM'){document.getElementById('SCOM').value = data.SCOM; document.getElementById('SCOMS').innerHTML = data.SCOM;}
+		else if (variable == 'SVAR'){document.getElementById('SVAR').value = data.SVAR; document.getElementById('SVARS').innerHTML = data.SVAR;}
+		else if (variable == 'SNBR'){document.getElementById('SNBR').value = data.SNBR; document.getElementById('SNBRS').innerHTML = data.SNBR;}
+		else if (variable == 'SNSP'){document.getElementById('SNSP').value = data.SNSP; document.getElementById('SNSPS').innerHTML = data.SNSP;}
+		else if (variable == 'SSBR'){document.getElementById('SSBR').value = data.SSBR; document.getElementById('SSBRS').innerHTML = data.SSBR;}
+		else if (variable == 'SDIF'){document.getElementById('SDIF').value = data.SDIF; document.getElementById('SDIFS').innerHTML = data.SDIF;}
+		else if (variable == 'SLSP'){document.getElementById('SLSP').value = data.SLSP; document.getElementById('SLSPS').innerHTML = data.SLSP;}
+		else if (variable == 'SCTM'){document.getElementById('SCTM').value = data.SCTM; document.getElementById('SCTMS').innerHTML = data.SCTM;}
+		else if (variable == 'SCAR'){document.getElementById('SCAR').value = data.SCAR; document.getElementById('SCARS').innerHTML = data.SCAR;}
+		else if (variable == 'SPAL'){document.getElementById('SPAL').value = data.SPAL; document.getElementById('SPALS').innerHTML = data.SPAL;}
+		else if (variable == 'SGRA'){document.getElementById('SGRA').value = data.SGRA; document.getElementById('SGRAS').innerHTML = data.SGRA;}
+		else if (variable == 'SNCO'){document.getElementById('SNCO').value = data.SNCO; document.getElementById('SNCOS').innerHTML = data.SNCO;}
+		else if (variable == 'SNCL'){document.getElementById('SNCL').value = data.SNCL; document.getElementById('SNCLS').innerHTML = data.SNCL;}
+		else if (variable == 'SOFF'){document.getElementById('SOFF').value = data.SOFF; document.getElementById('SOFFS').innerHTML = data.SOFF;}
+		else if (variable == 'SSCO'){document.getElementById('SSCO').value = data.SSCO; document.getElementById('SSCOS').innerHTML = data.SSCO;}
+		else if (variable == 'SSTM'){document.getElementById('SSTM').value = data.SSTM; document.getElementById('SSTMS').innerHTML = data.SSTM;}
+		else if (variable == 'SSTN'){document.getElementById('SSTN').value = data.SSTN; document.getElementById('SSTNS').innerHTML = data.SSTN;}
+		else if (variable == 'SBWS'){document.getElementById('SBWS').value = data.SBWS; document.getElementById('SBWSS').innerHTML = data.SBWS;}
+		else if (variable == 'SSWS'){document.getElementById('SSWS').value = data.SSWS; document.getElementById('SSWSS').innerHTML = data.SSWS;}
+		else if (variable == 'SSBS'){document.getElementById('SSBS').value = data.SSBS; document.getElementById('SSBSS').innerHTML = data.SSBS;}
+		else if (variable == 'SSSS'){document.getElementById('SSSS').value = data.SSSS; document.getElementById('SSSSS').innerHTML = data.SSSS;}
+		else if (variable == 'SLPS'){document.getElementById('SLPS').value = data.SLPS; document.getElementById('SLPSS').innerHTML = data.SLPS;}
+		else if (variable == 'SPGM'){document.getElementById('SPGM').value = data.SPGM; document.getElementById('SPGMS').innerHTML = data.SPGM;}
+		else if (variable == 'SOBR'){document.getElementById('SOBR').value = data.SOBR; document.getElementById('SOBRS').innerHTML = data.SOBR;}
+		else if (variable == 'SOST'){document.getElementById('SOST').value = data.SOST; document.getElementById('SOSTS').innerHTML = data.SOST;}
+		else if (variable == 'SRED'){document.getElementById('SRED').value = data.SRED; document.getElementById('SREDS').innerHTML = data.SRED;}
+		else if (variable == 'SGRE'){document.getElementById('SGRE').value = data.SGRE; document.getElementById('SGRES').innerHTML = data.SGRE;}
+		else if (variable == 'SBLU'){document.getElementById('SBLU').value = data.SBLU; document.getElementById('SBLUS').innerHTML = data.SBLU;}
+		else if (variable == 'SRMI'){document.getElementById('SRMI').value = data.SRMI; document.getElementById('SRMIS').innerHTML = data.SRMI;}
+		else if (variable == 'SRMA'){document.getElementById('SRMA').value = data.SRMA; document.getElementById('SRMAS').innerHTML = data.SRMA;}
+		else if (variable == 'SGMI'){document.getElementById('SGMI').value = data.SGMI; document.getElementById('SGMIS').innerHTML = data.SGMI;}
+		else if (variable == 'SGMA'){document.getElementById('SGMA').value = data.SGMA; document.getElementById('SGMAS').innerHTML = data.SGMA;}
+		else if (variable == 'SBMI'){document.getElementById('SBMI').value = data.SBMI; document.getElementById('SBMIS').innerHTML = data.SBMI;}
+		else if (variable == 'SBMA'){document.getElementById('SBMA').value = data.SBMA; document.getElementById('SBMAS').innerHTML = data.SBMA;}
+		else if (variable == 'SYMI'){document.getElementById('SYMI').value = data.SYMI; document.getElementById('SYMIS').innerHTML = data.SYMI;}
+		else if (variable == 'SYMA'){document.getElementById('SYMA').value = data.SYMA; document.getElementById('SYMAS').innerHTML = data.SYMA;}
+		else if (variable == 'SMI1'){document.getElementById('SMI1').value = data.SMI1; document.getElementById('SMI1S').innerHTML = data.SMI1;}
+		else if (variable == 'SMA1'){document.getElementById('SMA1').value = data.SMA1; document.getElementById('SMA1S').innerHTML = data.SMA1;}
+		else if (variable == 'SMI2'){document.getElementById('SMI2').value = data.SMI2; document.getElementById('SMI2S').innerHTML = data.SMI2;}
+		else if (variable == 'SMA2'){document.getElementById('SMA2').value = data.SMA2; document.getElementById('SMA2S').innerHTML = data.SMA2;}
+		else if (variable == 'SMI3'){document.getElementById('SMI3').value = data.SMI3; document.getElementById('SMI3S').innerHTML = data.SMI3;}
+		else if (variable == 'SMA3'){document.getElementById('SMA3').value = data.SMA3; document.getElementById('SMA3S').innerHTML = data.SMA3;}
+		else if (variable == 'SMI4'){document.getElementById('SMI4').value = data.SMI4; document.getElementById('SMI4S').innerHTML = data.SMI4;}
+		else if (variable == 'SMA4'){document.getElementById('SMA4').value = data.SMA4; document.getElementById('SMA4S').innerHTML = data.SMA4;}
+		else if (variable == 'SM3R'){document.getElementById('SM3R').value = data.SM3R; document.getElementById('SM3RS').innerHTML = data.SM3R;}
+		else if (variable == 'SBSM'){document.getElementById('SBSM').value = data.SBSM; document.getElementById('SBSMS').innerHTML = data.SBSM;}
+		else if (variable == 'SSSF'){document.getElementById('SSSF').value = data.SSSF; document.getElementById('SSSFS').innerHTML = data.SSSF;}
+		else if (variable == 'SHUE'){document.getElementById('SHUE').value = data.SHUE; document.getElementById('SHUES').innerHTML = data.SHUE;}
+		else if (variable == 'SHUE'){document.getElementById('SHUE').value = data.SHUE; document.getElementById('SHUES').innerHTML = data.SHUE;}
+		else if (variable == 'SHUE'){document.getElementById('SHUE').value = data.SHUE; document.getElementById('SHUES').innerHTML = data.SHUE;}
+		else if (variable == 'SHUE'){document.getElementById('SHUE').value = data.SHUE; document.getElementById('SHUES').innerHTML = data.SHUE;}
+
+		else if (variable == 'TCON'){document.getElementById('TCON').checked = data.TCON;}
+		else if (variable == 'TCFA'){document.getElementById('TCFA').checked = data.TCFA;}
+		else if (variable == 'TCRA'){document.getElementById('TCRA').checked = data.TCRA;}
+		else if (variable == 'TCEX'){document.getElementById('TCEX').checked = data.TCEX;}
+		else if (variable == 'TGLI'){document.getElementById('TGLI').checked = data.TGLI;}
+		else if (variable == 'TRBO'){document.getElementById('TRBO').checked = data.TRBO;}
+		else if (variable == 'TRVO'){document.getElementById('TRVO').checked = data.TRVO;}
+		else if (variable == 'TWHO'){document.getElementById('TWHO').checked = data.TWHO;}
+		else if (variable == 'TDIR'){document.getElementById('TDIR').checked = data.TDIR;}
+		else if (variable == 'TCAC'){document.getElementById('TCAC').checked = data.TCAC;}
+		else if (variable == 'TSTE'){document.getElementById('TSTE').checked = data.TSTE;}
+		else if (variable == 'TTWO'){document.getElementById('TTWO').checked = data.TTWO;}
+		else if (variable == 'THSV'){document.getElementById('THSV').checked = data.THSV;}
+		else if (variable == 'TMWF'){document.getElementById('TMWF').checked = data.TMWF;}
+		else if (variable == 'TBEE'){document.getElementById('TBEE').checked = data.TBEE;}
+		else if (variable == 'TPMO'){document.getElementById('TPMO').checked = data.TPMO;}
+		else if (variable == 'TCPM'){document.getElementById('TCPM').checked = data.TCPM;}
+		//else if (variable == 'TLSE'){document.getElementById('TLSE').checked = data.TLSE;}
+
+		else if (variable == 'TSCM'){document.getElementById('TSCM').checked = data.TSCM;}
+		else if (variable == 'TSET'){document.getElementById('TSET').checked = data.TSET;}
+		else if (variable == 'TAAM'){document.getElementById('TAAM').checked = data.TAAM;}
+		else if (variable == 'TDAM'){document.getElementById('TDAM').checked = data.TDAM;}
+
+		else if (variable == 'HNUM')document.getElementById('HNUMS').innerHTML = data.HNUM;
+
+		else if (variable == 'HSPE')document.getElementById('HSPES').innerHTML = data.HSPE;
+		else if (variable == 'HHHH')document.getElementById('HHHHS').innerHTML = data.HHHH;
+		else if (variable == 'HSSS')document.getElementById('HSSSS').innerHTML = data.HSSS;
+		else if (variable == 'HVVV')document.getElementById('HVVVS').innerHTML = data.HVVV;
+		else if (variable == 'HPTI')document.getElementById('HPTIS').innerHTML = data.HPTI;
+
+		else if (variable == 'HCTI')document.getElementById('HCTIS').innerHTML = data.HCTI;
+		else if (variable == 'HY1N')document.getElementById('HY1NS').innerHTML = data.HY1N;
+		else if (variable == 'HY1O')document.getElementById('HY1OS').innerHTML = data.HY1O;
+		else if (variable == 'HPTT')document.getElementById('HPTTS').innerHTML = data.HPTT;
+
+		else if (variable == 'HCOL'){
+			if (data.HCOL == 0){
+				document.getElementById('HCOLS').innerHTML = "RGB";
+				}
+			else if (data.HCOL == 1){
+				document.getElementById('HCOLS').innerHTML = "GRB";
+				}
+			else if (data.HCOL == 2){
+				document.getElementById('HCOLS').innerHTML = "BRG";
+				}			
+			else if (data.HCOL == 3){
+				document.getElementById('HCOLS').innerHTML = "BGR";
+				}
+			else if (data.HCOL == 4){
+				document.getElementById('HCOLS').innerHTML = "RBG";
+				}	
+			else if (data.HCOL == 5){
+				document.getElementById('HCOLS').innerHTML = "GBR";
+				}						
+		}		
+	
+		else if (variable == 'recMsg'){document.getElementById('recMsg').checked = data.recMsg; setTimeout(msgRec, 800);}
+		}
+	}
+	
+	function msgRec(){
+		document.getElementById('recMsg').checked = false;
+	}	
+
+
+// Called when a message is received from the server
+// function onMessage(event) {
+ 
+//     // Print out our received message
+//     //console.log("Received: " + event.data);
+
+// 	var string = event.data;
+// 	if (string.charAt(0) == 0){
+// 		var rawProgramName = event.data;
+// 		var programName = rawProgramName.substr(1);
+// 		document.getElementById("progn").innerHTML = programName;
+// 		var firstFourChars = "xxxx";
+// 		k = 0;
+// 		//k = 32;
+// 		doSend("GETS"+k);
+// 		//console.log("sends program name");
+// 	}	
+// 	else if (string.charAt(0) == "G"){
+// 		var prefixChars = "G";
+// 		if (string.charAt(1) == 0){
+// 			var rawProgramName = event.data;
+// 			var programName = rawProgramName.substr(2);
+// 			document.getElementById("progn").innerHTML = programName;
+// 			var firstFourChars = "xxxx";
+// 			}
+// 		else {
+// 			var newString = string.substr(1);
+// 			var firstFourChars = newString.substring(0,4);
+// 			var firstFiveChars = firstFourChars+"S";
+// 			var residu = newString.slice(4, newString.length);
+// 		}
+// 	}
+// 	else {
+// 		var firstFourChars = string.substring(0,4);
+// 		var firstFiveChars = firstFourChars+"S";
+// 		var residu = string.slice(4, string.length);
+// //	console.log(residu);
+// 	}
+
+// 	if (firstFourChars.charAt(0) == "S"){
+// 	document.getElementById(firstFourChars).value = residu;
+// 	document.getElementById(firstFiveChars).innerHTML = residu;
+//     }
+	
+	
+//     else if (firstFourChars.charAt(0) == "T"){
+// 		if (residu == 1){
+// 		document.getElementById(firstFourChars).checked = true;
+// 		}
+// 		else if (residu == 0){
+// 		document.getElementById(firstFourChars).checked = false;
+// //		console.log("does it check off");
+// 		}
+// 	}
+	
+// 	else if (firstFourChars.charAt(0) == "H"){
+// 		if (firstFiveChars == "HCOLS") {
+// 			if (residu == 0){
+// 				residu = "RGB";
+// 			}
+// 			else if (residu == 1){
+// 				residu = "GRB";
+// 			}
+// 			else if (residu == 2){
+// 				residu = "BRG";
+// 			}			
+// 			else if (residu == 3){
+// 				residu = "BGR";
+// 			}
+// 			else if (residu == 4){
+// 				residu = "RBG";
+// 			}	
+// 			else if (residu == 5){
+// 				residu = "GBR";
+// 			}						
+// 			document.getElementById(firstFiveChars).innerHTML = residu;
+// 		}
+// 	else {
+// 		document.getElementById(firstFiveChars).innerHTML = residu;
+// 	}	
+//     }	
+
+// 	if (prefixChars == "G"){
+// 	k = k + 1;
+// 	//console.log(k);
+// 		if (k < 71){ //54
+// 		setTimeout(function(){ doSend("GETS"+k); }, 20);
+// 		}
+// 		else if (k >= 71){ //54
+// 		//k = 0;
+// 		//doSend(k);
+// 		//console.log(k);
+// 		document.getElementById("TLSE").checked = false;
+// 		//console.log("exit here");
+// 		}
+// 	}
+// }
+ 
+// Sends a message to the server (and prints it to the console)
+// function doSend(message) {
+// 	String(message);
+//     //console.log("Sending: " + message);
+//     websocket.send(message);
+// }
+
+// function updateSlider(fixedVariable, slideAmount){
+// 	var fourChars = fixedVariable+"S";
+// 	if (fixedVariable != "SLSP"){	
+// 		document.getElementById(fourChars).innerHTML = slideAmount;
+// 		doSend(fixedVariable+slideAmount)
+// 	}
+// 	else if (fixedVariable == "SLSP"){
+// 		var adjustedSpeed = Math.trunc(Math.exp(slideAmount*0.14)*10);
+// 		//console.log(adjustedSpeed);
+// 		document.getElementById(fourChars).innerHTML = adjustedSpeed;
+// 		doSend(fixedVariable+adjustedSpeed)
+// 	}
+// }
+
+// function updateProgSlider(slideAmount){
+// 	document.getElementById('SPGM').value = slideAmount;
+// 	document.getElementById('SPGMS').innerHTML = slideAmount;
+// 	doSend('SPGM'+slideAmount);
+// 	}
+
+// function updateBriSSlider(slideAmount){
+// 	document.getElementById('SBSM').value = slideAmount;
+// 	document.getElementById('SBSMS').innerHTML = slideAmount;
+// 	doSend('SBSM'+slideAmount);
+// 	}
+	
+// function updateCArray(slideAmount){
+// 	document.getElementById('SCAR').value = slideAmount;
+// 	document.getElementById('SCARS').innerHTML = slideAmount;
+// 	doSend('SCAR'+slideAmount);
+// 	}	
+
+// function updateVarSlider(slideAmount){
+// 	document.getElementById('SVAR').value = slideAmount;
+// 	document.getElementById('SVARS').innerHTML = slideAmount;
+// 	doSend('SVAR'+slideAmount);
+// 	}	
+
+// function updateCMode(slideAmount){
+// 	document.getElementById('SCOM').value = slideAmount;
+// 	document.getElementById('SCOMS').innerHTML = slideAmount;
+// 	doSend('SCOM'+slideAmount);
+// 	}		
+
+// function updateButton(fixedVariable) { 
+// 	 if (document.getElementById(fixedVariable).checked == true){
+// 		doSend(fixedVariable+1);
+// 		if (fixedVariable == "TLSE"){
+// 			//console.log("enter mode here STARTS ALL OVER");
+// 			k = 0;
+// 			doSend("GETS"+k);
+
+// 		// 	var myJSON = JSON.stringify({requestInfo:true});
+// 		// websocket.send(myJSON);
+// 		}
+// 	}
+// 	 else {
+// 		doSend(fixedVariable+0);
+// 	 }
+	  
+// }
+
+// function changeColor(opt)
+// {
+//     document.getElementById("HCOLS").innerHTML = opt;
+//     // document.getElementById("displaycolor1").innerHTML = opt[0];
+//     doSend("SETT"+opt[0]);
+// 	document.getElementById("reboot").innerHTML  = "reboot to activate";
+    
+// }
+
+// function updateText() {
+//   document.getElementById("reboot").innerHTML  = "reboot to activate";
+//   doSend("ssid"+ssid.value);
+//   doSend("pass"+pass.value);
+// }
+
+// function updateNumLeds() {
+//   document.getElementById("HNUMS").innerHTML  = NUM_LEDS.value;
+//   doSend("SNLD"+NUM_LEDS.value);
+// }
+
+// function rebootSystem() {
+// doSend("BOOT");
+// }
+
+
+
 
 function setTab(fixedVariable) {
   var x = document.getElementById(fixedVariable);
@@ -287,6 +529,19 @@ $(document).ready(function() {
     }, 1000);
 });
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
  
 <body>
 <h1>LED Control panel</h1>
@@ -295,6 +550,13 @@ $(document).ready(function() {
     <span id='date-part'></span>
     <span> &nbsp  / &nbsp  </span>
     <span id='time-part'></span>
+
+	&nbsp;
+
+	<span id="checkbox6">
+		<input class="ckeckbox-element" type="checkbox" id="recMsg"/>  
+		<i class="glyphicon glyphicon-ok"></i>
+	</span> 
 </div>
 </p>
 <p class="infowindow">time to next effect: <span id='HCTIS'></span> &nbsp </span></p>
@@ -315,32 +577,32 @@ $(document).ready(function() {
 <div class="switchcontainer">
 _Cycle
 <label class="switch">
-  <input type="checkbox" id="TCON" onclick="updateButton('TCON')"> 
+  <input type="checkbox" id="TCON" onclick="updateButton(this.id, this.checked)"> 
   <span class="sliderround"></span>
 </label>
 _Fade
 <label class="switch">
-  <input type="checkbox" id="TCFA" onclick="updateButton('TCFA')"> 
+  <input type="checkbox" id="TCFA" onclick="updateButton(this.id, this.checked)"> 
   <span class="sliderround"></span>
 </label>
 _Random
 <label class="switch">
-  <input type="checkbox" id="TCRA" onclick="updateButton('TCRA')"> 
+  <input type="checkbox" id="TCRA" onclick="updateButton(this.id, this.checked)"> 
   <span class="sliderround"></span>
 </label>
 _Exclude
 <label class="switch">
-  <input type="checkbox" id="TCEX" onclick="updateButton('TCEX')"> 
+  <input type="checkbox" id="TCEX" onclick="updateButton(this.id, this.checked)"> 
   <span class="sliderround"></span>
 </label>
 _(de)activate
 <label class="switch">
-  <input type="checkbox" id="TCAC" onclick="updateButton('TCAC')"> 
+  <input type="checkbox" id="TCAC" onclick="updateButton(this.id, this.checked)"> 
   <span class="sliderround"></span>
 </label>
 EEPROM
 <label class="switch">
-  <input type="checkbox" id="TSTE" onclick="updateButton('TSTE')"> 
+  <input type="checkbox" id="TSTE" onclick="updateButton(this.id, this.checked)"> 
   <span class="sliderround"></span>
 </label>
 </div>
@@ -349,7 +611,7 @@ EEPROM
 <div class="titlex">
 _Cycle time (s):
 </div>
-<input id="SCTM" class="sliderx" type="range" min="0" max="3600" step="1" value="600" onchange="updateSlider('SCTM', this.value)">
+<input id="SCTM" class="sliderx" type="range" min="0" max="3600" step="1" value="600" onchange="updateSlider(this.id, this.value)">
 <div class="varvaluex" id="SCTMS"></div> <div class="infox"></div>
 </div>
 <div class="slidecontainerx">
@@ -376,7 +638,7 @@ _Cycle time (s):
 	<div class="titlex">
 	_Effect speedfactor:
 	</div>
-	<input id="SLPS" class="sliderx" type="range" min="25" max="400" step="25" value="100" onchange="updateSlider('SLPS', this.value)">
+	<input id="SLPS" class="sliderx" type="range" min="25" max="400" step="25" value="100" onchange="updateSlider(this.id, this.value)">
 	<div class="varvalueh"><span id="SLPSS"></span> &nbsp /100</div>
 	</div>
 	<div class="slidecontainerx">
@@ -406,7 +668,7 @@ _Cycle time (s):
 <div class="switchcontainer1">
 	save cycle param to all modes:
 	<label class="switch">
-	  <input type="checkbox" id="TCPM" onclick="updateButton('TCPM')"> 
+	  <input type="checkbox" id="TCPM" onclick="updateButton(this.id, this.checked)"> 
 	  <span class="sliderround"></span>
 	</label>
 </div>
@@ -426,13 +688,13 @@ _Cycle time (s):
 <div class="switchcontainer">
 	_Personalized presets ON/OFF
 	<label class="switch">
-	  <input type="checkbox" id="TPMO" onclick="updateButton('TPMO')"> 
+	  <input type="checkbox" id="TPMO" onclick="updateButton(this.id, this.checked)"> 
 	  <span class="sliderround"></span>
 	</label>
 	&nbsp; &nbsp;
 	Save mode as personalized preset:
 	<label class="switch">
-	  <input type="checkbox" id="TSCM" onclick="updateButton('TSCM')"> 
+	  <input type="checkbox" id="TSCM" onclick="updateButton(this.id, this.checked)"> 
 	  <span class="sliderround"></span>
 	</label>
 	<div class="dropdown">
@@ -458,63 +720,55 @@ _Cycle time (s):
 <div class="titles">
 <p class="progwindows"> <span id="progn"></span><span>  (prog: </span><span id="SPGMS">___</span><span>)</span></p>
 </div>
-<span class="titlez">
-load settings
-</span>
-		<label class="switch2">
-		  <input type="checkbox" id="TLSE" onclick="updateButton('TLSE')"> 
-		  <span class="sliderround"></span>
-		</label>
 </div>
-
 
 <div class="slidecontainerx">
 <div class="titlex">
 _Prog. Mode (0-37):
 </div>
-<input id="SPGM" class="sliderx" type="range" min="0" max="37" step="1" value="0" onchange="updateSlider('SPGM', this.value)">
+<input id="SPGM" class="sliderx" type="range" min="0" max="37" step="1" value="0" onchange="updateSlider(this.id, this.value)">
 <div class="varvaluex" id="SPGMS"></div><div class="infox">
 <div class="dropdown">
   <button class="dropbtn">program modes:</button>
   <div class="dropdown-content">
-    <li value="0"  onclick="updateProgSlider(this.value)">0: static_glow</li>
-	<li value="1"  onclick="updateProgSlider(this.value)">1: varying_glow</li>
-	<li value="2"  onclick="updateProgSlider(this.value)">2: warm_glow</li>
-	<li value="3"  onclick="updateProgSlider(this.value)">3: reflection</li>
-    <li value="4"  onclick="updateProgSlider(this.value)">4: deflection</li>
-    <li value="5"  onclick="updateProgSlider(this.value)">5: coloursplash</li>
-	<li value="6"  onclick="updateProgSlider(this.value)">6: palette</li>
-	<li value="7"  onclick="updateProgSlider(this.value)">7: colourwash</li>
-	<li value="8"  onclick="updateProgSlider(this.value)">8: rainbow_1</li>
-    <li value="9"  onclick="updateProgSlider(this.value)">9: rainbow_2</li>
-    <li value="10"  onclick="updateProgSlider(this.value)">10: rainbow_3</li>
-    <li value="11"  onclick="updateProgSlider(this.value)">11: rainbow_4</li>
-    <li value="12"  onclick="updateProgSlider(this.value)">12: rainbow_5</li>
-	<li value="13"  onclick="updateProgSlider(this.value)">13: rainbow_6</li>
-	<li value="14"  onclick="updateProgSlider(this.value)">14: rainbow_7</li>
-	<li value="15"  onclick="updateProgSlider(this.value)">15: gradient</li>
-    <li value="16"  onclick="updateProgSlider(this.value)">16: lucky7</li>
-	<li value="17"  onclick="updateProgSlider(this.value)">17: goldstrike</li>	
-	<li value="18"  onclick="updateProgSlider(this.value)">18: halcyon</li>
-    <li value="19"  onclick="updateProgSlider(this.value)">19: snow_melt</li>
-	<li value="20"  onclick="updateProgSlider(this.value)">20: snow_pile</li>
-	<li value="21"  onclick="updateProgSlider(this.value)">21: snow_storm</li>
-	<li value="22"  onclick="updateProgSlider(this.value)">22: snow_rainbow</li>
-    <li value="23"  onclick="updateProgSlider(this.value)">23: sparkle</li>
-    <li value="24"  onclick="updateProgSlider(this.value)">24: sparkle_storm</li>	
-	<li value="25"  onclick="updateProgSlider(this.value)">25: sparkle_rainbow</li> 
-    <li value="26"  onclick="updateProgSlider(this.value)">26: twinkle</li>	
-    <li value="27"  onclick="updateProgSlider(this.value)">27: gambler</li>
-    <li value="28"  onclick="updateProgSlider(this.value)">28: casino</li>
-    <li value="29"  onclick="updateProgSlider(this.value)">29: fine_canvas</li>	
-    <li value="30"  onclick="updateProgSlider(this.value)">30: rough_canvas</li>	
-    <li value="31"  onclick="updateProgSlider(this.value)">31: xmas_1</li>
-    <li value="32"  onclick="updateProgSlider(this.value)">32: xmas_2</li>
-    <li value="33"  onclick="updateProgSlider(this.value)">33: xmas_3</li>
-    <li value="34"  onclick="updateProgSlider(this.value)">34: splash</li>
-	<li value="35"  onclick="updateProgSlider(this.value)">35: strobe</li>
-	<li value="36"  onclick="updateProgSlider(this.value)">36: meteor</li>	
-	<li value="37"  onclick="updateProgSlider(this.value)">37: RGBmode</li>
+    <li value="0"  onclick="updateNumberS('SPGM', this.value)">0: static_glow</li>
+	<li value="1"  onclick="updateNumberS('SPGM', this.value)">1: varying_glow</li>
+	<li value="2"  onclick="updateNumberS('SPGM', this.value)">2: warm_glow</li>
+	<li value="3"  onclick="updateNumberS('SPGM', this.value)">3: reflection</li>
+    <li value="4"  onclick="updateNumberS('SPGM', this.value)">4: deflection</li>
+    <li value="5"  onclick="updateNumberS('SPGM', this.value)">5: coloursplash</li>
+	<li value="6"  onclick="updateNumberS('SPGM', this.value)">6: palette</li>
+	<li value="7"  onclick="updateNumberS('SPGM', this.value)">7: colourwash</li>
+	<li value="8"  onclick="updateNumberS('SPGM', this.value)">8: rainbow_1</li>
+    <li value="9"  onclick="updateNumberS('SPGM', this.value)">9: rainbow_2</li>
+    <li value="10"  onclick="updateNumberS('SPGM', this.value)">10: rainbow_3</li>
+    <li value="11"  onclick="updateNumberS('SPGM', this.value)">11: rainbow_4</li>
+    <li value="12"  onclick="updateNumberS('SPGM', this.value)">12: rainbow_5</li>
+	<li value="13"  onclick="updateNumberS('SPGM', this.value)">13: rainbow_6</li>
+	<li value="14"  onclick="updateNumberS('SPGM', this.value)">14: rainbow_7</li>
+	<li value="15"  onclick="updateNumberS('SPGM', this.value)">15: gradient</li>
+    <li value="16"  onclick="updateNumberS('SPGM', this.value)">16: lucky7</li>
+	<li value="17"  onclick="updateNumberS('SPGM', this.value)">17: goldstrike</li>	
+	<li value="18"  onclick="updateNumberS('SPGM', this.value)">18: halcyon</li>
+    <li value="19"  onclick="updateNumberS('SPGM', this.value)">19: snow_melt</li>
+	<li value="20"  onclick="updateNumberS('SPGM', this.value)">20: snow_pile</li>
+	<li value="21"  onclick="updateNumberS('SPGM', this.value)">21: snow_storm</li>
+	<li value="22"  onclick="updateNumberS('SPGM', this.value)">22: snow_rainbow</li>
+    <li value="23"  onclick="updateNumberS('SPGM', this.value)">23: sparkle</li>
+    <li value="24"  onclick="updateNumberS('SPGM', this.value)">24: sparkle_storm</li>	
+	<li value="25"  onclick="updateNumberS('SPGM', this.value)">25: sparkle_rainbow</li> 
+    <li value="26"  onclick="updateNumberS('SPGM', this.value)">26: twinkle</li>	
+    <li value="27"  onclick="updateNumberS('SPGM', this.value)">27: gambler</li>
+    <li value="28"  onclick="updateNumberS('SPGM', this.value)">28: casino</li>
+    <li value="29"  onclick="updateNumberS('SPGM', this.value)">29: fine_canvas</li>	
+    <li value="30"  onclick="updateNumberS('SPGM', this.value)">30: rough_canvas</li>	
+    <li value="31"  onclick="updateNumberS('SPGM', this.value)">31: xmas_1</li>
+    <li value="32"  onclick="updateNumberS('SPGM', this.value)">32: xmas_2</li>
+    <li value="33"  onclick="updateNumberS('SPGM', this.value)">33: xmas_3</li>
+    <li value="34"  onclick="updateNumberS('SPGM', this.value)">34: splash</li>
+	<li value="35"  onclick="updateNumberS('SPGM', this.value)">35: strobe</li>
+	<li value="36"  onclick="updateNumberS('SPGM', this.value)">36: meteor</li>	
+	<li value="37"  onclick="updateNumberS('SPGM', this.value)">37: RGBmode</li>
   </div>
 </div>
 </div>
@@ -568,37 +822,37 @@ _Prog. Mode (0-37):
 	<div class="titlex">
 	_*Bri_S preset (0-25):
 	</div>
-	<input id="SBSM" class="sliderx" type="range" min="0" max="25" step="1" value="0" onchange="updateSlider('SBSM', this.value)">
+	<input id="SBSM" class="sliderx" type="range" min="0" max="25" step="1" value="0" onchange="updateSlider(this.id, this.value)">
 	<div class="varvaluex" id="SBSMS"></div><div class="infox">
 		<div class="dropdown">
 			<button class="dropbtn">Bri_Sat presets:</button>
 			<div class="dropdown-content">
-			  <li value="0"  onclick="updateBriSSlider(this.value)">0: global storage</li>
-			  <li value="1"  onclick="updateBriSSlider(this.value)">1: basic glow_1</li>
-			  <li value="2"  onclick="updateBriSSlider(this.value)">2: basic glow_2</li>
-			  <li value="3"  onclick="updateBriSSlider(this.value)">3: misty_1</li>
-			  <li value="4"  onclick="updateBriSSlider(this.value)">4: misty_2</li>
-			  <li value="5"  onclick="updateBriSSlider(this.value)">5: misty_3</li>
-			  <li value="6"  onclick="updateBriSSlider(this.value)">6: misty_4</li>	
-			  <li value="7"  onclick="updateBriSSlider(this.value)">7: S_twinkle_bsl_1</li>
-			  <li value="8"  onclick="updateBriSSlider(this.value)">8: S_twinkle_bsl_2</li>		
-			  <li value="9"  onclick="updateBriSSlider(this.value)">9: S_twinkle_rb1</li>	
-			  <li value="10"  onclick="updateBriSSlider(this.value)">10: S_twinkle_rb1</li>	
-			  <li value="11"  onclick="updateBriSSlider(this.value)">11: S_twinkle_b2</li> 
-			  <li value="12"  onclick="updateBriSSlider(this.value)">12: spark_1</li>
-			  <li value="13"  onclick="updateBriSSlider(this.value)">13: spark_2</li>
-			  <li value="14"  onclick="updateBriSSlider(this.value)">14: long_wave</li>
-			  <li value="15"  onclick="updateBriSSlider(this.value)">15: diamond_1</li>
-			  <li value="16"  onclick="updateBriSSlider(this.value)">16: diamond_2 (Df)</li>
-			  <li value="17"  onclick="updateBriSSlider(this.value)">17: diamond_3</li>
-			  <li value="18"  onclick="updateBriSSlider(this.value)">18: F_twinkle_bsl</li>
-			  <li value="19"  onclick="updateBriSSlider(this.value)">19: M_twinkle</li>
-			  <li value="20"  onclick="updateBriSSlider(this.value)">20: F_twinkle_s</li>
-			  <li value="21"  onclick="updateBriSSlider(this.value)">21: F_twinkle_fc</li>
-			  <li value="22"  onclick="updateBriSSlider(this.value)">22: neon_lights</li>
-			  <li value="23"  onclick="updateBriSSlider(this.value)">23: fire_glow</li>
-			  <li value="24"  onclick="updateBriSSlider(this.value)">24: no_glow_hiBr</li>
-			  <li value="25"  onclick="updateBriSSlider(this.value)">25: no_glow_loBr</li>
+			  <li value="0"  onclick="updateNumberS('SBSM', this.value)">0: global storage</li>
+			  <li value="1"  onclick="updateNumberS('SBSM', this.value)">1: basic glow_1</li>
+			  <li value="2"  onclick="updateNumberS('SBSM', this.value)">2: basic glow_2</li>
+			  <li value="3"  onclick="updateNumberS('SBSM', this.value)">3: misty_1</li>
+			  <li value="4"  onclick="updateNumberS('SBSM', this.value)">4: misty_2</li>
+			  <li value="5"  onclick="updateNumberS('SBSM', this.value)">5: misty_3</li>
+			  <li value="6"  onclick="updateNumberS('SBSM', this.value)">6: misty_4</li>	
+			  <li value="7"  onclick="updateNumberS('SBSM', this.value)">7: S_twinkle_bsl_1</li>
+			  <li value="8"  onclick="updateNumberS('SBSM', this.value)">8: S_twinkle_bsl_2</li>		
+			  <li value="9"  onclick="updateNumberS('SBSM', this.value)">9: S_twinkle_rb1</li>	
+			  <li value="10"  onclick="updateNumberS('SBSM', this.value)">10: S_twinkle_rb1</li>	
+			  <li value="11"  onclick="updateNumberS('SBSM', this.value)">11: S_twinkle_b2</li> 
+			  <li value="12"  onclick="updateNumberS('SBSM', this.value)">12: spark_1</li>
+			  <li value="13"  onclick="updateNumberS('SBSM', this.value)">13: spark_2</li>
+			  <li value="14"  onclick="updateNumberS('SBSM', this.value)">14: long_wave</li>
+			  <li value="15"  onclick="updateNumberS('SBSM', this.value)">15: diamond_1</li>
+			  <li value="16"  onclick="updateNumberS('SBSM', this.value)">16: diamond_2 (Df)</li>
+			  <li value="17"  onclick="updateNumberS('SBSM', this.value)">17: diamond_3</li>
+			  <li value="18"  onclick="updateNumberS('SBSM', this.value)">18: F_twinkle_bsl</li>
+			  <li value="19"  onclick="updateNumberS('SBSM', this.value)">19: M_twinkle</li>
+			  <li value="20"  onclick="updateNumberS('SBSM', this.value)">20: F_twinkle_s</li>
+			  <li value="21"  onclick="updateNumberS('SBSM', this.value)">21: F_twinkle_fc</li>
+			  <li value="22"  onclick="updateNumberS('SBSM', this.value)">22: neon_lights</li>
+			  <li value="23"  onclick="updateNumberS('SBSM', this.value)">23: fire_glow</li>
+			  <li value="24"  onclick="updateNumberS('SBSM', this.value)">24: no_glow_hiBr</li>
+			  <li value="25"  onclick="updateNumberS('SBSM', this.value)">25: no_glow_loBr</li>
 			</div>
 		  </div>
 		  </div>
@@ -640,14 +894,14 @@ _Prog. Mode (0-37):
 	<div class="titlex">
 	_*Mode variant(0-2):
 	</div>
-	<input id="SVAR" class="sliderx" type="range" min="0" max="2" step="1" value="1" onchange="updateSlider('SVAR', this.value)">
+	<input id="SVAR" class="sliderx" type="range" min="0" max="2" step="1" value="1" onchange="updateSlider(this.id, this.value)">
 	<div class="varvaluex" id="SVARS"></div><div class="infox">
 		<div class="dropdown">
 			<button class="dropbtn">mode variant:</button>
 			<div class="dropdown-content">
-				<li value="0"  onclick="updateVarSlider(this.value)">0: most basic variant</li>
-				<li value="1"  onclick="updateVarSlider(this.value)">1: standard variant</li>
-				<li value="2"  onclick="updateVarSlider(this.value)">2: colourful variant</li>
+				<li value="0"  onclick="updateNumberS('SVAR', this.value)">0: most basic variant</li>
+				<li value="1"  onclick="updateNumberS('SVAR', this.value)">1: standard variant</li>
+				<li value="2"  onclick="updateNumberS('SVAR', this.value)">2: colourful variant</li>
 			</div>
 			</div>
 	</div>
@@ -668,18 +922,18 @@ _Prog. Mode (0-37):
 <div class="titlex">
 _*Color Mode (0-5):
 </div>
-<input id="SCOM" class="sliderx" type="range" min="0" max="5" step="1" value="2" onchange="updateSlider('SCOM', this.value)">
+<input id="SCOM" class="sliderx" type="range" min="0" max="5" step="1" value="2" onchange="updateSlider(this.id, this.value)">
 <div class="varvaluex" id="SCOMS"></div><div class="infox">
 	<div class="dropdown">
 		<button class="dropbtn">color modes:</button>
 		<div class="dropdown-content">
 		  <li >Pick color from:</li>
-		  <li value="0"  onclick="updateCMode(this.value)">- Hue color</li>
-		  <li value="1"  onclick="updateCMode(this.value)">- rainbow (all colors possible)</li>
-		  <li value="2"  onclick="updateCMode(this.value)">- selection 1 (slider CM 2&3)</li>
-		  <li value="3"  onclick="updateCMode(this.value)">- selection 2 (slider CM 2&3)</li>
-		  <li value="4"  onclick="updateCMode(this.value)">- selected color array (0-58)</li>
-		  <li value="5"  onclick="updateCMode(this.value)">- special mode (hue + spark)</li>
+		  <li value="0"  onclick="updateNumberS('SCOM', this.value)">- Hue color</li>
+		  <li value="1"  onclick="updateNumberS('SCOM', this.value)">- rainbow (all colors possible)</li>
+		  <li value="2"  onclick="updateNumberS('SCOM', this.value)">- selection 1 (slider CM 2&3)</li>
+		  <li value="3"  onclick="updateNumberS('SCOM', this.value)">- selection 2 (slider CM 2&3)</li>
+		  <li value="4"  onclick="updateNumberS('SCOM', this.value)">- selected color array (0-58)</li>
+		  <li value="5"  onclick="updateNumberS('SCOM', this.value)">- special mode (hue + spark)</li>
 		</div>
 	  </div>
 </div>
@@ -702,7 +956,7 @@ _*Color Mode (0-5):
 	<div class="titlex">
 	_*LED_dif (0-255):
 	</div>
-	<input id="SDIF" class="sliderx" type="range" min="1" max="255" step="1" value="7" onchange="updateSlider('SDIF', this.value)">
+	<input id="SDIF" class="sliderx" type="range" min="1" max="255" step="1" value="7" onchange="updateSlider(this.id, this.value)">
 	<div class="varvaluex" id="SDIFS"></div> <div class="infox"></div>
 	</div>
 
@@ -710,7 +964,7 @@ _*Color Mode (0-5):
 	<div class="titlex">
 	_*Preset speed (ms):
 	</div>
-	<input id="SLSP" class="sliderx" type="range" min="0" max="60" step="1" value="10" onchange="updateSlider('SLSP', this.value)">
+	<input id="SLSP" class="sliderx" type="range" min="0" max="60" step="1" value="10" onchange="updateSlider(this.id, this.value)">
 	<div class="varvalueh"><span id="SLSPS"></span> &nbsp | &nbsp  <span id='HSPES'></span></div>
 </div>
 </div>
@@ -730,7 +984,7 @@ _*Color Mode (0-5):
 	<div class="titlex">
 	_Hue Value (0-255):
 	</div>
-	<input id="SHUE" class="sliderhue" type="range" min="0" max="255" step="1" value="128" onchange="updateSlider('SHUE', this.value)">
+	<input id="SHUE" class="sliderhue" type="range" min="0" max="255" step="1" value="128" onchange="updateSlider(this.id, this.value)">
 	<div class="varvalueh"><span id="SHUES"></span> &nbsp | &nbsp   <span id="HY1OS"></span>>><span id="HY1NS"></span></div>
 </div>	
 
@@ -738,70 +992,70 @@ _*Color Mode (0-5):
 <div class="titlex">
 _*Color Array (0-58):
 </div>
-<input id="SCAR" class="sliderx" type="range" min="0" max="58" step="1" value="8" onchange="updateSlider('SCAR', this.value)">
+<input id="SCAR" class="sliderx" type="range" min="0" max="58" step="1" value="8" onchange="updateSlider(this.id, this.value)">
 <div class="varvaluex"><span  id="SCARS"></span></div> <div class="infox">		<div class="dropdown">
 	<button class="dropbtn">color arrays:</button>
 	<div class="dropdown-content">
 	  <li>first color is main Hue</li>
-	  <li value="0"  onclick="updateCArray(this.value)">0: little green !!</li>
-	  <li value="1"  onclick="updateCArray(this.value)">1: personal best</li>
-	  <li value="2"  onclick="updateCArray(this.value)">2: orange</li>
-	  <li value="3"  onclick="updateCArray(this.value)">3: pink, blue</li>
-	  <li value="4"  onclick="updateCArray(this.value)">4: blue, pink</li>
-	  <li value="5"  onclick="updateCArray(this.value)">5: blue, orange, pink </li>
-	  <li value="6"  onclick="updateCArray(this.value)">6: no purple/pink</li>	
-	  <li value="7"  onclick="updateCArray(this.value)">7: rainbow</li>	
-	  <li value="8"  onclick="updateCArray(this.value)">8: fine canvas</li>	
-	  <li value="9"  onclick="updateCArray(this.value)">9: rainbow_2</li>
-	  <li value="10"  onclick="updateCArray(this.value)">10: no green</li>
-	  <li value="11"  onclick="updateCArray(this.value)">11: yellow, red</li>
-	  <li value="12"  onclick="updateCArray(this.value)">12: rainbow_3</li>
-	  <li value="13"  onclick="updateCArray(this.value)">13: no red</li>
-	  <li value="14"  onclick="updateCArray(this.value)">14: rainbow_4</li>
-	  <li value="15"  onclick="updateCArray(this.value)">15: RGB + yel</li>
-	  <li value="16"  onclick="updateCArray(this.value)">16: 4 colour_1</li>
-	  <li value="17"  onclick="updateCArray(this.value)">17: 4_colour_2</li>
-	  <li value="18"  onclick="updateCArray(this.value)">18: RGB</li>
-	  <li value="19"  onclick="updateCArray(this.value)">19: blue, orange, pink</li>
-	  <li value="20"  onclick="updateCArray(this.value)">20: yellow, orange, red</li>
-	  <li value="21"  onclick="updateCArray(this.value)">21: pink, orange, green</li>
-	  <li value="22"  onclick="updateCArray(this.value)">22: pink, orange, yellow</li>
-	  <li value="23"  onclick="updateCArray(this.value)">23: yellow, orange, green</li>
-	  <li value="24"  onclick="updateCArray(this.value)">24: blue, orange, purple</li>
-	  <li value="25"  onclick="updateCArray(this.value)">25: red, orange, pink</li>
-	  <li value="26"  onclick="updateCArray(this.value)">26: red, orange, salmon</li>	
-	  <li value="27"  onclick="updateCArray(this.value)">27: red, orange, turqoise</li>	
-	  <li value="28"  onclick="updateCArray(this.value)">28: blue, purple, turqoise</li>	
-	  <li value="29"  onclick="updateCArray(this.value)">29: purple, orange, turqoise</li>
-	  <li value="30"  onclick="updateCArray(this.value)">30: red, green</li>
-	  <li value="31"  onclick="updateCArray(this.value)">31: lemon, red</li>
-	  <li value="32"  onclick="updateCArray(this.value)">32: cyan, lemon</li>
-	  <li value="33"  onclick="updateCArray(this.value)">33: pink, lemon</li>
-	  <li value="34"  onclick="updateCArray(this.value)">34: purple, green</li>
-	  <li value="35"  onclick="updateCArray(this.value)">35: yellow, green</li>
-	  <li value="36"  onclick="updateCArray(this.value)">36: cyan, yellow</li>
-	  <li value="37"  onclick="updateCArray(this.value)">37: cyan, orange</li>
-	  <li value="38"  onclick="updateCArray(this.value)">38: orange, pink</li>
-	  <li value="39"  onclick="updateCArray(this.value)">39: orange, salmon</li>
-	  <li value="40"  onclick="updateCArray(this.value)">40: yellow, red</li>	
-	  <li value="41"  onclick="updateCArray(this.value)">41: red, pink</li>
-	  <li value="42"  onclick="updateCArray(this.value)">42: yellow, pink</li>
-	  <li value="43"  onclick="updateCArray(this.value)">43: cyan, turqoise</li>
-	  <li value="44"  onclick="updateCArray(this.value)">44: cyan, pink</li>
-	  <li value="45"  onclick="updateCArray(this.value)">45: turqoise, purple</li>
-	  <li value="46"  onclick="updateCArray(this.value)">46: purple, orange</li>	
-	  <li value="47"  onclick="updateCArray(this.value)">47: purple, red</li>	
-	  <li value="48"  onclick="updateCArray(this.value)">48: cyan, red</li>	
-	  <li value="49"  onclick="updateCArray(this.value)">49: cyan, pink</li>
-	  <li value="50"  onclick="updateCArray(this.value)">50: red to yellow</li>
-	  <li value="51"  onclick="updateCArray(this.value)">51: blue to yellow</li>
-	  <li value="52"  onclick="updateCArray(this.value)">52: blue to yellow + green</li>
-	  <li value="53"  onclick="updateCArray(this.value)">53: red to yellow + green</li>
-	  <li value="54"  onclick="updateCArray(this.value)">54: red to yellow + green</li>
-	  <li value="55"  onclick="updateCArray(this.value)">55: red to yellow + blue</li>
-	  <li value="56"  onclick="updateCArray(this.value)">56: green to blue + red</li>
-	  <li value="57"  onclick="updateCArray(this.value)">57: green to blue + red</li>
-	  <li value="58"  onclick="updateCArray(this.value)">58: rainbow_5</li>	    	  
+	  <li value="0"  onclick="updateNumberS('SCAR', this.value)">0: little green !!</li>
+	  <li value="1"  onclick="updateNumberS('SCAR', this.value)">1: personal best</li>
+	  <li value="2"  onclick="updateNumberS('SCAR', this.value)">2: orange</li>
+	  <li value="3"  onclick="updateNumberS('SCAR', this.value)">3: pink, blue</li>
+	  <li value="4"  onclick="updateNumberS('SCAR', this.value)">4: blue, pink</li>
+	  <li value="5"  onclick="updateNumberS('SCAR', this.value)">5: blue, orange, pink </li>
+	  <li value="6"  onclick="updateNumberS('SCAR', this.value)">6: no purple/pink</li>	
+	  <li value="7"  onclick="updateNumberS('SCAR', this.value)">7: rainbow</li>	
+	  <li value="8"  onclick="updateNumberS('SCAR', this.value)">8: fine canvas</li>	
+	  <li value="9"  onclick="updateNumberS('SCAR', this.value)">9: rainbow_2</li>
+	  <li value="10"  onclick="updateNumberS('SCAR', this.value)">10: no green</li>
+	  <li value="11"  onclick="updateNumberS('SCAR', this.value)">11: yellow, red</li>
+	  <li value="12"  onclick="updateNumberS('SCAR', this.value)">12: rainbow_3</li>
+	  <li value="13"  onclick="updateNumberS('SCAR', this.value)">13: no red</li>
+	  <li value="14"  onclick="updateNumberS('SCAR', this.value)">14: rainbow_4</li>
+	  <li value="15"  onclick="updateNumberS('SCAR', this.value)">15: RGB + yel</li>
+	  <li value="16"  onclick="updateNumberS('SCAR', this.value)">16: 4 colour_1</li>
+	  <li value="17"  onclick="updateNumberS('SCAR', this.value)">17: 4_colour_2</li>
+	  <li value="18"  onclick="updateNumberS('SCAR', this.value)">18: RGB</li>
+	  <li value="19"  onclick="updateNumberS('SCAR', this.value)">19: blue, orange, pink</li>
+	  <li value="20"  onclick="updateNumberS('SCAR', this.value)">20: yellow, orange, red</li>
+	  <li value="21"  onclick="updateNumberS('SCAR', this.value)">21: pink, orange, green</li>
+	  <li value="22"  onclick="updateNumberS('SCAR', this.value)">22: pink, orange, yellow</li>
+	  <li value="23"  onclick="updateNumberS('SCAR', this.value)">23: yellow, orange, green</li>
+	  <li value="24"  onclick="updateNumberS('SCAR', this.value)">24: blue, orange, purple</li>
+	  <li value="25"  onclick="updateNumberS('SCAR', this.value)">25: red, orange, pink</li>
+	  <li value="26"  onclick="updateNumberS('SCAR', this.value)">26: red, orange, salmon</li>	
+	  <li value="27"  onclick="updateNumberS('SCAR', this.value)">27: red, orange, turqoise</li>	
+	  <li value="28"  onclick="updateNumberS('SCAR', this.value)">28: blue, purple, turqoise</li>	
+	  <li value="29"  onclick="updateNumberS('SCAR', this.value)">29: purple, orange, turqoise</li>
+	  <li value="30"  onclick="updateNumberS('SCAR', this.value)">30: red, green</li>
+	  <li value="31"  onclick="updateNumberS('SCAR', this.value)">31: lemon, red</li>
+	  <li value="32"  onclick="updateNumberS('SCAR', this.value)">32: cyan, lemon</li>
+	  <li value="33"  onclick="updateNumberS('SCAR', this.value)">33: pink, lemon</li>
+	  <li value="34"  onclick="updateNumberS('SCAR', this.value)">34: purple, green</li>
+	  <li value="35"  onclick="updateNumberS('SCAR', this.value)">35: yellow, green</li>
+	  <li value="36"  onclick="updateNumberS('SCAR', this.value)">36: cyan, yellow</li>
+	  <li value="37"  onclick="updateNumberS('SCAR', this.value)">37: cyan, orange</li>
+	  <li value="38"  onclick="updateNumberS('SCAR', this.value)">38: orange, pink</li>
+	  <li value="39"  onclick="updateNumberS('SCAR', this.value)">39: orange, salmon</li>
+	  <li value="40"  onclick="updateNumberS('SCAR', this.value)">40: yellow, red</li>	
+	  <li value="41"  onclick="updateNumberS('SCAR', this.value)">41: red, pink</li>
+	  <li value="42"  onclick="updateNumberS('SCAR', this.value)">42: yellow, pink</li>
+	  <li value="43"  onclick="updateNumberS('SCAR', this.value)">43: cyan, turqoise</li>
+	  <li value="44"  onclick="updateNumberS('SCAR', this.value)">44: cyan, pink</li>
+	  <li value="45"  onclick="updateNumberS('SCAR', this.value)">45: turqoise, purple</li>
+	  <li value="46"  onclick="updateNumberS('SCAR', this.value)">46: purple, orange</li>	
+	  <li value="47"  onclick="updateNumberS('SCAR', this.value)">47: purple, red</li>	
+	  <li value="48"  onclick="updateNumberS('SCAR', this.value)">48: cyan, red</li>	
+	  <li value="49"  onclick="updateNumberS('SCAR', this.value)">49: cyan, pink</li>
+	  <li value="50"  onclick="updateNumberS('SCAR', this.value)">50: red to yellow</li>
+	  <li value="51"  onclick="updateNumberS('SCAR', this.value)">51: blue to yellow</li>
+	  <li value="52"  onclick="updateNumberS('SCAR', this.value)">52: blue to yellow + green</li>
+	  <li value="53"  onclick="updateNumberS('SCAR', this.value)">53: red to yellow + green</li>
+	  <li value="54"  onclick="updateNumberS('SCAR', this.value)">54: red to yellow + green</li>
+	  <li value="55"  onclick="updateNumberS('SCAR', this.value)">55: red to yellow + blue</li>
+	  <li value="56"  onclick="updateNumberS('SCAR', this.value)">56: green to blue + red</li>
+	  <li value="57"  onclick="updateNumberS('SCAR', this.value)">57: green to blue + red</li>
+	  <li value="58"  onclick="updateNumberS('SCAR', this.value)">58: rainbow_5</li>	    	  
 	</div>
   </div></div>
 </div>
@@ -810,7 +1064,7 @@ _*Color Array (0-58):
 <div class="titlex">
 _*Num_colors (1-15):
 </div>
-<input id="SNCO" class="sliderx" type="range" min="0" max="15" step="1" value="0" onchange="updateSlider('SNCO', this.value)">
+<input id="SNCO" class="sliderx" type="range" min="0" max="15" step="1" value="0" onchange="updateSlider(this.id, this.value)">
 <div class="varvaluex" id="SNCOS"></div> <div class="infox"></div>
 </div>
 
@@ -818,7 +1072,7 @@ _*Num_colors (1-15):
 <div class="titlex">
 _*ColorLength (1-50):
 </div>
-<input id="SNCL" class="sliderx" type="range" min="0" max="50" step="1" value="10" onchange="updateSlider('SNCL', this.value)">
+<input id="SNCL" class="sliderx" type="range" min="0" max="50" step="1" value="10" onchange="updateSlider(this.id, this.value)">
 <div class="varvaluex" id="SNCLS"></div> <div class="infox"></div>
 </div>
 
@@ -826,7 +1080,7 @@ _*ColorLength (1-50):
 <div class="titlex">
 *FastLED.Palet (20):
 </div>
-<input id="SPAL" class="sliderx" type="range" min="0" max="20" step="1" value="2" onchange="updateSlider('SPAL', this.value)">
+<input id="SPAL" class="sliderx" type="range" min="0" max="20" step="1" value="2" onchange="updateSlider(this.id, this.value)">
 <div class="varvaluex" id="SPALS"></div> <div class="infox">prog. 6</div>
 </div>
 
@@ -834,7 +1088,7 @@ _*ColorLength (1-50):
 <div class="titlex">
 Prog.Gradient (14):
 </div>
-<input id="SGRA" class="sliderx" type="range" min="0" max="14" step="1" value="0" onchange="updateSlider('SGRA', this.value)">
+<input id="SGRA" class="sliderx" type="range" min="0" max="14" step="1" value="0" onchange="updateSlider(this.id, this.value)">
 <div class="varvaluex" id="SGRAS"></div> <div class="infox"></div>
 </div>
 <hr/>
@@ -857,12 +1111,12 @@ _gaps xmas modes (31-33):
 </div>
 <section class="range-slider">
   <span class="rangeValues"></span>
-  <input id="SRMI" value="245" min="0" max="255" step="1" type="range" class="sliderpink" onchange="updateSlider('SRMI', this.value)">
-  <input id="SRMA" value="10" min="0" max="255" step="1" type="range" class="sliderorange" onchange="updateSlider('SRMA', this.value)">
-  <input id="SGMI" value="55" min="0" max="255" step="1" type="range" class="sliderlemon" onchange="updateSlider('SGMI', this.value)">
-  <input id="SGMA" value="115" min="0" max="255" step="1" type="range" class="slideraqua" onchange="updateSlider('SGMA', this.value)">
-  <input id="SBMI" value="145" min="0" max="255" step="1" type="range" class="sliderblue" onchange="updateSlider('SBMI', this.value)">
-  <input id="SBMA" value="180" min="0" max="255" step="1" type="range" class="sliderpurple" onchange="updateSlider('SBMA', this.value)">  
+  <input id="SRMI" value="245" min="0" max="255" step="1" type="range" class="sliderpink" onchange="updateSlider(this.id, this.value)">
+  <input id="SRMA" value="10" min="0" max="255" step="1" type="range" class="sliderorange" onchange="updateSlider(this.id, this.value)">
+  <input id="SGMI" value="55" min="0" max="255" step="1" type="range" class="sliderlemon" onchange="updateSlider(this.id, this.value)">
+  <input id="SGMA" value="115" min="0" max="255" step="1" type="range" class="slideraqua" onchange="updateSlider(this.id, this.value)">
+  <input id="SBMI" value="145" min="0" max="255" step="1" type="range" class="sliderblue" onchange="updateSlider(this.id, this.value)">
+  <input id="SBMA" value="180" min="0" max="255" step="1" type="range" class="sliderpurple" onchange="updateSlider(this.id, this.value)">  
 </section>
 </div>
 
@@ -876,10 +1130,10 @@ _gaps CM 2&3:
 <!-- This block can be reused as many times as needed -->
 <section class="range-slider1">
   <span class="rangeValues1"></span>
-  <input id="SYMI" value="42" min="0" max="255" step="1" type="range" class="sliderorange" onchange="updateSlider('SYMI', this.value)">
-  <input id="SYMA" value="84" min="0" max="255" step="1" type="range" class="sliderpink" onchange="updateSlider('SYMA', this.value)">  
-  <input id="SMI1" value="82" min="0" max="255" step="1" type="range" class="sliderlemon" onchange="updateSlider('SMI1', this.value)">
-  <input id="SMA1" value="206" min="0" max="255" step="1" type="range" class="slideraqua" onchange="updateSlider('SMA1', this.value)">  
+  <input id="SYMI" value="42" min="0" max="255" step="1" type="range" class="sliderorange" onchange="updateSlider(this.id, this.value)">
+  <input id="SYMA" value="84" min="0" max="255" step="1" type="range" class="sliderpink" onchange="updateSlider(this.id, this.value)">  
+  <input id="SMI1" value="82" min="0" max="255" step="1" type="range" class="sliderlemon" onchange="updateSlider(this.id, this.value)">
+  <input id="SMA1" value="206" min="0" max="255" step="1" type="range" class="slideraqua" onchange="updateSlider(this.id, this.value)">  
 </section>
 </div>
 
@@ -892,8 +1146,8 @@ _mode 10:
 <!-- This block can be reused as many times as needed -->
 <section class="range-slider3">
   <span class="rangeValues3"></span>
-  <input id="SMI2" value="130" min="0" max="255" step="1" type="range" class="sliderorange" onchange="updateSlider('SMI2', this.value)">  
-  <input id="SMA2" value="42" min="0" max="255" step="1" type="range" class="sliderpink" onchange="updateSlider('SMA2', this.value)">
+  <input id="SMI2" value="130" min="0" max="255" step="1" type="range" class="sliderorange" onchange="updateSlider(this.id, this.value)">  
+  <input id="SMA2" value="42" min="0" max="255" step="1" type="range" class="sliderpink" onchange="updateSlider(this.id, this.value)">
 </section>
 </div>
 
@@ -906,9 +1160,9 @@ _mode 14:
 <!-- This block can be reused as many times as needed -->
 <section class="range-slider2">
   <span class="rangeValues2"></span>
-  <input id="SMI3" value="130" min="0" max="255" step="1" type="range" class="sliderorange" onchange="updateSlider('SMI3', this.value)">  
-  <input id="SMA3" value="190" min="0" max="255" step="1" type="range" class="sliderpink" onchange="updateSlider('SMA3', this.value)">
-  <input id="SM3R" value="90" min="0" max="255" step="1" type="range" class="sliderhue" onchange="updateSlider('SM3R', this.value)">
+  <input id="SMI3" value="130" min="0" max="255" step="1" type="range" class="sliderorange" onchange="updateSlider(this.id, this.value)">  
+  <input id="SMA3" value="190" min="0" max="255" step="1" type="range" class="sliderpink" onchange="updateSlider(this.id, this.value)">
+  <input id="SM3R" value="90" min="0" max="255" step="1" type="range" class="sliderhue" onchange="updateSlider(this.id, this.value)">
 </section>
 </div>
 
@@ -921,8 +1175,8 @@ _mode 15 (&22, 25):
 <!-- This block can be reused as many times as needed -->
 <section class="range-slider3">
   <span class="rangeValues3"></span>
-  <input id="SMI4" value="0" min="0" max="255" step="1" type="range" class="sliderorange" onchange="updateSlider('SMI4', this.value)">  
-  <input id="SMA4" value="40" min="0" max="255" step="1" type="range" class="sliderpink" onchange="updateSlider('SMA4', this.value)">
+  <input id="SMI4" value="0" min="0" max="255" step="1" type="range" class="sliderorange" onchange="updateSlider(this.id, this.value)">  
+  <input id="SMA4" value="40" min="0" max="255" step="1" type="range" class="sliderpink" onchange="updateSlider(this.id, this.value)">
 </section>
 </div>
 </div>	
@@ -942,7 +1196,7 @@ _mode 15 (&22, 25):
 <div class="titlex">
 _RED (0-255):
 </div>
-<input id="SRED" class="sliderred" type="range" min="0" max="255" step="1" value="128" onchange="updateSlider('SRED', this.value)">
+<input id="SRED" class="sliderred" type="range" min="0" max="255" step="1" value="128" onchange="updateSlider(this.id, this.value)">
 <div class="varvaluex" id="SREDS"></div><div class="infox"></div>
 </div>
 
@@ -950,7 +1204,7 @@ _RED (0-255):
 <div class="titlex">
 _GREEN (0-255) :
 </div>
-<input id="SGRE" class="slidergreen" type="range" min="0" max="255" step="1" value="128" onchange="updateSlider('SGRE', this.value)">
+<input id="SGRE" class="slidergreen" type="range" min="0" max="255" step="1" value="128" onchange="updateSlider(this.id, this.value)">
 <div class="varvaluex" id="SGRES"></div><div class="infox"></div>
 </div>
 
@@ -958,7 +1212,7 @@ _GREEN (0-255) :
 <div class="titlex">
 _BLUE (0-255) :
 </div>
-<input id="SBLU" class="sliderblues" type="range" min="0" max="255" step="1" value="128" onchange="updateSlider('SBLU', this.value)">
+<input id="SBLU" class="sliderblues" type="range" min="0" max="255" step="1" value="128" onchange="updateSlider(this.id, this.value)">
 <div class="varvaluex" id="SBLUS"></div><div class="infox"></div>
 </div>
 
@@ -967,7 +1221,7 @@ _BLUE (0-255) :
 <div class="switchcontainer">
 update & display HSV values:
 <label class="switch">
-  <input type="checkbox" id="THSV" onclick="updateButton('THSV')"> 
+  <input type="checkbox" id="THSV" onclick="updateButton(this.id, this.checked)"> 
   <span class="sliderround"></span>
 </label>
 </div>
@@ -992,7 +1246,7 @@ update & display HSV values:
 <div class="titlex">
 _*Bri Value (0-255) :
 </div>
-<input id="SBRI" class="sliderbri" type="range" min="0" max="255" step="1" value="128" onchange="updateSlider('SBRI', this.value)">
+<input id="SBRI" class="sliderbri" type="range" min="0" max="255" step="1" value="128" onchange="updateSlider(this.id, this.value)">
 <div class="varvaluex" id="SBRIS"></div><div class="infox"></div>
 </div>
 	
@@ -1001,7 +1255,7 @@ _*Bri Value (0-255) :
 <div class="titlex">
 _*Glow Mode (0-8):
 </div>
-<input id="SGLO" class="sliderx" type="range" min="0" max="8" step="1" value="0" onchange="updateSlider('SGLO', this.value)">
+<input id="SGLO" class="sliderx" type="range" min="0" max="8" step="1" value="0" onchange="updateSlider(this.id, this.value)">
 <div class="varvaluex" id="SGLOS"></div><div class="infox">
 <div class="dropdown">
 	<button class="dropbtn">info list:</button>
@@ -1040,14 +1294,14 @@ _*Glow Mode (0-8):
 <div class="titlex">
 _*Num_brigh (0-255): 
 </div>
-<input id="SNBR" class="sliderx" type="range" min="1" max="255" step="1" value="11" onchange="updateSlider('SNBR', this.value)">
+<input id="SNBR" class="sliderx" type="range" min="1" max="255" step="1" value="11" onchange="updateSlider(this.id, this.value)">
 <div class="varvaluex" id="SNBRS"></div><div class="infox"></div>
 </div>
 <div class="slidecontainerx">
 <div class="titlex">
 _*Offset_brigh (1-175): 
 </div>
-<input id="SOBR" class="sliderx" type="range" min="1" max="175" step="1" value="30" onchange="updateSlider('SOBR', this.value)">
+<input id="SOBR" class="sliderx" type="range" min="1" max="175" step="1" value="30" onchange="updateSlider(this.id, this.value)">
 <div class="varvaluex" id="SOBRS"></div><div class="infox"></div>
 </div>
 <br>
@@ -1055,7 +1309,7 @@ _*Offset_brigh (1-175):
 <div class="titlex">
 _*Wave time(Sec) (br):
 </div>
-<input id="SBWS" class="sliderx" type="range" min="1000" max="30000" step="1000" value="2000" onchange="updateSlider('SBWS', this.value)">
+<input id="SBWS" class="sliderx" type="range" min="1000" max="30000" step="1000" value="2000" onchange="updateSlider(this.id, this.value)">
 <div class="varvaluex" id="SBWSS"></div> <div class="infox"></div>
 </div>
 <div class="slidecontainerx">
@@ -1100,7 +1354,7 @@ _*Wave time(Sec) (br):
 <div class="titlex">
 _*Wave BPM(br):
 </div>
-<input id="SSBS" class="sliderx" type="range" min="2" max="60" step="1" value="30" onchange="updateSlider('SSBS', this.value)">
+<input id="SSBS" class="sliderx" type="range" min="2" max="60" step="1" value="30" onchange="updateSlider(this.id, this.value)">
 <div class="varvaluex" id="SSBSS"></div> <div class="infox"></div>
 </div>
 <div class="slidecontainerx">
@@ -1176,7 +1430,7 @@ _*Wave BPM(br):
 	<div class="titlex">
 	_*Sat Value (0-255) :
 	</div>
-	<input id="SSAT" class="slidersat" type="range" min="0" max="255" step="1" value="128" onchange="updateSlider('SSAT', this.value)">
+	<input id="SSAT" class="slidersat" type="range" min="0" max="255" step="1" value="128" onchange="updateSlider(this.id, this.value)">
 	<div class="varvaluex" id="SSATS"></div><div class="infox"></div>
 </div>
 	
@@ -1184,7 +1438,7 @@ _*Wave BPM(br):
 		<div class="titlex">
 		_Sat Mode (0-8):
 		</div>
-		<input id="SSTM" class="sliderx" type="range" min="0" max="8" step="1" value="0" onchange="updateSlider('SSTM', this.value)">
+		<input id="SSTM" class="sliderx" type="range" min="0" max="8" step="1" value="0" onchange="updateSlider(this.id, this.value)">
 		<div class="varvaluex" id="SSTMS"></div><div class="infox">
 		<div class="dropdown">
 			<button class="dropbtn">info list:</button>
@@ -1223,14 +1477,14 @@ _*Wave BPM(br):
 <div class="titlex">
 _*Num_sat (0-255): 
 </div>
-<input id="SSTN" class="sliderx" type="range" min="1" max="255" step="1" value="13" onchange="updateSlider('SSTN', this.value)">
+<input id="SSTN" class="sliderx" type="range" min="1" max="255" step="1" value="13" onchange="updateSlider(this.id, this.value)">
 <div class="varvaluex" id="SSTNS"></div><div class="infox"></div>
 </div>
 <div class="slidecontainerx">
 <div class="titlex">
 _*Offset_sat (1-175): 
 </div>
-<input id="SOST" class="sliderx" type="range" min="1" max="175" step="1" value="50" onchange="updateSlider('SOST', this.value)">
+<input id="SOST" class="sliderx" type="range" min="1" max="175" step="1" value="50" onchange="updateSlider(this.id, this.value)">
 <div class="varvaluex" id="SOSTS"></div><div class="infox"></div>
 </div>
 <br>
@@ -1239,7 +1493,7 @@ _*Offset_sat (1-175):
 <div class="titlex">
 _*Wave time(Sec) (sat):
 </div>
-<input id="SSWS" class="sliderx" type="range" min="1000" max="30000" step="1000" value="2000" onchange="updateSlider('SSWS', this.value)">
+<input id="SSWS" class="sliderx" type="range" min="1000" max="30000" step="1000" value="2000" onchange="updateSlider(this.id, this.value)">
 <div class="varvaluex" id="SSWSS"></div> <div class="infox"></div>
 </div>
 <div class="slidecontainerx">
@@ -1284,7 +1538,7 @@ _*Wave time(Sec) (sat):
 <div class="titlex">
 _*Wave BPM(sat):
 </div>
-<input id="SSSS" class="sliderx" type="range" min="2" max="60" step="1" value="30" onchange="updateSlider('SSSS', this.value)">
+<input id="SSSS" class="sliderx" type="range" min="2" max="60" step="1" value="30" onchange="updateSlider(this.id, this.value)">
 <div class="varvaluex" id="SSSSS"></div> <div class="infox"></div>
 </div>
 <div class="slidecontainerx">
@@ -1357,7 +1611,7 @@ _*Wave BPM(sat):
 <div class="switchcontainer">
 Maintain complete waveforms
 <label class="switch">
-  <input type="checkbox" id="TMWF" onclick="updateButton('TMWF')"> 
+  <input type="checkbox" id="TMWF" onclick="updateButton(this.id, this.checked)"> 
   <span class="sliderround"></span>
 </label>
 </div>
@@ -1379,7 +1633,7 @@ Maintain complete waveforms
 <div class="titlex">
 _*Num_spark (0-30):
 </div>
-<input id="SNSP" class="sliderx" type="range" min="1" max="30" step="1" value="20" onchange="updateSlider('SNSP', this.value)">
+<input id="SNSP" class="sliderx" type="range" min="1" max="30" step="1" value="20" onchange="updateSlider(this.id, this.value)">
 <div class="varvaluex" id="SNSPS"></div> <div class="infox">(21)</div>
 </div>
 
@@ -1387,7 +1641,7 @@ _*Num_spark (0-30):
 <div class="titlex">
 _*Spark_bri (0-255):
 </div>
-<input id="SSBR" class="sliderx" type="range" min="0" max="255" step="1" value="0" onchange="updateSlider('SSBR', this.value)">
+<input id="SSBR" class="sliderx" type="range" min="0" max="255" step="1" value="0" onchange="updateSlider(this.id, this.value)">
 <div class="varvaluex" id="SSBRS"></div><div class="infox"></div>
 </div>
 
@@ -1395,7 +1649,7 @@ _*Spark_bri (0-255):
 <div class="titlex">
 _*Spark_sat (0-255):
 </div>
-<input id="SSSF" class="sliderx" type="range" min="0" max="255" step="1" value="0" onchange="updateSlider('SSSF', this.value)">
+<input id="SSSF" class="sliderx" type="range" min="0" max="255" step="1" value="0" onchange="updateSlider(this.id, this.value)">
 <div class="varvaluex" id="SSSFS"></div><div class="infox"></div>
 </div>
 
@@ -1403,7 +1657,7 @@ _*Spark_sat (0-255):
 <div class="titlex">
 _Spark_color (0-255):
 </div>
-<input id="SSCO" class="sliderx" type="range" min="0" max="255" step="1" value="0" onchange="updateSlider('SSCO', this.value)">
+<input id="SSCO" class="sliderx" type="range" min="0" max="255" step="1" value="0" onchange="updateSlider(this.id, this.value)">
 <div class="varvaluex" id="SSCOS"></div> <div class="infox"></div>
 </div>
 
@@ -1411,7 +1665,7 @@ _Spark_color (0-255):
 <div class="titlex">
 Add.offset (1-15):
 </div>
-<input id="SOFF" class="sliderx" type="range" min="1" max="15" step="1" value="7" onchange="updateSlider('SOFF', this.value)">
+<input id="SOFF" class="sliderx" type="range" min="1" max="15" step="1" value="7" onchange="updateSlider(this.id, this.value)">
 <div class="varvaluex" id="SOFFS"></div> <div class="infox"></div>
 </div>
 </div>
@@ -1431,22 +1685,22 @@ Add.offset (1-15):
 <div class="switchcontainer">
 _*Glitter
 <label class="switch">
-  <input type="checkbox" id="TGLI" onclick="updateButton('TGLI')"> 
+  <input type="checkbox" id="TGLI" onclick="updateButton(this.id, this.checked)"> 
   <span class="sliderround"></span>
 </label>
 Rainbow (mode 16-18)
 <label class="switch">
-  <input type="checkbox" id="TRBO" onclick="updateButton('TRBO')"> 
+  <input type="checkbox" id="TRBO" onclick="updateButton(this.id, this.checked)"> 
   <span class="sliderround"></span> 
 </label>
 Reverse (mode 16-18)
 <label class="switch">
-  <input type="checkbox" id="TRVO" onclick="updateButton('TRVO')"> 
+  <input type="checkbox" id="TRVO" onclick="updateButton(this.id, this.checked)"> 
   <span class="sliderround"></span> 
 </label>
 white (mode 29)
 <label class="switch">
-  <input type="checkbox" id="TWHO" onclick="updateButton('TWHO')"> 
+  <input type="checkbox" id="TWHO" onclick="updateButton(this.id, this.checked)"> 
   <span class="sliderround"></span> 
 </label>
 </div>
@@ -1455,17 +1709,17 @@ white (mode 29)
 <span class="sliderwindowsmall"> complex settings (default is advised): </span> &nbsp  &nbsp  &nbsp 
 direction
 <label class="switch">
-  <input type="checkbox" id="TDIR" onclick="updateButton('TDIR')"> 
+  <input type="checkbox" id="TDIR" onclick="updateButton(this.id, this.checked)"> 
   <span class="sliderround"></span>
 </label>
 _Tower
 <label class="switch">
-  <input type="checkbox" id="TTWO" onclick="updateButton('TTWO')"> 
+  <input type="checkbox" id="TTWO" onclick="updateButton(this.id, this.checked)"> 
   <span class="sliderround"></span>
 </label>
 _Bees
 <label class="switch">
-  <input type="checkbox" id="TBEE" onclick="updateButton('TBEE')"> 
+  <input type="checkbox" id="TBEE" onclick="updateButton(this.id, this.checked)"> 
   <span class="sliderround"></span>
 </label>
 </div>
@@ -1486,13 +1740,13 @@ _Bees
 <p class="sliderwindow"> 
 <span class="textinfo">NUM_LEDS (1-600):</span> <span class="inputparam"> <input type="number" id="NUM_LEDS" max="600" min="1" value=""></span> &nbsp
 <span class="textinfo" id="HNUMS">___</span> &nbsp
-<span class="inputparam"> <button onclick="updateNumLeds()">submit</button>	</span> &nbsp
+<span class="inputparam"> <button onclick="updateNumber('SNLD', NUM_LEDS.value)">submit</button>	</span> &nbsp
 </p>
 <br>
 <p class="sliderwindow"> 
 <span class="textinfo"> color order: </span> &nbsp 
 <span class="inputparam">
-<select onchange="changeColor(this.value)">
+<select onchange="changeColor('SETT', this.value)">
     <option value="0. RGB">RGB</option>
     <option value="1. GRB">GRB</option>
     <option value="2. BRG">BRG</option>
@@ -1505,13 +1759,13 @@ _Bees
 </p>
 <br>
 <p class="sliderwindow"> 
-<span class="textinfo"> ssid:</span> <span class="inputparam"> <input type="text" id="ssid" value=""></span> <span class="textinfo" id="HSIDS">___</span> &nbsp </span>
-<span class="textinfo"> password: </span> <span class="inputparam"> <input type="text" id="pass" value=""></span> <span class="textinfo" id="HPASS">___</span> &nbsp <span class="inputparam"> <button onclick="updateText()">submit</button> </span>
+<span class="textinfo"> ssid:</span> <span class="inputparam"> <input type="text" id="ssid" value=""></span> <span class="textinfo" id="HSIDS">___</span> &nbsp <span class="inputparam"> <button onclick="updateText('ssid', ssid.value)">submit</button> </span>
+<span class="textinfo"> password: </span> <span class="inputparam"> <input type="text" id="pass" value=""></span> <span class="textinfo" id="HPASS">___</span> &nbsp <span class="inputparam"> <button onclick="updateText('pass', pass.value)">submit</button> </span>
 </p>
 <br>
 <p class="sliderwindow"> 
 <span class="textinfo"> <span id="reboot"></span></span>&nbsp
-<span class="inputparam"> <button onclick="rebootSystem()">reboot</button></span>
+<span class="inputparam"> <button onclick="updateText('BOOT', 1)">reboot</button></span>
 </p>
 <br>
 <hr/>
@@ -1520,26 +1774,26 @@ _Bees
 <div class="switchcontainer">
 	Save All SETTINGS to GLOBAL EEPROM
 	<label class="switch">
-	  <input type="checkbox" id="TSET" onclick="updateButton('TSET')"> 
+	  <input type="checkbox" id="TSET" onclick="updateButton(this.id, this.checked)"> 
 	  <span class="sliderround"></span>
 	</label>
 </div>
 <div class="switchcontainer">
 ACTIVATE all PRESETS in EEPROM
 <label class="switch">
-  <input type="checkbox" id="TAAM" onclick="updateButton('TAAM')"> 
+  <input type="checkbox" id="TAAM" onclick="updateButton(this.id, this.checked)"> 
   <span class="sliderround"></span>
 </label>
 DEACTIVATE all PRESETS in EEPROM
 <label class="switch">
-  <input type="checkbox" id="TDAM" onclick="updateButton('TDAM')"> 
+  <input type="checkbox" id="TDAM" onclick="updateButton(this.id, this.checked)"> 
   <span class="sliderround"></span>
 </label>
 </div>
 <div class="switchcontainer">
 	Clear EEPROM - SET TO DEFAULT
 		<label class="switch">
-		  <input type="checkbox" id="TSED" onclick="updateButton('TSED')"> 
+		  <input type="checkbox" id="TSED" onclick="updateButton(this.id, this.checked)"> 
 		  <span class="sliderround"></span>
 		</label>
 	</div>

@@ -28,8 +28,9 @@ void static_glow(void){
      yval1 = changeColourFcn(colorMode, yval1, 0, 255);
      forcedColourChange = false; 
      updateOled(102, 56, &yval1); 
-     mergedString = "GSHUE"+String(yval);
-     ws.textAll(mergedString); 
+     notifyClientsSingleObjectByte("SHUE", yval);
+    //  mergedString = "GSHUE"+String(yval);
+    //  ws.textAll(mergedString); 
   }
 
     if (millis() - previousMillis2 >= FPS) { 
@@ -2849,9 +2850,12 @@ if (millis() - previousMillis1 >= changeSpeed) {
 //  Serial.print(hsv.h);
 //  Serial.print(", "); Serial.print(hsv.s);
 //  Serial.print(", "); Serial.println(hsv.v);
-  mergedString = "HHHH"+String(HUE); ws.textAll(mergedString);  
-  mergedString = "HSSS"+String(SAT); ws.textAll(mergedString);  
-  mergedString = "HVVV"+String(VAL); ws.textAll(mergedString);  
+    notifyClientsSingleObjectByte("HHHH", HUE);
+    notifyClientsSingleObjectByte("HSSS", SAT);
+    notifyClientsSingleObjectByte("HVVV", VAL);
+  // mergedString = "HHHH"+String(HUE); ws.textAll(mergedString);  
+  // mergedString = "HSSS"+String(SAT); ws.textAll(mergedString);  
+  // mergedString = "HVVV"+String(VAL); ws.textAll(mergedString);  
 //  mergedString = "G"+"THSV"+String(loadHSV); ws.textAll(mergedString);  
   loadHSV = false;  
   }

@@ -589,6 +589,15 @@ input:checked + .sliderround:before {
   cursor:pointer;
 }
 
+#checkbox6{
+  background:#grey;
+  display:inline-block;
+  padding:2px 2px;
+  border-radius:2px;
+  position:relative;
+  cursor:pointer;
+}
+
 .ckeckbox-element{
   display:block;
   position:absolute;
@@ -607,6 +616,14 @@ input:checked + .sliderround:before {
 
 #checkbox1>input[type='checkbox']:checked+i{
   color:#333333;
+}
+
+#checkbox6>input[type='checkbox']+i{
+  color:#999999;
+}
+
+#checkbox6>input[type='checkbox']:checked+i{
+  color:#04ff00;
 }
 
  section.range-slider {

@@ -19,11 +19,24 @@ FASTLED_USING_NAMESPACE
 #include <Adafruit_SSD1306.h>
 #include <SPI.h>
 #include <EEPROM.h>
+#include <ArduinoJson.h>
 #include <pgmspace.h>
 #include <IRremoteESP8266.h>
 #include <IRrecv.h>
 #include <IRutils.h>
 #include <ESPAsyncWebServer.h>
+
+//#define DEBUG_OUTPUT // comment out for debugging mode (mainly for checking memory issues and JSON communication)
+
+#ifdef DEBUG_OUTPUT
+  #define DEBUG_PRINT(x) Serial.print(x)
+  #define DEBUG_PRINTLN(x) Serial.println(x)
+  #define DEBUG_PRINTF(x...) Serial.printf(x)
+#else
+  #define DEBUG_PRINT(x)
+  #define DEBUG_PRINTLN(x)
+  #define DEBUG_PRINTF(x...)
+#endif
 
 // LED properties
 #define NUM_SET 600 // THIS DEFINES THE MAXIMUM LED_NUMBER 
@@ -189,6 +202,15 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len);
 void processWebSocketMessage(String str, int dataVar);
 void processWebSocketMessageS(String str, int stringLength, String dataString);
 void notifyClients();
+
+void notifyClientsSingleObject(String object, boolean value);
+void notifyClientsSingleObjectByte(String object, byte value);
+void notifyClientsSingleObjectInt(String object, uint32_t value);
+void notifyClientsSingleObjectSignedInt(String object, int32_t value);
+void notifyClientsSingleString(String object, String &message);
+void sendProgramInfo();
+void writeStringToEEPROM(int addrOffset, const String &strToWrite);
+
 void sendMessageToClient(int dataVar);
 void initWebSocket();
 void onRootRequest(AsyncWebServerRequest *request);
