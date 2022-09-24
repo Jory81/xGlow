@@ -117,8 +117,7 @@ function updateNumberS(key, value) {
 		//console.log(myJSON);
 	}
 
-	function changeColor(key, value)
-{
+	function changeColor(key, value)	{
     document.getElementById("HCOLS").innerHTML = value;
 	document.getElementById("reboot").innerHTML  = "reboot to activate";
 
@@ -130,12 +129,10 @@ function updateNumberS(key, value) {
 	//console.log(myJSON);
     // document.getElementById("displaycolor1").innerHTML = opt[0];
     //doSend("SETT"+opt[0]);
-	
     
 }
 	
 	function updateSlider(key, value){
-
 	var fourChars = key+"S";
 	if (key != "SLSP"){	
 		document.getElementById(key).innerHTML = value;
@@ -310,201 +307,6 @@ function onMessage(event) {
 		document.getElementById('recMsg').checked = false;
 	}	
 
-
-// Called when a message is received from the server
-// function onMessage(event) {
- 
-//     // Print out our received message
-//     //console.log("Received: " + event.data);
-
-// 	var string = event.data;
-// 	if (string.charAt(0) == 0){
-// 		var rawProgramName = event.data;
-// 		var programName = rawProgramName.substr(1);
-// 		document.getElementById("progn").innerHTML = programName;
-// 		var firstFourChars = "xxxx";
-// 		k = 0;
-// 		//k = 32;
-// 		doSend("GETS"+k);
-// 		//console.log("sends program name");
-// 	}	
-// 	else if (string.charAt(0) == "G"){
-// 		var prefixChars = "G";
-// 		if (string.charAt(1) == 0){
-// 			var rawProgramName = event.data;
-// 			var programName = rawProgramName.substr(2);
-// 			document.getElementById("progn").innerHTML = programName;
-// 			var firstFourChars = "xxxx";
-// 			}
-// 		else {
-// 			var newString = string.substr(1);
-// 			var firstFourChars = newString.substring(0,4);
-// 			var firstFiveChars = firstFourChars+"S";
-// 			var residu = newString.slice(4, newString.length);
-// 		}
-// 	}
-// 	else {
-// 		var firstFourChars = string.substring(0,4);
-// 		var firstFiveChars = firstFourChars+"S";
-// 		var residu = string.slice(4, string.length);
-// //	console.log(residu);
-// 	}
-
-// 	if (firstFourChars.charAt(0) == "S"){
-// 	document.getElementById(firstFourChars).value = residu;
-// 	document.getElementById(firstFiveChars).innerHTML = residu;
-//     }
-	
-	
-//     else if (firstFourChars.charAt(0) == "T"){
-// 		if (residu == 1){
-// 		document.getElementById(firstFourChars).checked = true;
-// 		}
-// 		else if (residu == 0){
-// 		document.getElementById(firstFourChars).checked = false;
-// //		console.log("does it check off");
-// 		}
-// 	}
-	
-// 	else if (firstFourChars.charAt(0) == "H"){
-// 		if (firstFiveChars == "HCOLS") {
-// 			if (residu == 0){
-// 				residu = "RGB";
-// 			}
-// 			else if (residu == 1){
-// 				residu = "GRB";
-// 			}
-// 			else if (residu == 2){
-// 				residu = "BRG";
-// 			}			
-// 			else if (residu == 3){
-// 				residu = "BGR";
-// 			}
-// 			else if (residu == 4){
-// 				residu = "RBG";
-// 			}	
-// 			else if (residu == 5){
-// 				residu = "GBR";
-// 			}						
-// 			document.getElementById(firstFiveChars).innerHTML = residu;
-// 		}
-// 	else {
-// 		document.getElementById(firstFiveChars).innerHTML = residu;
-// 	}	
-//     }	
-
-// 	if (prefixChars == "G"){
-// 	k = k + 1;
-// 	//console.log(k);
-// 		if (k < 71){ //54
-// 		setTimeout(function(){ doSend("GETS"+k); }, 20);
-// 		}
-// 		else if (k >= 71){ //54
-// 		//k = 0;
-// 		//doSend(k);
-// 		//console.log(k);
-// 		document.getElementById("TLSE").checked = false;
-// 		//console.log("exit here");
-// 		}
-// 	}
-// }
- 
-// Sends a message to the server (and prints it to the console)
-// function doSend(message) {
-// 	String(message);
-//     //console.log("Sending: " + message);
-//     websocket.send(message);
-// }
-
-// function updateSlider(fixedVariable, slideAmount){
-// 	var fourChars = fixedVariable+"S";
-// 	if (fixedVariable != "SLSP"){	
-// 		document.getElementById(fourChars).innerHTML = slideAmount;
-// 		doSend(fixedVariable+slideAmount)
-// 	}
-// 	else if (fixedVariable == "SLSP"){
-// 		var adjustedSpeed = Math.trunc(Math.exp(slideAmount*0.14)*10);
-// 		//console.log(adjustedSpeed);
-// 		document.getElementById(fourChars).innerHTML = adjustedSpeed;
-// 		doSend(fixedVariable+adjustedSpeed)
-// 	}
-// }
-
-// function updateProgSlider(slideAmount){
-// 	document.getElementById('SPGM').value = slideAmount;
-// 	document.getElementById('SPGMS').innerHTML = slideAmount;
-// 	doSend('SPGM'+slideAmount);
-// 	}
-
-// function updateBriSSlider(slideAmount){
-// 	document.getElementById('SBSM').value = slideAmount;
-// 	document.getElementById('SBSMS').innerHTML = slideAmount;
-// 	doSend('SBSM'+slideAmount);
-// 	}
-	
-// function updateCArray(slideAmount){
-// 	document.getElementById('SCAR').value = slideAmount;
-// 	document.getElementById('SCARS').innerHTML = slideAmount;
-// 	doSend('SCAR'+slideAmount);
-// 	}	
-
-// function updateVarSlider(slideAmount){
-// 	document.getElementById('SVAR').value = slideAmount;
-// 	document.getElementById('SVARS').innerHTML = slideAmount;
-// 	doSend('SVAR'+slideAmount);
-// 	}	
-
-// function updateCMode(slideAmount){
-// 	document.getElementById('SCOM').value = slideAmount;
-// 	document.getElementById('SCOMS').innerHTML = slideAmount;
-// 	doSend('SCOM'+slideAmount);
-// 	}		
-
-// function updateButton(fixedVariable) { 
-// 	 if (document.getElementById(fixedVariable).checked == true){
-// 		doSend(fixedVariable+1);
-// 		if (fixedVariable == "TLSE"){
-// 			//console.log("enter mode here STARTS ALL OVER");
-// 			k = 0;
-// 			doSend("GETS"+k);
-
-// 		// 	var myJSON = JSON.stringify({requestInfo:true});
-// 		// websocket.send(myJSON);
-// 		}
-// 	}
-// 	 else {
-// 		doSend(fixedVariable+0);
-// 	 }
-	  
-// }
-
-// function changeColor(opt)
-// {
-//     document.getElementById("HCOLS").innerHTML = opt;
-//     // document.getElementById("displaycolor1").innerHTML = opt[0];
-//     doSend("SETT"+opt[0]);
-// 	document.getElementById("reboot").innerHTML  = "reboot to activate";
-    
-// }
-
-// function updateText() {
-//   document.getElementById("reboot").innerHTML  = "reboot to activate";
-//   doSend("ssid"+ssid.value);
-//   doSend("pass"+pass.value);
-// }
-
-// function updateNumLeds() {
-//   document.getElementById("HNUMS").innerHTML  = NUM_LEDS.value;
-//   doSend("SNLD"+NUM_LEDS.value);
-// }
-
-// function rebootSystem() {
-// doSend("BOOT");
-// }
-
-
-
-
 function setTab(fixedVariable) {
   var x = document.getElementById(fixedVariable);
   if (x.style.display === "none") {
@@ -531,18 +333,6 @@ $(document).ready(function() {
 </script>
 
 
-
-
-
-
-
-
-
-
-
-
-
- 
 <body>
 <h1>LED Control panel</h1>
 <p class="infowindow">
