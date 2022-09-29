@@ -129,7 +129,7 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
       else if (json.containsKey("TMWF")){maintainWaveForm = json["TMWF"];}
       else if (json.containsKey("TSET")){saveEverythingToEEPROM(); sendDelayWSMessage=true; message = 2; previousMillis14=millis();}
       else if (json.containsKey("TSED")){int eeAddress=0; EEPROM.put(eeAddress, customVar); EEPROM.commit(); FastLED.delay(1000); ESP.restart();}
-      else if (json.containsKey("SETT")){EEPROM.put((offsetof(storeInEEPROM, rgbcolor)), json["SSET"]); EEPROM.commit(); RGBCOLOR = json["SETT"]; Serial.println(RGBCOLOR);}
+      else if (json.containsKey("SETT")){RGBCOLOR = json["SETT"]; EEPROM.put((offsetof(storeInEEPROM, rgbcolor)), RGBCOLOR); EEPROM.commit();}//Serial.println(RGBCOLOR);}
       else if (json.containsKey("TAAM")){ActiveModesToEEPROM(); sendDelayWSMessage=true; message = 3; previousMillis14=millis();}
       else if (json.containsKey("TDAM")){DeactiveModesToEEPROM(); sendDelayWSMessage=true; message = 4; previousMillis14=millis();}
       else if (json.containsKey("SRMI")){yminrood = json["SRMI"]; fillxmasArray(); ysr=0; for (int i = 0; i < 10; i++){colour[i]=(numAmax/10*i);} if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, yminrood), yminrood);  EEPROM.commit();};}
