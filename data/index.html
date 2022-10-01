@@ -822,11 +822,11 @@ _*Cycle time (s):
 		<button class="dropbtn">info list:</button>
 		<div class="dropdown-content">
 			<li>PER MODE ADJUSTABLE:</li>
-			<li>0: preset 1 (hardcoded)</li>
-			<li>1: preset 2 (EEPROM)</li>
-			<li>2: preset 3 (EEPROM)</li>
-			<li>3: preset 4 (EEPROM)</li>
-			<li>4: cycles all 4 presets</li>
+			<li value="0"  onclick="updateNumberS('SPST', this.value)">0: preset 1 (hardcoded)</li>
+			<li value="1"  onclick="updateNumberS('SPST', this.value)">1: preset 2 (EEPROM)</li>
+			<li value="2"  onclick="updateNumberS('SPST', this.value)">2: preset 3 (EEPROM)</li>
+			<li value="3"  onclick="updateNumberS('SPST', this.value)">3: preset 4 (EEPROM)</li>
+			<li value="4"  onclick="updateNumberS('SPST', this.value)">4: cycles all 4 presets</li>
 		</div>
 	  </div>
 	  &nbsp;
