@@ -60,8 +60,9 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
             return;
         }
 
-      if (json.containsKey("TLSE")){sendProgramInfo(); notifyClientsSingleObject("TLSE", false);}
-      
+      if (json.containsKey("TLSE")){sendProgramInfo(1); sendProgramInfo(2); DEBUG_PRINTLN("enters here in TLSE"); notifyClientsSingleObject("TLSE", false);}
+      //else if (json.containsKey("TLSX")){sendProgramInfo(2); DEBUG_PRINTLN("enters here in TLSX"); }
+
       else if (json.containsKey("ssid")){String wifiID = json["ssid"]; EEPROMposition = offsetof(storeInEEPROM, ssidStorage[0]); writeStringToEEPROM(EEPROMposition, wifiID); notifyClientsSingleString("wifiID", wifiID);}
       else if (json.containsKey("pass")){String wifiPASS = json["pass"]; EEPROMposition = offsetof(storeInEEPROM, passStorage[0]); writeStringToEEPROM(EEPROMposition, wifiPASS); notifyClientsSingleString("wifiPASS", wifiPASS);}
       
@@ -69,7 +70,7 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
       else if (json.containsKey("SBRI")){BRIGH = json["SBRI"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, BRIGH), BRIGH);  EEPROM.commit();};}
       else if (json.containsKey("SSAT")){S = json["SSAT"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, S), S);  EEPROM.commit();};}
       else if (json.containsKey("SPGM")){programMode = json["SPGM"]; cycleT=0;  previousMillis44 = millis();  previousMillis45 = millis(); if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, programMode), programMode);  EEPROM.commit();};  changeState();} 
-      else if (json.containsKey("SBSM")){BriSPreset = json["SBSM"]; readBriSData(BriSPreset); sendProgramInfo();}
+      else if (json.containsKey("SBSM")){BriSPreset = json["SBSM"]; readBriSData(BriSPreset); sendProgramInfo(1);}
       else if (json.containsKey("SGLO")){glowON = json["SGLO"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, glowON), glowON);  EEPROM.commit();};}
       else if (json.containsKey("SSTM")){satON = json["SSTM"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, satON), satON);  EEPROM.commit();};}
 
@@ -94,11 +95,11 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
       else if (json.containsKey("SSCO")){z5 = json["SSCO"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, z5), z5);  EEPROM.commit();};}
       else if (json.containsKey("SOFF")){offdis = json["SOFF"]; if (tower && (effect_function == *snow_flakes || effect_function == *snow_flakes_2 || effect_function == *snow_flakesR)){offdisC = offdis; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, offdisC), offdisC);  EEPROM.commit();};};} //  || effect_function == *meteor
       else if (json.containsKey("SCTM")){cycleTime = json["SCTM"]; cycleTime = cycleTime*1000; if (cycleTime == 0){cycleTime = 60000;} if (saveToEEPROM){saveCycleParamToEEPROM();};}
-      else if (json.containsKey("SBWS")){waveTimeBr = json["SBWS"]; convBrigh = waveTimeBr/numbrigh; if (maintainWaveForm){BPMB=60000/waveTimeBr; notifyClientsSingleObjectByte("SSBS", BPMB);}; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, waveTimeBr), waveTimeBr); EEPROM.put(offsetof(storeInEEPROM, BPMB), BPMB);  EEPROM.commit();};}
-      else if (json.containsKey("SSWS")){waveTimeS = json["SSWS"]; convSat = waveTimeS/numsat; if (maintainWaveForm){BPMS=60000/waveTimeS; notifyClientsSingleObjectByte("SSSS", BPMS);}; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, waveTimeS), waveTimeS); EEPROM.put(offsetof(storeInEEPROM, BPMS), BPMS);  EEPROM.commit();};}      
+      else if (json.containsKey("SBWS")){waveTimeBr = json["SBWS"]; convBrigh = waveTimeBr/numbrigh; if (maintainWaveForm){BPMB=60000/waveTimeBr; notifyClientsSingleObjectByte("SSBS", BPMB);};}// if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, waveTimeBr), waveTimeBr); EEPROM.put(offsetof(storeInEEPROM, BPMB), BPMB);  EEPROM.commit();};}
+      else if (json.containsKey("SSWS")){waveTimeS = json["SSWS"]; convSat = waveTimeS/numsat; if (maintainWaveForm){BPMS=60000/waveTimeS; notifyClientsSingleObjectByte("SSSS", BPMS);};}// if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, waveTimeS), waveTimeS); EEPROM.put(offsetof(storeInEEPROM, BPMS), BPMS);  EEPROM.commit();};}      
       else if (json.containsKey("SLPS")){timefactor3 = json["SLPS"]; timefactor3 = timefactor3/100; Serial.println(timefactor3); if (saveToEEPROM){saveCycleParamToEEPROM();};}
-      else if (json.containsKey("SSBS")){BPMB = json["SSBS"]; if (maintainWaveForm){waveTimeBr=60000/BPMB; convBrigh=waveTimeBr/numbrigh; notifyClientsSingleObjectInt("SBWS", waveTimeBr);}; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, BPMB), BPMB);  EEPROM.put(offsetof(storeInEEPROM, waveTimeBr), waveTimeBr); EEPROM.commit(); };}      
-      else if (json.containsKey("SSSS")){BPMS = json["SSSS"]; if (maintainWaveForm){waveTimeS=60000/BPMS; convSat=waveTimeS/numsat; notifyClientsSingleObjectInt("SSWS", waveTimeS);}; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, BPMS), BPMS); EEPROM.put(offsetof(storeInEEPROM, waveTimeS), waveTimeS);  EEPROM.commit();};} 
+      else if (json.containsKey("SSBS")){BPMB = json["SSBS"]; if (maintainWaveForm){waveTimeBr=60000/BPMB; convBrigh=waveTimeBr/numbrigh; notifyClientsSingleObjectInt("SBWS", waveTimeBr);};}// if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, BPMB), BPMB);  EEPROM.put(offsetof(storeInEEPROM, waveTimeBr), waveTimeBr); EEPROM.commit(); };}      
+      else if (json.containsKey("SSSS")){BPMS = json["SSSS"]; if (maintainWaveForm){waveTimeS=60000/BPMS; convSat=waveTimeS/numsat; notifyClientsSingleObjectInt("SSWS", waveTimeS);};}// if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, BPMS), BPMS); EEPROM.put(offsetof(storeInEEPROM, waveTimeS), waveTimeS);  EEPROM.commit();};} 
       else if (json.containsKey("SOBR")){offBr = json["SOBR"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, offBr), offBr);  EEPROM.commit();};}   
       else if (json.containsKey("SOST")){offS = json["SOST"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, offS), offS);  EEPROM.commit();};}    
       else if (json.containsKey("SRED")){Red = json["SRED"]; loadHSV = true; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, Red), Red);  EEPROM.commit();};} 
@@ -116,8 +117,10 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
 //      else if (str == "TVBB"){varBPMB = dataVar; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, varBPMB), varBPMB);  EEPROM.commit();};} // EEPROM
 //      else if (str == "TVNS"){varNumsat = dataVar; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, varNumsat), varNumsat);  EEPROM.commit();};} // EEPROM
 //      else if (str == "TVBS"){varBPMS = dataVar; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, varBPMS), varBPMS);  EEPROM.commit();};} // EEPROM      
-      else if (json.containsKey("TPMO")){personalizedModes = json["TPMO"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, personalizedModes), personalizedModes);  EEPROM.commit();};}
-      else if (json.containsKey("TSCM")){saveCurrentModeToEEPROM(); sendDelayWSMessage=true; message = 1; previousMillis14=millis(); }
+      else if (json.containsKey("SPST")){selectedPreset[programMode] = json["SPST"]; selectedPresetVariable = selectedPreset[programMode]; cycleT=0;  previousMillis44 = millis();  previousMillis45 = millis();  if (saveToEEPROM){int offsetPosition = offsetof(storeInEEPROM, selectedPreset[0]); EEPROM.put((offsetPosition + programMode), selectedPresetVariable);  EEPROM.commit();} changeState();}
+      else if (json.containsKey("TSCM")){saveCurrentPresetToEEPROM(); sendDelayWSMessage=true; message = 1; previousMillis14=millis(); }
+      else if (json.containsKey("TSBM")){saveCurrentBriSPresetToEEPROM(); sendDelayWSMessage=true; message = 5; previousMillis14=millis(); }
+      
       else if (json.containsKey("TRBO")){rainbowON = json["TRBO"];}
       else if (json.containsKey("TRVO")){reverseON = json["TRVO"];}
       else if (json.containsKey("TWHO")){whiteON = json["TWHO"];  if (whiteON){for (int t=0; t<15; t++){satval[t]=S;   satval[0]=0;}} else if (!whiteON){for (int t=0; t<15; t++){satval[t]=S;}}}
@@ -154,9 +157,11 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
     }
 }
 
-void sendProgramInfo(){
+void sendProgramInfo(byte message){
 //StaticJsonDocument<2000> doc; // 2500
 DynamicJsonDocument doc(2000);
+    switch (message){
+      case 1: {
     strcpy_P(buffer, (char*)pgm_read_dword(&(string_table[programMode])));
     doc["progn"] = buffer;
     doc["SHUE"] = yval;
@@ -198,6 +203,9 @@ DynamicJsonDocument doc(2000);
     doc["TCAC"] = cmode[programMode]; // 37
     doc["TSTE"] = saveToEEPROM;
     doc["TTWO"] = tower;
+    
+    doc["SPST"] = selectedPreset[programMode];
+
     doc["SOBR"] = offBr;
     doc["SOST"] = offS;
     doc["SRED"] = Red;
@@ -226,10 +234,39 @@ DynamicJsonDocument doc(2000);
     doc["SMA2"] = ymax2;      
     doc["SM3R"] = range;
     doc["SBSM"] = BriSPreset;   
-    doc["TPMO"] = personalizedModes;   
+    //doc["TPMO"] = personalizedModes;   
     doc["TCPM"] = saveForAllModes;
-    doc["HCOL"] = RGBCOLOR; 
+    doc["HCOL"] = RGBCOLOR;
+      }
+      break;
+      case 2:{
+      doc["BSMP"][0] = modeCount;
 
+      for (int m = 1; m <= modeCount; m++){
+      int offsetPosition = (offsetof(storeInEEPROM, BriSPreset[0])) + m-1;  
+      uint8_t BriSPresetVal = EEPROM.read(offsetPosition);
+      DEBUG_PRINTLN(BriSPresetVal);
+      doc["BSMP"][m] = BriSPresetVal;
+      }
+
+      doc["BSMY"][0] = modeCount;
+      for (int m = 1; m <= modeCount; m++){
+      int offsetPosition = (offsetof(storeInEEPROM, BriSPreset2[0])) + m-1;  
+      uint8_t BriSPresetVal = EEPROM.read(offsetPosition);
+      DEBUG_PRINTLN(BriSPresetVal);
+      doc["BSMY"][m] = BriSPresetVal;
+      }
+
+      doc["BSMX"][0] = modeCount;
+      for (int m = 1; m <= modeCount; m++){
+      int offsetPosition = (offsetof(storeInEEPROM, BriSPreset3[0])) + m-1;  
+      uint8_t BriSPresetVal = EEPROM.read(offsetPosition);
+      DEBUG_PRINTLN(BriSPresetVal);
+      doc["BSMX"][m] = BriSPresetVal;
+      } 
+    }
+    break;
+    }
                                 
 char data[2000]; // 2500
 size_t len = serializeJson(doc, data);
@@ -321,6 +358,7 @@ void handleWebsocketUpdate(){
         case 2: {notifyClientsSingleObject("TSET", false);} break; //ws.textAll("GTSET0");} break;
         case 3: {notifyClientsSingleObject("TAAM", false);} break; //ws.textAll("GTAAM0");} break;
         case 4: {notifyClientsSingleObject("TDAM", false);} break; //ws.textAll("GTDAM0");} break;
+        case 5: {notifyClientsSingleObject("TSBM", false);} break; //ws.textAll("GTDAM0");} break;
       }        
       sendDelayWSMessage=false;
       message=0;
@@ -347,7 +385,8 @@ EEPROM.put((offsetPosition+(offsetInArray*sizeof(float))), timefactor3);
 EEPROM.commit();
 }
 
-void saveCurrentModeToEEPROM(){
+void saveCurrentPresetToEEPROM(){
+if (selectedPreset[programMode] == 1){
 int offsetPosition = offsetof(storeInEEPROM, BriSPreset[0]);
 EEPROM.put((offsetPosition+programMode), BriSPreset); 
 offsetPosition = offsetof(storeInEEPROM, changeSpeed[0]);
@@ -390,9 +429,115 @@ EEPROM.put(offsetof(storeInEEPROM, colorlengthm[0]), colorlength);
 else if (effect_function == random_string){
 EEPROM.put(offsetof(storeInEEPROM, colorlengthm[1]), colorlength);
 }
+}
+else if (selectedPreset[programMode] == 2){
+int offsetPosition = offsetof(storeInEEPROM, BriSPreset2[0]);
+EEPROM.put((offsetPosition+programMode), BriSPreset); 
 
+offsetPosition = offsetof(storeInEEPROM, changeSpeed2[0]);
+EEPROM.put((offsetPosition+(programMode*sizeof(unsigned long))), changeSpeed); 
+
+offsetPosition = offsetof(storeInEEPROM, setDifference2[0]);
+EEPROM.put((offsetPosition+(programMode*sizeof(int))), setDifference);
+
+offsetPosition = offsetof(storeInEEPROM, colorMode2[0]);
+EEPROM.put((offsetPosition+(programMode*sizeof(int))), colorMode); 
+
+offsetPosition = offsetof(storeInEEPROM, arrayn2[0]);
+EEPROM.put((offsetPosition+programMode), arrayn); 
+
+offsetPosition = offsetof(storeInEEPROM, numsparks2[0]);
+EEPROM.put((offsetPosition+programMode), numsparks); 
+
+offsetPosition = offsetof(storeInEEPROM, varON2[0]);
+EEPROM.put((offsetPosition+programMode), varON);
+
+offsetPosition = offsetof(storeInEEPROM, glitterON2[0]);
+EEPROM.put((offsetPosition+programMode), glitterON);
+
+if (effect_function == pers_color){
+EEPROM.put(offsetof(storeInEEPROM, numcolor12), numcolor); 
+}
+else if (effect_function == pers_block){
+EEPROM.put(offsetof(storeInEEPROM, numcolor22), numcolor); 
+EEPROM.put(offsetof(storeInEEPROM, colorlengthm2[2]), colorlength); 
+}
+else if (effect_function == static_glow && programMode == 0){
+EEPROM.put(offsetof(storeInEEPROM, yval2), yval);
+}
+else if (effect_function == static_glow && programMode == 2){
+EEPROM.put(offsetof(storeInEEPROM, yvalm22), yval);
+}
+else if (effect_function == static_glow && programMode == 3){
+EEPROM.put(offsetof(storeInEEPROM, yvalm32), yval);
+}
+else if (effect_function == palettes){
+EEPROM.put(offsetof(storeInEEPROM, gCurrentPaletteNumber2), gCurrentPaletteNumber);
+}
+else if (effect_function == rainbow_6){
+EEPROM.put(offsetof(storeInEEPROM, colorlengthm2[0]), colorlength);
+}
+else if (effect_function == random_string){
+EEPROM.put(offsetof(storeInEEPROM, colorlengthm2[1]), colorlength);
+}
+}
+
+else if (selectedPreset[programMode] == 3){
+int offsetPosition = offsetof(storeInEEPROM, BriSPreset3[0]);
+EEPROM.put((offsetPosition+programMode), BriSPreset); 
+
+offsetPosition = offsetof(storeInEEPROM, changeSpeed3[0]);
+EEPROM.put((offsetPosition+(programMode*sizeof(unsigned long))), changeSpeed); 
+
+offsetPosition = offsetof(storeInEEPROM, setDifference3[0]);
+EEPROM.put((offsetPosition+(programMode*sizeof(int))), setDifference);
+
+offsetPosition = offsetof(storeInEEPROM, colorMode3[0]);
+EEPROM.put((offsetPosition+(programMode*sizeof(int))), colorMode); 
+
+offsetPosition = offsetof(storeInEEPROM, arrayn3[0]);
+EEPROM.put((offsetPosition+programMode), arrayn); 
+
+offsetPosition = offsetof(storeInEEPROM, numsparks3[0]);
+EEPROM.put((offsetPosition+programMode), numsparks); 
+
+offsetPosition = offsetof(storeInEEPROM, varON3[0]);
+EEPROM.put((offsetPosition+programMode), varON);
+
+offsetPosition = offsetof(storeInEEPROM, glitterON3[0]);
+EEPROM.put((offsetPosition+programMode), glitterON);
+
+if (effect_function == pers_color){
+EEPROM.put(offsetof(storeInEEPROM, numcolor13), numcolor); 
+}
+else if (effect_function == pers_block){
+EEPROM.put(offsetof(storeInEEPROM, numcolor23), numcolor); 
+EEPROM.put(offsetof(storeInEEPROM, colorlengthm3[2]), colorlength); 
+}
+else if (effect_function == static_glow && programMode == 0){
+EEPROM.put(offsetof(storeInEEPROM, yval3), yval);
+}
+else if (effect_function == static_glow && programMode == 2){
+EEPROM.put(offsetof(storeInEEPROM, yvalm23), yval);
+}
+else if (effect_function == static_glow && programMode == 3){
+EEPROM.put(offsetof(storeInEEPROM, yvalm33), yval);
+}
+else if (effect_function == palettes){
+EEPROM.put(offsetof(storeInEEPROM, gCurrentPaletteNumber3), gCurrentPaletteNumber);
+}
+else if (effect_function == rainbow_6){
+EEPROM.put(offsetof(storeInEEPROM, colorlengthm3[0]), colorlength);
+}
+else if (effect_function == random_string){
+EEPROM.put(offsetof(storeInEEPROM, colorlengthm3[1]), colorlength);
+}
+}
+}
+
+void saveCurrentBriSPresetToEEPROM(){
 uint8_t offsetInArray = BriSPreset;
-offsetPosition = offsetof(storeInEEPROM, waveTimeBr[0]);
+int offsetPosition = offsetof(storeInEEPROM, waveTimeBr[0]);
 EEPROM.put((offsetPosition+(offsetInArray*sizeof(unsigned long))), waveTimeBr); 
 offsetPosition = offsetof(storeInEEPROM, waveTimeS[0]);
 EEPROM.put((offsetPosition+(offsetInArray*sizeof(unsigned long))), waveTimeS);
@@ -465,69 +610,217 @@ void enableMode(){
 
 
 void loadPersonalSettings(){
-int offsetPosition = (offsetof(storeInEEPROM, BriSPreset[0])) + programMode;  
-BriSPreset = EEPROM.read(offsetPosition);
-offsetPosition = (offsetof(storeInEEPROM, arrayn[0])) + programMode; 
-arrayn = EEPROM.read(offsetPosition);
-offsetPosition = (offsetof(storeInEEPROM, varON[0])) + programMode; 
-varON = EEPROM.read(offsetPosition); for (int p=0; p<10; p++){if (varON == 0){yvar[p]= 0; yvarg[p]= 0;} else {yvar[p]=yvarC[p]; yvarg[p]=yvargC[p];};}
-offsetPosition = (offsetof(storeInEEPROM, numsparks[0])) + programMode; 
-numsparks = EEPROM.read(offsetPosition);
-offsetPosition = (offsetof(storeInEEPROM, glitterON[0])) + programMode; 
-glitterON = EEPROM.read(offsetPosition);
 
-#ifdef ESP8266 
-offsetPosition = offsetof(storeInEEPROM, changeSpeed[0]) + (programMode*sizeof(unsigned long));  
-EEPROM.get(offsetPosition, changeSpeed);
-offsetPosition = offsetof(storeInEEPROM, cycleTime[0]) + (programMode*sizeof(unsigned long));  
-EEPROM.get(offsetPosition, cycleTime);
-offsetPosition = offsetof(storeInEEPROM, timefactor3[0]) + (programMode*sizeof(float));  
-EEPROM.get(offsetPosition, timefactor3);
-offsetPosition = offsetof(storeInEEPROM, setDifference[0]) + (programMode*sizeof(int));  
-EEPROM.get(offsetPosition, setDifference);
-offsetPosition = offsetof(storeInEEPROM, colorMode[0]) + (programMode*sizeof(int));  
-EEPROM.get(offsetPosition, colorMode);
-#else
-offsetPosition = offsetof(storeInEEPROM, changeSpeed[0]) + (programMode*sizeof(unsigned long));  
-changeSpeed = EEPROM.readLong(offsetPosition); 
-
-offsetPosition = offsetof(storeInEEPROM, cycleTime[0]) + (programMode*sizeof(unsigned long));  
+int offsetPosition = offsetof(storeInEEPROM, cycleTime[0]) + (programMode*sizeof(unsigned long));  
 cycleTime = EEPROM.readLong(offsetPosition); 
 
 offsetPosition = offsetof(storeInEEPROM, timefactor3[0]) + (programMode*sizeof(float));  
 timefactor3 = EEPROM.readFloat(offsetPosition); 
 
-offsetPosition = offsetof(storeInEEPROM, setDifference[0]) + (programMode*sizeof(int));
-setDifference = EEPROM.readInt(offsetPosition);
+switch (selectedPresetVariable){
+  case 1: {
+    int offsetPosition = (offsetof(storeInEEPROM, BriSPreset[0])) + programMode;  
+    BriSPreset = EEPROM.read(offsetPosition);
+    offsetPosition = (offsetof(storeInEEPROM, arrayn[0])) + programMode; 
+    arrayn = EEPROM.read(offsetPosition);
+    offsetPosition = (offsetof(storeInEEPROM, varON[0])) + programMode; 
+    varON = EEPROM.read(offsetPosition); for (int p=0; p<10; p++){if (varON == 0){yvar[p]= 0; yvarg[p]= 0;} else {yvar[p]=yvarC[p]; yvarg[p]=yvargC[p];};}
+    offsetPosition = (offsetof(storeInEEPROM, numsparks[0])) + programMode; 
+    numsparks = EEPROM.read(offsetPosition);
+    offsetPosition = (offsetof(storeInEEPROM, glitterON[0])) + programMode; 
+    glitterON = EEPROM.read(offsetPosition);
 
-offsetPosition = offsetof(storeInEEPROM, colorMode[0]) + (programMode*sizeof(int));  
-colorMode = EEPROM.readInt(offsetPosition);
-#endif
+    #ifdef ESP8266 
+    offsetPosition = offsetof(storeInEEPROM, changeSpeed[0]) + (programMode*sizeof(unsigned long));  
+    EEPROM.get(offsetPosition, changeSpeed);
+    // offsetPosition = offsetof(storeInEEPROM, cycleTime[0]) + (programMode*sizeof(unsigned long));  
+    // EEPROM.get(offsetPosition, cycleTime);
+    // offsetPosition = offsetof(storeInEEPROM, timefactor3[0]) + (programMode*sizeof(float));  
+    // EEPROM.get(offsetPosition, timefactor3);
+    offsetPosition = offsetof(storeInEEPROM, setDifference[0]) + (programMode*sizeof(int));  
+    EEPROM.get(offsetPosition, setDifference);
+    offsetPosition = offsetof(storeInEEPROM, colorMode[0]) + (programMode*sizeof(int));  
+    EEPROM.get(offsetPosition, colorMode);
+    #else
+    offsetPosition = offsetof(storeInEEPROM, changeSpeed[0]) + (programMode*sizeof(unsigned long));  
+    changeSpeed = EEPROM.readLong(offsetPosition); 
 
-if (effect_function == pers_color){
-numcolor = EEPROM.read(offsetof(storeInEEPROM, numcolor1));
-}
-else if (effect_function == pers_block){
-numcolor = EEPROM.read(offsetof(storeInEEPROM, numcolor2));
-colorlength = EEPROM.read(offsetof(storeInEEPROM, colorlengthm[2]));
-}
-else if (effect_function == static_glow && programMode == 0){
-yval = EEPROM.read(offsetof(storeInEEPROM, yval));
-}
-else if (effect_function == static_glow && programMode == 2){
-yval = EEPROM.read(offsetof(storeInEEPROM, yvalm2));
-}
-else if (effect_function == static_glow && programMode == 3){
-yval = EEPROM.read(offsetof(storeInEEPROM, yvalm3));
-}
-else if (effect_function == palettes){
-gCurrentPaletteNumber = EEPROM.read(offsetof(storeInEEPROM, gCurrentPaletteNumber));
-}
-else if (effect_function == rainbow_6){
-colorlength = EEPROM.read(offsetof(storeInEEPROM, colorlengthm[0]));
-}
-else if (effect_function == random_string){
-colorlength = EEPROM.read(offsetof(storeInEEPROM, colorlengthm[1]));
+    // offsetPosition = offsetof(storeInEEPROM, cycleTime[0]) + (programMode*sizeof(unsigned long));  
+    // cycleTime = EEPROM.readLong(offsetPosition); 
+
+    // offsetPosition = offsetof(storeInEEPROM, timefactor3[0]) + (programMode*sizeof(float));  
+    // timefactor3 = EEPROM.readFloat(offsetPosition); 
+
+    offsetPosition = offsetof(storeInEEPROM, setDifference[0]) + (programMode*sizeof(int));
+    setDifference = EEPROM.readInt(offsetPosition);
+
+    offsetPosition = offsetof(storeInEEPROM, colorMode[0]) + (programMode*sizeof(int));  
+    colorMode = EEPROM.readInt(offsetPosition);
+    #endif
+
+    if (effect_function == pers_color){
+    numcolor = EEPROM.read(offsetof(storeInEEPROM, numcolor1));
+    }
+    else if (effect_function == pers_block){
+    numcolor = EEPROM.read(offsetof(storeInEEPROM, numcolor2));
+    colorlength = EEPROM.read(offsetof(storeInEEPROM, colorlengthm[2]));
+    }
+    else if (effect_function == static_glow && programMode == 0){
+    yval = EEPROM.read(offsetof(storeInEEPROM, yval));
+    }
+    else if (effect_function == static_glow && programMode == 2){
+    yval = EEPROM.read(offsetof(storeInEEPROM, yvalm2));
+    }
+    else if (effect_function == static_glow && programMode == 3){
+    yval = EEPROM.read(offsetof(storeInEEPROM, yvalm3));
+    }
+    else if (effect_function == palettes){
+    gCurrentPaletteNumber = EEPROM.read(offsetof(storeInEEPROM, gCurrentPaletteNumber));
+    }
+    else if (effect_function == rainbow_6){
+    colorlength = EEPROM.read(offsetof(storeInEEPROM, colorlengthm[0]));
+    }
+    else if (effect_function == random_string){
+    colorlength = EEPROM.read(offsetof(storeInEEPROM, colorlengthm[1]));
+    }
+  } break;
+
+  case 2: {
+    int offsetPosition = (offsetof(storeInEEPROM, BriSPreset2[0])) + programMode;  
+    BriSPreset = EEPROM.read(offsetPosition);
+    offsetPosition = (offsetof(storeInEEPROM, arrayn2[0])) + programMode; 
+    arrayn = EEPROM.read(offsetPosition);
+    offsetPosition = (offsetof(storeInEEPROM, varON2[0])) + programMode; 
+    varON = EEPROM.read(offsetPosition); for (int p=0; p<10; p++){if (varON == 0){yvar[p]= 0; yvarg[p]= 0;} else {yvar[p]=yvarC[p]; yvarg[p]=yvargC[p];};}
+    offsetPosition = (offsetof(storeInEEPROM, numsparks2[0])) + programMode; 
+    numsparks = EEPROM.read(offsetPosition);
+    offsetPosition = (offsetof(storeInEEPROM, glitterON2[0])) + programMode; 
+    glitterON = EEPROM.read(offsetPosition);
+
+    #ifdef ESP8266 
+    offsetPosition = offsetof(storeInEEPROM, changeSpeed2[0]) + (programMode*sizeof(unsigned long));  
+    EEPROM.get(offsetPosition, changeSpeed);
+    // offsetPosition = offsetof(storeInEEPROM, cycleTime[0]) + (programMode*sizeof(unsigned long));  
+    // EEPROM.get(offsetPosition, cycleTime);
+    // offsetPosition = offsetof(storeInEEPROM, timefactor3[0]) + (programMode*sizeof(float));  
+    // EEPROM.get(offsetPosition, timefactor3);
+    offsetPosition = offsetof(storeInEEPROM, setDifference2[0]) + (programMode*sizeof(int));  
+    EEPROM.get(offsetPosition, setDifference);
+    offsetPosition = offsetof(storeInEEPROM, colorMode2[0]) + (programMode*sizeof(int));  
+    EEPROM.get(offsetPosition, colorMode);
+    #else
+    offsetPosition = offsetof(storeInEEPROM, changeSpeed2[0]) + (programMode*sizeof(unsigned long));  
+    changeSpeed = EEPROM.readLong(offsetPosition); 
+
+    // offsetPosition = offsetof(storeInEEPROM, cycleTime[0]) + (programMode*sizeof(unsigned long));  
+    // cycleTime = EEPROM.readLong(offsetPosition); 
+
+    // offsetPosition = offsetof(storeInEEPROM, timefactor3[0]) + (programMode*sizeof(float));  
+    // timefactor3 = EEPROM.readFloat(offsetPosition); 
+
+    offsetPosition = offsetof(storeInEEPROM, setDifference2[0]) + (programMode*sizeof(int));
+    setDifference = EEPROM.readInt(offsetPosition);
+
+    offsetPosition = offsetof(storeInEEPROM, colorMode2[0]) + (programMode*sizeof(int));  
+    colorMode = EEPROM.readInt(offsetPosition);
+    #endif
+
+    if (effect_function == pers_color){
+    numcolor = EEPROM.read(offsetof(storeInEEPROM, numcolor12));
+    }
+    else if (effect_function == pers_block){
+    numcolor = EEPROM.read(offsetof(storeInEEPROM, numcolor22));
+    colorlength = EEPROM.read(offsetof(storeInEEPROM, colorlengthm2[2]));
+    }
+    else if (effect_function == static_glow && programMode == 0){
+    yval = EEPROM.read(offsetof(storeInEEPROM, yval2));
+    }
+    else if (effect_function == static_glow && programMode == 2){
+    yval = EEPROM.read(offsetof(storeInEEPROM, yvalm22));
+    }
+    else if (effect_function == static_glow && programMode == 3){
+    yval = EEPROM.read(offsetof(storeInEEPROM, yvalm32));
+    }
+    else if (effect_function == palettes){
+    gCurrentPaletteNumber = EEPROM.read(offsetof(storeInEEPROM, gCurrentPaletteNumber2));
+    }
+    else if (effect_function == rainbow_6){
+    colorlength = EEPROM.read(offsetof(storeInEEPROM, colorlengthm2[0]));
+    }
+    else if (effect_function == random_string){
+    colorlength = EEPROM.read(offsetof(storeInEEPROM, colorlengthm2[1]));
+    }
+    
+
+  } break;
+
+  case 3: {
+        int offsetPosition = (offsetof(storeInEEPROM, BriSPreset3[0])) + programMode;  
+    BriSPreset = EEPROM.read(offsetPosition);
+    offsetPosition = (offsetof(storeInEEPROM, arrayn3[0])) + programMode; 
+    arrayn = EEPROM.read(offsetPosition);
+    offsetPosition = (offsetof(storeInEEPROM, varON3[0])) + programMode; 
+    varON = EEPROM.read(offsetPosition); for (int p=0; p<10; p++){if (varON == 0){yvar[p]= 0; yvarg[p]= 0;} else {yvar[p]=yvarC[p]; yvarg[p]=yvargC[p];};}
+    offsetPosition = (offsetof(storeInEEPROM, numsparks3[0])) + programMode; 
+    numsparks = EEPROM.read(offsetPosition);
+    offsetPosition = (offsetof(storeInEEPROM, glitterON3[0])) + programMode; 
+    glitterON = EEPROM.read(offsetPosition);
+
+    #ifdef ESP8266 
+    offsetPosition = offsetof(storeInEEPROM, changeSpeed3[0]) + (programMode*sizeof(unsigned long));  
+    EEPROM.get(offsetPosition, changeSpeed);
+    // offsetPosition = offsetof(storeInEEPROM, cycleTime[0]) + (programMode*sizeof(unsigned long));  
+    // EEPROM.get(offsetPosition, cycleTime);
+    // offsetPosition = offsetof(storeInEEPROM, timefactor3[0]) + (programMode*sizeof(float));  
+    // EEPROM.get(offsetPosition, timefactor3);
+    offsetPosition = offsetof(storeInEEPROM, setDifference3[0]) + (programMode*sizeof(int));  
+    EEPROM.get(offsetPosition, setDifference);
+    offsetPosition = offsetof(storeInEEPROM, colorMode3[0]) + (programMode*sizeof(int));  
+    EEPROM.get(offsetPosition, colorMode);
+    #else
+    offsetPosition = offsetof(storeInEEPROM, changeSpeed3[0]) + (programMode*sizeof(unsigned long));  
+    changeSpeed = EEPROM.readLong(offsetPosition); 
+
+    // offsetPosition = offsetof(storeInEEPROM, cycleTime[0]) + (programMode*sizeof(unsigned long));  
+    // cycleTime = EEPROM.readLong(offsetPosition); 
+
+    // offsetPosition = offsetof(storeInEEPROM, timefactor3[0]) + (programMode*sizeof(float));  
+    // timefactor3 = EEPROM.readFloat(offsetPosition); 
+
+    offsetPosition = offsetof(storeInEEPROM, setDifference3[0]) + (programMode*sizeof(int));
+    setDifference = EEPROM.readInt(offsetPosition);
+
+    offsetPosition = offsetof(storeInEEPROM, colorMode3[0]) + (programMode*sizeof(int));  
+    colorMode = EEPROM.readInt(offsetPosition);
+    #endif
+
+    if (effect_function == pers_color){
+    numcolor = EEPROM.read(offsetof(storeInEEPROM, numcolor13));
+    }
+    else if (effect_function == pers_block){
+    numcolor = EEPROM.read(offsetof(storeInEEPROM, numcolor23));
+    colorlength = EEPROM.read(offsetof(storeInEEPROM, colorlengthm3[2]));
+    }
+    else if (effect_function == static_glow && programMode == 0){
+    yval = EEPROM.read(offsetof(storeInEEPROM, yval3));
+    }
+    else if (effect_function == static_glow && programMode == 2){
+    yval = EEPROM.read(offsetof(storeInEEPROM, yvalm23));
+    }
+    else if (effect_function == static_glow && programMode == 3){
+    yval = EEPROM.read(offsetof(storeInEEPROM, yvalm33));
+    }
+    else if (effect_function == palettes){
+    gCurrentPaletteNumber = EEPROM.read(offsetof(storeInEEPROM, gCurrentPaletteNumber3));
+    }
+    else if (effect_function == rainbow_6){
+    colorlength = EEPROM.read(offsetof(storeInEEPROM, colorlengthm3[0]));
+    }
+    else if (effect_function == random_string){
+    colorlength = EEPROM.read(offsetof(storeInEEPROM, colorlengthm3[1]));
+    }
+
+  } break;
 }
 
 selectcolorArray();
@@ -536,7 +829,7 @@ readBriSData(BriSPreset);
 
 void readBriSData(byte preset)
 {
-  if (!personalizedModes){
+  if (selectedPresetVariable == 0){
           BRIGH = pgm_read_byte(&selectPresetB_data[preset].BRIGH);
       BrF = pgm_read_byte(&selectPresetB_data[preset].BrF);
       glowON = pgm_read_byte(&selectPresetB_data[preset].glowON);
@@ -552,7 +845,7 @@ void readBriSData(byte preset)
       BPMS = pgm_read_byte(&selectPresetB_data[preset].BPMS);
       waveTimeS = pgm_read_dword(&selectPresetB_data[preset].waveTimeS);
   }
-  else if (personalizedModes){
+  else if (selectedPresetVariable != 0){
       uint8_t offsetInArray = preset;
       // Serial.println(offsetInArray);
       int offsetPosition = (offsetof(storeInEEPROM, BRIGH[0])) + offsetInArray; 

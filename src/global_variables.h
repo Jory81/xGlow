@@ -74,12 +74,15 @@ struct storeInEEPROM {
   uint8_t ymaxblauw;
   boolean cmode[modeCount];
   boolean glitterON[modeCount];
+  boolean glitterON2[modeCount];
+  boolean glitterON3[modeCount];
   const byte rgbcolor;
   boolean cycle;
   boolean fadeFirst;
   boolean randomCycle;
   boolean excludeModes;
-  boolean personalizedModes;
+  //boolean personalizedModes;
+  byte selectedPreset[modeCount];
   uint32_t cycleTime[modeCount];
   byte programMode;
   boolean tower;
@@ -88,9 +91,17 @@ struct storeInEEPROM {
   byte Green;
   byte Blue;
   byte yval;
+  byte yval2;
+  byte yval3;
   byte yvalm2;
+  byte yvalm22;
+  byte yvalm23;
   byte yvalm3;
+  byte yvalm32;
+  byte yvalm33;
   byte colorlengthm[3];
+  byte colorlengthm2[3];
+  byte colorlengthm3[3];
   byte varONglobal; 
   byte BRIGH[26];
   byte offBr[26];
@@ -108,6 +119,8 @@ struct storeInEEPROM {
   uint32_t waveTimeS[26];
   float timefactor3[modeCount];
   byte numsparks[modeCount];
+  byte numsparks2[modeCount];
+  byte numsparks3[modeCount];
   boolean Bees; 
   boolean varNumbrigh;
   boolean varBPMB;
@@ -121,15 +134,33 @@ struct storeInEEPROM {
   uint8_t ymax4;  
   uint8_t range;
   byte gCurrentPaletteNumber; 
+  byte gCurrentPaletteNumber2; 
+  byte gCurrentPaletteNumber3; 
   byte offdisC;
   byte numcolor1;
-  byte numcolor2; 
+  byte numcolor12;
+  byte numcolor13;
+  byte numcolor2;
+  byte numcolor22;
+  byte numcolor23; 
   uint8_t BriSPreset[modeCount];
+  uint8_t BriSPreset2[modeCount];
+  uint8_t BriSPreset3[modeCount];
   unsigned long changeSpeed[modeCount];
+  unsigned long changeSpeed2[modeCount];
+  unsigned long changeSpeed3[modeCount];
   int setDifference[modeCount];
+  int setDifference2[modeCount];
+  int setDifference3[modeCount];
   int colorMode[modeCount];
+  int colorMode2[modeCount];
+  int colorMode3[modeCount];
   byte arrayn[modeCount];
+  byte arrayn2[modeCount];
+  byte arrayn3[modeCount];
   byte varON[modeCount];
+  byte varON2[modeCount];
+  byte varON3[modeCount];
   int NUM_LEDS;   
 };
 
@@ -245,7 +276,7 @@ storeInEEPROM customVar = {
       // 50 // NUM_LEDS   
 
     // SMALL CHRISTMAS TREE
-      22225, // code to check
+      11223, // code to check
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, // ssid storage
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, // pass storage
       1, // empty byte so ymin loads correctly
@@ -263,7 +294,18 @@ storeInEEPROM customVar = {
       1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
       1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
       1, 1, 1, 1, 1, 1, 1, 1,
+      
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // glitterON (1 = active)
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+      0, 1, 1, 1, 0, 0, 0, 0,
+      
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // glitterON2 (1 = active)
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+      0, 1, 1, 1, 0, 0, 0, 0,
+      
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // glitterON3 (1 = active)
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
       0, 1, 1, 1, 0, 0, 0, 0,
@@ -272,7 +314,11 @@ storeInEEPROM customVar = {
       1, // fade 
       1, // random
       1, // excludemodes
-      0, // personalizedModes
+      //0, // personalizedModes
+      4, 4, 4, 4, 4, 4, 4, 4, 4, 4, // selectedPreset
+      4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+      4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 
+      4, 4, 4, 4, 4, 4, 4, 4, 
       300000, 240000, 300000, 150000, 300000,   240000, 600000, 150000, 180000, 180000, // cycleTime
       120000, 60000, 120000, 120000, 180000,    240000, 120000, 300000, 240000, 180000,
       300000, 300000, 300000, 300000, 300000,   300000, 200000, 60000, 120000, 180000, 
@@ -283,10 +329,23 @@ storeInEEPROM customVar = {
       0, // red
       0, // green
       7, // blue
+
       5, // yval
+      5, // yval2
+      5, // yval3
+
       18, // yvalm2
+      18, // yvalm22
+      18, // yvalm23
+
       198, // yvalm3
+      198, // yvalm32
+      198, // yvalm33
+
       20, 16, 10, // colorLength rainbow_6, random_string, pers_block
+      20, 16, 10, // colorLength rainbow_6, random_string, pers_block
+      20, 16, 10, // colorLength rainbow_6, random_string, pers_block
+
       1, // varON 
       205, 155, 205, 194, 205,         205, 205, 202, 202, 150,          255, 205, 136, 106, 205,         205, 205, 205, 205, 205,            205, 205, 194, 175, 255, 75,// BRIGH          position 0 is global variable
       36, 34, 35, 43, 40,              19, 40, 59, 60, 50,               1, 1, 93, 18, 35,                175, 90, 175, 74, 79,                45, 35, 43, 24, 0, 0, // offBr               position 0 is global variable
@@ -306,7 +365,18 @@ storeInEEPROM customVar = {
       1.00, 1.00, 1.00, 1.00, 1.00,     1.00, 1.00, 1.00, 1.00, 1.00,
       1.00, 0.25, 1.00, 0.50, 0.50,     0.25, 1.00, 1.00, 1.00, 0.25, 
       0.25, 1.00, 1.00, 1.00, 1.00,     1.00, 1.00, 1.00,
+      
       10, 10, 10, 10, 10, 10, 10, 10, 10, 10, // numsparks
+      10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+      10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 
+      10, 10, 10, 10, 10, 10, 10, 10,
+      
+      10, 10, 10, 10, 10, 10, 10, 10, 10, 10, // numsparks2
+      10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+      10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 
+      10, 10, 10, 10, 10, 10, 10, 10,
+      
+      10, 10, 10, 10, 10, 10, 10, 10, 10, 10, // numsparks3
       10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
       10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 
       10, 10, 10, 10, 10, 10, 10, 10,
@@ -322,31 +392,107 @@ storeInEEPROM customVar = {
       248, // ymin4
       47, // ymax4
       60, // range
+
       7, // FastLDPalet;
+      7, // FastLDPalet2;
+      7, // FastLDPalet3;
+
       14, // offdisC
+
       3, //numcolor1 pers_color
+      3, //numcolor1 pers_color2
+      3, //numcolor1 pers_color3
+      
       15, //numcolor2 pers_block
+      15, //numcolor2 pers_block2
+      15, //numcolor2 pers_block3
+      
       22, 23, 9, 0, 21, 3, 11, 11, 10, 21, // uint8_t BriSpreset
       4, 2, 0, 0, 24, 0, 0, 0, 0, 0, 
       0, 13, 0, 0, 0, 0, 0, 0, 0, 8, 
       0, 24, 0, 24, 0, 0, 0, 0,
+      
+      22, 23, 9, 0, 21, 3, 11, 11, 10, 21, // uint8_t BriSpreset2
+      4, 2, 0, 0, 24, 0, 0, 0, 0, 0, 
+      0, 13, 0, 0, 0, 0, 0, 0, 0, 8, 
+      0, 24, 0, 24, 0, 0, 0, 0,
+      
+      22, 23, 9, 0, 21, 3, 11, 11, 10, 21, // uint8_t BriSpreset3
+      4, 2, 0, 0, 24, 0, 0, 0, 0, 0, 
+      0, 13, 0, 0, 0, 0, 0, 0, 0, 8, 
+      0, 24, 0, 24, 0, 0, 0, 0,
+      
       100, 100, 100, 100, 100, 35, 50, 50, 20, 46, // unsigned long changeSpeed
       100, 70, 108, 189, 100, 200, 110, 110, 110, 125, 
       125, 130, 125, 130, 135, 130, 30, 30, 2000, 2000, 
       1000, 200, 100, 40, 30, 20, 50, 50,
+      
+      100, 100, 100, 100, 100, 35, 50, 50, 20, 46, // unsigned long changeSpeed2
+      100, 70, 108, 189, 100, 200, 110, 110, 110, 125, 
+      125, 130, 125, 130, 135, 130, 30, 30, 2000, 2000, 
+      1000, 200, 100, 40, 30, 20, 50, 50,
+      
+      100, 100, 100, 100, 100, 35, 50, 50, 20, 46, // unsigned long changeSpeed3
+      100, 70, 108, 189, 100, 200, 110, 110, 110, 125, 
+      125, 130, 125, 130, 135, 130, 30, 30, 2000, 2000, 
+      1000, 200, 100, 40, 30, 20, 50, 50,
+
       7, 7, 7, 78, 80, 7, 1, 45, 1, 2, // int setDifference
       4, 7, 2, 25, 1, 1, 10, 6, 95, 7, 
       7, 7, 7, 7, 7, 7, 200, 40, 1, 1, 
       1, 7, 7, 7, 40, 40, 10, 1,
+      
+      7, 7, 7, 78, 80, 7, 1, 45, 1, 2, // int setDifference2
+      4, 7, 2, 25, 1, 1, 10, 6, 95, 7, 
+      7, 7, 7, 7, 7, 7, 200, 40, 1, 1, 
+      1, 7, 7, 7, 40, 40, 10, 1,
+      
+      7, 7, 7, 78, 80, 7, 1, 45, 1, 2, // int setDifference3
+      4, 7, 2, 25, 1, 1, 10, 6, 95, 7, 
+      7, 7, 7, 7, 7, 7, 200, 40, 1, 1, 
+      1, 7, 7, 7, 40, 40, 10, 1,
+
       0, 0, 0, 0, 1, 2, 1, 1, 0, 0, // int colorMode
       0, 0, 0, 0, 0, 0, 4, 4, 4, 4,
       1, 1, 0, 2, 1, 0, 4, 5, 1, 4, 
       1, 1, 1, 1, 5, 1, 2, 0,
+
+      0, 0, 0, 0, 1, 2, 1, 1, 0, 0, // int colorMode2
+      0, 0, 0, 0, 0, 0, 4, 4, 4, 4,
+      1, 1, 0, 2, 1, 0, 4, 5, 1, 4, 
+      1, 1, 1, 1, 5, 1, 2, 0,
+
+      0, 0, 0, 0, 1, 2, 1, 1, 0, 0, // int colorMode3
+      0, 0, 0, 0, 0, 0, 4, 4, 4, 4,
+      1, 1, 0, 2, 1, 0, 4, 5, 1, 4, 
+      1, 1, 1, 1, 5, 1, 2, 0,
+      
       1, 1, 1, 1, 1, 1, 1, 1, 7, 7, // byte arrayn
       1, 1, 1, 1, 1, 1, 0, 0, 0, 0,
       1, 1, 1, 1, 1, 1, 1, 1, 1, 25, 
       4, 1, 1, 1, 1, 0, 0, 0,
+      
+      1, 1, 1, 1, 1, 1, 1, 1, 7, 7, // byte arrayn2
+      1, 1, 1, 1, 1, 1, 0, 0, 0, 0,
+      1, 1, 1, 1, 1, 1, 1, 1, 1, 25, 
+      4, 1, 1, 1, 1, 0, 0, 0,
+      
+      1, 1, 1, 1, 1, 1, 1, 1, 7, 7, // byte arrayn3
+      1, 1, 1, 1, 1, 1, 0, 0, 0, 0,
+      1, 1, 1, 1, 1, 1, 1, 1, 1, 25, 
+      4, 1, 1, 1, 1, 0, 0, 0,
+      
       1, 1, 1, 1, 1, 1, 1, 1, 1, 1, // varON byte
+      1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+      1, 1, 2, 1, 1, 1, 2, 1, 1, 2, 
+      2, 1, 1, 1, 1, 1, 1, 1,
+      
+      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, // varON2 byte
+      1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+      1, 1, 2, 1, 1, 1, 2, 1, 1, 2, 
+      2, 1, 1, 1, 1, 1, 1, 1,
+      
+      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, // varON3 byte
       1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
       1, 1, 2, 1, 1, 1, 2, 1, 1, 2, 
       2, 1, 1, 1, 1, 1, 1, 1,
@@ -665,7 +811,8 @@ boolean     varBPMB = false;
 boolean     varNumsat = false;
 boolean     varBPMS = false;
 boolean     colourTimerActive = true;
-boolean     personalizedModes = false;
+byte        selectedPreset[modeCount] = {0};
+byte        selectedPresetVariable = 0;
 boolean     sendDelayWSMessage=false;
 byte        message = 0;
 
@@ -951,7 +1098,7 @@ numbrigh = EEPROM.read(offsetof(storeInEEPROM, numbrigh[0]));
 Bees = EEPROM.read(offsetof(storeInEEPROM, Bees));
 range = EEPROM.read(offsetof(storeInEEPROM, range));
 offdisC = EEPROM.read(offsetof(storeInEEPROM, offdisC));
-personalizedModes = EEPROM.read(offsetof(storeInEEPROM, personalizedModes));
+//personalizedModes = EEPROM.read(offsetof(storeInEEPROM, personalizedModes));
 
 #ifdef ESP8266 
       for (int m = 0; m < modeCount; m++){
@@ -960,6 +1107,14 @@ personalizedModes = EEPROM.read(offsetof(storeInEEPROM, personalizedModes));
       //Serial.print(offsetPosition+m); Serial.print(" "); Serial.println(cmode[m]);
       //Serial.println("heeree in setupp 222");
       }
+
+      for (int m = 0; m < modeCount; m++){
+      int offsetPosition = offsetof(storeInEEPROM, selectedPreset[0]);
+      EEPROM.get(offsetPosition+m, selectedPreset[m]); 
+      //Serial.print(offsetPosition+m); Serial.print(" "); Serial.println(cmode[m]);
+      //Serial.println("heeree in setupp 222");
+      }
+
       Serial.println(F(" "));
       Serial.println(F("wifi settings"));
       for (int m = 0; m < 32; m++){
@@ -981,6 +1136,11 @@ personalizedModes = EEPROM.read(offsetof(storeInEEPROM, personalizedModes));
       for (int m = 0; m < modeCount; m++){
       int offsetPosition = offsetof(storeInEEPROM, cmode[0]);
       cmode[m]  = EEPROM.read(offsetPosition+m);
+      }
+
+      for (int m = 0; m < modeCount; m++){
+      int offsetPosition = offsetof(storeInEEPROM, selectedPreset[0]);
+      selectedPreset[m]  = EEPROM.read(offsetPosition+m);
       }
       
       for (int m = 0; m < 32; m++){

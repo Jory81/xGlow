@@ -139,7 +139,8 @@ void changePColors();
 void fillxmasArray();
 void initializeGlitter();
 void loadPersonalSettings();
-void saveCurrentModeToEEPROM();
+void saveCurrentPresetToEEPROM();
+void saveCurrentBriSPresetToEEPROM();
 void saveCycleParamToEEPROM();
 void fillArrayRainbow(uint8_t fillcase);
 void fillArrayGradient(uint8_t fillcase, uint8_t y0r, int setDifference);
@@ -208,7 +209,7 @@ void notifyClientsSingleObjectByte(String object, byte value);
 void notifyClientsSingleObjectInt(String object, uint32_t value);
 void notifyClientsSingleObjectSignedInt(String object, int32_t value);
 void notifyClientsSingleString(String object, String &message);
-void sendProgramInfo();
+void sendProgramInfo(byte message);
 void writeStringToEEPROM(int addrOffset, const String &strToWrite);
 
 void sendMessageToClient(int dataVar);

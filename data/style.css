@@ -45,8 +45,8 @@ p.sliderwindows {
 
 p.progwindows {
 	color: red;
-	text-align: center;
-	margin: 10px 0px 0px 0px;
+	text-align: right;
+	margin: 0px  0px 15px 0px;
 }
 
 p.togglewindow {
@@ -59,6 +59,14 @@ p.togglewindow {
   position: relative;
   display: flex;
   width: 3%;
+  float: center;
+}
+
+.varvaluex1 {
+  color: white;
+  position: relative;
+  display: flex;
+  width: 1%;
   float: center;
 }
 
@@ -92,6 +100,13 @@ p.togglewindow {
   text-align: left;
 }
 
+.titlex1 { 
+  color: white;
+  width: 10%;
+  position: right;
+  text-align: right;
+}
+
 .titlez { 
   color: white;
   position: relative;
@@ -112,6 +127,11 @@ p.progwindows {
 
 .slidecontainerx {
   width: 100%;
+  display: flex;
+}
+
+.slidecontainerx1 {
+  width: 15%;
   display: flex;
 }
 
@@ -397,6 +417,44 @@ p.progwindows {
   transition: opacity .2s;
 }
 
+.sliderx1 {
+  -webkit-appearance: none;
+  display: flex;
+  position: relative;
+  width: 20px;
+  height: 15px;
+  border-radius: 5px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.sliderx1:hover {
+  opacity: 1;
+}
+
+.sliderx1::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+   background: #FFFFFF;
+  cursor: pointer;
+  border: 2px solid #000000;
+}
+
+.sliderx1::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  cursor: pointer;
+  border: 2px solid #000000;
+}
+
 .sliderx:hover {
   opacity: 1;
 }
@@ -420,7 +478,6 @@ p.progwindows {
   cursor: pointer;
   border: 2px solid #000000;
 }
-
 
 .sliderticksx {
   position: relative;
@@ -472,6 +529,19 @@ p.progwindows {
 }
 
 .switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.switch1 {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 18px;
+}
+
+.switch1 input { 
   opacity: 0;
   width: 0;
   height: 0;
@@ -532,6 +602,46 @@ input:checked + .sliderround:before {
   transform: translateX(26px);
 }
 
+.sliderround1 {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+  border-radius: 16px;
+}
+
+.sliderround1:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 1px;
+  bottom: 1px;
+  background-color: white;
+  border-radius: 50%;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .sliderround1 {
+  background-color: #333333;
+}
+
+input:focus + .sliderround1 {
+  box-shadow: 0 0 1px #333333;
+}
+
+input:checked + .sliderround1:before {
+  -webkit-transform: translateX(43px);
+  -ms-transform: translateX(43px);
+  transform: translateX(43px);
+}
+
 .dropbtn {
   background-color: red;
   color: white;
@@ -561,9 +671,31 @@ input:checked + .sliderround:before {
   display: block;
 }
 
+.dropdown-content1 {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 220px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content1 li {
+  color: #d26969;
+  padding: 4px 16px;
+  text-decoration: none;
+  display: block;
+}
+
 .dropdown-content li:hover {background-color: white;}
 
 .dropdown:hover .dropdown-content {display: block;}
+
+
+.dropdown-content1 li:hover {background-color: white;}
+
+.dropdown:hover .dropdown-content1 {display: block;}
+
 
 .dropdown:hover .dropbtn {background-color: #333333;}
 
