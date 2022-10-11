@@ -620,7 +620,9 @@ static const selectColorMod19_Mod26_pgm selectColor_data[14] PROGMEM =
 uint8_t   brigh[255]={0};
 uint8_t   colour[15]={};
 
-uint8_t   colourS[6]={217, 164, 0, 96, 55, 140}; //  colourS[0]=217;        colourS[1]=164;        colourS[2]=0;        colourS[3]=96;        colourS[4]=55;            colour[5]=140;
+//colour[4] = 0;   colour[0] = 55;     colour[1] = 158;     colour[2] = 88;     colour[3] = 217;
+
+uint8_t   colourS[6]={55, 164, 96, 217, 0, 140}; //  colourS[0]=217;        colourS[1]=164;        colourS[2]=0;        colourS[3]=96;        colourS[4]=55;            colour[5]=140;
 uint8_t   newColour[15]={};
 uint8_t   colourR[10]={0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 int       dirArray[10]={1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
