@@ -179,6 +179,9 @@ void fillArrayGradient(uint8_t fillcase, uint8_t y0r, int setDifference){
           longxArray[i] = y0r;
           blockArray[i] = y0r;
         } break;
+        case 3: {
+          blockArray[i] = y0r;
+        } break;
       }            
       
       if (NUM_LEDS > 300){

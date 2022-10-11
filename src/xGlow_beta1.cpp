@@ -26,6 +26,18 @@ FASTLED_USING_NAMESPACE
 #include <IRutils.h>
 #include <ESPAsyncWebServer.h>
 
+#define print_EEPROM
+
+#ifdef print_EEPROM
+  #define EEPROM_PRINT(x) Serial.print(x)
+  #define EEPROM_PRINTLN(x) Serial.println(x)
+  #define EEPROM_PRINTF(x...) Serial.printf(x)
+#else
+  #define EEPROM_PRINT(x)
+  #define EEPROM_PRINTLN(x)
+  #define EEPROM_PRINTF(x...)
+#endif
+
 //#define DEBUG_OUTPUT // comment out for debugging mode (mainly for checking memory issues and JSON communication)
 
 #ifdef DEBUG_OUTPUT
@@ -95,6 +107,7 @@ void oledDisplay();
 void spiffs();
 void eeprom();
 void initializeEEPROM();
+void printEEPROM();
 void wifi();
 void LED_properties();
 void initialize_preset();

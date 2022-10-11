@@ -40,6 +40,7 @@ void initializeEEPROM(){
     display.print(F("code: ")); display.println(check);
     display.println(F("EEPROM SET"));
     display.display();
+    printEEPROM();
     initializeEEPROMvariables(); // functio in global_variables.h at the bottom.    
     cfactor2=NUM_LEDS/100;
     cfactor3=NUM_LEDS/100;
@@ -48,7 +49,7 @@ void initializeEEPROM(){
     convSat=waveTimeS/numsat;
       if (cfactor2 > 3){cfactor2 = 3;} 
       else if (cfactor2 < 1){cfactor2 = 1;}; 
-      Serial.print(F("NUM_LEDS: ")); Serial.println(NUM_LEDS);
+    Serial.print(F("NUM_LEDS: ")); Serial.println(NUM_LEDS);
     FastLED.delay(1000);
     }
     
