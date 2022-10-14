@@ -180,7 +180,13 @@ void static_glow(void);
 void rainbow_1(void); 
 void rainbow_2(void); 
 void s7_strings(void);
+
+void s7_strings_2(void);
+
 void snow_flakes(void); 
+
+void snow_flakes2(void);
+
 void rainbow_4(void); 
 void sparkling(void); 
 void snow_storm(void);

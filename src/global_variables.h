@@ -12,8 +12,10 @@ const char string_2[] PROGMEM = "warm_glow";
 const char string_3[] PROGMEM = "reflection"; 
 const char string_4[] PROGMEM = "deflection";
 const char string_5[] PROGMEM = "coloursplash";
-const char string_6[] PROGMEM = "palette"; 
-const char string_7[] PROGMEM = "colourwash"; 
+const char string_6[] PROGMEM = "palette";
+
+const char string_7[] PROGMEM = "snow alt."; 
+//const char string_7[] PROGMEM = "colourwash"; 
 const char string_8[] PROGMEM = "rainbow_1";
 const char string_9[] PROGMEM = "rainbow_2";
 
@@ -35,14 +37,18 @@ const char string_23[] PROGMEM = "sparkle";
 const char string_24[] PROGMEM = "sparkle_storm";
 const char string_25[] PROGMEM = "sparkle_rainbow"; 
 const char string_26[] PROGMEM = "twinkle";
-const char string_27[] PROGMEM = "gambler";
-const char string_28[] PROGMEM = "casino";
+const char string_27[] PROGMEM = "casino";
+
+const char string_28[] PROGMEM = "7_strings mirror";
+//const char string_28[] PROGMEM = "casino";
 const char string_29[] PROGMEM = "fine_canvas";
 
 const char string_30[] PROGMEM = "rough_canvas"; 
 const char string_31[] PROGMEM = "xmas_1"; 
 const char string_32[] PROGMEM = "xmas_2"; 
-const char string_33[] PROGMEM = "xmas_3";
+const char string_33[] PROGMEM = "snow mirror";
+//const char string_33[] PROGMEM = "xmas_3";
+
 const char string_34[] PROGMEM = "splash";
 const char string_35[] PROGMEM = "strobe";
 const char string_36[] PROGMEM = "meteor"; 
@@ -682,6 +688,13 @@ int pos2[30] ={-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -
 int pos3[30] ={-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
 int pos4[30] ={-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
 int rr[30]  ={-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
+
+int pos7[30] ={-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
+int pos8[30] ={-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
+int pos9[30] ={-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
+int pos10[30] ={-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
+int pos11[30] ={-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
+int rr2[30]  ={-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
 //boolean setLedBack[30] = {0};
 
 //uint16_t randomNumberMinimum[30]={25, 10, 25, 10, 25, 60,  100, 125, 115, 125, 145, 145, 145, 155, 200, 60, 125, 150, 175, 25, 120, 145, 155, 200, 60, 125, 150, 175, 25, 120};
@@ -712,9 +725,9 @@ uint8_t zmem = 99;
 uint8_t zr[4]={140, 10, 228, 88};
 uint8_t yMA[30]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 
-int sparkarray[30]={0};
-int arraypos=0;
-int arrayPos=0;
+// int sparkarray[30]={0};
+// int arraypos=0;
+// int arrayPos=0;
 
 String dataString;
 String wifiID;
@@ -928,6 +941,7 @@ enum { GETTING_DARKER = 0, GETTING_BRIGHTER = 1 };
 int num30 =0;
 int yy = 0;
 int hh = NUM_LEDS;
+int xx = 0;
 int xp=2;
 int xp2=2;
 int w = NUM_LEDS-1;
