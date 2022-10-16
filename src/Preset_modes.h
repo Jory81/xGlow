@@ -597,7 +597,11 @@ if (millis() - previousMillisLN[k] >= rtAM[k]/df){
       if (varON == 2 && colorMode == 5){
         z7++;
         z[k] = z7;
-     }
+      }
+
+      if ((varON == 2) && (colorMode == 2 || colorMode == 3 || colorMode == 4 )){
+        z[k] = yval1 + random(35,225);
+      }
 
     interRun[k]=1.1;
     previousMillisLN[k] = millis();
@@ -760,17 +764,17 @@ if (millis() - previousMillisLN[k] >= rtAM[k]/df){
     //blockArray[i[k]]=(z[k]);  
     a[k]=i[k];
 
-          i[k] = i[k]+=1;
-          if (i[k] == 40*cfactor3 || i[k] == 30*cfactor3 || i[k] == 20*cfactor3 || i[k] == 10*cfactor3){ 
-          int chance = random(15);
-            if (chance > 9){
-              interRun[k]=1.1;
-            }
-            else if (chance < 5){
-              interRun[k]=0.9;
-            }
-            else {interRun[k] = 1;}
-          }
+    i[k] = i[k]+=1;
+    if (i[k] == 40*cfactor3 || i[k] == 30*cfactor3 || i[k] == 20*cfactor3 || i[k] == 10*cfactor3){ 
+    int chance = random(15);
+      if (chance > 9){
+        interRun[k]=1.1;
+      }
+      else if (chance < 5){
+        interRun[k]=0.9;
+      }
+      else {interRun[k] = 1;}
+    }
    
     if (i[k]>NUM_LEDS/2){
 
@@ -782,7 +786,11 @@ if (millis() - previousMillisLN[k] >= rtAM[k]/df){
       if (varON == 2 && colorMode == 5){
         z7++;
         z[k] = z7;
-     }
+      }
+
+      if ((varON == 2) && (colorMode == 2 || colorMode == 3 || colorMode == 4 )){
+          z[k] = yval1 + random(35,225);
+      }
 
     interRun[k]=1.1;
     previousMillisLN[k] = millis();
