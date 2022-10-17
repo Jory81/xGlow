@@ -198,7 +198,7 @@ DynamicJsonDocument doc(2000);
     doc["SSWS"] = waveTimeS;// convSat = dataVar/numsat;}
     doc["SSBS"] = BPMB;      
     doc["SSSS"] = BPMS;                   
-    doc["SLPS"] = timefactor3;// timefactor3 = dataVar/100;}            
+    doc["SLPS"] = String(timefactor3,2);// timefactor3 = dataVar/100;}            
     doc["SPGM"] = programMode; 
     doc["TCAC"] = cmode[programMode]; // 37
     doc["TSTE"] = saveToEEPROM;
