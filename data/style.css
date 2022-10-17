@@ -28,6 +28,7 @@ p.sliderwindowsmall {
 	color: white;
 	text-align: center;
 	font-size: 0.8em;
+
 }
 
 p.infowindow {
@@ -1122,3 +1123,24 @@ section.range-slider3 input::-moz-range-thumb {
 #time-part {
     font-size: 1em;
 }
+
+.inputcontainer{
+height: 25px;
+}
+
+.inputparam {
+color: grey;
+text-align: center;
+}
+
+.form-controlx input-sl {
+  color: grey;
+  text-align: center;
+  }
+  
+.units { font-size: 1.0rem; }
+
+.btnx {
+  border: none;
+  background:#0667b7;
+  }

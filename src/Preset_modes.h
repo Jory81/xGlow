@@ -1027,7 +1027,7 @@ fillNUM_LEDS1(colour, NUM_LEDS);
 
 void sparkling(void){
 if (readyToChange){
-  rn6=random(0,18);
+  rn6=random(0,24);
   //rn6 = 12;  
     if (rn6==0){
       variant=0;
@@ -1077,17 +1077,17 @@ if (readyToChange){
       offmax=random(8,14)*cfactor3;
       slingerSpeed=timeArray3[random(0,5)]*changeSpeed/cfactor3;
     }
-    else if (rn6 == 10 || rn6 == 11){
+    else if (rn6 > 9 && rn6 < 13){
       variant=0;
       yy=NUM_LEDS;
     }
-    else if (rn6 == 12 || rn6 == 13){
+    else if (rn6 > 12 && rn6 < 17){
       variant=8;
     }
-    else if (rn6 == 14 || rn6 == 15){
+    else if (rn6 > 16 && rn6 < 21){
       variant=9;
     } 
-    else if (rn6 == 16 || rn6 == 17){
+    else if (rn6 > 20 && rn6 < 25){
       variant=10;
     }      
   if (tower){

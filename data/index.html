@@ -82,6 +82,7 @@ function onClose(event) {
 function updateNumber(key, value) {
 		if (key == 'SNLD'){
 		document.getElementById("HNUMS").innerHTML  = value;
+		}
 		var field = key;
 		var obj = {};
 		obj[field] = value;
@@ -89,7 +90,6 @@ function updateNumber(key, value) {
 		websocket.send(myJSON);  
 		//console.log(myJSON);
 	}
-}
 
 function updateNumberS(key, value) {
 
@@ -196,7 +196,7 @@ function onMessage(event) {
 		else if (variable == 'SSBR'){document.getElementById('SSBR').value = data.SSBR; document.getElementById('SSBRS').innerHTML = data.SSBR;}
 		else if (variable == 'SDIF'){document.getElementById('SDIF').value = data.SDIF; document.getElementById('SDIFS').innerHTML = data.SDIF;}
 		else if (variable == 'SLSP'){document.getElementById('SLSP').value = data.SLSP; document.getElementById('SLSPS').innerHTML = data.SLSP;}
-		else if (variable == 'SCTM'){document.getElementById('SCTM').value = data.SCTM; document.getElementById('SCTMS').innerHTML = data.SCTM;}
+		//else if (variable == 'SCTM'){document.getElementById('SCTM').value = data.SCTM; document.getElementById('SCTMS').innerHTML = data.SCTM;}
 		else if (variable == 'SCAR'){document.getElementById('SCAR').value = data.SCAR; document.getElementById('SCARS').innerHTML = data.SCAR;}
 		else if (variable == 'SPAL'){document.getElementById('SPAL').value = data.SPAL; document.getElementById('SPALS').innerHTML = data.SPAL;}
 		else if (variable == 'SGRA'){document.getElementById('SGRA').value = data.SGRA; document.getElementById('SGRAS').innerHTML = data.SGRA;}
@@ -210,7 +210,7 @@ function onMessage(event) {
 		else if (variable == 'SSWS'){document.getElementById('SSWS').value = data.SSWS; document.getElementById('SSWSS').innerHTML = data.SSWS;}
 		else if (variable == 'SSBS'){document.getElementById('SSBS').value = data.SSBS; document.getElementById('SSBSS').innerHTML = data.SSBS;}
 		else if (variable == 'SSSS'){document.getElementById('SSSS').value = data.SSSS; document.getElementById('SSSSS').innerHTML = data.SSSS;}
-		else if (variable == 'SLPS'){document.getElementById('SLPS').value = data.SLPS; document.getElementById('SLPSS').innerHTML = data.SLPS;}
+	
 		else if (variable == 'SPGM'){document.getElementById('SPGM').value = data.SPGM; document.getElementById('SPGMS').innerHTML = data.SPGM;}
 		else if (variable == 'SOBR'){document.getElementById('SOBR').value = data.SOBR; document.getElementById('SOBRS').innerHTML = data.SOBR;}
 		else if (variable == 'SOST'){document.getElementById('SOST').value = data.SOST; document.getElementById('SOSTS').innerHTML = data.SOST;}
@@ -268,7 +268,11 @@ function onMessage(event) {
 		else if (variable == 'TAAM'){document.getElementById('TAAM').checked = data.TAAM;}
 		else if (variable == 'TDAM'){document.getElementById('TDAM').checked = data.TDAM;}
 
-		else if (variable == 'HNUM')document.getElementById('HNUMS').innerHTML = data.HNUM;
+		else if (variable == 'HNUM'){document.getElementById('HNUMS').innerHTML = data.HNUM;}
+
+		else if (variable == 'SCTM'){document.getElementById('SCTMS').value = data.SCTM;}
+
+		else if (variable == 'SLPS'){document.getElementById('SLPSS').value = data.SLPS;}
 
 		else if (variable == 'HSPE')document.getElementById('HSPES').innerHTML = data.HSPE;
 		else if (variable == 'HHHH')document.getElementById('HHHHS').innerHTML = data.HHHH;
@@ -680,7 +684,18 @@ $(document).ready(function() {
 		<input class="ckeckbox-element" type="checkbox" id="recMsg"/>  
 		<i class="glyphicon glyphicon-ok"></i>
 	</span> 
+
+	&nbsp; 
+
+<span class="switchcontainer">
+	<span>
+	EEPROM
+	<input type="checkbox" id="TSTE" onclick="updateButton(this.id, this.checked)"> 
+	</label>
+</span>
+
 </div>
+
 </p>
 <p class="infowindow">time to next effect: <span id='HCTIS'></span> &nbsp </span></p>
 <p class="infowindow">time to colour change: <span id='HPTIS'></span> / <span id='HPTTS'></span> </span></p>
@@ -698,24 +713,19 @@ $(document).ready(function() {
 
 </p>
 <div class="switchcontainer">
-_Cycle
+_cycle
 <label class="switch">
   <input type="checkbox" id="TCON" onclick="updateButton(this.id, this.checked)"> 
   <span class="sliderround"></span>
 </label>
-_Fade
+_fade
 <label class="switch">
   <input type="checkbox" id="TCFA" onclick="updateButton(this.id, this.checked)"> 
   <span class="sliderround"></span>
 </label>
-_Random
+_random
 <label class="switch">
   <input type="checkbox" id="TCRA" onclick="updateButton(this.id, this.checked)"> 
-  <span class="sliderround"></span>
-</label>
-_Exclude
-<label class="switch">
-  <input type="checkbox" id="TCEX" onclick="updateButton(this.id, this.checked)"> 
   <span class="sliderround"></span>
 </label>
 _(de)activate
@@ -723,77 +733,20 @@ _(de)activate
   <input type="checkbox" id="TCAC" onclick="updateButton(this.id, this.checked)"> 
   <span class="sliderround"></span>
 </label>
-EEPROM
+_selection
 <label class="switch">
-  <input type="checkbox" id="TSTE" onclick="updateButton(this.id, this.checked)"> 
+  <input type="checkbox" id="TCEX" onclick="updateButton(this.id, this.checked)"> 
   <span class="sliderround"></span>
 </label>
 </div>
 <br>
-<div class="slidecontainerx">
-<div class="titlex">
-_*Cycle time (s):
-</div>
-<input id="SCTM" class="sliderx" type="range" min="0" max="3600" step="1" value="600" onchange="updateSlider(this.id, this.value)">
-<div class="varvaluex" id="SCTMS"></div> <div class="infox"></div>
-</div>
-<div class="slidecontainerx">
-<div class="titlex">(seconds)</div>
-  <div class="sliderticksx">
-    <p>0</p>
-    <p>300</p>
-    <p>600</p>
-    <p>900</p>
-    <p>1200</p>
-    <p></p>
-	<p>1800</p>
-    <p></p>
-    <p></p>
-    <p>2400</p>
-    <p></p>
-    <p></p>
-	<p>3600</p>
-  </div>
-  <div class="varvaluex"></div><div class="infox"></div>
-</div>
-<br>
-<div class="slidecontainerx">
-	<div class="titlex">
-	_*Effect speedfactor:
-	</div>
-	<input id="SLPS" class="sliderx" type="range" min="25" max="400" step="25" value="100" onchange="updateSlider(this.id, this.value)">
-	<div class="varvalueh"><span id="SLPSS"></span> &nbsp /100</div>
-	</div>
-	<div class="slidecontainerx">
-		<div class="titlex">(relative)</div>
-	  <div class="sliderticksx">
-		<p>0.25(fast)</p>
-		<p>0.5</p>
-		<p>0.75</p>
-		<p>1(default)</p>
-		<p></p>
-		<p></p>
-		<p></p>
-		<p>2</p>
-		<p></p>
-		<p></p>
-		<p></p>
-		<p>3</p>
-		<p></p>
-		<p></p>
-		<p></p>
-		<p>4.0(slow)</p>	
-	  </div>
-	  <div class="varvaluex"></div><div class="infox"></div>  
-	</div>
-</div>
-<br>
-<div class="switchcontainer1">
-	save cycle param to all modes:
-	<label class="switch1">
-	  <input type="checkbox" id="TCPM" onclick="updateButton(this.id, this.checked)"> 
-	  <span class="sliderround1"></span>
-	</label>
+<p class="sliderwindowsmall">
+	<span class="inputparam"> <input type="number" style="width: 65px;" placeholder="uint32_t" id="SCTMS" value=""></span> <span class="textinfo"> (s)      </span>
+	<span><button onclick="updateNumberS('SCTM', SCTMS.value)" class="btnx btn-primary">_cycle time</button> </span>
+&nbsp; &nbsp;
+	<span class="inputparam"> <input type="number" style="width: 65px;" placeholder="float" class="form-controlx input-sl" id="SLPSS" value=""></span> <span class="textinfo"> 0.1-5.0</span>
+	<span><button onclick="updateNumberS('SLPS', SLPSS.value)" class="btnx btn-primary">_effect speed</button> </span>
+</p>
 </div>
 <hr/>
 
@@ -1907,7 +1860,7 @@ _Bees (19, 22)
 
 	<div id="ledSettings">
 
-</P>
+	</p>
 <p class="sliderwindow"> 
 <span class="textinfo">NUM_LEDS (1-600):</span> <span class="inputparam"> <input type="number" id="NUM_LEDS" max="600" min="1" value=""></span> &nbsp
 <span class="textinfo" id="HNUMS">___</span> &nbsp
@@ -1946,6 +1899,14 @@ _Bees (19, 22)
 	Save All SETTINGS to GLOBAL EEPROM (BriSPreset [0])
 	<label class="switch1">
 	  <input type="checkbox" id="TSET" onclick="updateButton(this.id, this.checked)"> 
+	  <span class="sliderround1"></span>
+	</label>
+</div>
+
+<div class="switchcontainer">
+	save current cycle param (cycle time & effect speed) to all modes:
+	<label class="switch1">
+	  <input type="checkbox" id="TCPM" onclick="updateButton(this.id, this.checked)"> 
 	  <span class="sliderround1"></span>
 	</label>
 </div>

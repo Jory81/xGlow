@@ -97,7 +97,7 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
       else if (json.containsKey("SCTM")){cycleTime = json["SCTM"]; cycleTime = cycleTime*1000; if (cycleTime == 0){cycleTime = 60000;} if (saveToEEPROM){saveCycleParamToEEPROM();};}
       else if (json.containsKey("SBWS")){waveTimeBr = json["SBWS"]; convBrigh = waveTimeBr/numbrigh; if (maintainWaveForm){BPMB=60000/waveTimeBr; notifyClientsSingleObjectByte("SSBS", BPMB);};}// if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, waveTimeBr), waveTimeBr); EEPROM.put(offsetof(storeInEEPROM, BPMB), BPMB);  EEPROM.commit();};}
       else if (json.containsKey("SSWS")){waveTimeS = json["SSWS"]; convSat = waveTimeS/numsat; if (maintainWaveForm){BPMS=60000/waveTimeS; notifyClientsSingleObjectByte("SSSS", BPMS);};}// if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, waveTimeS), waveTimeS); EEPROM.put(offsetof(storeInEEPROM, BPMS), BPMS);  EEPROM.commit();};}      
-      else if (json.containsKey("SLPS")){timefactor3 = json["SLPS"]; timefactor3 = timefactor3/100; Serial.println(timefactor3); if (saveToEEPROM){saveCycleParamToEEPROM();};}
+      else if (json.containsKey("SLPS")){timefactor3 = json["SLPS"]; Serial.println(timefactor3); if (saveToEEPROM){saveCycleParamToEEPROM();};}
       else if (json.containsKey("SSBS")){BPMB = json["SSBS"]; if (maintainWaveForm){waveTimeBr=60000/BPMB; convBrigh=waveTimeBr/numbrigh; notifyClientsSingleObjectInt("SBWS", waveTimeBr);};}// if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, BPMB), BPMB);  EEPROM.put(offsetof(storeInEEPROM, waveTimeBr), waveTimeBr); EEPROM.commit(); };}      
       else if (json.containsKey("SSSS")){BPMS = json["SSSS"]; if (maintainWaveForm){waveTimeS=60000/BPMS; convSat=waveTimeS/numsat; notifyClientsSingleObjectInt("SSWS", waveTimeS);};}// if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, BPMS), BPMS); EEPROM.put(offsetof(storeInEEPROM, waveTimeS), waveTimeS);  EEPROM.commit();};} 
       else if (json.containsKey("SOBR")){offBr = json["SOBR"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, offBr), offBr);  EEPROM.commit();};}   
@@ -198,7 +198,7 @@ DynamicJsonDocument doc(2000);
     doc["SSWS"] = waveTimeS;// convSat = dataVar/numsat;}
     doc["SSBS"] = BPMB;      
     doc["SSSS"] = BPMS;                   
-    doc["SLPS"] = timefactor3*100;// timefactor3 = dataVar/100;}            
+    doc["SLPS"] = timefactor3;// timefactor3 = dataVar/100;}            
     doc["SPGM"] = programMode; 
     doc["TCAC"] = cmode[programMode]; // 37
     doc["TSTE"] = saveToEEPROM;
