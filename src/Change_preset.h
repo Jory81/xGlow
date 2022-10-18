@@ -82,7 +82,7 @@ if (changeModus){
       case 7: {       effect_function = snow_flakes;       if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=125;        setDifference=7;      colorMode=5;    arrayn=0;      varON=1;   selectcolorArray();    }; if (selectedPresetVariable == 0 || numsparks == 10){numsparks=7*cfactor2;  };   offdis = offdisC;       sF=1;           previousMillis8=millis();     } break;        
       
       case 8: {        effect_function = rainbow_1;         if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=10;          changeSpeed=20;         setDifference=1;      colorMode=0;    arrayn=7;      varON=1;   selectcolorArray();     };} break;
-      case 9: {        effect_function = rainbow_2;         if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=2;           changeSpeed=100;        setDifference=2;      colorMode=0;    arrayn=7;      varON=1;   selectcolorArray();     };} break;
+      case 9: {        effect_function = rainbow_2;         if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=2;           changeSpeed=100;        setDifference=2;      colorMode=0;    arrayn=7;      varON=1;   selectcolorArray(); }      dir1 = 1;} break;
       case 10: {       effect_function = rainbow_3;         if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=4;           changeSpeed=100;        setDifference=4;      colorMode=0;                   varON=1;   }; colour[0]= yval1+0;        colour[1]= yval1+15;        colour[2]= yval1+30;        colour[3]= yval1+45;        colour[4]= yval1+60;        colour[5]= yval1+75;        colour[6]= yval1+90;        colour[7]= yval1+105;        colour[8]= yval1+120;        colour[9]= yval1+135; };   yval1=ymin2;       for (int i=0; i<10; i++){dirArray[i]=1;} break;                                                     
       case 11: {       effect_function = rainbow_4;         if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=200;        setDifference=7;                                     varON=1;   }; ysr=0;  } break;    
       case 12: {       effect_function = rainbow_5;         if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=30;         setDifference=3;                                     varON=1;   }; if (tower) {offdis=1;} else {offdis=3;}    } break;   
@@ -164,7 +164,6 @@ if (changeModus){
     INTERVAL7=5000;
     outOfModus = true;
     evenOddCounter = 0;
-    dir1 = 1;
     if ((effect_function == *static_glow && programMode == 3)  || effect_function == colourSplash){
     dir = 1; xdir = 0;
     }

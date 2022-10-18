@@ -3045,7 +3045,8 @@ void rainbow_7(void){
 }
 
 void gradient(void){
-if (varON == 1 || (varON == 2 && (!changeColor))){  
+if (varON == 1 || (varON == 2 && (!changeColor))){ 
+//if (varON == 1){   
     if (millis() - previousMillis1 >= changeSpeed + rn15) {
     previousMillis1 = millis();
     rn15=0;
@@ -3066,7 +3067,7 @@ if (varON == 1 || (varON == 2 && (!changeColor))){
 }
 
 if (varON == 2){
-if (millis() - previousMillis36 > INTERVAL7) {
+if (millis() - previousMillis36 > INTERVAL7 && (!changeColor)) {
         selectColor = random(14);
         dir1=1;
         ymax4 = pgm_read_byte(&selectColor_data[selectColor].ymax4);
@@ -3089,7 +3090,7 @@ if (millis() - previousMillis37 >= changeSpeed && (changeColor)) {
 
     for(int i = 0; i < NUM_LEDS; i++){
       if (longxArray[i] != blockArray[i]){
-        longxArray[i] = fadeFnc(blockArray[i], longxArray[i]); 
+        longxArray[i] = fadeFnc(longxArray[i], blockArray[i]); 
       }
     }
 
@@ -3107,8 +3108,8 @@ if (millis() - previousMillis37 >= changeSpeed && (changeColor)) {
     
     if (millis() - previousMillis2 >= FPS) {     
       previousMillis2 = millis(); 
-      y0r=yval1;  
-      dir0=1;
+      // y0r=yval1;  
+      // dir0=1;
       
        for(int i = 0; i < NUM_LEDS; i++ ){
        leds[i] = CHSV(longxArray[i],satval[satlu],brigh[brighlu]);
