@@ -959,6 +959,8 @@ int num2=0;
 
 int num4=0;
 
+uint8_t rainbow2m = 1;
+
 int num6=0;
 int num15=75;
 int flakeCounter=0;

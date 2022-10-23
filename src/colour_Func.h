@@ -215,7 +215,6 @@ void fillArrayGradient(uint8_t fillcase, uint8_t y0r, int setDifference){
 //         }
 // }
 
-
 void fillNUM_LEDS1(uint8_t arrayType[], int NUM_LEDS){
        for(int i = 0; i < NUM_LEDS; i++ ){
        leds[i] = CHSV(arrayType[colourlu],satval[satlu],brigh[brighlu]);
@@ -238,6 +237,44 @@ void fillNUM_LEDS1(uint8_t arrayType[], int NUM_LEDS){
        colourlu=0;
        return;
 }
+
+// void fillRainbow2(uint16_t arrayType[], uint8_t fillcase){
+
+// switch (fillcase){
+//   case 1: {
+//         for(int i = 0; i < NUM_LEDS/2; i++ ){
+//               arrayType[(NUM_LEDS/2)-i] = ysr;
+//               arrayType[(NUM_LEDS/2)+i] = ysr;
+
+//               if (NUM_LEDS > 300){
+//                 if (i % setDifference == 0){
+//                   ysr+=1;
+//                 }
+//               }
+//               else {
+//               ysr+=setDifference;
+//               }
+//         }
+//   }
+//   break;
+//   case 2: {
+//         for(int i = 0; i < NUM_LEDS; i++ ){
+//               arrayType[i] = ysr;
+
+//               if (NUM_LEDS > 300){
+//                 if (i % setDifference == 0){
+//                   ysr+=1;
+//                 }
+//               }
+//               else {ysr+=setDifference;}
+//             }
+
+//   }
+//   break;
+//   return;
+// }
+// }
+
 
 uint8_t changeColourFcn(int selectMode, uint8_t yvIn, uint8_t yvalmin, uint8_t yvalmax){
   switch (selectMode){

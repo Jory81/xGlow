@@ -2128,34 +2128,218 @@ void rainbow_5(void){
 void rainbow_2(void){
     if (millis() - previousMillis1 >= changeSpeed) {
       previousMillis1 = millis();
-      yval1-=offdis*dir1;
-      ysr=yval1;
+
+      if (varON == 1){
+        yval1-=offdis*dir1;
+        ysr=yval1;
+        //fillRainbow2(longxArray, 1);
+
+        for(int i = 0; i < NUM_LEDS/2; i++ ){
+              longxArray[(NUM_LEDS/2)-i] = ysr;
+              longxArray[(NUM_LEDS/2)+i] = ysr;
+
+              if (NUM_LEDS > 300){
+                if (i % setDifference == 0){
+                  ysr+=1;
+                }
+              }
+              else {
+              ysr+=setDifference;
+              }
+        }
+      }
+      else if (varON == 2 && (!changeColor)){
+        yval1-=offdis*dir1;
+        ysr=yval1;
+
+        //fillRainbow2(longxArray, rainbow2m);
+
+        switch (rainbow2m){
+          case 1: {
+            for(int i = 0; i < NUM_LEDS/2; i++ ){
+              longxArray[(NUM_LEDS/2)-i] = ysr;
+              longxArray[(NUM_LEDS/2)+i] = ysr;
+
+            if (NUM_LEDS > 300){
+              if (i % setDifference == 0){
+                ysr+=1;
+              }
+            }
+            else {ysr+=setDifference;
+            }
+            }
+          }
+          break;
+          case 2: {
+            for(int i = 0; i < NUM_LEDS; i++ ){
+              longxArray[i] = ysr;
+
+              if (NUM_LEDS > 300){
+                if (i % setDifference == 0){
+                  ysr+=1;
+                }
+              }
+              else {ysr+=setDifference;}
+            }
+          break;
+          }
+        }
+      }
     }
+
+    if (varON == 2){
+      if (millis() - previousMillis36 >= INTERVAL7 && (!changeColor)){ 
+        previousMillis36 = millis();
+        rn6=random(0,4);
+        INTERVAL7=interval9*timeArray2[random(0,6)]*timefactor3;
+        changeColor = true;
+        ysr = yval1; 
+          if (rn6 == 0 || rn6 == 1){
+            rainbow2m = 1;
+
+            for(int i = 0; i < NUM_LEDS/2; i++ ){
+              blockArray[(NUM_LEDS/2)-i] = ysr;
+              blockArray[(NUM_LEDS/2)+i] = ysr;
+
+            if (NUM_LEDS > 300){
+              if (i % setDifference == 0){
+                ysr+=1;
+              }
+            }
+            else {ysr+=setDifference;
+            }
+            }
+
+            if (rn6 == 0){
+              dir1 = 1;
+            }
+            else if (rn6 == 1){
+              dir1 = -1;
+          }
+          }
+          else if (rn6 == 2 || rn6 == 3){
+            rainbow2m = 2;
+
+            for(int i = 0; i < NUM_LEDS; i++ ){
+              blockArray[i] = ysr;
+
+              if (NUM_LEDS > 300){
+                if (i % setDifference == 0){
+                  ysr+=1;
+                }
+              }
+              else {ysr+=setDifference;}
+            }
+
+            if (rn6 == 2){
+              dir1 = 1;
+            }
+            else if (rn6 == 3){
+              dir1 = -1;
+            }
+          } 
+      } 
+
+    if (millis() - previousMillis38 >= FPS && (changeColor)) {
+      previousMillis38 = millis();
+
+        for(int i = 0; i < NUM_LEDS; i++){
+          if (longxArray[i] != blockArray[i]){
+            longxArray[i] = fadeFnc(longxArray[i], blockArray[i]); 
+          }
+        }
+
+        for(int i = 0; i < NUM_LEDS; i++){
+          if (longxArray[i] != blockArray[i]) { 
+            changeColor = true;
+            break;}
+          else {
+            changeColor = false;
+            }
+          }      
+    }  
+  }
+
+
+//     if (millis() - previousMillis2 >= FPS) { 
+//       previousMillis2 = millis();  
+//       switch(rainbow2m){
+//         case 1: {
+//           for(int i = 0; i < NUM_LEDS/2; i++ ){
+//             leds[(NUM_LEDS/2)-i] = CHSV(ysr+yvar[varlu],satval[satlu],brigh[brighlu]);
+//             leds[(NUM_LEDS/2)+i] = leds[(NUM_LEDS/2)-i];
+
+//             if (NUM_LEDS > 300){
+//               if (i % setDifference == 0){
+//                 ysr+=1;
+//               }
+//             }
+//             else {
+//             ysr+=setDifference;
+//             }
+            
+//             brighlu++;
+//             if (brighlu >= numbrigh){brighlu = 0;} 
+            
+//             varlu++;
+//             if (varlu >= 10){varlu =0;}
+
+//             satlu++;
+//             if (satlu >= numsat){satlu = 0;}
+//             } 
+//         }
+//         break;
+//         case 2: {
+//           for(int i = 0; i < NUM_LEDS; i++ ){
+//             leds[i] = CHSV(ysr+yvar[varlu],satval[satlu],brigh[brighlu]);
+
+//             if (NUM_LEDS > 300){
+//               if (i % setDifference == 0){
+//                 ysr+=1;
+//               }
+//             }
+//             else {
+//             ysr+=setDifference;
+//             }
+            
+//             brighlu++;
+//             if (brighlu >= numbrigh){brighlu = 0;} 
+            
+//             varlu++;
+//             if (varlu >= 10){varlu =0;}
+
+//             satlu++;
+//             if (satlu >= numsat){satlu = 0;}
+//             } 
+//         }
+//         break;
+//       }
+
+//       handleGlitter();
+//       FastLED.show();
+//       brighlu=0;
+//       ysr=yval1;
+//       varlu=0;
+//       satlu=0;
+//     }
+// }
 
     if (millis() - previousMillis2 >= FPS) { 
       previousMillis2 = millis();  
-      for(int i = 0; i < NUM_LEDS/2; i++ ){
-      leds[(NUM_LEDS/2)-i] = CHSV(ysr+yvar[varlu],satval[satlu],brigh[brighlu]);
-      leds[(NUM_LEDS/2)+i] = leds[(NUM_LEDS/2)-i];
 
-      if (NUM_LEDS > 300){
-        if (i % setDifference == 0){
-          ysr+=1;
-        }
-      }
-      else {
-      ysr+=setDifference;
-      }
-      
-      brighlu++;
-      if (brighlu >= numbrigh){brighlu = 0;} 
-      
-      varlu++;
-      if (varlu >= 10){varlu =0;}
+        for(int i = 0; i < NUM_LEDS; i++ ){
+            leds[i] = CHSV(longxArray[i]+yvar[varlu],satval[satlu],brigh[brighlu]);
+            
+            brighlu++;
+            if (brighlu >= numbrigh){brighlu = 0;} 
+            
+            varlu++;
+            if (varlu >= 10){varlu =0;}
 
-      satlu++;
-      if (satlu >= numsat){satlu = 0;}
-      } 
+            satlu++;
+            if (satlu >= numsat){satlu = 0;}
+            } 
+
        
       handleGlitter();
       FastLED.show();
@@ -2515,18 +2699,18 @@ else if (variant == 1 && (!readyToChange)){
         previousMillis35 = millis();
 
         for (int s=0; s<numsparks;s++){
-        if ((rr[s] < (NUM_LEDS/2)+xx) && (rr[s] > (NUM_LEDS/2)-xx)){
-          longxArray[rr[s]]=yold;
-        }
-        else if ((rr[s] >= (NUM_LEDS/2)+xx) || (rr[s] <= (NUM_LEDS/2)-xx)){
+        if ((rr[s] <= (NUM_LEDS/2)+xx) && (rr[s] >= (NUM_LEDS/2)-xx)){
           longxArray[rr[s]]=yval1;
         }
-
-        if ((rr2[s] < (NUM_LEDS/2)+xx) && (rr2[s] > (NUM_LEDS/2)-xx)){
-          longxArray[rr2[s]]=yold;
+        else if ((rr[s] > (NUM_LEDS/2)+xx) || (rr[s] < (NUM_LEDS/2)-xx)){
+          longxArray[rr[s]]=yold;
         }
-        else if ((rr2[s] >= (NUM_LEDS/2)+xx) || (rr2[s] <= (NUM_LEDS/2)-xx)){
+
+        if ((rr2[s] <= (NUM_LEDS/2)+xx) && (rr2[s] >= (NUM_LEDS/2)-xx)){
           longxArray[rr2[s]]=yval1;
+        }
+        else if ((rr2[s] > (NUM_LEDS/2)+xx) || (rr2[s] < (NUM_LEDS/2)-xx)){
+          longxArray[rr2[s]]=yold;
         }
 
         longxArray[pos[s]]=colourS[4];
