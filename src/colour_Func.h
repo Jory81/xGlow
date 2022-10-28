@@ -399,7 +399,7 @@ if (colorMode == 0){
 
   if( random(255) < setDifference ) {
     int pos = random(NUM_LEDS);
-    if( !leds[pos]) {
+    if(!leds[pos]) {
       leds[pos] = CHSV(yval1,Stwinkle,150);
       setPixelDirection(pos, GETTING_BRIGHTER);
     }

@@ -44,11 +44,14 @@ void initializeEEPROM(){
     initializeEEPROMvariables(); // functio in global_variables.h at the bottom.    
     cfactor2=NUM_LEDS/100;
     cfactor3=NUM_LEDS/100;
-    cfactor1=300/NUM_LEDS;//
+    //cfactor1=300/NUM_LEDS;//
     convBrigh=waveTimeBr/numbrigh;
     convSat=waveTimeS/numsat;
       if (cfactor2 > 3){cfactor2 = 3;} 
-      else if (cfactor2 < 1){cfactor2 = 1;}; 
+      else if (cfactor2 < 1){
+        cfactor2 = 1;
+        cfactor3 = 1;
+        }; 
     Serial.print(F("NUM_LEDS: ")); Serial.println(NUM_LEDS);
     FastLED.delay(1000);
     }
