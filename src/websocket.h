@@ -60,7 +60,7 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
             return;
         }
 
-      if (json.containsKey("TLSE")){sendProgramInfo(1); sendProgramInfo(2); DEBUG_PRINTLN("enters here in TLSE"); notifyClientsSingleObject("TLSE", false);}
+      if (json.containsKey("TLSE")){sendProgramInfo(1); sendProgramInfo(2); sendProgramInfo(3); DEBUG_PRINTLN("enters here in TLSE"); notifyClientsSingleObject("TLSE", false);}
       //else if (json.containsKey("TLSX")){sendProgramInfo(2); DEBUG_PRINTLN("enters here in TLSX"); }
 
       else if (json.containsKey("ssid")){String wifiID = json["ssid"]; EEPROMposition = offsetof(storeInEEPROM, ssidStorage[0]); writeStringToEEPROM(EEPROMposition, wifiID); notifyClientsSingleString("wifiID", wifiID);}
@@ -162,81 +162,81 @@ void sendProgramInfo(byte message){
 DynamicJsonDocument doc(2000);
     switch (message){
       case 1: {
-    strcpy_P(buffer, (char*)pgm_read_dword(&(string_table[programMode])));
-    doc["progn"] = buffer;
-    doc["SHUE"] = yval;
-    doc["SBRI"] = BRIGH; 
-    doc["SSAT"] = S;
-    doc["SGLO"] = glowON;
-    doc["SCOM"] = colorMode;
-    doc["SVAR"] = varON;
-    doc["SNBR"] = numbrigh;
-    doc["SNSP"] = numsparks;
-    doc["SSBR"] = BrF;
-    doc["SDIF"] = setDifference;
-    doc["SLSP"] = changeSpeed;
-    doc["SCTM"] = cycleTime/1000;
-    doc["SCAR"] = arrayn;
-    doc["SPAL"] = gCurrentPaletteNumber;
-    doc["SGRA"] = selectColor;
-    doc["SNCO"] = numcolor;
-    doc["SNCL"] = colorlength;
-    doc["TCON"] = cycle;
-    doc["TCFA"] = fadeFirst;
-    doc["TCRA"] = randomCycle;
-    doc["TCEX"] = excludeModes;
-    doc["TGLI"] = glitterON;
-    doc["TRBO"] = rainbowON;
-    doc["TRVO"] = reverseON;
-    doc["TWHO"] = whiteON;
-    doc["TDIR"] = xdir;
-    doc["SOFF"] = offdis; 
-    doc["SSCO"] = z5;
-    doc["SSTM"] = satON;
-    doc["SSTN"] = numsat;
-    doc["SBWS"] = waveTimeBr;// convBrigh = dataVar/numbrigh;}
-    doc["SSWS"] = waveTimeS;// convSat = dataVar/numsat;}
-    doc["SSBS"] = BPMB;      
-    doc["SSSS"] = BPMS;                   
-    doc["SLPS"] = String(timefactor3,2);// timefactor3 = dataVar/100;}            
-    doc["SPGM"] = programMode; 
-    doc["TCAC"] = cmode[programMode]; // 37
-    doc["TSTE"] = saveToEEPROM;
-    doc["TTWO"] = tower;
-    
-    doc["SPST"] = selectedPreset[programMode];
+        strcpy_P(buffer, (char*)pgm_read_dword(&(string_table[programMode])));
+        doc["progn"] = buffer;
+        doc["SHUE"] = yval;
+        doc["SBRI"] = BRIGH; 
+        doc["SSAT"] = S;
+        doc["SGLO"] = glowON;
+        doc["SCOM"] = colorMode;
+        doc["SVAR"] = varON;
+        doc["SNBR"] = numbrigh;
+        doc["SNSP"] = numsparks;
+        doc["SSBR"] = BrF;
+        doc["SDIF"] = setDifference;
+        doc["SLSP"] = changeSpeed;
+        doc["SCTM"] = cycleTime/1000;
+        doc["SCAR"] = arrayn;
+        doc["SPAL"] = gCurrentPaletteNumber;
+        doc["SGRA"] = selectColor;
+        doc["SNCO"] = numcolor;
+        doc["SNCL"] = colorlength;
+        doc["TCON"] = cycle;
+        doc["TCFA"] = fadeFirst;
+        doc["TCRA"] = randomCycle;
+        doc["TCEX"] = excludeModes;
+        doc["TGLI"] = glitterON;
+        doc["TRBO"] = rainbowON;
+        doc["TRVO"] = reverseON;
+        doc["TWHO"] = whiteON;
+        doc["TDIR"] = xdir;
+        doc["SOFF"] = offdis; 
+        doc["SSCO"] = z5;
+        doc["SSTM"] = satON;
+        doc["SSTN"] = numsat;
+        doc["SBWS"] = waveTimeBr;// convBrigh = dataVar/numbrigh;}
+        doc["SSWS"] = waveTimeS;// convSat = dataVar/numsat;}
+        doc["SSBS"] = BPMB;      
+        doc["SSSS"] = BPMS;                   
+        doc["SLPS"] = String(timefactor3,2);// timefactor3 = dataVar/100;}            
+        doc["SPGM"] = programMode; 
+        doc["TCAC"] = cmode[programMode]; // 37
+        doc["TSTE"] = saveToEEPROM;
+        doc["TTWO"] = tower;
+        
+        doc["SPST"] = selectedPreset[programMode];
 
-    doc["SOBR"] = offBr;
-    doc["SOST"] = offS;
-    doc["SRED"] = Red;
-    doc["SGRE"] = Green;
-    doc["SBLU"] = Blue;
-    doc["THSV"] = updateHSV;   
-    doc["SSSF"] = SF;
-    doc["HNUM"] = NUM_LEDS; 
-    doc["TMWF"] = maintainWaveForm; 
-    doc["TBEE"] = Bees; 
-    doc["SRMI"] = yminrood;
-    doc["SRMA"] = ymaxrood;
-    doc["SGMI"] = ymingroen;
-    doc["SGMA"] = ymaxgroen;
-    doc["SBMI"] = yminblauw;
-    doc["SBMA"] = ymaxblauw;
-    doc["SYMI"] = ymin;
-    doc["SYMA"] = ymax;
-    doc["SMI1"] = ymin1;
-    doc["SMA1"] = ymax1;
-    doc["SMI3"] = ymin3;
-    doc["SMA3"] = ymax3;
-    doc["SMI4"] = ymin4;
-    doc["SMA4"] = ymax4;
-    doc["SMI2"] = ymin2;
-    doc["SMA2"] = ymax2;      
-    doc["SM3R"] = range;
-    doc["SBSM"] = BriSPreset;   
-    //doc["TPMO"] = personalizedModes;   
-    doc["TCPM"] = saveForAllModes;
-    doc["HCOL"] = RGBCOLOR;
+        doc["SOBR"] = offBr;
+        doc["SOST"] = offS;
+        doc["SRED"] = Red;
+        doc["SGRE"] = Green;
+        doc["SBLU"] = Blue;
+        doc["THSV"] = updateHSV;   
+        doc["SSSF"] = SF;
+        doc["HNUM"] = NUM_LEDS; 
+        doc["TMWF"] = maintainWaveForm; 
+        doc["TBEE"] = Bees; 
+        doc["SRMI"] = yminrood;
+        doc["SRMA"] = ymaxrood;
+        doc["SGMI"] = ymingroen;
+        doc["SGMA"] = ymaxgroen;
+        doc["SBMI"] = yminblauw;
+        doc["SBMA"] = ymaxblauw;
+        doc["SYMI"] = ymin;
+        doc["SYMA"] = ymax;
+        doc["SMI1"] = ymin1;
+        doc["SMA1"] = ymax1;
+        doc["SMI3"] = ymin3;
+        doc["SMA3"] = ymax3;
+        doc["SMI4"] = ymin4;
+        doc["SMA4"] = ymax4;
+        doc["SMI2"] = ymin2;
+        doc["SMA2"] = ymax2;      
+        doc["SM3R"] = range;
+        doc["SBSM"] = BriSPreset;   
+        //doc["TPMO"] = personalizedModes;   
+        doc["TCPM"] = saveForAllModes;
+        doc["HCOL"] = RGBCOLOR;
       }
       break;
       case 2:{
@@ -264,6 +264,11 @@ DynamicJsonDocument doc(2000);
       DEBUG_PRINTLN(BriSPresetVal);
       doc["BSMX"][m] = BriSPresetVal;
       } 
+    }
+    break;
+    case 3:{
+      doc["MAC"] = WiFi.macAddressDec().c_str();
+      //Serial.printf("Trying to connect decimal [%s] ", WiFi.macAddressDec().c_str());
     }
     break;
     }

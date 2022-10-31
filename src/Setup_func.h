@@ -76,15 +76,23 @@ void wifi(){
   int wifiCounter=0;
   
   #ifdef ESP8266
-  WiFi.hostname("Xlights");
+  WiFi.hostname("xglow");
   #else
   #endif
   
   WiFi.mode(WIFI_STA);
+
+  #ifdef ESP32
+  String hostname = "xglow";
+  WiFi.setHostname(hostname.c_str()); //define hostname
+  #else
+  #endif
+ 
   const char *WIFI_SSID = &wifiID[0];
   const char *WIFI_PASS = &wifiPASS[0];
   WiFi.begin(WIFI_SSID, WIFI_PASS);  
   Serial.printf("Trying to connect [%s] ", WiFi.macAddress().c_str());
+
   while (WiFi.status() != WL_CONNECTED) {
       Serial.print(".");
        display.clearDisplay();
@@ -106,10 +114,12 @@ void wifi(){
   display.println(F("soft-AP IP:"));
   Serial.println(WiFi.softAPIP());
   display.println(WiFi.softAPIP());
+  Serial.printf(" %s\n", WiFi.softAPIP().toString().c_str());
   display.display();    
   }
-  Serial.printf(" %s\n", WiFi.localIP().toString().c_str());
-  Serial.printf(" %s\n", WiFi.softAPIP().toString().c_str());
+  else {
+    Serial.printf(" %s\n", WiFi.localIP().toString().c_str());
+  }  
     
   initWebSocket();
   initWebServer();

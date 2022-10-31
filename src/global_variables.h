@@ -732,6 +732,7 @@ uint8_t yMA[30]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 String dataString;
 String wifiID;
 String wifiPASS;
+uint8_t Mac[6] = {0};
 
 //const char *WIFI_SSID = "Su***s**l";
 //const char *WIFI_PASS = "se*******at13";

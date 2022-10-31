@@ -91,6 +91,20 @@ function updateNumber(key, value) {
 		//console.log(myJSON);
 	}
 
+	function updateMac(key, value1, value2, value3, value4, value5, value6) {
+		var field = key;
+		var obj = {};
+		obj[field][0] = value1;
+		obj[field][1] = value2;
+		obj[field][2] = value3;
+		obj[field][3] = value4;
+		obj[field][4] = value5;
+		obj[field][5] = value6;
+		var myJSON = JSON.stringify(obj);
+		websocket.send(myJSON);  
+		console.log(myJSON);
+	}	
+
 function updateNumberS(key, value) {
 
 	var elongatedKey = key +"S";
@@ -269,6 +283,7 @@ function onMessage(event) {
 		else if (variable == 'TDAM'){document.getElementById('TDAM').checked = data.TDAM;}
 
 		else if (variable == 'HNUM'){document.getElementById('HNUMS').innerHTML = data.HNUM;}
+		else if (variable == 'MAC'){document.getElementById('MAC').innerHTML = data.MAC;}
 
 		else if (variable == 'SCTM'){document.getElementById('SCTMS').value = data.SCTM;}
 
@@ -1851,7 +1866,7 @@ _Bees (19, 22)
 
 <hr/>
 
-<p class="sliderwindow"> LED (SYSTEM) SETTINGS:
+<p class="sliderwindow"> LED SETTINGS:
 
 	<span id="checkbox1">
 	<input class="ckeckbox-element" type="checkbox" id="1N1" onclick="setTab('ledSettings')"/>  
@@ -1866,7 +1881,7 @@ _Bees (19, 22)
 <span class="textinfo" id="HNUMS">___</span> &nbsp
 <span class="inputparam"> <button onclick="updateNumber('SNLD', NUM_LEDS.value)">submit</button>	</span> &nbsp
 </p>
-<br>
+
 <p class="sliderwindow"> 
 <span class="textinfo"> color order: </span> &nbsp 
 <span class="inputparam">
@@ -1882,10 +1897,38 @@ _Bees (19, 22)
 <span class="textinfo" id="HCOLS">___</span> 
 </p>
 <br>
+<p class="sliderwindow"> WIFI & ESP32 settings:
+
+	</p>
 <p class="sliderwindow"> 
-<span class="textinfo"> ssid:</span> <span class="inputparam"> <input type="text" id="ssid" value=""></span> <span class="textinfo" id="HSIDS">___</span> &nbsp <span class="inputparam"> <button onclick="updateText('ssid', ssid.value)">submit</button> </span>
-<span class="textinfo"> password: </span> <span class="inputparam"> <input type="text" id="pass" value=""></span> <span class="textinfo" id="HPASS">___</span> &nbsp <span class="inputparam"> <button onclick="updateText('pass', pass.value)">submit</button> </span>
+<span class="textinfo">ssid:</span> <span class="inputparam"> <input type="text" id="ssid" value=""></span> <span class="textinfo" id="HSIDS">___</span> &nbsp <span class="inputparam"> <button onclick="updateText('ssid', ssid.value)">submit</button> </span>
+<br>
+<span class="textinfo">pass:</span> <span class="inputparam"> <input type="text" id="pass" value=""></span> <span class="textinfo" id="HPASS">___</span> &nbsp <span class="inputparam"> <button onclick="updateText('pass', pass.value)">submit</button> </span>
 </p>
+<br>
+<p class="sliderwindow"> 
+	<span class="textinfo">mac address: </span>
+	<span class="textinfo" id="MAC">___</span> &nbsp
+	</p>
+<br>
+
+<p class="sliderwindow"> 
+	<span class="textinfo">ESP32's connected:</span> <span class="inputparam"> <input type="number" id="NUM_ESP" max="10" min="0" value=""></span> &nbsp
+	<span class="textinfo" id="ESP">___</span> &nbsp
+	<span class="inputparam"> <button onclick="updateNumber('ESP', NUM_ESP.value)">submit</button>	</span> &nbsp
+</p>
+
+<p class="sliderwindowsmall">
+	<span class="textinfo">mac 1:</span><span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac1_1" value=""></span>
+	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac1_2" value=""></span>
+	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac1_3" value=""></span>
+	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac1_4" value=""></span>
+	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac1_5" value=""></span>
+	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac1_6" value=""></span>
+	<span><button onclick="updateMac('mac1', mac1_1.value, mac1_2.value, mac1_3.value, mac1_4.value, mac1_5.value, mac1_6.value)" class="btnx btn-primary">_update mac1</button> </span>
+
+</p>
+
 <br>
 <p class="sliderwindow"> 
 <span class="textinfo"> <span id="reboot"></span></span>&nbsp
