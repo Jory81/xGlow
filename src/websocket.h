@@ -152,8 +152,8 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
       else if (json.containsKey("SMI4")){ymin4 = json["SMI4"]; yval1=ymin4; dir0=1; dir1=1; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, ymin4), ymin4);  EEPROM.commit();};}
       else if (json.containsKey("SMA4")){ymax4 = json["SMA4"]; yval1=ymin4; dir0=1; dir1=1; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, ymax4), ymax4);  EEPROM.commit();};}
       else if (json.containsKey("SM3R")){range = json["SM3R"]; ledspercolor=NUM_LEDS/range; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, range), range);  EEPROM.commit();};}
-      else if (json.containsKey("ESP")){num_esp = json["ESP"];}
-      else if (json.containsKey("mac1")){for (int i = 0; i < 6; i++){Mac[i] = json["mac1"][i];} writeMacTooEEPROM(0);}
+      else if (json.containsKey("ESP")){num_esp = json["ESP"]; EEPROM.put(offsetof(storeInEEPROM, num_esp), num_esp);  EEPROM.commit();}
+      else if (json.containsKey("mac1")){for (int i = 0; i < 6; i++){Mac[i] = json["mac1"][i]; Serial.println(Mac[i]);} writeMacTooEEPROM(0);}
       else if (json.containsKey("mac2")){for (int i = 6; i < 12; i++){Mac[i] = json["mac2"][i%6];} writeMacTooEEPROM(1);}
 
       //  mac1[0] = json["mac1"][0]; mac1[1] = json["mac1"][1]; mac1[2] = json["mac1"][2]; mac1[3] = json["mac1"][3]; mac1[4] = json["mac1"][4]; mac1[5] = json["mac1"][5]; for (int i = 0; i < 6; i++){Serial.println(mac1[i]);}}
@@ -166,6 +166,7 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
       // else if (json.containsKey("mac8")){};
       // else if (json.containsKey("mac9")){};
       // else if (json.containsKey("mac10")){};
+      else if (json.containsKey("TSYN")){syncEsp = json["TSYN"];}
       else if (json.containsKey("BOOT")){ESP.restart();};
       notifyClientsSingleObject("recMsg", true);
     }
@@ -174,7 +175,9 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
   void writeMacTooEEPROM(uint8_t mac){
     for (int i = mac*6; i < (mac*6)+6; i++){
       int offsetPosition = (offsetof(storeInEEPROM, Mac[0]));
-      EEPROM.put(offsetPosition+i), Mac[i]);  
+      //uint8_t macAds = Mac[i];
+      Serial.print("offsetposition"); Serial.println(offsetPosition+i);
+      EEPROM.put((offsetPosition+i), Mac[i]);  
     }
     EEPROM.commit();
   }
@@ -259,6 +262,7 @@ DynamicJsonDocument doc(2000);
         //doc["TPMO"] = personalizedModes;   
         doc["TCPM"] = saveForAllModes;
         doc["HCOL"] = RGBCOLOR;
+        doc["TSYN"] = syncEsp;
       }
       break;
       case 2:{
@@ -267,7 +271,7 @@ DynamicJsonDocument doc(2000);
       for (int m = 1; m <= modeCount; m++){
       int offsetPosition = (offsetof(storeInEEPROM, BriSPreset[0])) + m-1;  
       uint8_t BriSPresetVal = EEPROM.read(offsetPosition);
-      DEBUG_PRINTLN(BriSPresetVal);
+      //DEBUG_PRINTLN(BriSPresetVal);
       doc["BSMP"][m] = BriSPresetVal;
       }
 
@@ -275,7 +279,7 @@ DynamicJsonDocument doc(2000);
       for (int m = 1; m <= modeCount; m++){
       int offsetPosition = (offsetof(storeInEEPROM, BriSPreset2[0])) + m-1;  
       uint8_t BriSPresetVal = EEPROM.read(offsetPosition);
-      DEBUG_PRINTLN(BriSPresetVal);
+      //DEBUG_PRINTLN(BriSPresetVal);
       doc["BSMY"][m] = BriSPresetVal;
       }
 
@@ -283,17 +287,28 @@ DynamicJsonDocument doc(2000);
       for (int m = 1; m <= modeCount; m++){
       int offsetPosition = (offsetof(storeInEEPROM, BriSPreset3[0])) + m-1;  
       uint8_t BriSPresetVal = EEPROM.read(offsetPosition);
-      DEBUG_PRINTLN(BriSPresetVal);
+      //DEBUG_PRINTLN(BriSPresetVal);
       doc["BSMX"][m] = BriSPresetVal;
       } 
     }
     break;
     case 3:{
       doc["MAC"] = WiFi.macAddressDec().c_str();
+      doc["n_esp"] = num_esp;
       for (int n = 0; n < 10; n++){
         switch (n){
-          case 1: for (int m = n*6; m < (n*6)+6; m++){doc["mac1"][m % 6] = Mac[m];} break;
-          case 2: for (int m = n*6; m < (n*6)+6; m++){doc["mac2"][m % 6] = Mac[m];} break;
+          case 0: {
+            for (int m = n*6; m < (n*6)+6; m++){
+              doc["mac1"][m%6] = Mac[m];
+              }
+              break;
+          }
+          case 1: {
+            for (int m = n*6; m < (n*6)+6; m++){
+              doc["mac2"][m%6] = Mac[m];
+              }
+              break;
+          }
         }
     }
     break;
@@ -310,7 +325,47 @@ size_t len = serializeJson(doc, data);
     DEBUG_PRINTLN(" ");
 
 ws.textAll(data, len);
-return;
+
+if (syncEsp){
+  DynamicJsonDocument doc(250);
+        doc["SHUE"] = yval;
+        //doc["SGLO"] = glowON;
+        doc["SCOM"] = colorMode;
+        doc["SVAR"] = varON;
+        doc["SDIF"] = setDifference;
+        doc["SLSP"] = changeSpeed;
+
+        doc["SCAR"] = arrayn;
+        doc["SPAL"] = gCurrentPaletteNumber;
+        doc["SGRA"] = selectColor;
+        doc["TCON"] = false;
+        doc["SPGM"] = programMode; 
+        
+        doc["SPST"] = selectedPresetVariable;
+        doc["SRED"] = Red;
+        doc["SGRE"] = Green;
+        doc["SBLU"] = Blue;
+        doc["SBSM"] = BriSPreset;   
+        //doc["TPMO"] = personalizedModes;   
+        //doc["TCPM"] = saveForAllModes;
+        //doc["HCOL"] = RGBCOLOR;
+                                
+        char data[250]; // 250
+        size_t len = serializeJson(doc, data);
+
+            DEBUG_PRINT(F("sending JSON message: ")); DEBUG_PRINTLN(len);
+            for (int i = 0; i < len;  i++){
+            DEBUG_PRINT(data[i]);
+            }
+            DEBUG_PRINTLN(" ");
+
+          for (int i = 0; i < num_esp; i++){
+            uint8_t broadcastAddress[6] = {Mac[i*6], Mac[(i*6)+1], Mac[(i*6)+2], Mac[(i*6)+3], Mac[(i*6)+4], Mac[(i*6)+5]};
+            Serial.println(broadcastAddress[i]);
+            esp_now_send(broadcastAddress, (uint8_t *) &data, len);
+          }
+        }
+        return;
 }
 
 void writeStringToEEPROM(int addrOffset, const String &strToWrite){

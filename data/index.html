@@ -276,6 +276,7 @@ function onMessage(event) {
 		else if (variable == 'TSET'){document.getElementById('TSET').checked = data.TSET;}
 		else if (variable == 'TAAM'){document.getElementById('TAAM').checked = data.TAAM;}
 		else if (variable == 'TDAM'){document.getElementById('TDAM').checked = data.TDAM;}
+		else if (variable == 'TSYN'){document.getElementById('TSYN').checked = data.TSYN;}
 
 		else if (variable == 'HNUM'){document.getElementById('HNUMS').innerHTML = data.HNUM;}
 		else if (variable == 'MAC'){document.getElementById('MAC').innerHTML = data.MAC;}
@@ -294,6 +295,8 @@ function onMessage(event) {
 		else if (variable == 'HY1N'){document.getElementById('HY1NS').innerHTML = data.HY1N;}
 		else if (variable == 'HY1O'){document.getElementById('HY1OS').innerHTML = data.HY1O;}
 		else if (variable == 'HPTT'){document.getElementById('HPTTS').innerHTML = data.HPTT;}
+
+		else if (variable == 'n_esp'){document.getElementById('ESP').innerHTML = data.n_esp;}
 
 		else if (variable == 'mac1'){document.getElementById('mac1_1').value = data.mac1[0]; document.getElementById('mac1_2').value = data.mac1[1]; document.getElementById('mac1_3').value = data.mac1[2]; document.getElementById('mac1_4').value = data.mac1[3]; document.getElementById('mac1_5').value = data.mac1[4]; document.getElementById('mac1_6').value = data.mac1[5];}
 		else if (variable == 'mac2'){document.getElementById('mac2_1').value = data.mac2[0]; document.getElementById('mac2_2').value = data.mac2[1]; document.getElementById('mac2_3').value = data.mac2[2]; document.getElementById('mac2_4').value = data.mac2[3]; document.getElementById('mac2_5').value = data.mac2[4]; document.getElementById('mac2_6').value = data.mac2[5];}

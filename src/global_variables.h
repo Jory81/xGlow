@@ -797,6 +797,7 @@ String strget;
 String mergedString;
 char msg_buf[11];
 
+boolean     syncEsp = false;
 boolean     randomCycle = false; // EEPROM.readByte(96);
 boolean     changeModus = false;
 boolean     fadeFirst = true;
@@ -1172,6 +1173,7 @@ num_esp = EEPROM.read(offsetof(storeInEEPROM, num_esp));
       for (int m = 0; m < 60; m++){
       int offsetPosition = offsetof(storeInEEPROM, Mac[0]);
       Mac[m]  = EEPROM.read(offsetPosition+m);
+      //Serial.print("MAC initialization "); Serial.println(Mac[m]);
       }      
 
       for (int m = 0; m < modeCount; m++){

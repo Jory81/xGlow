@@ -125,6 +125,34 @@ void wifi(){
   initWebServer();
 }
 
+void espNow(){
+    // Initilize ESP-NOW
+  if (esp_now_init() != ESP_OK) {
+    Serial.println("Error initializing ESP-NOW");
+    return;
+  }
+  //esp_now_register_recv_cb(receiveCallback);
+  // Register the send callback
+  esp_now_register_send_cb(OnDataSent);
+  //esp_now_register_recv_cb(receiveCallback);
+  esp_now_register_recv_cb(OnDataRecv);
+  
+  // Register peer
+  for (int i = 0; i < num_esp; i++){
+    uint8_t broadcastAddress[6] = {Mac[i*6], Mac[(i*6)+1], Mac[(i*6)+2], Mac[(i*6)+3], Mac[(i*6)+4], Mac[(i*6)+5]};
+    memcpy(peerInfo.peer_addr, broadcastAddress, 6);
+    peerInfo.channel = 0;  
+    peerInfo.encrypt = false;
+    Serial.print("added peer: "); Serial.print(i); Serial.print(" "); Serial.print(broadcastAddress[0]); Serial.print(" "); Serial.print(broadcastAddress[1]); Serial.print(" "); Serial.print(broadcastAddress[2]); Serial.print(" "); Serial.print(broadcastAddress[3]); Serial.print(" "); Serial.print(broadcastAddress[4]); Serial.print(" "); Serial.println(broadcastAddress[5]);
+    
+    // Add peer        
+    if (esp_now_add_peer(&peerInfo) != ESP_OK){
+      Serial.println("Failed to add peer");
+      return;
+    }
+}
+}
+
 void LED_properties(){
     #ifdef ESP8266
     EEPROM.get(offsetof(storeInEEPROM, rgbcolor), RGBCOLOR);
