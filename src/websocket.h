@@ -152,10 +152,32 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
       else if (json.containsKey("SMI4")){ymin4 = json["SMI4"]; yval1=ymin4; dir0=1; dir1=1; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, ymin4), ymin4);  EEPROM.commit();};}
       else if (json.containsKey("SMA4")){ymax4 = json["SMA4"]; yval1=ymin4; dir0=1; dir1=1; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, ymax4), ymax4);  EEPROM.commit();};}
       else if (json.containsKey("SM3R")){range = json["SM3R"]; ledspercolor=NUM_LEDS/range; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, range), range);  EEPROM.commit();};}
+      else if (json.containsKey("ESP")){num_esp = json["ESP"];}
+      else if (json.containsKey("mac1")){for (int i = 0; i < 6; i++){Mac[i] = json["mac1"][i];} writeMacTooEEPROM(0);}
+      else if (json.containsKey("mac2")){for (int i = 6; i < 12; i++){Mac[i] = json["mac2"][i%6];} writeMacTooEEPROM(1);}
+
+      //  mac1[0] = json["mac1"][0]; mac1[1] = json["mac1"][1]; mac1[2] = json["mac1"][2]; mac1[3] = json["mac1"][3]; mac1[4] = json["mac1"][4]; mac1[5] = json["mac1"][5]; for (int i = 0; i < 6; i++){Serial.println(mac1[i]);}}
+      // else if (json.containsKey("mac2")){};
+      // else if (json.containsKey("mac3")){};
+      // else if (json.containsKey("mac4")){};
+      // else if (json.containsKey("mac5")){};
+      // else if (json.containsKey("mac6")){};
+      // else if (json.containsKey("mac7")){};
+      // else if (json.containsKey("mac8")){};
+      // else if (json.containsKey("mac9")){};
+      // else if (json.containsKey("mac10")){};
       else if (json.containsKey("BOOT")){ESP.restart();};
       notifyClientsSingleObject("recMsg", true);
     }
 }
+
+  void writeMacTooEEPROM(uint8_t mac){
+    for (int i = mac*6; i < (mac*6)+6; i++){
+      int offsetPosition = (offsetof(storeInEEPROM, Mac[0]));
+      EEPROM.put(offsetPosition+i), Mac[i]);  
+    }
+    EEPROM.commit();
+  }
 
 void sendProgramInfo(byte message){
 //StaticJsonDocument<2000> doc; // 2500
@@ -268,10 +290,15 @@ DynamicJsonDocument doc(2000);
     break;
     case 3:{
       doc["MAC"] = WiFi.macAddressDec().c_str();
-      //Serial.printf("Trying to connect decimal [%s] ", WiFi.macAddressDec().c_str());
+      for (int n = 0; n < 10; n++){
+        switch (n){
+          case 1: for (int m = n*6; m < (n*6)+6; m++){doc["mac1"][m % 6] = Mac[m];} break;
+          case 2: for (int m = n*6; m < (n*6)+6; m++){doc["mac2"][m % 6] = Mac[m];} break;
+        }
     }
     break;
     }
+}
                                 
 char data[2000]; // 2500
 size_t len = serializeJson(doc, data);

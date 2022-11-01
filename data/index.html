@@ -91,15 +91,10 @@ function updateNumber(key, value) {
 		//console.log(myJSON);
 	}
 
-	function updateMac(key, value1, value2, value3, value4, value5, value6) {
+	function updateMac(key, val1, val2, val3, val4, val5, val6) {
 		var field = key;
 		var obj = {};
-		obj[field][0] = value1;
-		obj[field][1] = value2;
-		obj[field][2] = value3;
-		obj[field][3] = value4;
-		obj[field][4] = value5;
-		obj[field][5] = value6;
+		obj[field] = [val1, val2, val3, val4, val5, val6];
 		var myJSON = JSON.stringify(obj);
 		websocket.send(myJSON);  
 		console.log(myJSON);
@@ -289,16 +284,19 @@ function onMessage(event) {
 
 		else if (variable == 'SLPS'){document.getElementById('SLPSS').value = data.SLPS;}
 
-		else if (variable == 'HSPE')document.getElementById('HSPES').innerHTML = data.HSPE;
-		else if (variable == 'HHHH')document.getElementById('HHHHS').innerHTML = data.HHHH;
-		else if (variable == 'HSSS')document.getElementById('HSSSS').innerHTML = data.HSSS;
-		else if (variable == 'HVVV')document.getElementById('HVVVS').innerHTML = data.HVVV;
-		else if (variable == 'HPTI')document.getElementById('HPTIS').innerHTML = data.HPTI;
+		else if (variable == 'HSPE'){document.getElementById('HSPES').innerHTML = data.HSPE;}
+		else if (variable == 'HHHH'){document.getElementById('HHHHS').innerHTML = data.HHHH;}
+		else if (variable == 'HSSS'){document.getElementById('HSSSS').innerHTML = data.HSSS;}
+		else if (variable == 'HVVV'){document.getElementById('HVVVS').innerHTML = data.HVVV;}
+		else if (variable == 'HPTI'){document.getElementById('HPTIS').innerHTML = data.HPTI;}
 
-		else if (variable == 'HCTI')document.getElementById('HCTIS').innerHTML = data.HCTI;
-		else if (variable == 'HY1N')document.getElementById('HY1NS').innerHTML = data.HY1N;
-		else if (variable == 'HY1O')document.getElementById('HY1OS').innerHTML = data.HY1O;
-		else if (variable == 'HPTT')document.getElementById('HPTTS').innerHTML = data.HPTT;
+		else if (variable == 'HCTI'){document.getElementById('HCTIS').innerHTML = data.HCTI;}
+		else if (variable == 'HY1N'){document.getElementById('HY1NS').innerHTML = data.HY1N;}
+		else if (variable == 'HY1O'){document.getElementById('HY1OS').innerHTML = data.HY1O;}
+		else if (variable == 'HPTT'){document.getElementById('HPTTS').innerHTML = data.HPTT;}
+
+		else if (variable == 'mac1'){document.getElementById('mac1_1').value = data.mac1[0]; document.getElementById('mac1_2').value = data.mac1[1]; document.getElementById('mac1_3').value = data.mac1[2]; document.getElementById('mac1_4').value = data.mac1[3]; document.getElementById('mac1_5').value = data.mac1[4]; document.getElementById('mac1_6').value = data.mac1[5];}
+		else if (variable == 'mac2'){document.getElementById('mac2_1').value = data.mac2[0]; document.getElementById('mac2_2').value = data.mac2[1]; document.getElementById('mac2_3').value = data.mac2[2]; document.getElementById('mac2_4').value = data.mac2[3]; document.getElementById('mac2_5').value = data.mac2[4]; document.getElementById('mac2_6').value = data.mac2[5];}
 
 		else if (variable == 'HCOL'){
 			if (data.HCOL == 0){
@@ -703,9 +701,14 @@ $(document).ready(function() {
 	&nbsp; 
 
 <span class="switchcontainer">
-	<span>
 	EEPROM
 	<input type="checkbox" id="TSTE" onclick="updateButton(this.id, this.checked)"> 
+	</label>
+</span>
+
+<span class="switchcontainer">
+	SYNC
+	<input type="checkbox" id="TSYN" onclick="updateButton(this.id, this.checked)"> 
 	</label>
 </span>
 
@@ -1925,8 +1928,17 @@ _Bees (19, 22)
 	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac1_4" value=""></span>
 	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac1_5" value=""></span>
 	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac1_6" value=""></span>
-	<span><button onclick="updateMac('mac1', mac1_1.value, mac1_2.value, mac1_3.value, mac1_4.value, mac1_5.value, mac1_6.value)" class="btnx btn-primary">_update mac1</button> </span>
+	<span><button onclick="updateMac('mac1', mac1_1.value, mac1_2.value, mac1_3.value, mac1_4.value, mac1_5.value, mac1_6.value)" class="btnx btn-primary">_update</button> </span>
+</p>
 
+<p class="sliderwindowsmall">
+	<span class="textinfo">mac 2:</span><span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac2_1" value=""></span>
+	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac2_2" value=""></span>
+	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac2_3" value=""></span>
+	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac2_4" value=""></span>
+	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac2_5" value=""></span>
+	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac2_6" value=""></span>
+	<span><button onclick="updateMac('mac2', mac2_1.value, mac2_2.value, mac2_3.value, mac2_4.value, mac2_5.value, mac2_6.value)" class="btnx btn-primary">_update</button> </span>
 </p>
 
 <br>

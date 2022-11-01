@@ -231,6 +231,7 @@ void notifyClientsSingleObjectSignedInt(String object, int32_t value);
 void notifyClientsSingleString(String object, String &message);
 void sendProgramInfo(byte message);
 void writeStringToEEPROM(int addrOffset, const String &strToWrite);
+void writeMacTooEEPROM(uint8_t mac);
 
 void sendMessageToClient(int dataVar);
 void initWebSocket();

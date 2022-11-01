@@ -167,7 +167,18 @@ struct storeInEEPROM {
   byte varON[modeCount];
   byte varON2[modeCount];
   byte varON3[modeCount];
-  int NUM_LEDS;   
+  int NUM_LEDS;
+  uint8_t num_esp;
+  uint8_t Mac[60];  
+  // uint8_t mac2[6]; 
+  // uint8_t mac3[6]; 
+  // uint8_t mac4[6]; 
+  // uint8_t mac5[6]; 
+  // uint8_t mac6[6]; 
+  // uint8_t mac7[6]; 
+  // uint8_t mac8[6]; 
+  // uint8_t mac9[6]; 
+  // uint8_t mac10[6]; 
 };
 
 byte RGBCOLOR = 0;
@@ -282,7 +293,7 @@ storeInEEPROM customVar = {
       // 50 // NUM_LEDS   
 
     // SMALL CHRISTMAS TREE
-      11223, // code to check
+      11442, // code to check
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, // ssid storage
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, // pass storage
       1, // empty byte so ymin loads correctly
@@ -473,7 +484,18 @@ storeInEEPROM customVar = {
       
       // varON3 byte
       1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 1, 2, 1, 1, 1, 1, 1, 1, 2, 1, 1, 2, 2, 1, 1, 1, 2, 2, 1, 1,
-      50 // NUM_LEDS            
+      50, // NUM_LEDS   
+      0, // num_esp
+      0, 0, 0, 0, 0, 0, //mac1
+      0, 0, 0, 0, 0, 0, //mac2
+      0, 0, 0, 0, 0, 0, //mac3
+      0, 0, 0, 0, 0, 0, //mac4
+      0, 0, 0, 0, 0, 0, //mac5
+      0, 0, 0, 0, 0, 0, //mac6
+      0, 0, 0, 0, 0, 0, //mac7
+      0, 0, 0, 0, 0, 0, //mac8
+      0, 0, 0, 0, 0, 0, //mac9
+      0, 0, 0, 0, 0, 0 //mac10        
     };
 
 
@@ -732,7 +754,17 @@ uint8_t yMA[30]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 String dataString;
 String wifiID;
 String wifiPASS;
-uint8_t Mac[6] = {0};
+uint8_t num_esp = 0;
+uint8_t Mac[60] = {0};
+// uint8_t mac2[6] = {0};
+// uint8_t mac3[6] = {0};
+// uint8_t mac4[6] = {0};
+// uint8_t mac5[6] = {0};
+// uint8_t mac6[6] = {0};
+// uint8_t mac7[6] = {0};
+// uint8_t mac8[6] = {0};
+// uint8_t mac9[6] = {0};
+// uint8_t mac10[6] = {0};
 
 //const char *WIFI_SSID = "Su***s**l";
 //const char *WIFI_PASS = "se*******at13";
@@ -1089,6 +1121,7 @@ numbrigh = EEPROM.read(offsetof(storeInEEPROM, numbrigh[0]));
 Bees = EEPROM.read(offsetof(storeInEEPROM, Bees));
 range = EEPROM.read(offsetof(storeInEEPROM, range));
 offdisC = EEPROM.read(offsetof(storeInEEPROM, offdisC));
+num_esp = EEPROM.read(offsetof(storeInEEPROM, num_esp));
 //personalizedModes = EEPROM.read(offsetof(storeInEEPROM, personalizedModes));
 
 #ifdef ESP8266 
@@ -1098,6 +1131,13 @@ offdisC = EEPROM.read(offsetof(storeInEEPROM, offdisC));
       //Serial.print(offsetPosition+m); Serial.print(" "); Serial.println(cmode[m]);
       //Serial.println("heeree in setupp 222");
       }
+
+      for (int m = 0; m < 60; m++){
+      int offsetPosition = offsetof(storeInEEPROM, Mac[0]);
+      EEPROM.get(offsetPosition+m, Mac[m]); 
+      //Serial.print(offsetPosition+m); Serial.print(" "); Serial.println(cmode[m]);
+      //Serial.println("heeree in setupp 222");
+      }      
 
       for (int m = 0; m < modeCount; m++){
       int offsetPosition = offsetof(storeInEEPROM, selectedPreset[0]);
@@ -1128,6 +1168,11 @@ offdisC = EEPROM.read(offsetof(storeInEEPROM, offdisC));
       int offsetPosition = offsetof(storeInEEPROM, cmode[0]);
       cmode[m]  = EEPROM.read(offsetPosition+m);
       }
+
+      for (int m = 0; m < 60; m++){
+      int offsetPosition = offsetof(storeInEEPROM, Mac[0]);
+      Mac[m]  = EEPROM.read(offsetPosition+m);
+      }      
 
       for (int m = 0; m < modeCount; m++){
       int offsetPosition = offsetof(storeInEEPROM, selectedPreset[0]);

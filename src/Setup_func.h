@@ -23,7 +23,7 @@ void spiffs(){
 }
 
 void eeprom(){
-      EEPROM.begin(3100);
+      EEPROM.begin(3200);
 }
 
 void initializeEEPROM(){
@@ -36,7 +36,7 @@ void initializeEEPROM(){
 
     Serial.print(F("size of EEPROM: ")); Serial.println(sizeof(customVar));
     
-    if (check == 11223){
+    if (check == 11442){
     display.print(F("code: ")); display.println(check);
     display.println(F("EEPROM SET"));
     display.display();
@@ -56,7 +56,7 @@ void initializeEEPROM(){
     FastLED.delay(1000);
     }
     
-    else if (check != 11223){
+    else if (check != 11442){
     display.println(F("EEPROM not initialized"));
     display.println(F("Writing to EEPROM...."));
     display.display();
