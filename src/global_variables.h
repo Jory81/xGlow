@@ -797,6 +797,7 @@ String strget;
 String mergedString;
 char msg_buf[11];
 
+boolean     espNowMessage = false;
 boolean     syncEsp = false;
 boolean     randomCycle = false; // EEPROM.readByte(96);
 boolean     changeModus = false;
@@ -838,6 +839,7 @@ byte        message = 0;
 
 uint16_t    dataVar=0;
 
+uint8_t EspNowMessageType = 0;
 uint8_t BriSPreset=0;
 byte glowON = 2; // glow is ON
 byte satON = 0;

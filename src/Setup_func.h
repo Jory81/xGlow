@@ -126,16 +126,13 @@ void wifi(){
 }
 
 void espNow(){
-    // Initilize ESP-NOW
+  // Initilize ESP-NOW
   if (esp_now_init() != ESP_OK) {
     Serial.println("Error initializing ESP-NOW");
     return;
   }
-  //esp_now_register_recv_cb(receiveCallback);
-  // Register the send callback
+
   esp_now_register_send_cb(OnDataSent);
-  //esp_now_register_recv_cb(receiveCallback);
-  esp_now_register_recv_cb(OnDataRecv);
   
   // Register peer
   for (int i = 0; i < num_esp; i++){
@@ -143,14 +140,18 @@ void espNow(){
     memcpy(peerInfo.peer_addr, broadcastAddress, 6);
     peerInfo.channel = 0;  
     peerInfo.encrypt = false;
-    Serial.print("added peer: "); Serial.print(i); Serial.print(" "); Serial.print(broadcastAddress[0]); Serial.print(" "); Serial.print(broadcastAddress[1]); Serial.print(" "); Serial.print(broadcastAddress[2]); Serial.print(" "); Serial.print(broadcastAddress[3]); Serial.print(" "); Serial.print(broadcastAddress[4]); Serial.print(" "); Serial.println(broadcastAddress[5]);
+    Serial.print("added peer: ");// Serial.print(i); Serial.print(" "); Serial.print(broadcastAddress[0]); Serial.print(" "); Serial.print(broadcastAddress[1]); Serial.print(" "); Serial.print(broadcastAddress[2]); Serial.print(" "); Serial.print(broadcastAddress[3]); Serial.print(" "); Serial.print(broadcastAddress[4]); Serial.print(" "); Serial.println(broadcastAddress[5]);
     
     // Add peer        
     if (esp_now_add_peer(&peerInfo) != ESP_OK){
       Serial.println("Failed to add peer");
       return;
     }
-}
+  }
+
+      // Register for a callback function that will be called when data is received
+  esp_now_register_recv_cb(OnDataRecv);
+//}
 }
 
 void LED_properties(){

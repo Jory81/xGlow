@@ -183,6 +183,7 @@ if (changeModus){
     // mergedString = "HY1N "; ws.textAll(mergedString);
     // mergedString = "HY1O "; ws.textAll(mergedString);   
     displayOled();
-    sendProgramInfo(1);                            
+    sendProgramInfo(1);   
+    if (syncEsp){espNowMessage = true;   EspNowMessageType = 0;  }                         
   }
 }
