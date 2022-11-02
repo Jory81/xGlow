@@ -69,7 +69,7 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
       else if (json.containsKey("SHUE")){yval = json["SHUE"]; forcedColourChange = true; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, yval), yval);  EEPROM.commit();}; if (syncEsp){espNowMessage = true;   EspNowMessageType = 2;  }; }
       else if (json.containsKey("SBRI")){BRIGH = json["SBRI"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, BRIGH), BRIGH);  EEPROM.commit();};}
       else if (json.containsKey("SSAT")){S = json["SSAT"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, S), S);  EEPROM.commit();};}
-      else if (json.containsKey("SPGM")){programMode = json["SPGM"]; cycleT=0;  previousMillis44 = millis();  previousMillis45 = millis(); if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, programMode), programMode);  EEPROM.commit();};  changeState();} 
+      else if (json.containsKey("SPGM")){programMode = json["SPGM"]; selectPreset(); if (syncEsp){espNowMessage = true;   EspNowMessageType = 0;}; cycleT=0;  previousMillis44 = millis();  previousMillis45 = millis(); if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, programMode), programMode);  EEPROM.commit();};  changeState();} 
       else if (json.containsKey("SBSM")){BriSPreset = json["SBSM"]; readBriSData(BriSPreset); sendProgramInfo(1); if (syncEsp){espNowMessage = true;   EspNowMessageType = 1;  }; }
       else if (json.containsKey("SGLO")){glowON = json["SGLO"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, glowON), glowON);  EEPROM.commit();};}
       else if (json.containsKey("SSTM")){satON = json["SSTM"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, satON), satON);  EEPROM.commit();};}
@@ -87,7 +87,7 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
 
 
       else if (json.containsKey("SNLD")){NUM_LEDS = json["SNLD"]; EEPROM.put(offsetof(storeInEEPROM, NUM_LEDS), NUM_LEDS);  EEPROM.commit();}
-      else if (json.containsKey("SCAR")){arrayn = json["SCAR"];     selectcolorArray();    newColors++;if (syncEsp){espNowMessage = true;   EspNowMessageType = 7;  }; }  // THIS ONE
+      else if (json.containsKey("SCAR")){arrayn = json["SCAR"];     selectcolorArray();    newColors++; if (syncEsp){espNowMessage = true;   EspNowMessageType = 7;  }; }  // THIS ONE
       else if (json.containsKey("SPAL")){gCurrentPaletteNumber = json["SPAL"]; gTargetPalette =( gGradientPalettes[gCurrentPaletteNumber] ); if (syncEsp){espNowMessage = true;   EspNowMessageType = 8;  }; }
       else if (json.containsKey("SGRA")){selectColor = json["SGRA"];   dir1=1;    ymax4 = pgm_read_byte(&selectColor_data[selectColor].ymax4);  ymin4 = pgm_read_byte(&selectColor_data[selectColor].ymin4);   setDifference = pgm_read_byte(&selectColor_data[selectColor].setDifference);    yval1=ymin4;   dir0=1;   if (effect_function == *rainbow_3){setDifference = 4;  }if (syncEsp){espNowMessage = true;   EspNowMessageType = 9;  }; }
       else if (json.containsKey("SNCO")){numcolor = json["SNCO"];   newColors++;    if (whiteON){for (int t=0; t<15; t++){satval[t]=S; satval[0]=0;}}      else if (!whiteON){for (int t=0; t<15; t++){satval[t]=S;}}}
@@ -117,7 +117,7 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
 //      else if (str == "TVBB"){varBPMB = dataVar; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, varBPMB), varBPMB);  EEPROM.commit();};} // EEPROM
 //      else if (str == "TVNS"){varNumsat = dataVar; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, varNumsat), varNumsat);  EEPROM.commit();};} // EEPROM
 //      else if (str == "TVBS"){varBPMS = dataVar; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, varBPMS), varBPMS);  EEPROM.commit();};} // EEPROM      
-      else if (json.containsKey("SPST")){selectedPreset[programMode] = json["SPST"]; selectedPresetVariable = selectedPreset[programMode]; cycleT=0;  previousMillis44 = millis();  previousMillis45 = millis();  if (saveToEEPROM){int offsetPosition = offsetof(storeInEEPROM, selectedPreset[0]); EEPROM.put((offsetPosition + programMode), selectedPresetVariable);  EEPROM.commit();} changeState();}
+      else if (json.containsKey("SPST")){selectedPreset[programMode] = json["SPST"]; selectPreset(); if (syncEsp){espNowMessage = true;   EspNowMessageType = 0;  }; cycleT=0;   previousMillis44 = millis();  previousMillis45 = millis();  if (saveToEEPROM){int offsetPosition = offsetof(storeInEEPROM, selectedPreset[0]); EEPROM.put((offsetPosition + programMode), selectedPreset[programMode]);  EEPROM.commit();} changeState();}
       else if (json.containsKey("TSCM")){saveCurrentPresetToEEPROM(); sendDelayWSMessage=true; message = 1; previousMillis14=millis(); }
       else if (json.containsKey("TSBM")){saveCurrentBriSPresetToEEPROM(); sendDelayWSMessage=true; message = 5; previousMillis14=millis(); }
       
@@ -1326,6 +1326,9 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
         }
         Serial.print("Bytes received: ");
         Serial.println(len);
+        inSync = true;
+//         incomingMessage = true;
+// }
 
         // DEBUG_PRINTLN(F("received JSON espnow message: "));
         // for (int i = 0; i < len; i++){
@@ -1342,34 +1345,46 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
             DEBUG_PRINTLN(err.c_str());
             return;
         }
+        // JsonObject object = json.to<JsonObject>();
 
-      if (json.containsKey("SBSM")){BriSPreset = json["SBSM"]; readBriSData(BriSPreset);}// sendProgramInfo(1);}
-      else if (json.containsKey("SRED")){Red = json["SRED"]; loadHSV = true;}// if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, Red), Red);  EEPROM.commit();};} 
-      else if (json.containsKey("SGRE")){Green = json["SGRE"]; loadHSV = true;}// if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, Green), Green);  EEPROM.commit();};}   
-      else if (json.containsKey("SBLU")){Blue = json["SBLU"]; loadHSV = true;}// if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, Blue), Blue);  EEPROM.commit();};}
-      
-      else if (json.containsKey("SPST")){selectedPreset[programMode] = json["SPST"]; selectedPresetVariable = selectedPreset[programMode];}// cycleT=0;  previousMillis44 = millis();  previousMillis45 = millis();  if (saveToEEPROM){int offsetPosition = offsetof(storeInEEPROM, selectedPreset[0]); EEPROM.put((offsetPosition + programMode), selectedPresetVariable);  EEPROM.commit();} changeState();}
-      else if (json.containsKey("TCON")){cycle = json["TCON"];} //if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, cycle), cycle);  EEPROM.commit();};} // EEPROM
-      else if (json.containsKey("SGRA")){selectColor = json["SGRA"];   dir1=1;    ymax4 = pgm_read_byte(&selectColor_data[selectColor].ymax4);  ymin4 = pgm_read_byte(&selectColor_data[selectColor].ymin4);   setDifference = pgm_read_byte(&selectColor_data[selectColor].setDifference);    yval1=ymin4;   dir0=1;   if (effect_function == *rainbow_3){setDifference = 4;  }}
-      else if (json.containsKey("SPAL")){gCurrentPaletteNumber = json["SPAL"]; gTargetPalette =( gGradientPalettes[gCurrentPaletteNumber] );}
-      else if (json.containsKey("SCAR")){arrayn = json["SCAR"];     selectcolorArray();    newColors++;}  // THIS ONE
-      
-      else if (json.containsKey("SDIF")){setDifference = json["SDIF"]; fillxmasArray(); diffbeat=60000/(setDifference*4*100); diffbeat2=diffbeat/2;  setDifference2 = setDifference+5;} // diff[0]=0;     x = 1;  num = 0;        diff[1]=0;     xn = 1;    num7 = 0; }
-      else if (json.containsKey("SLSP")){changeSpeed = json["SLSP"];}
-      else if (json.containsKey("SVAR")){varON = json["SVAR"]; for (int p=0; p<10; p++){if (varON == 0){yvar[p]= 0; yvarg[p]= 0;} else {yvar[p]=yvarC[p]; yvarg[p]=yvargC[p];};};}// if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, varON), varON);  EEPROM.commit();};}
-      else if (json.containsKey("SCOM")){colorMode = json["SCOM"]; colorMode = colorMode-1; procesColourMode();} // memoryByte = 'c'; processChange();} // THIS ONE
-      else if (json.containsKey("SHUE")){yval = json["SHUE"]; forcedColourChange = true;}// if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, yval), yval);  EEPROM.commit();};}
-      else if (json.containsKey("SPGM")){programMode = json["SPGM"]; cycleT=0;  previousMillis44 = millis();  previousMillis45 = millis(); changeState();} // if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, programMode), programMode);  EEPROM.commit();};          
+        // for (int i = 0; i < object.size(); i++){
+          JsonObject root = json.as<JsonObject>();
 
+        // using C++11 syntax (preferred):
+        for (JsonPair kv : root) {
+            String variable = kv.key().c_str();
+        //     Serial.println(kv.key().c_str());
+        //     Serial.println(kv.value().as<char*>());
+        // }
+      
+          if (variable == "SPST"){selectedPreset[programMode] = json["SPST"]; selectedPresetVariable = selectedPreset[programMode];}// Serial.println("selectbrispreset"); cycleT=0;  previousMillis44 = millis();  previousMillis45 = millis();  if (saveToEEPROM){int offsetPosition = offsetof(storeInEEPROM, selectedPreset[0]); EEPROM.put((offsetPosition + programMode), selectedPresetVariable);  EEPROM.commit();} changeState();}
+      
+          else if (variable =="SPGM"){programMode = json["SPGM"]; cycleT=0;  previousMillis44 = millis();  previousMillis45 = millis(); changeState();} //Serial.print("containsprogramMode"); Serial.println(programMode); // if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, programMode), programMode);  EEPROM.commit();};          
+          else if (variable =="SBSM"){BriSPreset = json["SBSM"]; readBriSData(BriSPreset);}// sendProgramInfo(1);}
+          else if (variable =="SRED"){Red = json["SRED"]; loadHSV = true;}// if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, Red), Red);  EEPROM.commit();};} 
+          else if (variable =="SGRE"){Green = json["SGRE"]; loadHSV = true;}// if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, Green), Green);  EEPROM.commit();};}   
+          else if (variable =="SBLU"){Blue = json["SBLU"]; loadHSV = true;}// if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, Blue), Blue);  EEPROM.commit();};}
+          
+          else if (variable == "TCON"){cycle = json["TCON"]; } // Serial.println("cycle to false"); if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, cycle), cycle);  EEPROM.commit();};} // EEPROM
+          else if (variable =="SGRA"){selectColor = json["SGRA"];   dir1=1;    ymax4 = pgm_read_byte(&selectColor_data[selectColor].ymax4);  ymin4 = pgm_read_byte(&selectColor_data[selectColor].ymin4);   setDifference = pgm_read_byte(&selectColor_data[selectColor].setDifference);    yval1=ymin4;   dir0=1;   if (effect_function == *rainbow_3){setDifference = 4;  }}
+          else if (variable =="SPAL"){gCurrentPaletteNumber = json["SPAL"]; gTargetPalette =( gGradientPalettes[gCurrentPaletteNumber] );}
+          else if (variable =="SCAR"){arrayn = json["SCAR"];     selectcolorArray();    newColors++;}  // THIS ONE
+          
+          else if (variable =="SDIF"){setDifference = json["SDIF"]; fillxmasArray(); diffbeat=60000/(setDifference*4*100); diffbeat2=diffbeat/2;  setDifference2 = setDifference+5;} // diff[0]=0;     x = 1;  num = 0;        diff[1]=0;     xn = 1;    num7 = 0; }
+          else if (variable =="SLSP"){changeSpeed = json["SLSP"];}
+          else if (variable =="SVAR"){varON = json["SVAR"]; for (int p=0; p<10; p++){if (varON == 0){yvar[p]= 0; yvarg[p]= 0;} else {yvar[p]=yvarC[p]; yvarg[p]=yvargC[p];};};}// if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, varON), varON);  EEPROM.commit();};}
+          else if (variable =="SCOM"){colorMode = json["SCOM"]; colorMode = colorMode-1; procesColourMode();} // memoryByte = 'c'; processChange();} // THIS ONE
+          else if (variable =="SHUE"){yval = json["SHUE"]; forcedColourChange = true;}// if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, yval), yval);  EEPROM.commit();};}
+          else if (variable == "TSYN"){syncEsp = json["TSYN"];}
         //if (json.containsKey("SPGM")){Serial.println("containsprogramMode");};//programMode = json["SPGM"]; cycleT=0;  previousMillis44 = millis();  previousMillis45 = millis(); changeState();} // if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, programMode), programMode);  EEPROM.commit();};  
+        }
 
-
-
+}
 
   // incomingTemp = incomingReadings.temp;
   // incomingHum = incomingReadings.hum;
   // incomingPres = incomingReadings.pres;
-}
+//}
 
 // Callback when data is sent
 void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
@@ -1379,12 +1394,17 @@ void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
   //   Serial.print("\r\nLast Packet Send Status:\t");
   // Serial.println(status == ESP_NOW_SEND_SUCCESS ? "Delivery Success" : "Delivery Fail");
 
-  // if (status == ESP_NOW_SEND_SUCCESS){
-  //     espNowMessage = false;
-  // }
-  // else {
-
-  // }
+  if (status == ESP_NOW_SEND_SUCCESS){
+      espNowMessage = false;
+      inSyncCounter = 0;
+  }
+  else {
+      espNowMessage = true;
+      inSyncCounter++;
+      if (inSyncCounter > 100){
+        inSync = false;
+      }
+  }
   
   // if (status ==0){
   //   success = "Delivery Success :)";

@@ -11,6 +11,8 @@ void handleModeSwitch(){ // HANDLE SWITCHING MODUS
           if (programMode >= modeCount){programMode = 0;}
           else if (programMode < 0){programMode = modeCount-1;}  
         if ((cmode[programMode]) || (!excludeModes)){
+        selectPreset(); 
+        if (syncEsp){espNowMessage = true;   EspNowMessageType = 0;}; 
         changeState();
         }
         else if (!cmode[programMode]){      
@@ -21,6 +23,8 @@ void handleModeSwitch(){ // HANDLE SWITCHING MODUS
                     if (programMode >= modeCount){programMode = 0;}
                     else if (programMode < 0){programMode = modeCount-1;}             
           }
+        selectPreset();
+        if (syncEsp){espNowMessage = true;   EspNowMessageType = 0;};
         changeState();
         }
       }
@@ -28,10 +32,14 @@ void handleModeSwitch(){ // HANDLE SWITCHING MODUS
         uint8_t newProgramMode = random(0,modeCount+1);   
         if (((cmode[newProgramMode]) && (newProgramMode != programMode)) || (!excludeModes)){
           programMode = newProgramMode;
+          selectPreset();
+          if (syncEsp){espNowMessage = true;   EspNowMessageType = 0;};
           changeState();} 
         else if ((!cmode[newProgramMode]) || (newProgramMode == programMode)){
           while ((!cmode[newProgramMode]) || (newProgramMode == programMode)){ newProgramMode = random(0,modeCount+1); }
        programMode = newProgramMode;
+       selectPreset();
+       if (syncEsp){espNowMessage = true;   EspNowMessageType = 0;};
        changeState();}
       }
   cycleT=0;
@@ -41,17 +49,6 @@ void handleModeSwitch(){ // HANDLE SWITCHING MODUS
 }
 
 void changeState(){
-    if (selectedPreset[programMode] == 4){
-      selectedPresetVariable = random8(0,4);
-      DEBUG_PRINTLN("in changeState mode 4");
-      DEBUG_PRINTLN(selectedPresetVariable);
-    }
-    else {
-      selectedPresetVariable = selectedPreset[programMode];
-      DEBUG_PRINTLN("in changeState mode 0, 1, 2 or 3");
-      DEBUG_PRINTLN(selectedPresetVariable);
-    }
-
     if (fadeFirst){
     modeUp = false;
     modeDown = false;
@@ -64,6 +61,20 @@ void changeState(){
     modeDown = false;     
     changeModus = true;
     fadeCounter=0;
+    }
+    return;
+}
+
+void selectPreset(){
+    if (selectedPreset[programMode] == 4){
+      selectedPresetVariable = random8(0,4);
+      DEBUG_PRINTLN("in changeState mode 4");
+      DEBUG_PRINTLN(selectedPresetVariable);
+    }
+    else {
+      selectedPresetVariable = selectedPreset[programMode];
+      DEBUG_PRINTLN("in changeState mode 0, 1, 2 or 3");
+      DEBUG_PRINTLN(selectedPresetVariable);
     }
     return;
 }
@@ -183,7 +194,6 @@ if (changeModus){
     // mergedString = "HY1N "; ws.textAll(mergedString);
     // mergedString = "HY1O "; ws.textAll(mergedString);   
     displayOled();
-    sendProgramInfo(1);   
-    if (syncEsp){espNowMessage = true;   EspNowMessageType = 0;  }                         
+    sendProgramInfo(1);                          
   }
 }

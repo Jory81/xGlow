@@ -72,7 +72,7 @@ if (millis() - previousMillis36 > INTERVAL7 && varON == 2) {
           }
         }      
       }
-    else if (!changeColor){
+    else if ((!changeColor) && (!inSync)){
       byte oldArrayn = arrayn;
       arrayn = random(arrayCount);
       updateOled(24, 40, &oldArrayn);
@@ -169,7 +169,7 @@ if (millis() - previousMillisAM[k] >= (INTERVALf[k]*timeSpeed[k])) {
         //     z[k]=zr[3];
         //  }
       }
-      if (millis() - previousMillis36 > INTERVAL9 && colorMode == 4 && varON == 2) {
+      if (millis() - previousMillis36 > INTERVAL9 && colorMode == 4 && varON == 2 && inSync == false) {
       arrayn = random(arrayCount);
       updateOled(24, 40, &arrayn);
       selectcolorArray();
@@ -312,7 +312,7 @@ if (millis() - previousMillisAM[k] >= (INTERVALf[k]*timeSpeed[k])) {
       if (varON == 2 && colorMode !=4 ){
         z[k] = yMA[k] + random(50, 200);
       }
-      if (millis() - previousMillis36 > INTERVAL9 && colorMode == 4 && varON == 2) {
+      if (millis() - previousMillis36 > INTERVAL9 && colorMode == 4 && varON == 2 && inSync == false) {
       arrayn = random(arrayCount);
       updateOled(24, 40, &arrayn);
       selectcolorArray();
@@ -1913,7 +1913,7 @@ else if (fadeIsActive){
       }
     }
 
-    if (millis() - previousMillis36 > INTERVAL9 && colorMode == 4 && varON == 2) {
+    if (millis() - previousMillis36 > INTERVAL9 && colorMode == 4 && varON == 2 && inSync == false) {
       arrayn = random(arrayCount);
       updateOled(24, 40, &arrayn);
       selectcolorArray();
@@ -1951,7 +1951,7 @@ if (millis() - previousMillis1 >= changeSpeed){
       }   
 }
 
-if (millis() - previousMillis36 > INTERVAL7 && varON == 2 && colorMode == 4) {
+if (millis() - previousMillis36 > INTERVAL7 && varON == 2 && colorMode == 4 && inSync == false) {
       arrayn = random(arrayCount);
       updateOled(24, 40, &arrayn);
       selectcolorArray();
@@ -1999,7 +1999,7 @@ else if (millis() - previousMillis36 > INTERVAL7 && varON == 2) {
           }
         }      
       }
-    else if (!changeColor){
+    else if ((!changeColor) && (!inSync)){
       oldArrayn = arrayn;
       arrayn = random(arrayCount);
       updateOled(24, 40, &oldArrayn);
@@ -2050,7 +2050,7 @@ if (millis() - previousMillis1 >= changeSpeed){
   }
 }
 
-if (millis() - previousMillis36 > INTERVAL7 && colorMode == 4 && varON == 2) {
+if (millis() - previousMillis36 > INTERVAL7 && colorMode == 4 && varON == 2 && inSync == false) {
       arrayn = random(arrayCount);
       updateOled(24, 40, &arrayn);
       selectcolorArray();
@@ -2129,7 +2129,7 @@ void rainbow_2(void){
     if (millis() - previousMillis1 >= changeSpeed) {
       previousMillis1 = millis();
 
-      if (varON == 1){
+      if (varON != 2){
         yval1-=offdis*dir1;
         ysr=yval1;
         //fillRainbow2(longxArray, 1);
@@ -3431,7 +3431,7 @@ if (millis() - previousMillis1 >= modeDelay) {
               }
             }      
           }
-        else if (!changeColor){
+        else if ((!changeColor) && (!inSync)){
           oldArrayn = arrayn;
           arrayn = random(arrayCount);
           updateOled(24, 40, &oldArrayn);

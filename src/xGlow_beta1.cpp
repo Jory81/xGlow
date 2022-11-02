@@ -39,7 +39,7 @@ FASTLED_USING_NAMESPACE
   #define EEPROM_PRINTF(x...)
 #endif
 
-#define DEBUG_OUTPUT // comment out for debugging mode (mainly for checking memory issues and JSON communication)
+//#define DEBUG_OUTPUT // comment out for debugging mode (mainly for checking memory issues and JSON communication)
 
 #ifdef DEBUG_OUTPUT
   #define DEBUG_PRINT(x) Serial.print(x)
@@ -365,6 +365,7 @@ void handleGlitter();
 // initializes modes when mode is changed. Change_preset.h
 void handleModeSwitch();
 void changeState();
+void selectPreset();
 void handleModeInitialization();
 void handleWebsocketUpdate();
 void enableMode();
@@ -509,13 +510,16 @@ handleWebsocketUpdate();
 }
 
 void handleEspNowMessage(){
+  if (millis() - previousMillis7 > 10) { 
+  previousMillis7 = millis();
+
   if (espNowMessage){
 
   DynamicJsonDocument doc(250);
   switch (EspNowMessageType){
     case 0:    {
-                doc["SPGM"] = programMode;
                 doc["SPST"] = selectedPresetVariable;
+                doc["SPGM"] = programMode;
                 doc["TCON"] = false;
     } break;
     case 1:    {doc["SBSM"] = BriSPreset;}break;
@@ -532,6 +536,7 @@ void handleEspNowMessage(){
                 doc["SGRE"] = Green;
                 doc["SBLU"] = Blue;
     } break;
+    doc["TSYN"] = false;
   }   
                                         
     char data[250]; // 250
@@ -567,9 +572,8 @@ void handleEspNowMessage(){
   // espNowMessage = false;
   // }
 
-espNowMessage = false;
-
 // }
+}
 }
 
 

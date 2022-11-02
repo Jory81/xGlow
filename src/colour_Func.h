@@ -127,7 +127,8 @@ void selectcolorArray(){
       colour[i] = pgm_read_byte(&selectColor_array[arrayn].colour[i]); 
 //      Serial.println(colour[i]);
     }
-  }                                                
+  }  
+if (syncEsp){espNowMessage = true;   EspNowMessageType = 7;  };                                                
 }
 
 void fillLongxArray(uint8_t colour, uint16_t num_leds){

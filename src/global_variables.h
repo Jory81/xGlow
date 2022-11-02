@@ -797,7 +797,10 @@ String strget;
 String mergedString;
 char msg_buf[11];
 
+boolean     inSync = false;
+uint8_t     inSyncCounter = 0;
 boolean     espNowMessage = false;
+boolean     incomingMessage = false;
 boolean     syncEsp = false;
 boolean     randomCycle = false; // EEPROM.readByte(96);
 boolean     changeModus = false;
