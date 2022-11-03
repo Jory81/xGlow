@@ -90,14 +90,14 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
       else if (json.containsKey("SCAR")){arrayn = json["SCAR"];     selectcolorArray();    newColors++; if (syncEsp){espNowMessage = true;   EspNowMessageType = 7;  }; }  // THIS ONE
       else if (json.containsKey("SPAL")){gCurrentPaletteNumber = json["SPAL"]; gTargetPalette =( gGradientPalettes[gCurrentPaletteNumber] ); if (syncEsp){espNowMessage = true;   EspNowMessageType = 8;  }; }
       else if (json.containsKey("SGRA")){selectColor = json["SGRA"];   dir1=1;    ymax4 = pgm_read_byte(&selectColor_data[selectColor].ymax4);  ymin4 = pgm_read_byte(&selectColor_data[selectColor].ymin4);   setDifference = pgm_read_byte(&selectColor_data[selectColor].setDifference);    yval1=ymin4;   dir0=1;   if (effect_function == *rainbow_3){setDifference = 4;  }if (syncEsp){espNowMessage = true;   EspNowMessageType = 9;  }; }
-      else if (json.containsKey("SNCO")){numcolor = json["SNCO"];   newColors++;    if (whiteON){for (int t=0; t<15; t++){satval[t]=S; satval[0]=0;}}      else if (!whiteON){for (int t=0; t<15; t++){satval[t]=S;}}}
-      else if (json.containsKey("SNCL")){colorlength = json["SNCL"]; newColors++;}// if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, colorlength), colorlength);  EEPROM.commit();};}
-      else if (json.containsKey("SSCO")){z5 = json["SSCO"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, z5), z5);  EEPROM.commit();};}
+      else if (json.containsKey("SNCO")){numcolor = json["SNCO"];   newColors++; if (syncEsp){espNowMessage = true;   EspNowMessageType = 12;  };    if (whiteON){for (int t=0; t<15; t++){satval[t]=S; satval[0]=0;}}      else if (!whiteON){for (int t=0; t<15; t++){satval[t]=S;}}}
+      else if (json.containsKey("SNCL")){colorlength = json["SNCL"]; newColors++; if (syncEsp){espNowMessage = true;   EspNowMessageType = 13;  };}// if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, colorlength), colorlength);  EEPROM.commit();};}
+      else if (json.containsKey("SSCO")){z5 = json["SSCO"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, z5), z5);  EEPROM.commit();}; if (syncEsp){espNowMessage = true;   EspNowMessageType = 14;  };}
       else if (json.containsKey("SOFF")){offdis = json["SOFF"]; if (tower && (effect_function == *snow_flakes || effect_function == *snow_flakes_2 || effect_function == *snow_flakesR)){offdisC = offdis; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, offdisC), offdisC);  EEPROM.commit();};};} //  || effect_function == *meteor
       else if (json.containsKey("SCTM")){cycleTime = json["SCTM"]; cycleTime = cycleTime*1000; if (cycleTime == 0){cycleTime = 60000;} if (saveToEEPROM){saveCycleParamToEEPROM();};}
       else if (json.containsKey("SBWS")){waveTimeBr = json["SBWS"]; convBrigh = waveTimeBr/numbrigh; if (maintainWaveForm){BPMB=60000/waveTimeBr; notifyClientsSingleObjectByte("SSBS", BPMB);};}// if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, waveTimeBr), waveTimeBr); EEPROM.put(offsetof(storeInEEPROM, BPMB), BPMB);  EEPROM.commit();};}
       else if (json.containsKey("SSWS")){waveTimeS = json["SSWS"]; convSat = waveTimeS/numsat; if (maintainWaveForm){BPMS=60000/waveTimeS; notifyClientsSingleObjectByte("SSSS", BPMS);};}// if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, waveTimeS), waveTimeS); EEPROM.put(offsetof(storeInEEPROM, BPMS), BPMS);  EEPROM.commit();};}      
-      else if (json.containsKey("SLPS")){timefactor3 = json["SLPS"]; Serial.println(timefactor3); if (saveToEEPROM){saveCycleParamToEEPROM();};}
+      else if (json.containsKey("SLPS")){timefactor3 = json["SLPS"]; if (saveToEEPROM){saveCycleParamToEEPROM();};}
       else if (json.containsKey("SSBS")){BPMB = json["SSBS"]; if (maintainWaveForm){waveTimeBr=60000/BPMB; convBrigh=waveTimeBr/numbrigh; notifyClientsSingleObjectInt("SBWS", waveTimeBr);};}// if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, BPMB), BPMB);  EEPROM.put(offsetof(storeInEEPROM, waveTimeBr), waveTimeBr); EEPROM.commit(); };}      
       else if (json.containsKey("SSSS")){BPMS = json["SSSS"]; if (maintainWaveForm){waveTimeS=60000/BPMS; convSat=waveTimeS/numsat; notifyClientsSingleObjectInt("SSWS", waveTimeS);};}// if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, BPMS), BPMS); EEPROM.put(offsetof(storeInEEPROM, waveTimeS), waveTimeS);  EEPROM.commit();};} 
       else if (json.containsKey("SOBR")){offBr = json["SOBR"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, offBr), offBr);  EEPROM.commit();};}   
@@ -153,9 +153,16 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
       else if (json.containsKey("SMA4")){ymax4 = json["SMA4"]; yval1=ymin4; dir0=1; dir1=1; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, ymax4), ymax4);  EEPROM.commit();};}
       else if (json.containsKey("SM3R")){range = json["SM3R"]; ledspercolor=NUM_LEDS/range; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, range), range);  EEPROM.commit();};}
       else if (json.containsKey("ESP")){num_esp = json["ESP"]; EEPROM.put(offsetof(storeInEEPROM, num_esp), num_esp);  EEPROM.commit();}
-      else if (json.containsKey("mac1")){for (int i = 0; i < 6; i++){Mac[i] = json["mac1"][i]; Serial.println(Mac[i]);} writeMacTooEEPROM(0);}
+      else if (json.containsKey("mac1")){for (int i = 0; i < 6; i++){Mac[i] = json["mac1"][i];} writeMacTooEEPROM(0);}
       else if (json.containsKey("mac2")){for (int i = 6; i < 12; i++){Mac[i] = json["mac2"][i%6];} writeMacTooEEPROM(1);}
-
+      else if (json.containsKey("mac3")){for (int i = 12; i < 18; i++){Mac[i] = json["mac3"][i%6];} writeMacTooEEPROM(2);}
+      else if (json.containsKey("mac4")){for (int i = 18; i < 24; i++){Mac[i] = json["mac4"][i%6];} writeMacTooEEPROM(3);}
+      else if (json.containsKey("mac5")){for (int i = 24; i < 30; i++){Mac[i] = json["mac5"][i%6];} writeMacTooEEPROM(4);}
+      else if (json.containsKey("mac6")){for (int i = 30; i < 36; i++){Mac[i] = json["mac6"][i%6];} writeMacTooEEPROM(5);}
+      else if (json.containsKey("mac7")){for (int i = 36; i < 42; i++){Mac[i] = json["mac7"][i%6];} writeMacTooEEPROM(6);}
+      else if (json.containsKey("mac8")){for (int i = 42; i < 48; i++){Mac[i] = json["mac8"][i%6];} writeMacTooEEPROM(7);}
+      else if (json.containsKey("mac9")){for (int i = 48; i < 54; i++){Mac[i] = json["mac9"][i%6];} writeMacTooEEPROM(8);}
+      else if (json.containsKey("mac10")){for (int i = 54; i < 60; i++){Mac[i] = json["mac10"][i%6];} writeMacTooEEPROM(9);}
       //  mac1[0] = json["mac1"][0]; mac1[1] = json["mac1"][1]; mac1[2] = json["mac1"][2]; mac1[3] = json["mac1"][3]; mac1[4] = json["mac1"][4]; mac1[5] = json["mac1"][5]; for (int i = 0; i < 6; i++){Serial.println(mac1[i]);}}
       // else if (json.containsKey("mac2")){};
       // else if (json.containsKey("mac3")){};
@@ -176,7 +183,7 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
     for (int i = mac*6; i < (mac*6)+6; i++){
       int offsetPosition = (offsetof(storeInEEPROM, Mac[0]));
       //uint8_t macAds = Mac[i];
-      Serial.print("offsetposition"); Serial.println(offsetPosition+i);
+      //Serial.print("offsetposition"); Serial.println(offsetPosition+i);
       EEPROM.put((offsetPosition+i), Mac[i]);  
     }
     EEPROM.commit();
@@ -1322,10 +1329,10 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
         memcpy(&dataEspNow, incomingData, sizeof(dataEspNow));
         dataEspNow[len] = 0;
         for (int i = 0; i < len; i++){
-          Serial.print(dataEspNow[i]);
+          //Serial.print(dataEspNow[i]);
         }
-        Serial.print("Bytes received: ");
-        Serial.println(len);
+        //Serial.print("Bytes received: ");
+        //Serial.println(len);
         inSync = true;
 //         incomingMessage = true;
 // }
@@ -1366,7 +1373,7 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
           else if (variable =="SBLU"){Blue = json["SBLU"]; loadHSV = true;}// if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, Blue), Blue);  EEPROM.commit();};}
           
           else if (variable == "TCON"){cycle = json["TCON"]; } // Serial.println("cycle to false"); if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, cycle), cycle);  EEPROM.commit();};} // EEPROM
-          else if (variable =="SGRA"){selectColor = json["SGRA"];   dir1=1;    ymax4 = pgm_read_byte(&selectColor_data[selectColor].ymax4);  ymin4 = pgm_read_byte(&selectColor_data[selectColor].ymin4);   setDifference = pgm_read_byte(&selectColor_data[selectColor].setDifference);    yval1=ymin4;   dir0=1;   if (effect_function == *rainbow_3){setDifference = 4;  }}
+          else if (variable =="SGRA"){selectColor = json["SGRA"];   dir1=1;    ymax4 = pgm_read_byte(&selectColor_data[selectColor].ymax4);  ymin4 = pgm_read_byte(&selectColor_data[selectColor].ymin4);   setDifference = pgm_read_byte(&selectColor_data[selectColor].setDifference);    yval1=ymin4;   dir0=1;     fillArrayGradient(3, yval1, setDifference); changeColor = true;   if (effect_function == *rainbow_3){setDifference = 4;  }}
           else if (variable =="SPAL"){gCurrentPaletteNumber = json["SPAL"]; gTargetPalette =( gGradientPalettes[gCurrentPaletteNumber] );}
           else if (variable =="SCAR"){arrayn = json["SCAR"];     selectcolorArray();    newColors++;}  // THIS ONE
           
@@ -1376,6 +1383,13 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
           else if (variable =="SCOM"){colorMode = json["SCOM"]; colorMode = colorMode-1; procesColourMode();} // memoryByte = 'c'; processChange();} // THIS ONE
           else if (variable =="SHUE"){yval = json["SHUE"]; forcedColourChange = true;}// if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, yval), yval);  EEPROM.commit();};}
           else if (variable == "TSYN"){syncEsp = json["TSYN"];}
+          else if (variable == "SHUY"){yval1 = json["SHUY"];}
+          else if (variable == "ZVAL"){for (int n = 0; n < 30; n++){z[n] = json["ZVAL"][n];};}
+          else if (variable == "SNCO"){numcolor = json["SNCO"];   newColors++; if (whiteON){for (int t=0; t<15; t++){satval[t]=S; satval[0]=0;}}      else if (!whiteON){for (int t=0; t<15; t++){satval[t]=S;}}}
+          else if (variable == "SNCL"){colorlength = json["SNCL"]; newColors++; }// if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, colorlength), colorlength);  EEPROM.commit();};}
+          else if (variable == "SSCO"){z5 = json["SSCO"]; }
+          else if (variable == "CSYN"){colourSync = json["CSYN"];}
+          else if (variable == "SHYX"){colourSync = json["SHYX"];}
         //if (json.containsKey("SPGM")){Serial.println("containsprogramMode");};//programMode = json["SPGM"]; cycleT=0;  previousMillis44 = millis();  previousMillis45 = millis(); changeState();} // if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, programMode), programMode);  EEPROM.commit();};  
         }
 
@@ -1403,7 +1417,7 @@ void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
       inSyncCounter++;
       if (inSyncCounter > 100){
         inSync = false;
-      }
+      } // perhaps this is on the wrong end. It needs to be on the receivers end.
   }
   
   // if (status ==0){

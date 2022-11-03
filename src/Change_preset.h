@@ -171,6 +171,7 @@ if (changeModus){
       fillArrayRainbow(2);
     }
     readBriSData(BriSPreset);
+    colourSync = false;
     slowFactor=0;
     INTERVAL7=5000;
     outOfModus = true;

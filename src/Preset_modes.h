@@ -53,10 +53,16 @@ if (millis() - previousMillis1 >= changeSpeed) {
   }
 }
 
-if (millis() - previousMillis36 > INTERVAL7 && varON == 2) {
+if (millis() - previousMillis36 > INTERVAL7 && varON == 2) { 
   if (millis() - previousMillis37 >= FPS) {
-  previousMillis37 = millis(); 
-
+    previousMillis37 = millis(); 
+    
+    if ((syncEsp) && (alertColor)){
+    espNowMessage = true;
+    EspNowMessageType = 7;
+    alertColor = false;
+    };
+  
     for (int i = 0;  i < 10; i++){
      if (colour[i] != newColour[i]) { 
        changeColor = true;
@@ -77,6 +83,7 @@ if (millis() - previousMillis36 > INTERVAL7 && varON == 2) {
       arrayn = random(arrayCount);
       updateOled(24, 40, &oldArrayn);
       selectcolorArray();
+      alertColor = true;
       INTERVAL7=interval9*timeArray2[random(0,6)]*timefactor3;
       updateOledFloat(88, 0, &INTERVAL7, 0); 
       previousMillis36 = millis();
@@ -173,6 +180,7 @@ if (millis() - previousMillisAM[k] >= (INTERVALf[k]*timeSpeed[k])) {
       arrayn = random(arrayCount);
       updateOled(24, 40, &arrayn);
       selectcolorArray();
+      if (syncEsp){espNowMessage = true;   EspNowMessageType = 7;  };
       INTERVAL9=interval9*timeArray2[random(0,6)]*timefactor3;
       previousMillis36 = millis();
       T=0;        
@@ -316,6 +324,7 @@ if (millis() - previousMillisAM[k] >= (INTERVALf[k]*timeSpeed[k])) {
       arrayn = random(arrayCount);
       updateOled(24, 40, &arrayn);
       selectcolorArray();
+      if (syncEsp){espNowMessage = true;   EspNowMessageType = 7;  };   
       INTERVAL9=interval9*timeArray2[random(0,6)]*timefactor3;
       previousMillis36 = millis();
       T=0;        
@@ -435,7 +444,7 @@ if (millis() - previousMillis11 >= interval8) {
     }
 }  
 
-if (millis() - previousMillis6 >= INTERVAL7){
+if (millis() - previousMillis6 >= INTERVAL7 && (!inSync)){
       
     if (colorMode == 0 && varON == 0){
       yval1=yval;
@@ -508,7 +517,8 @@ if (millis() - previousMillis6 >= INTERVAL7){
   //   ydiff=setDifference;
   //   }
    //}
-     
+    
+    if (syncEsp){espNowMessage = true;   EspNowMessageType = 11;  };
     updateOled(102, 56, &yval1);          
     INTERVAL7=interval7*timeArray2[random(0,6)]*timefactor3;
     updateOledFloat(88, 0, &INTERVAL7, 0); 
@@ -673,7 +683,7 @@ if (millis() - previousMillis11 >= interval8) {
     }
 }  
 
-if (millis() - previousMillis6 >= INTERVAL7){
+if (millis() - previousMillis6 >= INTERVAL7 && (!inSync)){
       
     if (colorMode == 5 && varON != 2){
       yval1=yval;
@@ -736,7 +746,8 @@ if (millis() - previousMillis6 >= INTERVAL7){
   //   ydiff=setDifference;
   //   }
    //}
-     
+    
+    if (syncEsp){espNowMessage = true;   EspNowMessageType = 11;  };
     updateOled(102, 56, &yval1);          
     INTERVAL7=interval7*timeArray2[random(0,6)]*timefactor3;
     updateOledFloat(88, 0, &INTERVAL7, 0); 
@@ -1917,6 +1928,7 @@ else if (fadeIsActive){
       arrayn = random(arrayCount);
       updateOled(24, 40, &arrayn);
       selectcolorArray();
+      if (syncEsp){espNowMessage = true;   EspNowMessageType = 7;  };   
       INTERVAL9=interval9*timeArray2[random(0,6)]*timefactor3;
       previousMillis36 = millis();
       T=0;        
@@ -1955,6 +1967,7 @@ if (millis() - previousMillis36 > INTERVAL7 && varON == 2 && colorMode == 4 && i
       arrayn = random(arrayCount);
       updateOled(24, 40, &arrayn);
       selectcolorArray();
+      if (syncEsp){espNowMessage = true;   EspNowMessageType = 7;  };   
       INTERVAL7=(interval9/5)*timeArray2[random(0,6)]*timefactor3;
       updateOledFloat(88, 0, &INTERVAL7, 0); 
       previousMillis36 = millis();
@@ -1983,6 +1996,12 @@ changePColors();
 else if (millis() - previousMillis36 > INTERVAL7 && varON == 2) {
   if (millis() - previousMillis1 >= (changeSpeed/10)) {
   previousMillis1 = millis(); 
+  
+  if ((syncEsp) && (alertColor)){
+    espNowMessage = true;
+    EspNowMessageType = 7;
+    alertColor = false;
+  };   
 
     for (int i = 0;  i < 15; i++){
      if (colour[i] != newColour[i]) { 
@@ -2004,6 +2023,7 @@ else if (millis() - previousMillis36 > INTERVAL7 && varON == 2) {
       arrayn = random(arrayCount);
       updateOled(24, 40, &oldArrayn);
       selectcolorArray();
+      alertColor = true;
       INTERVAL7=interval9*timeArray2[random(0,6)]*timefactor3;
       updateOledFloat(88, 0, &INTERVAL7, 0); 
       previousMillis36 = millis();
@@ -2054,6 +2074,7 @@ if (millis() - previousMillis36 > INTERVAL7 && colorMode == 4 && varON == 2 && i
       arrayn = random(arrayCount);
       updateOled(24, 40, &arrayn);
       selectcolorArray();
+      if (syncEsp){espNowMessage = true;   EspNowMessageType = 7;  };
       INTERVAL7=interval9*timeArray2[random(0,6)]*timefactor3;
       updateOledFloat(88, 0, &INTERVAL7, 0); 
       previousMillis36 = millis();
@@ -2360,16 +2381,22 @@ void twinkle(void){
 }
 
 void static_glow_2(void){
-  if (millis() - previousMillis1 >= INTERVAL7){
-     yx = changeColourFcn(colorMode, yx, 0, 255);
-     INTERVAL7=interval9*timeArray2[random(0,6)]*timefactor3;
-     updateOledFloat(88, 0, &INTERVAL7, 0); 
-     previousMillis1 = millis();
-     updateOled(102, 56, &yx);
-     T=0;
+  if (millis() - previousMillis1 > INTERVAL7){
+      if ((!inSync) && setDifference > 20){
+        yx = changeColourFcn(colorMode, yx, 0, 255);
+        if (syncEsp){espNowMessage = true;   EspNowMessageType = 16;  };
+      }
+      else if (setDifference < 21){
+        yx = changeColourFcn(colorMode, yx, 0, 255);
+      }  
+      INTERVAL7=interval9*timeArray2[random(0,6)]*timefactor3;
+      updateOledFloat(88, 0, &INTERVAL7, 0); 
+      previousMillis1 = millis();
+      updateOled(102, 56, &yx);
+      T=0;
   }
 
-  if (fadeFirst == 1 && yval1 != yx){
+  if ((fadeFirst) && yval1 != yx){
     if (millis() - previousMillis36 >= changeSpeed) {
       previousMillis36 = millis();
       yval1 = fadeFnc(yval1, yx); 
@@ -2387,11 +2414,14 @@ void static_glow_2(void){
 }
 
 void colourSplash(void){ 
-if (millis() - previousMillis1 > INTERVAL7) {
+if (millis() - previousMillis1 > INTERVAL7 && (!inSync) || (colourSync)) {
   if (millis() - previousMillis36 >= changeSpeed) {
     previousMillis36 = millis();
     if (forcedColourChange) {
+      if (!colourSync){
       yval1 = yval1+=random(60, 195);
+      if (syncEsp){espNowMessage = true;   EspNowMessageType = 15;  };
+      }
       seedNumber = (random(10, 25))*cfactor3;
         for (int i = 0; i < seedNumber; i++){
          seedArray[i]=random(NUM_LEDS);
@@ -2400,6 +2430,7 @@ if (millis() - previousMillis1 > INTERVAL7) {
     }
     yTrans = fadeFnc(yTrans, yval1);     
     if (yTrans == yval1) {
+      colourSync = false;
       forcedColourChange = true;
       INTERVAL7=(interval9/7)*timeArray2[random(0,6)]*timefactor3;
       updateOledFloat(88, 0, &INTERVAL7, 0); 
@@ -3251,7 +3282,7 @@ if (varON == 1 || (varON == 2 && (!changeColor))){
 }
 
 if (varON == 2){
-if (millis() - previousMillis36 > INTERVAL7 && (!changeColor)) {
+if (millis() - previousMillis36 > INTERVAL7 && (!changeColor) && (!inSync)) {
         selectColor = random(14);
         dir1=1;
         ymax4 = pgm_read_byte(&selectColor_data[selectColor].ymax4);
@@ -3259,6 +3290,7 @@ if (millis() - previousMillis36 > INTERVAL7 && (!changeColor)) {
         setDifference = pgm_read_byte(&selectColor_data[selectColor].setDifference);
         yval1=ymin4;
         dir0=1;
+        if (syncEsp){espNowMessage = true;   EspNowMessageType = 9;  };
         fillArrayGradient(3, yval1, setDifference);
         changeColor = true;
         INTERVAL7=interval9*timeArray2[random(0,6)]*timefactor3;
@@ -3268,6 +3300,8 @@ if (millis() - previousMillis36 > INTERVAL7 && (!changeColor)) {
         previousMillis36 = millis();
         T=0;        
       }
+
+      
 
 if (millis() - previousMillis37 >= changeSpeed && (changeColor)) {
   previousMillis37 = millis();
@@ -3414,28 +3448,38 @@ if (millis() - previousMillis1 >= modeDelay) {
   }
   else if (varON == 2){
     if (millis() - previousMillis36 > INTERVAL7 && colorMode != 4) {
-        modeDelay = changeSpeed/10;
-        newColors++;
-        for (int i = 0;  i < 15; i++){
+      
+      if ((syncEsp) && (alertColor)){
+        espNowMessage = true;
+        EspNowMessageType = 7;
+        alertColor = false;
+      }; 
+
+      modeDelay = changeSpeed/10;
+      newColors++;
+      
+      for (int i = 0;  i < 15; i++){
         if (colour[i] != newColour[i]) { 
           changeColor = true;
-          break;}
+          break;
+        }
         else{
           changeColor = false;}
-        } 
+      } 
             
-        if (changeColor) {
-            for (int i = 0; i < 15; i++){
-              if (colour[i] != newColour[i]){
-                colour[i] = fadeFnc(colour[i], newColour[i]); 
-              }
-            }      
-          }
+      if (changeColor) {
+          for (int i = 0; i < 15; i++){
+            if (colour[i] != newColour[i]){
+              colour[i] = fadeFnc(colour[i], newColour[i]); 
+            }
+          }      
+      }
         else if ((!changeColor) && (!inSync)){
           oldArrayn = arrayn;
           arrayn = random(arrayCount);
           updateOled(24, 40, &oldArrayn);
           selectcolorArray();
+          alertColor = true;
           INTERVAL7=interval9*timeArray2[random(0,6)]*timefactor3;
           updateOledFloat(88, 0, &INTERVAL7, 0); 
           previousMillis36 = millis();
@@ -3636,9 +3680,10 @@ if (millis() - previousMillis1 >= changeSpeed) {
   y01m=y0r;
 }
 
-if (millis() - previousMillis36 > INTERVAL7 && varON == 2) {
+if (millis() - previousMillis36 > INTERVAL7 && varON == 2 && (!inSync)) {
   gCurrentPaletteNumber = random(gGradientPaletteCount);
   gTargetPalette = gGradientPalettes[gCurrentPaletteNumber];
+  if (syncEsp){espNowMessage = true;   EspNowMessageType = 8;  };
   INTERVAL7=interval9*timeArray2[random(0,6)]*timefactor3;
   updateOledFloat(88, 0, &INTERVAL7, 0);
   previousMillis36 = millis(); 

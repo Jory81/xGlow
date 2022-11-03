@@ -510,7 +510,7 @@ handleWebsocketUpdate();
 }
 
 void handleEspNowMessage(){
-  if (millis() - previousMillis7 > 10) { 
+  if (millis() - previousMillis7 > 30) { 
   previousMillis7 = millis();
 
   if (espNowMessage){
@@ -535,9 +535,23 @@ void handleEspNowMessage(){
                 doc["SRED"] = Red;
                 doc["SGRE"] = Green;
                 doc["SBLU"] = Blue;
-    } break;
-    doc["TSYN"] = false;
-  }   
+               } break;
+    case 11:   {
+                doc["SHUY"] = yval1;
+                doc["SDIF"] = setDifference;
+                for (int i = 0; i < 30; i++){
+                  doc["ZVAL"][i] = z[i];
+                }
+              } break; 
+    case 12:   {doc["SNCO"] = numcolor;} break;
+    case 13:   {doc["SNCL"] = colorlength;} break;
+    case 14:   {doc["SSCO"] = z5;} break;    
+    case 15:   {doc["SHUY"] = yval1;
+                doc["CSYN"] = true;
+               } break;
+    case 16:   {doc["SHYX"] = yx;}                         
+  } 
+  doc["TSYN"] = false;  
                                         
     char data[250]; // 250
     size_t len = serializeJson(doc, data);

@@ -797,11 +797,13 @@ String strget;
 String mergedString;
 char msg_buf[11];
 
-boolean     inSync = false;
-uint8_t     inSyncCounter = 0;
-boolean     espNowMessage = false;
-boolean     incomingMessage = false;
-boolean     syncEsp = false;
+boolean     inSync = false; // if the decives receives messages from another esp, it turns 'inSync'
+uint8_t     inSyncCounter = 0; // this is a counter to get the esp out of sync, if the messages fail to send
+boolean     espNowMessage = false; // tells the Esp_now void function there's a message waiting to be sent.
+//boolean     incomingMessage = false;
+boolean     syncEsp = false; // syncs the Esps
+boolean     alertColor = false; // alertsColor change in runmode (needed to sync color in 3 modes)
+boolean     colourSync = false; // sometimes timing determines colour, with this varianle timing and colour can be synced too
 boolean     randomCycle = false; // EEPROM.readByte(96);
 boolean     changeModus = false;
 boolean     fadeFirst = true;
