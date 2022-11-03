@@ -20,7 +20,24 @@ void handleAdditionalVariables(){ // HANDLE ADDITIONAL DEVIATION OF THE LED COLO
 if (effect_function != *rainbow_4 && effect_function != *xmas_solid){  
   if (millis() - previousMillis >= FPS) {
     previousMillis = millis();
+
+    if (effect_function == static_glow_2){
+      if (millis() - previousMillis43 >= 100) {
+        previousMillis43 = millis();
+        diff1+=dir2;
+          if (diff1 > setDifference){
+            dir2 = -1;
+          }
+          else if (diff1 <= -setDifference){
+            dir2 = 1;
+          }
+        }
+    }
+    else {
     diff1 = map(beattriwave8(diffbeat, 0, 255), 0, 255, -setDifference, setDifference+1); // triwave code below. Added to FastLed lib8tion.h -- library.
+    }
+
+
 
     if (setDifference == 1){
       for (int i = 0; i < 10; i++){

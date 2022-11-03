@@ -86,7 +86,7 @@ if (changeModus){
       case 1: {        effect_function = static_glow_2;     if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=23;          changeSpeed=100;        setDifference=7;      colorMode=2;                   varON=1;   };  }  break; 
       case 2: {        effect_function = static_glow;       if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=23;          changeSpeed=100;        setDifference=7;      colorMode=0;      yval=18;     varON=1;   }; forcedColourChange = true ;} break;
       case 3: {        effect_function = static_glow;       if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=100;        setDifference=80;     colorMode=0;      yval=217;    varON=1;   }; forcedColourChange = true  ;} break;                                                             
-      case 4: {        effect_function = static_glow_2;     if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=100;        setDifference=80;     colorMode=1;                   varON=1;   };  } break;
+      case 4: {        effect_function = static_glow_2;     if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=100;        setDifference=80;     colorMode=1;                   varON=1;   };  diff1=0; dir2=1;} break;
       case 5: {        effect_function = colourSplash;      if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=3;           changeSpeed=35;         setDifference=7;      colorMode=2;                   varON=1;   };  } break;
       case 6: {        effect_function = palettes;          if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=11;          changeSpeed=50;         setDifference=1;      gCurrentPaletteNumber=7;       varON=1;   };    gTargetPalette = gGradientPalettes[gCurrentPaletteNumber];  y0r=0;   } break;
       //case 7: {        effect_function = palettes_2;        if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=50;         setDifference=45;                                    varON=1;   }; y0r=0;     gCurrentPaletteNumber=11;     gTargetPalette = gGradientPalettes[gCurrentPaletteNumber] ;} break;
@@ -183,7 +183,8 @@ if (changeModus){
     dir = 2; xdir = 1;
     }
     diffbeat=60000/(setDifference*4*100);
-    diffbeat2=diffbeat/2;            
+    diffbeat2=diffbeat/2; 
+    dir2 = 1;           
     setDifference2 = setDifference+5;
     changeModus=false;
     executeScript=true;

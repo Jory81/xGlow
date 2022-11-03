@@ -549,7 +549,7 @@ void handleEspNowMessage(){
     case 15:   {doc["SHUY"] = yval1;
                 doc["CSYN"] = true;
                } break;
-    case 16:   {doc["SHYX"] = yx;}                         
+    case 16:   {doc["SHYX"] = yx;} break;                         
   } 
   doc["TSYN"] = false;  
                                         

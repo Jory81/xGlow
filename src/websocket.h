@@ -1389,7 +1389,7 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
           else if (variable == "SNCL"){colorlength = json["SNCL"]; newColors++; }// if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, colorlength), colorlength);  EEPROM.commit();};}
           else if (variable == "SSCO"){z5 = json["SSCO"]; }
           else if (variable == "CSYN"){colourSync = json["CSYN"];}
-          else if (variable == "SHYX"){colourSync = json["SHYX"];}
+          else if (variable == "SHYX"){yx = json["SHYX"];}
         //if (json.containsKey("SPGM")){Serial.println("containsprogramMode");};//programMode = json["SPGM"]; cycleT=0;  previousMillis44 = millis();  previousMillis45 = millis(); changeState();} // if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, programMode), programMode);  EEPROM.commit();};  
         }
 
