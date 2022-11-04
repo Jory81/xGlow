@@ -423,6 +423,9 @@ function onMessage(event) {
 				else if (data.BSMP[m] == 25){
 					document.getElementById("bs25").style.color = "blue";
 				}
+				else if (data.BSMP[m] == 26){
+					document.getElementById("bs26").style.color = "blue";
+				}
 				// else if (data.BSMP[m] == 6){
 				// 	document.getElementById(data.BSMP[m]).style.color = "green";
 				// }
@@ -532,6 +535,9 @@ function onMessage(event) {
 				else if (data.BSMY[m] == 25){
 					document.getElementById("bs25").style.color = "blue";
 				}
+				else if (data.BSMY[m] == 26){
+					document.getElementById("bs26").style.color = "blue";
+				}
 				// else if (data.BSMY[m] == 6){
 				// 	document.getElementById(data.BSMY[m]).style.color = "green";
 				// }
@@ -640,6 +646,9 @@ function onMessage(event) {
 				}
 				else if (data.BSMX[m] == 25){
 					document.getElementById("bs25").style.color = "blue";
+				}
+				else if (data.BSMX[m] == 26){
+					document.getElementById("bs26").style.color = "blue";
 				}
 				// else if (data.BSMX[m] == 6){
 				// 	document.getElementById(data.BSMX[m]).style.color = "green";
@@ -961,7 +970,7 @@ _Prog. Mode (0-37):
 	<div class="titlex">
 	_*Bri_S preset (0-25):
 	</div>
-	<input id="SBSM" class="sliderx" type="range" min="0" max="25" step="1" value="0" onchange="updateSlider(this.id, this.value)">
+	<input id="SBSM" class="sliderx" type="range" min="0" max="26" step="1" value="0" onchange="updateSlider(this.id, this.value)">
 	<div class="varvaluex" id="SBSMS"></div><div class="infox">
 		<div class="dropdown">
 			<button class="dropbtn">Bri_Sat presets:</button>
@@ -992,6 +1001,7 @@ _Prog. Mode (0-37):
 			  <li id="bs23" value="23"  onclick="updateNumberS('SBSM', this.value)">23: fire_glow</li>
 			  <li id="bs24" value="24"  onclick="updateNumberS('SBSM', this.value)">24: no_glow_hiBr</li>
 			  <li id="bs25" value="25"  onclick="updateNumberS('SBSM', this.value)">25: no_glow_loBr</li>
+			  <li id="bs26" value="26"  onclick="updateNumberS('SBSM', this.value)">26: spark_3</li>
 			</div>
 		  </div>
 		  </div>

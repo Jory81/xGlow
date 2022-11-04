@@ -488,12 +488,12 @@ if (millis() - previousMillis6 >= INTERVAL7 && (!inSync)){
         z[p]=zr[3];}
         }
       }
-  else if ((varON == 1) && (colorMode == 1 || colorMode == 2 || colorMode == 3 || colorMode == 4 )){ // colorMode =! 5
+  else if ((varON == 1) && (colorMode == 1 || colorMode == 2 || colorMode == 3 || colorMode == 4 )){ // colorMode != 5
        z[0] = yval1 + random(35,225);
         for (int p=0; p<numsparks; p++){
         z[p] = z[0];}
   }
-  else if ((varON == 2) && (colorMode =! 5)){
+  else if ((varON == 2) && (colorMode != 5)){
         for (int p=0; p<numsparks; p++){
         z[p] = yval1 + random(35,225);}
   }
@@ -609,7 +609,7 @@ if (millis() - previousMillisLN[k] >= rtAM[k]/df){
         z[k] = z7;
       }
 
-      if ((varON == 2) && (colorMode =! 5)){
+      if ((varON == 2) && (colorMode != 5)){
         z[k] = yval1 + random(35,225);
       }
 
