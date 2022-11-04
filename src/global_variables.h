@@ -7,48 +7,42 @@ typedef void (*effect_f) (void);  // This is type definition for the pointertype
 effect_f effect_function = NULL; // This is the pointer variable used to remember pointer to function()
 
 const char string_0[] PROGMEM = "static_glow"; 
-const char string_1[] PROGMEM = "varying_glow"; 
+const char string_1[] PROGMEM = "var_glow"; 
 const char string_2[] PROGMEM = "warm_glow";
 const char string_3[] PROGMEM = "reflection"; 
 const char string_4[] PROGMEM = "deflection";
 const char string_5[] PROGMEM = "coloursplash";
 const char string_6[] PROGMEM = "palette";
-
-const char string_7[] PROGMEM = "snow alt."; 
 //const char string_7[] PROGMEM = "colourwash"; 
-const char string_8[] PROGMEM = "rainbow_1";
-const char string_9[] PROGMEM = "rainbow_2";
-
-const char string_10[] PROGMEM = "rainbow_3";
-const char string_11[] PROGMEM = "rainbow_4";
-const char string_12[] PROGMEM = "rainbow_5";
-const char string_13[] PROGMEM = "rainbow_6";
-const char string_14[] PROGMEM = "rainbow_7"; 
-const char string_15[] PROGMEM = "gradient";
-const char string_16[] PROGMEM = "lucky7";
-const char string_17[] PROGMEM = "goldstrike";
-const char string_18[] PROGMEM = "halcyon"; 
-const char string_19[] PROGMEM = "snow_melt";
-
-const char string_20[] PROGMEM = "snow_pile";
-const char string_21[] PROGMEM = "snow_storm";
-const char string_22[] PROGMEM = "snow_rainbow"; 
-const char string_23[] PROGMEM = "sparkle";
-const char string_24[] PROGMEM = "sparkle_storm";
-const char string_25[] PROGMEM = "sparkle_rainbow"; 
-const char string_26[] PROGMEM = "twinkle";
-const char string_27[] PROGMEM = "casino";
-
-const char string_28[] PROGMEM = "7_strings mirror";
+const char string_7[] PROGMEM = "rainbow_1";
+const char string_8[] PROGMEM = "rainbow_2";
+const char string_9[] PROGMEM = "rainbow_3";
+const char string_10[] PROGMEM = "rainbow_4";
+const char string_11[] PROGMEM = "rainbow_5";
+const char string_12[] PROGMEM = "rainbow_6";
+const char string_13[] PROGMEM = "rainbow_7"; 
+const char string_14[] PROGMEM = "gradient";
+const char string_15[] PROGMEM = "7strings";
+const char string_16[] PROGMEM = "7s_v2";
+const char string_17[] PROGMEM = "7s_mirror";
+const char string_18[] PROGMEM = "halcyon";
+const char string_19[] PROGMEM = "snow";
+const char string_20[] PROGMEM = "snow_v2"; 
+const char string_21[] PROGMEM = "snow_pile";
+const char string_22[] PROGMEM = "snow_storm";
+const char string_23[] PROGMEM = "snow_rainbow"; 
+const char string_24[] PROGMEM = "snow_mirror";
+const char string_25[] PROGMEM = "sparkle";
+const char string_26[] PROGMEM = "sparkle_storm";
+const char string_27[] PROGMEM = "sparkle_rainbow"; 
+const char string_28[] PROGMEM = "twinkle";
+const char string_29[] PROGMEM = "casino";
 //const char string_28[] PROGMEM = "casino";
-const char string_29[] PROGMEM = "fine_canvas";
-
-const char string_30[] PROGMEM = "rough_canvas"; 
-const char string_31[] PROGMEM = "xmas_1"; 
-const char string_32[] PROGMEM = "xmas_2"; 
-const char string_33[] PROGMEM = "snow mirror";
+const char string_30[] PROGMEM = "fine_canvas";
+const char string_31[] PROGMEM = "rough_canvas"; 
+const char string_32[] PROGMEM = "xmas_1"; 
+const char string_33[] PROGMEM = "xmas_2"; 
 //const char string_33[] PROGMEM = "xmas_3";
-
 const char string_34[] PROGMEM = "splash";
 const char string_35[] PROGMEM = "strobe";
 const char string_36[] PROGMEM = "meteor"; 
@@ -432,58 +426,58 @@ storeInEEPROM customVar = {
       15, //numcolor2 pers_block3
       
       // uint8_t BriSpreset
-      22, 7, 9, 14, 21, 24, 11, 11, 10, 21, 14, 10, 0, 11, 24, 0, 2, 0, 14, 3, 23, 13, 0, 0, 0, 0, 0, 21, 0, 8, 0, 24, 0, 24, 0, 0, 0, 0,  
+      22, 7, 9, 14, 21,    24, 11,  10, 21,     14, 10, 0, 11, 24,    0, 2, 0, 2, 14, 3, 3,     23, 13, 0, 3, 0, 0,    0, 0, 21,  8,     0, 24, 0,  0,    0, 0, 0,  
       
       // uint8_t BriSpreset2
-      7, 3, 1, 16, 8, 1, 11, 11, 2, 7, 8, 6, 10, 8, 7, 0, 0, 0, 10, 2, 12, 12, 14, 0, 0, 0, 0, 10, 7, 8, 0, 24, 0, 24, 0, 0, 0, 0,  
+      7, 3, 1, 16, 8,    1, 11,  2, 7,     8, 6, 10, 8, 7,     0, 0, 0, 0, 10, 2, 2,    12, 12, 14, 2, 0, 0,     0, 0, 10,  8,     0, 24, 0,  0,    0, 0, 0,  
       
       // uint8_t BriSpreset3
-      3, 10, 3, 22, 7, 3, 11, 11, 18, 20, 10, 14, 24, 14, 8, 0, 0, 0, 18, 2, 6, 14, 10, 0, 0, 0, 0, 15, 0, 8, 0, 24, 0, 24, 0, 19, 0, 0,  
+      3, 10, 3, 22, 7,     3, 11,  18, 20,     10, 14, 24, 14, 8,    0, 0, 0, 0, 18, 2, 2,     6, 14, 10, 2, 0, 0,    0, 0, 15,  8,     0, 24, 0,  0,     19, 0, 0,  
       
       // unsigned long changeSpeed
-      100, 100, 100, 100, 100, 35, 50, 50, 20, 46, 100, 70, 108, 61, 100, 200, 20, 20, 124, 125, 125, 130, 125, 130, 135, 130, 30, 30, 2000, 2000, 1000, 200, 100, 40, 30, 35, 50, 50,  
+      100, 100, 100, 100, 100,     35, 50,  20, 46,    100, 70, 108, 61, 100,      200, 20, 20, 20, 124, 125, 125,    125, 130, 125, 125, 130, 135,       130, 30, 30,   2000,       1000, 200, 100,  30,       35, 50, 50,  
       
       // unsigned long changeSpeed2
-      100, 100, 100, 100, 100, 35, 50, 50, 20, 46, 100, 70, 108, 189, 100, 200, 20, 110, 110, 125, 125, 130, 125, 130, 135, 130, 70, 30, 2000, 2000, 1000, 200, 100, 40, 30, 10, 50, 50,  
+      100, 100, 100, 100, 100,       35, 50,  20, 46,       100, 70, 108, 189, 100,       200, 20, 110, 20, 110, 125, 125,       125, 130, 125, 125, 130, 135,       130, 70, 30,  2000,       1000, 200, 100,  30,      10, 50, 50,  
       
       // unsigned long changeSpeed3
-      100, 100, 100, 100, 100, 35, 50, 50, 20, 46, 100, 70, 108, 53, 100, 200, 40, 30, 110, 125, 125, 130, 125, 130, 135, 130, 70, 30, 2000, 2000, 1000, 200, 100, 40, 30, 15, 50, 50,  
+      100, 100, 100, 100, 100,       35, 50,  20, 46,      100, 70, 108, 53, 100,       200, 40, 30, 40, 110, 125, 125,       125, 130, 125, 125, 130, 135,      130, 70, 30,  2000,       1000, 200, 100,  30,       15, 50, 50,  
 
       // int setDifference
-      7, 7, 7, 78, 80, 7, 1, 45, 1, 2, 4, 7, 2, 25, 1, 1, 10, 6, 147, 7, 7, 7, 1, 7, 7, 7, 200, 40, 1, 1, 1, 7, 7, 7, 40, 5, 3, 1,
+      7, 7, 7, 78, 80,       7, 1,  1, 2,       4, 7, 2, 25, 1,      1, 10, 6, 10, 147, 7, 7,       7, 7, 1, 7, 7, 7,      7, 200, 40,  1,       1, 7, 7,  40,      5, 3, 1,
       
       // int setDifference2
-      7, 7, 7, 78, 80, 7, 1, 45, 1, 2, 4, 7, 2, 25, 1, 1, 1, 6, 95, 7, 7, 7, 1, 7, 7, 7, 255, 40, 1, 1, 1, 7, 7, 7, 40, 15, 10, 1,
+      7, 7, 7, 78, 80,      7, 1,  1, 2,      4, 7, 2, 25, 1,       1, 1, 6, 1, 95, 7, 7,      7, 7, 1, 7, 7, 7,       7, 255, 40,  1,       1, 7, 7,  40,       15, 10, 1,
       
       // int setDifference3
-      1, 7, 1, 78, 80, 7, 1, 45, 1, 2, 4, 7, 2, 25, 1, 1, 10, 6, 95, 7, 7, 7, 1, 7, 7, 7, 255, 40, 1, 1, 1, 7, 7, 7, 40, 20, 10, 1,  
+      1, 7, 1, 78, 80,       7, 1,  1, 2,       4, 7, 2, 25, 1,       1, 10, 6, 10, 95, 7, 7,      7, 7, 1, 7, 7, 7,      7, 255, 40,  1,       1, 7, 7,  40,       20, 10, 1,  
 
       // int colorMode
-      0, 2, 0, 0, 1, 2, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 5, 4, 5, 1, 1, 0, 2, 1, 0, 4, 1, 2, 4, 1, 1, 1, 1, 1, 5, 1, 0,
+      0, 2, 0, 0, 1,      2, 1,  0, 0,       0, 0, 0, 0, 0,      0, 1, 5, 1, 4, 5, 5,      1, 1, 0, 5, 2, 1,      0, 4, 1,  4,       1, 1, 1,  1,      5, 1, 0,
 
       // int colorMode2
-      0, 2, 0, 0, 1, 2, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 4, 1, 4, 1, 1, 1, 0, 2, 1, 0, 5, 5, 4, 4, 1, 1, 1, 1, 4, 5, 5, 0,
+      0, 2, 0, 0, 1,      2, 1,  0, 0,       0, 0, 0, 0, 0,       0, 4, 1, 4, 4, 1, 1,       1, 1, 0, 1, 2, 1,      0, 5, 5,  4,      1, 1, 1,  4,      5, 5, 0,
 
       // int colorMode3
-      0, 2, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 1, 1, 0, 2, 1, 0, 1, 1, 4, 4, 1, 1, 1, 1, 4, 2, 4, 0,  
+      0, 2, 0, 0, 1,      1, 1,  0, 0,       0, 0, 0, 0, 0,      0, 4, 4, 4, 4, 4, 4,      1, 1, 0, 4, 2, 1,      0, 1, 1,  4,       1, 1, 1,  4,      2, 4, 0,  
       
       // byte arrayn
-      1, 1, 1, 1, 1, 1, 1, 1, 7, 7, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 25, 4, 1, 1, 1, 1, 0, 0, 0,
+      1, 1, 1, 1, 1,      1, 1,  7, 7,       1, 1, 1, 1, 1,       1, 0, 0, 0, 0, 0, 0,      1, 1, 1, 0, 1, 1,       1, 1, 1,  25,      4, 1, 1,  1,       0, 0, 0,
       
       // byte arrayn2
-      4, 1, 1, 1, 1, 1, 1, 1, 7, 7, 1, 1, 1, 1, 1, 1, 27, 32, 0, 0, 1, 1, 1, 1, 1, 1, 57, 1, 5, 25, 4, 1, 1, 1, 27, 0, 0, 0,
+      4, 1, 1, 1, 1,      1, 1,  7, 7,       1, 1, 1, 1, 1,      1, 27, 32, 27, 0, 0, 0,       1, 1, 1, 0, 1, 1,       1, 57, 1,  25,      4, 1, 1,  27,       0, 0, 0,
       
       // byte arrayn3
-      1, 52, 1, 1, 1, 1, 1, 1, 7, 7, 1, 1, 1, 1, 1, 1, 19, 17, 0, 0, 1, 1, 1, 1, 1, 1, 29, 1, 27, 25, 4, 1, 1, 1, 27, 0, 38, 0,  
+      1, 52, 1, 1, 1,       1, 1,  7, 7,       1, 1, 1, 1, 1,      1, 19, 17, 19, 0, 0, 0,     1, 1, 1, 0, 1, 1,      1, 29, 1,  25,       4, 1, 1,  27,      0, 38, 0,  
       
       // varON byte
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 2, 1,
+      1, 1, 1, 1, 1,       1, 1,  1, 1,      1, 1, 1, 1, 1,      1, 1, 1, 1, 1, 1, 1,      1, 1, 2, 1, 1, 1,      1, 2, 1,  2,      2, 1, 1,  1,      1, 2, 1,
       
       // varON byte
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 0, 1, 1, 1, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1,  
+      1, 1, 1, 1, 1,       1, 1,  1, 1,      1, 1, 1, 1, 1,      1, 1, 2, 1, 1, 1, 1,       1, 1, 0, 1, 1, 1,      1, 2, 1,  2,       2, 1, 1,  1,      1, 1, 1,  
       
       // varON3 byte
-      1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 1, 2, 1, 1, 1, 1, 1, 1, 2, 1, 1, 2, 2, 1, 1, 1, 2, 2, 1, 1,
+      1, 1, 1, 1, 1,      0, 1,  1, 1,       1, 1, 1, 1, 1,      1, 2, 2, 2, 1, 2, 2,      1, 1, 1, 2, 1, 1,      1, 2, 1,  2,      2, 1, 1,  2,      2, 1, 1,
       50, // NUM_LEDS   
       0, // num_esp
       0, 0, 0, 0, 0, 0, //mac1
