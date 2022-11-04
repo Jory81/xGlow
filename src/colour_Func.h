@@ -36,10 +36,10 @@ void handleAdditionalVariables(){ // HANDLE ADDITIONAL DEVIATION OF THE LED COLO
     if (millis() - previousMillis46 > 200) {
         previousMillis46 = millis();
         diff2+=dir3;
-          if (diff2 >= setDifference2){
+          if (diff2 > setDifference2){
             dir3 = -1;
           }
-          else if (diff2 <= -setDifference2){
+          else if (diff2 < -setDifference2){
             dir3 = 1;
           }
         }   
@@ -63,7 +63,7 @@ void handleAdditionalVariables(){ // HANDLE ADDITIONAL DEVIATION OF THE LED COLO
         diff[3]=-diff2;
         diff[4]=diff1;
         diff[5]=-diff1;
-        diff[6]=+diff2;
+        diff[6]=diff2;
         diff[7]=diff1;
         diff[8]=-diff1;
         diff[9]=-diff2;
