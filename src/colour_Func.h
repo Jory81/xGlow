@@ -3,81 +3,60 @@
  */
 
 // addition for the fastled library
-LIB8STATIC uint8_t beattriwave8(accum88 beats_per_minute, uint8_t lowest = 0, uint8_t highest = 255, uint32_t timebase = 0, uint8_t phase_offset = 0)
-{
- uint8_t beat = beat8(beats_per_minute, timebase);
- uint8_t beatcos = triwave8(beat + phase_offset);
- uint8_t rangewidth = highest - lowest;
- uint8_t scaledbeat = scale8(beatcos, rangewidth);
- uint8_t result = lowest + scaledbeat;
- return result;
-}
+// LIB8STATIC uint8_t beattriwave8(accum88 beats_per_minute, uint8_t lowest = 0, uint8_t highest = 255, uint32_t timebase = 0, uint8_t phase_offset = 0)
+// {
+//  uint8_t beat = beat8(beats_per_minute, timebase);
+//  uint8_t beatcos = triwave8(beat + phase_offset);
+//  uint8_t rangewidth = highest - lowest;
+//  uint8_t scaledbeat = scale8(beatcos, rangewidth);
+//  uint8_t result = lowest + scaledbeat;
+//  return result;
+//}
 
 //
 
 
 void handleAdditionalVariables(){ // HANDLE ADDITIONAL DEVIATION OF THE LED COLOUR. IN HINDSIGHT A SIMPLE SINUS FUNCTION DOES THE SAME - another future code improvement.
-if (effect_function != *rainbow_4 && effect_function != *xmas_solid){  
-  if (millis() - previousMillis >= FPS) {
+//if (effect_function != *rainbow_4 && effect_function != *xmas_solid){  
+  if (millis() - previousMillis > 50) {
     previousMillis = millis();
 
-    if (effect_function == static_glow_2){
-      if (millis() - previousMillis43 >= 100) {
+    //if (effect_function == static_glow_2){
+    if (millis() - previousMillis43 > 100) {
         previousMillis43 = millis();
         diff1+=dir2;
-          if (diff1 > setDifference){
+          if (diff1 >= setDifference){
             dir2 = -1;
           }
           else if (diff1 <= -setDifference){
             dir2 = 1;
           }
         }
-    }
-    else {
-    diff1 = map(beattriwave8(diffbeat, 0, 255), 0, 255, -setDifference, setDifference+1); // triwave code below. Added to FastLed lib8tion.h -- library.
-    }
-
-
-
-    if (setDifference == 1){
-      for (int i = 0; i < 10; i++){
-        diff[i]=0;
-      }      
-    }
-    else {
-        if (dir == 1){
-          for (int i = 0; i < 10; i++){
-            diff[i]=diff1;
+    
+    if (millis() - previousMillis46 > 200) {
+        previousMillis46 = millis();
+        diff2+=dir3;
+          if (diff2 >= setDifference2){
+            dir3 = -1;
           }
-        }
-        else {
-        diff[0]=diff1;
-        diff[1]=diff1;
-        diff[2]=diff1;
-        diff[3]=-diff1;
-        diff[4]=diff1;
-        diff[5]=-diff1;
-        diff[6]=-diff1;
-        diff[7]=diff1;
-        diff[8]=diff1;
-        diff[9]=-diff1;  
-      } 
-    }
-}
-}
-  
-else if (effect_function == *rainbow_4 || effect_function == *xmas_solid){  
-  if (millis() - previousMillis >= FPS) {
-    previousMillis = millis();
-    diff1=map(beattriwave8(diffbeat, 0, 255), 0, 255, -setDifference, setDifference+1); // triwave code below. Added to FastLed lib8tion.h -- library.
-    diff2=map(beattriwave8(diffbeat2, 0, 255), 0, 255, -setDifference2, setDifference2+1);
+          else if (diff2 <= -setDifference2){
+            dir3 = 1;
+          }
+        }   
 
-    if (setDifference == 1){
-      for (int i = 0; i < 10; i++){
-        diff[i]=0;
-      }      
-    }
-    else {
+    //    -setDifference2, setDifference2+1 
+    //}
+    // else {
+    // diff1 = map(beattriwave8(diffbeat, 0, 255), 0, 255, -setDifference, setDifference+1); // triwave code below. Added to FastLed lib8tion.h -- library.
+    // }
+
+    // if (setDifference == 1){
+    //   for (int i = 0; i < 10; i++){
+    //     diff[i]=0;
+    //   }      
+    // }
+    // else {
+      if (effect_function == *rainbow_4 || effect_function == *xmas_solid){
         diff[0]=diff2;
         diff[1]=-diff1;
         diff[2]=diff1;
@@ -87,11 +66,80 @@ else if (effect_function == *rainbow_4 || effect_function == *xmas_solid){
         diff[6]=+diff2;
         diff[7]=diff1;
         diff[8]=-diff1;
-        diff[9]=-diff2;  
+        diff[9]=-diff2;
+      }
+      else {
+        if (dir == 1){
+          for (int i = 0; i < 10; i++){
+            diff[i]=diff1;
+          }
+        }
+        else {
+          diff[0]=diff1;
+          diff[1]=diff1;
+          diff[2]=diff1;
+          diff[3]=-diff1;
+          diff[4]=diff1;
+          diff[5]=-diff1;
+          diff[6]=-diff1;
+          diff[7]=diff1;
+          diff[8]=diff1;
+          diff[9]=-diff1;
+      }
     }
-  }    
+  //}
 }
 }
+
+    
+    // else {
+    //     if (dir == 1){
+    //       for (int i = 0; i < 10; i++){
+    //         diff[i]=diff1;
+    //       }
+    //     }
+    //     else {
+    //     diff[0]=diff1;
+    //     diff[1]=diff1;
+    //     diff[2]=diff1;
+    //     diff[3]=-diff1;
+    //     diff[4]=diff1;
+    //     diff[5]=-diff1;
+    //     diff[6]=-diff1;
+    //     diff[7]=diff1;
+    //     diff[8]=diff1;
+    //     diff[9]=-diff1;  
+    //   } 
+    // }
+// }
+// }
+  
+// else if (effect_function == *rainbow_4 || effect_function == *xmas_solid){  
+//   if (millis() - previousMillis >= FPS) {
+//     previousMillis = millis();
+//     diff1=map(beattriwave8(diffbeat, 0, 255), 0, 255, -setDifference, setDifference+1); // triwave code below. Added to FastLed lib8tion.h -- library.
+//     diff2=map(beattriwave8(diffbeat2, 0, 255), 0, 255, -setDifference2, setDifference2+1);
+
+//     if (setDifference == 1){
+//       for (int i = 0; i < 10; i++){
+//         diff[i]=0;
+//       }      
+//     }
+//     else {
+//         diff[0]=diff2;
+//         diff[1]=-diff1;
+//         diff[2]=diff1;
+//         diff[3]=-diff2;
+//         diff[4]=diff1;
+//         diff[5]=-diff1;
+//         diff[6]=+diff2;
+//         diff[7]=diff1;
+//         diff[8]=-diff1;
+//         diff[9]=-diff2;  
+//     }
+//   }    
+// }
+//}
 
 void fillxmasArray(){
         numfirstcycle=0;

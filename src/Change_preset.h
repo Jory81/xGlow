@@ -86,7 +86,7 @@ if (changeModus){
       case 1: {        effect_function = static_glow_2;     if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=23;          changeSpeed=100;        setDifference=7;      colorMode=2;                   varON=1;   };  }  break; 
       case 2: {        effect_function = static_glow;       if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=23;          changeSpeed=100;        setDifference=7;      colorMode=0;      yval=18;     varON=1;   }; forcedColourChange = true ;} break;
       case 3: {        effect_function = static_glow;       if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=100;        setDifference=80;     colorMode=0;      yval=217;    varON=1;   }; forcedColourChange = true  ;} break;                                                             
-      case 4: {        effect_function = static_glow_2;     if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=100;        setDifference=80;     colorMode=1;                   varON=1;   };  diff1=0; dir2=1;} break;
+      case 4: {        effect_function = static_glow_2;     if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=100;        setDifference=80;     colorMode=1;                   varON=1;   };  } break;
       case 5: {        effect_function = colourSplash;      if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=3;           changeSpeed=35;         setDifference=7;      colorMode=2;                   varON=1;   };  } break;
       case 6: {        effect_function = palettes;          if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=11;          changeSpeed=50;         setDifference=1;      gCurrentPaletteNumber=7;       varON=1;   };    gTargetPalette = gGradientPalettes[gCurrentPaletteNumber];  y0r=0;   } break;
       //case 7: {        effect_function = palettes_2;        if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=50;         setDifference=45;                                    varON=1;   }; y0r=0;     gCurrentPaletteNumber=11;     gTargetPalette = gGradientPalettes[gCurrentPaletteNumber] ;} break;
@@ -104,15 +104,15 @@ if (changeModus){
       case 17: {       effect_function = s7_strings_2;        if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=135;        setDifference=10;     colorMode=4;    arrayn=0;      varON=1;   selectcolorArray();   }; if (selectedPresetVariable == 0 || numsparks == 10){numsparks=5*cfactor2;  };     ir[0]=0;        ir[1]=0;    previousMillis9=millis();        previousMillis10=millis();        previousMillis12=millis();          } break;
 
       case 18: {       effect_function = s7_strings;        if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=110;        setDifference=95;     colorMode=4;    arrayn=0;      varON=1;   selectcolorArray();    }; if (selectedPresetVariable == 0 || numsparks == 10){numsparks=5*cfactor2;  };     ir[0]=0;        ir[1]=0;    previousMillis9=millis();        previousMillis10=millis();        previousMillis12=millis();           } break;
-      case 19: {       effect_function = snow_flakes;       if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=125;        setDifference=7;      colorMode=4;    arrayn=0;      varON=1;   selectcolorArray();    }; if (selectedPresetVariable == 0 || numsparks == 10){numsparks=7*cfactor2;  };   offdis = offdisC;       sF=1;           previousMillis8=millis();     } break;        
+      case 19: {       effect_function = snow_flakes;       if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=13;           changeSpeed=125;        setDifference=7;      yval=10;     colorMode=0;    arrayn=0;      varON=0;   selectcolorArray();    }; if (selectedPresetVariable == 0 || numsparks == 10){numsparks=7*cfactor2;  };   offdis = offdisC;       sF=1;           previousMillis8=millis();     } break;        
       
-      case 20: {       effect_function = snow_flakes;       if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=125;        setDifference=7;      colorMode=5;    arrayn=0;      varON=1;   selectcolorArray();    }; if (selectedPresetVariable == 0 || numsparks == 10){numsparks=7*cfactor2;  };   offdis = offdisC;       sF=1;           previousMillis8=millis();     } break;        
+      case 20: {       effect_function = snow_flakes;       if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=3;           changeSpeed=125;        setDifference=7;      yval=10 ; z5=92; colorMode=5;    arrayn=0;      varON=1;   selectcolorArray();    }; if (selectedPresetVariable == 0 || numsparks == 10){numsparks=7*cfactor2;  };   offdis = offdisC;       sF=1;           previousMillis8=millis();     } break;        
 
       case 21: {       effect_function = snow_flakes_2;     if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=125;        setDifference=7;      colorMode=1;                   varON=1;   }; if (selectedPresetVariable == 0 || numsparks == 10){numsparks=7*cfactor2;  }; sF=1;      offdis = offdisC;      partialArrayCounter=0;     forcedColourChange = true;      } break;
       case 22: {       effect_function = snow_storm;        if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=130;        setDifference=7;      colorMode=1;                   varON=1;   };  if (selectedPresetVariable == 0 || numsparks == 10){numsparks=5*cfactor2;  }; yval1=random(125,225);        hh=NUM_LEDS;        offmin=1;        offmax=1;     sparkSpeed=120;       rrhh=-1;        poshh=-1;        flakeCounter=0;    offdis=cfactor2;   } break;       
       case 23: {       effect_function = snow_flakesR;      if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=125;        setDifference=7;                                     varON=1;   }; if (selectedPresetVariable == 0 || numsparks == 10){numsparks=7*cfactor2;  }; offdis = offdisC;           sF=1;         previousMillis8=millis();     } break;
       
-      case 24: {       effect_function = snow_flakes2;       if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=155;        setDifference=7;      colorMode=4;    arrayn=1;      varON=2;   selectcolorArray();    }; if (selectedPresetVariable == 0 || numsparks == 10){numsparks=7*cfactor2;  };   offdis = offdisC;       sF=1;           previousMillis8=millis();     } break;
+      case 24: {       effect_function = snow_flakes2;       if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=155;        setDifference=7;      colorMode=0;   yval = 168;    arrayn=1;      varON=2;   selectcolorArray();    }; if (selectedPresetVariable == 0 || numsparks == 10){numsparks=7*cfactor2;  };   offdis = offdisC;       sF=1;           previousMillis8=millis();     } break;
 
       
       case 25: {       effect_function = sparkling;         if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=130;        setDifference=7;      colorMode=2;                   varON=1;   }; if (selectedPresetVariable == 0 || numsparks == 10){numsparks=10*cfactor2;  };  sparkSpeed=78;                        sparkSpeed=98;        yval1=random(125,225);        yy=0;        hh=NUM_LEDS;    variant=0;        offmin=15*cfactor2;        offmax=15*cfactor2;        offdis=1;       readyToChange = true;      } break;                 
@@ -188,9 +188,10 @@ if (changeModus){
     else {
     dir = 2; xdir = 1;
     }
-    diffbeat=60000/(setDifference*4*100);
-    diffbeat2=diffbeat/2; 
-    dir2 = 1;           
+    diff1 = 0;
+    diff2 = 0;
+    dir2 = 1;
+    dir3 = 1;           
     setDifference2 = setDifference+5;
     changeModus=false;
     executeScript=true;

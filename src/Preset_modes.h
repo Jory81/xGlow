@@ -511,7 +511,7 @@ if (millis() - previousMillis6 >= INTERVAL7 && (!inSync)){
     }
     else {
     setDifference=10;}
-    diffbeat=60000/(setDifference*4*100);
+    //diffbeat=60000/(setDifference*4*100);
     }
   //  else if (varON == 1 || varON == 2){
   //   ydiff=setDifference;
@@ -740,7 +740,7 @@ if (millis() - previousMillis6 >= INTERVAL7 && (!inSync)){
     }
     else {
     setDifference=10;}
-    diffbeat=60000/(setDifference*4*100);
+    //diffbeat=60000/(setDifference*4*100);
     }
   //  else if (varON == 1 || varON == 2){
   //   ydiff=setDifference;
@@ -2414,7 +2414,7 @@ void static_glow_2(void){
 }
 
 void colourSplash(void){ 
-if (millis() - previousMillis1 > INTERVAL7 && (!inSync) || (colourSync)) {
+if ((millis() - previousMillis1 > INTERVAL7 && (!inSync)) || (colourSync)) {
   if (millis() - previousMillis36 >= changeSpeed) {
     previousMillis36 = millis();
     if (forcedColourChange) {

@@ -3,12 +3,14 @@
 #ifdef ESP8266
  #include <ESP8266WiFi.h>
  #include "FS.h" 
+ #include <espnow.h>
 #else
  #include <WiFi.h>
  #include <SPIFFS.h>
+ #include <esp_now.h>
 #endif
 
-#include <esp_now.h>
+
 //#include <FastLED.h>
 
 #define FASTLED_ALLOW_INTERRUPTS 0
@@ -86,224 +88,9 @@ decode_results results;
 AsyncWebServer server(80);
 AsyncWebSocket ws("/ws");
 
-//uint8_t broadcastAddress[] = {0x24, 0x6F, 0x28, 0x7A, 0xAE, 0x7C};
- 
-// // Define a data structure
-// typedef struct struct_message {
-//   char a[32];
-//   int b;
-//   float c;
-//   bool d;
-// } struct_message;
- 
-// // Create a structured object
-// struct_message myData;
- 
-// Peer info
-//esp_now_peer_info_t peerInfo;
-
-
-//uint8_t broadcastAddress[] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
-//uint8_t broadcastAddress[] = {0x24, 0x62, 0xAB, 0xDC, 0xA6, 0x8C}; //84:CC:A8:5F:58:A8 || 24:62:AB:DC:A6:F0
-
-// Define variables to store BME280 readings to be sent
-float temperature;
-float humidity;
-float pressure;
-
-// Define variables to store incoming readings
-float incomingTemp;
-float incomingHum;
-float incomingPres;
-
-// Variable to store if sending data was successful
-//String success;
-
-//Structure example to send data
-//Must match the receiver structure
-typedef struct struct_message {
-    float temp;
-    float hum;
-    float pres;
-} struct_message;
-
-// Create a struct_message called BME280Readings to hold sensor readings
-struct_message BME280Readings;
-
-// Create a struct_message to hold incoming sensor readings
-struct_message incomingReadings;
-
 char dataEspNow[250];
 
 esp_now_peer_info_t peerInfo;
-
-//boolean espNowMessage = false;
-
-// // Callback when data is sent
-// void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
-//   DEBUG_PRINT("\r\nLast Packet Send Status:\t");
-//   DEBUG_PRINTLN(status == ESP_NOW_SEND_SUCCESS ? "Delivery Success" : "Delivery Fail");
-//   if (status == ESP_NOW_SEND_SUCCESS){
-//       espNowMessage = false;
-//   }
-//   else {
-
-//   }
-  
-//   // if (status ==0){
-//   //   success = "Delivery Success :)";
-//   // }
-//   // else{
-//   //   success = "Delivery Fail :(";
-//   // }
-// }
-
-// // Callback when data is received
-// void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
-
-//         memcpy(&dataEspNow, incomingData, sizeof(dataEspNow));
-//         dataEspNow[len] = 0;
-//         for (int i = 0; i < len; i++){
-//           Serial.print(dataEspNow[i]);
-//         }
-//         Serial.print("Bytes received: ");
-//         Serial.println(len);
-
-//         // DEBUG_PRINTLN(F("received JSON espnow message: "));
-//         // for (int i = 0; i < len; i++){
-//         // //strval[i]=(char)data[i];    
-//         // DEBUG_PRINT((char)incomingData[i]);
-//         // }
-//         // DEBUG_PRINTLN(" ");
-
-//         StaticJsonDocument<255> json;
-//         //DeserializationError err = deserializeJson(json, incomingData);
-//         DeserializationError err = deserializeJson(json, dataEspNow);
-//         if (err) {
-//             DEBUG_PRINT(F("deserializeJson() failed with code "));
-//             DEBUG_PRINTLN(err.c_str());
-//             return;
-//         }
-
-//       if (json.containsKey("SBSM")){BriSPreset = json["SBSM"]; readBriSData(BriSPreset);}// sendProgramInfo(1);}
-//       else if (json.containsKey("SRED")){Red = json["SRED"]; loadHSV = true;}// if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, Red), Red);  EEPROM.commit();};} 
-//       else if (json.containsKey("SGRE")){Green = json["SGRE"]; loadHSV = true;}// if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, Green), Green);  EEPROM.commit();};}   
-//       else if (json.containsKey("SBLU")){Blue = json["SBLU"]; loadHSV = true;}// if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, Blue), Blue);  EEPROM.commit();};}
-      
-//       else if (json.containsKey("SPST")){selectedPreset[programMode] = json["SPST"]; selectedPresetVariable = selectedPreset[programMode];}// cycleT=0;  previousMillis44 = millis();  previousMillis45 = millis();  if (saveToEEPROM){int offsetPosition = offsetof(storeInEEPROM, selectedPreset[0]); EEPROM.put((offsetPosition + programMode), selectedPresetVariable);  EEPROM.commit();} changeState();}
-//       else if (json.containsKey("TCON")){cycle = json["TCON"];} //if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, cycle), cycle);  EEPROM.commit();};} // EEPROM
-//       else if (json.containsKey("SGRA")){selectColor = json["SGRA"];   dir1=1;    ymax4 = pgm_read_byte(&selectColor_data[selectColor].ymax4);  ymin4 = pgm_read_byte(&selectColor_data[selectColor].ymin4);   setDifference = pgm_read_byte(&selectColor_data[selectColor].setDifference);    yval1=ymin4;   dir0=1;   if (effect_function == *rainbow_3){setDifference = 4;  }}
-//       else if (json.containsKey("SPAL")){gCurrentPaletteNumber = json["SPAL"]; gTargetPalette =( gGradientPalettes[gCurrentPaletteNumber] );}
-//       else if (json.containsKey("SCAR")){arrayn = json["SCAR"];     selectcolorArray();    newColors++;}  // THIS ONE
-      
-//       else if (json.containsKey("SDIF")){setDifference = json["SDIF"]; fillxmasArray(); diffbeat=60000/(setDifference*4*100); diffbeat2=diffbeat/2;  setDifference2 = setDifference+5;} // diff[0]=0;     x = 1;  num = 0;        diff[1]=0;     xn = 1;    num7 = 0; }
-//       else if (json.containsKey("SLSP")){changeSpeed = json["SLSP"];}
-//       else if (json.containsKey("SVAR")){varON = json["SVAR"]; for (int p=0; p<10; p++){if (varON == 0){yvar[p]= 0; yvarg[p]= 0;} else {yvar[p]=yvarC[p]; yvarg[p]=yvargC[p];};};}// if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, varON), varON);  EEPROM.commit();};}
-//       else if (json.containsKey("SCOM")){colorMode = json["SCOM"]; colorMode = colorMode-1; procesColourMode();} // memoryByte = 'c'; processChange();} // THIS ONE
-//       else if (json.containsKey("SHUE")){yval = json["SHUE"]; forcedColourChange = true;}// if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, yval), yval);  EEPROM.commit();};}
-//       else if (json.containsKey("SPGM")){programMode = json["SPGM"]; cycleT=0;  previousMillis44 = millis();  previousMillis45 = millis(); changeState();} // if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, programMode), programMode);  EEPROM.commit();};          
-
-//         //if (json.containsKey("SPGM")){Serial.println("containsprogramMode");};//programMode = json["SPGM"]; cycleT=0;  previousMillis44 = millis();  previousMillis45 = millis(); changeState();} // if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, programMode), programMode);  EEPROM.commit();};  
-
-
-
-
-//   // incomingTemp = incomingReadings.temp;
-//   // incomingHum = incomingReadings.hum;
-//   // incomingPres = incomingReadings.pres;
-// }
-
-
-
- 
-// Callback function called when data is sent
-
-// void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
-//   Serial.println("hi I sent esp now data");
-// }
-
-// void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
-//   Serial.print("\r\nLast Packet Send Status:\t");
-//   Serial.println(status == ESP_NOW_SEND_SUCCESS ? "Delivery Success" : "Delivery Fail");
-// }
-
-// void receiveCallback(const uint8_t *macAddr, const uint8_t *data, int dataLen)
-// // Called when data is received
-// {
-//   // Only allow a maximum of 250 characters in the message + a null terminating byte
-//   char buffer[ESP_NOW_MAX_DATA_LEN + 1];
-//   int msgLen = min(ESP_NOW_MAX_DATA_LEN, dataLen);
-//   strncpy(buffer, (const char *)data, msgLen);
- 
-//   // Make sure we are null terminated
-//   buffer[msgLen] = 0;
-//   for (int i = 0; i < dataLen; i++){
-//     Serial.print(buffer[i]);
-//   }
-// }
-//void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
-
-// void OnDataRecv(const uint8_t * mac, const uint8_t *data, int len) {
-//   Serial.println("hi i received esp now data");
-// }
-
-// void OnDataRecv(const uint8_t * mac, const uint8_t *data, int len) {
-//         uint8_t byteArray[] = {};
-//         memcpy(&byteArray, data, sizeof(data));
-//         Serial.print("Data ESP-NOW received: ");
-//         for (int i = 0; i < len; i++){
-//           Serial.println(byteArray[i]);
-//         }
-//         // Serial.println(len);
-
-//         DEBUG_PRINTLN(F("received JSON message from ESP-NOW: "));
-//         for (int i = 0; i < len; i++){
-//         //strval[i]=(char)data[i];    
-//         DEBUG_PRINT((char)data[i]);
-//         }
-//         DEBUG_PRINTLN(" ");
-
-//         //const uint8_t size = JSON_OBJECT_SIZE(1);
-//         StaticJsonDocument<250> json;
-//         DeserializationError err = deserializeJson(json, data);
-//         if (err) {
-//             DEBUG_PRINT(F("deserializeJson() failed with code "));
-//             DEBUG_PRINTLN(err.c_str());
-//             return;
-//         }
-
-//       // if (json.containsKey("SPGM")){programMode = json["SPGM"]; cycleT=0;  previousMillis44 = millis();  previousMillis45 = millis(); changeState();} // if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, programMode), programMode);  EEPROM.commit();};  
-//       // if (json.containsKey("SBSM")){BriSPreset = json["SBSM"]; readBriSData(BriSPreset);}// sendProgramInfo(1);}
-//       // else if (json.containsKey("SRED")){Red = json["SRED"]; loadHSV = true;}// if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, Red), Red);  EEPROM.commit();};} 
-//       // else if (json.containsKey("SGRE")){Green = json["SGRE"]; loadHSV = true;}// if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, Green), Green);  EEPROM.commit();};}   
-//       // else if (json.containsKey("SBLU")){Blue = json["SBLU"]; loadHSV = true;}// if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, Blue), Blue);  EEPROM.commit();};}
-      
-//       // else if (json.containsKey("SPST")){selectedPreset[programMode] = json["SPST"]; selectedPresetVariable = selectedPreset[programMode];}// cycleT=0;  previousMillis44 = millis();  previousMillis45 = millis();  if (saveToEEPROM){int offsetPosition = offsetof(storeInEEPROM, selectedPreset[0]); EEPROM.put((offsetPosition + programMode), selectedPresetVariable);  EEPROM.commit();} changeState();}
-//       // else if (json.containsKey("TCON")){cycle = json["TCON"];} //if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, cycle), cycle);  EEPROM.commit();};} // EEPROM
-//       // else if (json.containsKey("SGRA")){selectColor = json["SGRA"];   dir1=1;    ymax4 = pgm_read_byte(&selectColor_data[selectColor].ymax4);  ymin4 = pgm_read_byte(&selectColor_data[selectColor].ymin4);   setDifference = pgm_read_byte(&selectColor_data[selectColor].setDifference);    yval1=ymin4;   dir0=1;   if (effect_function == *rainbow_3){setDifference = 4;  }}
-//       // else if (json.containsKey("SPAL")){gCurrentPaletteNumber = json["SPAL"]; gTargetPalette =( gGradientPalettes[gCurrentPaletteNumber] );}
-//       // else if (json.containsKey("SCAR")){arrayn = json["SCAR"];     selectcolorArray();    newColors++;}  // THIS ONE
-      
-//       // else if (json.containsKey("SDIF")){setDifference = json["SDIF"]; fillxmasArray(); diffbeat=60000/(setDifference*4*100); diffbeat2=diffbeat/2;  setDifference2 = setDifference+5;} // diff[0]=0;     x = 1;  num = 0;        diff[1]=0;     xn = 1;    num7 = 0; }
-//       // else if (json.containsKey("SLSP")){changeSpeed = json["SLSP"];}
-//       // else if (json.containsKey("SVAR")){varON = json["SVAR"]; for (int p=0; p<10; p++){if (varON == 0){yvar[p]= 0; yvarg[p]= 0;} else {yvar[p]=yvarC[p]; yvarg[p]=yvargC[p];};};}// if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, varON), varON);  EEPROM.commit();};}
-//       // else if (json.containsKey("SCOM")){colorMode = json["SCOM"]; colorMode = colorMode-1; procesColourMode();} // memoryByte = 'c'; processChange();} // THIS ONE
-//       // else if (json.containsKey("SHUE")){yval = json["SHUE"]; forcedColourChange = true;}// if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, yval), yval);  EEPROM.commit();};}
-//       // else if (json.containsKey("SPGM")){programMode = json["SPGM"]; cycleT=0;  previousMillis44 = millis();  previousMillis45 = millis(); changeState();} // if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, programMode), programMode);  EEPROM.commit();};  
-//       return;
-//   //memcpy(&myData, incomingData, sizeof(myData));
-//   // Serial.print("Data received: ");
-//   // Serial.println(len);
-//   // Serial.print("Character Value: ");
-//   // Serial.println(myData.a);
-//   // Serial.print("Integer Value: ");
-//   // Serial.println(myData.b);
-//   // Serial.print("Float Value: ");
-//   // Serial.println(myData.c);
-//   // Serial.print("Boolean Value: ");
-//   // Serial.println(myData.d);
-//   // Serial.println();
-// }
 
 // Timing properties
 #define interval1 50 // pixel swap
@@ -568,25 +355,6 @@ void handleEspNowMessage(){
         esp_now_send(NULL, (uint8_t *) &data, len);
       //}
   }
-
-  // BME280Readings.temp = random(255);
-  // BME280Readings.hum = random(255);
-  // BME280Readings.pres = random(255);
-  
-  // for (int i = 0; i < num_esp; i++){
-  // uint8_t broadcastAddress[6] = {Mac[i*6], Mac[(i*6)+1], Mac[(i*6)+2], Mac[(i*6)+3], Mac[(i*6)+4], Mac[(i*6)+5]};
-  // esp_err_t result = esp_now_send(broadcastAddress, (uint8_t *) &BME280Readings, sizeof(BME280Readings));
-   
-  // if (result == ESP_OK) {
-  //   Serial.println("Sent with success");
-  // }
-  // else {
-  //   Serial.println("Error sending the data");
-  // }
-  // espNowMessage = false;
-  // }
-
-// }
 }
 }
 

@@ -398,8 +398,8 @@ else if (memoryByte == 'q'){
           else if (setDifference >= 25){
           setDifference-=5;
           }
-        diffbeat=60000/(setDifference*4*100);
-        diffbeat2=diffbeat/2;   
+        // diffbeat=60000/(setDifference*4*100);
+        // diffbeat2=diffbeat/2;   
         setDifference2 = setDifference+5;
         }
     }
@@ -459,8 +459,8 @@ else if (memoryByte == 'E'){
           else if (setDifference >= 25){
           setDifference+=5;
           }
-        diffbeat=60000/(setDifference*4*100);
-        diffbeat2=diffbeat/2;   
+        // diffbeat=60000/(setDifference*4*100);
+        // diffbeat2=diffbeat/2;   
       setDifference2 = setDifference+5;     
     }
 

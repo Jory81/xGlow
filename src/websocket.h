@@ -82,9 +82,8 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
       
       else if (json.containsKey("SSBR")){BrF = json["SSBR"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, BrF), BrF);  EEPROM.commit();};}
       else if (json.containsKey("SSSF")){SF = json["SSSF"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, SF), SF);  EEPROM.commit();};}
-      else if (json.containsKey("SDIF")){setDifference = json["SDIF"]; fillxmasArray(); diffbeat=60000/(setDifference*4*100); diffbeat2=diffbeat/2;  setDifference2 = setDifference+5;if (syncEsp){espNowMessage = true;   EspNowMessageType = 5;  }; } // diff[0]=0;     x = 1;  num = 0;        diff[1]=0;     xn = 1;    num7 = 0; }
+      else if (json.containsKey("SDIF")){setDifference = json["SDIF"]; fillxmasArray(); setDifference2 = setDifference+5;if (syncEsp){espNowMessage = true;   EspNowMessageType = 5;  }; } // diff[0]=0;     x = 1;  num = 0;        diff[1]=0;     xn = 1;    num7 = 0; } diffbeat=60000/(setDifference*4*100); diffbeat2=diffbeat/2;
       else if (json.containsKey("SLSP")){changeSpeed = json["SLSP"];if (syncEsp){espNowMessage = true;   EspNowMessageType = 6;  }; }
-
 
       else if (json.containsKey("SNLD")){NUM_LEDS = json["SNLD"]; EEPROM.put(offsetof(storeInEEPROM, NUM_LEDS), NUM_LEDS);  EEPROM.commit();}
       else if (json.containsKey("SCAR")){arrayn = json["SCAR"];     selectcolorArray();    newColors++; if (syncEsp){espNowMessage = true;   EspNowMessageType = 7;  }; }  // THIS ONE
@@ -113,10 +112,7 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
       //else if (json.containsKey("TCAC")){enableMode();}  // THIS ONE
       else if (json.containsKey("TGLI")){glitterON = json["TGLI"]; initializeGlitter();}
       else if (json.containsKey("TCAC")){enableMode();} 
-//      else if (str == "TVNB"){varNumbrigh = dataVar; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, varNumbrigh), varNumbrigh);  EEPROM.commit();};} // EEPROM
-//      else if (str == "TVBB"){varBPMB = dataVar; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, varBPMB), varBPMB);  EEPROM.commit();};} // EEPROM
-//      else if (str == "TVNS"){varNumsat = dataVar; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, varNumsat), varNumsat);  EEPROM.commit();};} // EEPROM
-//      else if (str == "TVBS"){varBPMS = dataVar; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, varBPMS), varBPMS);  EEPROM.commit();};} // EEPROM      
+     
       else if (json.containsKey("SPST")){selectedPreset[programMode] = json["SPST"]; selectPreset(); if (syncEsp){espNowMessage = true;   EspNowMessageType = 0;  }; cycleT=0;   previousMillis44 = millis();  previousMillis45 = millis();  if (saveToEEPROM){int offsetPosition = offsetof(storeInEEPROM, selectedPreset[0]); EEPROM.put((offsetPosition + programMode), selectedPreset[programMode]);  EEPROM.commit();} changeState();}
       else if (json.containsKey("TSCM")){saveCurrentPresetToEEPROM(); sendDelayWSMessage=true; message = 1; previousMillis14=millis(); }
       else if (json.containsKey("TSBM")){saveCurrentBriSPresetToEEPROM(); sendDelayWSMessage=true; message = 5; previousMillis14=millis(); }
@@ -163,16 +159,6 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
       else if (json.containsKey("mac8")){for (int i = 42; i < 48; i++){Mac[i] = json["mac8"][i%6];} writeMacTooEEPROM(7);}
       else if (json.containsKey("mac9")){for (int i = 48; i < 54; i++){Mac[i] = json["mac9"][i%6];} writeMacTooEEPROM(8);}
       else if (json.containsKey("mac10")){for (int i = 54; i < 60; i++){Mac[i] = json["mac10"][i%6];} writeMacTooEEPROM(9);}
-      //  mac1[0] = json["mac1"][0]; mac1[1] = json["mac1"][1]; mac1[2] = json["mac1"][2]; mac1[3] = json["mac1"][3]; mac1[4] = json["mac1"][4]; mac1[5] = json["mac1"][5]; for (int i = 0; i < 6; i++){Serial.println(mac1[i]);}}
-      // else if (json.containsKey("mac2")){};
-      // else if (json.containsKey("mac3")){};
-      // else if (json.containsKey("mac4")){};
-      // else if (json.containsKey("mac5")){};
-      // else if (json.containsKey("mac6")){};
-      // else if (json.containsKey("mac7")){};
-      // else if (json.containsKey("mac8")){};
-      // else if (json.containsKey("mac9")){};
-      // else if (json.containsKey("mac10")){};
       else if (json.containsKey("TSYN")){syncEsp = json["TSYN"];}
       else if (json.containsKey("BOOT")){ESP.restart();};
       notifyClientsSingleObject("recMsg", true);
@@ -1092,31 +1078,7 @@ void notifyClientsSingleObjectSignedInt(String object, int32_t value) {
 
 void printEEPROM(){
 
-    int offsetPosition;
-    // offsetPosition = (offsetof(storeInEEPROM, arrayn[0])) + programMode; 
-    // arrayn = EEPROM.read(offsetPosition);
-    // offsetPosition = (offsetof(storeInEEPROM, varON[0])) + programMode; 
-    // varON = EEPROM.read(offsetPosition); for (int p=0; p<10; p++){if (varON == 0){yvar[p]= 0; yvarg[p]= 0;} else {yvar[p]=yvarC[p]; yvarg[p]=yvargC[p];};}
-    // offsetPosition = (offsetof(storeInEEPROM, numsparks[0])) + programMode; 
-    // numsparks = EEPROM.read(offsetPosition);
-    // offsetPosition = (offsetof(storeInEEPROM, glitterON[0])) + programMode; 
-    // glitterON = EEPROM.read(offsetPosition);
-
-    // offsetPosition = offsetof(storeInEEPROM, changeSpeed[0]) + (programMode*sizeof(unsigned long));  
-    // changeSpeed = EEPROM.readLong(offsetPosition); 
-
-    // // offsetPosition = offsetof(storeInEEPROM, cycleTime[0]) + (programMode*sizeof(unsigned long));  
-    // // cycleTime = EEPROM.readLong(offsetPosition); 
-
-    // // offsetPosition = offsetof(storeInEEPROM, timefactor3[0]) + (programMode*sizeof(float));  
-    // // timefactor3 = EEPROM.readFloat(offsetPosition); 
-
-    // offsetPosition = offsetof(storeInEEPROM, setDifference[0]) + (programMode*sizeof(int));
-    // setDifference = EEPROM.readInt(offsetPosition);
-
-    // offsetPosition = offsetof(storeInEEPROM, colorMode[0]) + (programMode*sizeof(int));  
-    // colorMode = EEPROM.readInt(offsetPosition);
-
+int offsetPosition;
 
 EEPROM_PRINTLN("setdifference values: "); // int
 EEPROM_PRINTLN("setDifference: ");
@@ -1377,7 +1339,7 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
           else if (variable =="SPAL"){gCurrentPaletteNumber = json["SPAL"]; gTargetPalette =( gGradientPalettes[gCurrentPaletteNumber] );}
           else if (variable =="SCAR"){arrayn = json["SCAR"];     selectcolorArray();    newColors++;}  // THIS ONE
           
-          else if (variable =="SDIF"){setDifference = json["SDIF"]; fillxmasArray(); diffbeat=60000/(setDifference*4*100); diffbeat2=diffbeat/2;  setDifference2 = setDifference+5;} // diff[0]=0;     x = 1;  num = 0;        diff[1]=0;     xn = 1;    num7 = 0; }
+          else if (variable =="SDIF"){setDifference = json["SDIF"]; fillxmasArray();  setDifference2 = setDifference+5;} // diff[0]=0;     x = 1;  num = 0;        diff[1]=0;     xn = 1;    num7 = 0; } diffbeat=60000/(setDifference*4*100); diffbeat2=diffbeat/2;
           else if (variable =="SLSP"){changeSpeed = json["SLSP"];}
           else if (variable =="SVAR"){varON = json["SVAR"]; for (int p=0; p<10; p++){if (varON == 0){yvar[p]= 0; yvarg[p]= 0;} else {yvar[p]=yvarC[p]; yvarg[p]=yvargC[p];};};}// if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, varON), varON);  EEPROM.commit();};}
           else if (variable =="SCOM"){colorMode = json["SCOM"]; colorMode = colorMode-1; procesColourMode();} // memoryByte = 'c'; processChange();} // THIS ONE
@@ -1390,15 +1352,9 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
           else if (variable == "SSCO"){z5 = json["SSCO"]; }
           else if (variable == "CSYN"){colourSync = json["CSYN"];}
           else if (variable == "SHYX"){yx = json["SHYX"];}
-        //if (json.containsKey("SPGM")){Serial.println("containsprogramMode");};//programMode = json["SPGM"]; cycleT=0;  previousMillis44 = millis();  previousMillis45 = millis(); changeState();} // if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, programMode), programMode);  EEPROM.commit();};  
         }
 
 }
-
-  // incomingTemp = incomingReadings.temp;
-  // incomingHum = incomingReadings.hum;
-  // incomingPres = incomingReadings.pres;
-//}
 
 // Callback when data is sent
 void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
