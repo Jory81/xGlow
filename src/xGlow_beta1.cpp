@@ -90,7 +90,10 @@ AsyncWebSocket ws("/ws");
 
 char dataEspNow[250];
 
+#ifdef ESP8266
+#else
 esp_now_peer_info_t peerInfo;
+#endif
 
 // Timing properties
 #define interval1 50 // pixel swap
@@ -233,8 +236,12 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len);
 void processWebSocketMessage(String str, int dataVar);
 void processWebSocketMessageS(String str, int stringLength, String dataString);
 void notifyClients();
+#ifdef ESP8266
+void onSent(uint8_t *mac_addr, uint8_t sendStatus);
+#else
 void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status);
 void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len);
+#endif
 //void OnDataRecv(const uint8_t * mac, const uint8_t *data, int len);
 //void receiveCallback(const uint8_t *macAddr, const uint8_t *data, int dataLen);
 

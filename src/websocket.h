@@ -159,7 +159,7 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
       else if (json.containsKey("mac8")){for (int i = 42; i < 48; i++){Mac[i] = json["mac8"][i%6];} writeMacTooEEPROM(7);}
       else if (json.containsKey("mac9")){for (int i = 48; i < 54; i++){Mac[i] = json["mac9"][i%6];} writeMacTooEEPROM(8);}
       else if (json.containsKey("mac10")){for (int i = 54; i < 60; i++){Mac[i] = json["mac10"][i%6];} writeMacTooEEPROM(9);}
-      else if (json.containsKey("TSYN")){syncEsp = json["TSYN"];}
+      else if (json.containsKey("TSYN")){syncEsp = json["TSYN"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, syncEsp), syncEsp);  EEPROM.commit();};}
       else if (json.containsKey("BOOT")){ESP.restart();};
       notifyClientsSingleObject("recMsg", true);
     }
@@ -286,7 +286,10 @@ DynamicJsonDocument doc(2000);
     }
     break;
     case 3:{
+      #ifdef ESP8266
+      #else
       doc["MAC"] = WiFi.macAddressDec().c_str();
+      #endif
       doc["n_esp"] = num_esp;
       for (int n = 0; n < 10; n++){
         switch (n){
@@ -678,11 +681,20 @@ void enableMode(){
 
 void loadPersonalSettings(){
 
+#ifdef ESP8266 
+int offsetPosition = offsetof(storeInEEPROM, cycleTime[0]) + (programMode*sizeof(unsigned long));   
+EEPROM.get(offsetPosition, cycleTime);
+ 
+offsetPosition = offsetof(storeInEEPROM, timefactor3[0]) + (programMode*sizeof(float));  
+EEPROM.get(offsetPosition, timefactor3); 
+
+#else
 int offsetPosition = offsetof(storeInEEPROM, cycleTime[0]) + (programMode*sizeof(unsigned long));  
 cycleTime = EEPROM.readLong(offsetPosition); 
 
 offsetPosition = offsetof(storeInEEPROM, timefactor3[0]) + (programMode*sizeof(float));  
 timefactor3 = EEPROM.readFloat(offsetPosition); 
+#endif
 
 if (selectedPresetVariable == 1){
   DEBUG_PRINTLN("load from position 1");
@@ -1085,7 +1097,14 @@ EEPROM_PRINTLN("setDifference: ");
 for (int k = 0; k < modeCount; k++){  
 offsetPosition = (offsetof(storeInEEPROM, setDifference[0])) + (k*sizeof(int)); 
 //BriSPreset = EEPROM.read(offsetPosition);
+#ifdef ESP8266 
+int printvalue;
+EEPROM_PRINT(EEPROM.get(offsetPosition, printvalue));
+//EEPROM.get(offsetPosition, setDifference);
+#else
 EEPROM_PRINT(EEPROM.readInt(offsetPosition));
+#endif
+
 EEPROM_PRINT(", ");
 }
 EEPROM_PRINTLN(" ");
@@ -1094,7 +1113,12 @@ EEPROM_PRINTLN("setDifference2: ");
 for (int k = 0; k < modeCount; k++){  
 offsetPosition = (offsetof(storeInEEPROM, setDifference2[0])) + (k*sizeof(int)); 
 //BriSPreset = EEPROM.read(offsetPosition);
-EEPROM_PRINT(EEPROM.readInt(offsetPosition));
+#ifdef ESP8266 
+
+#else
+EEPROM_PRINT(EEPROM.readInt(offsetPosition))
+#endif
+;
 EEPROM_PRINT(", ");
 }
 EEPROM_PRINTLN(" ");
@@ -1103,7 +1127,12 @@ EEPROM_PRINTLN("setDifference3: ");
 for (int k = 0; k < modeCount; k++){  
 offsetPosition = (offsetof(storeInEEPROM, setDifference3[0])) + (k*sizeof(int)); 
 //BriSPreset = EEPROM.read(offsetPosition);
+#ifdef ESP8266 
+
+#else
 EEPROM_PRINT(EEPROM.readInt(offsetPosition));
+#endif
+
 EEPROM_PRINT(", ");
 }
 EEPROM_PRINTLN(" ");
@@ -1113,7 +1142,12 @@ EEPROM_PRINTLN("changeSpeed: ");
 for (int k = 0; k < modeCount; k++){  
 offsetPosition = (offsetof(storeInEEPROM, changeSpeed[0])) + (k*sizeof(unsigned long)); 
 //BriSPreset = EEPROM.read(offsetPosition);
+#ifdef ESP8266 
+
+#else
 EEPROM_PRINT(EEPROM.readLong(offsetPosition));
+#endif
+
 EEPROM_PRINT(", ");
 }
 EEPROM_PRINTLN(" ");
@@ -1122,7 +1156,12 @@ EEPROM_PRINTLN("changeSpeed2: ");
 for (int k = 0; k < modeCount; k++){  
 offsetPosition = (offsetof(storeInEEPROM, changeSpeed2[0])) + (k*sizeof(unsigned long)); 
 //BriSPreset = EEPROM.read(offsetPosition);
+#ifdef ESP8266 
+
+#else
 EEPROM_PRINT(EEPROM.readLong(offsetPosition));
+#endif
+
 EEPROM_PRINT(", ");
 }
 EEPROM_PRINTLN(" ");
@@ -1131,7 +1170,12 @@ EEPROM_PRINTLN("changeSpeed3: ");
 for (int k = 0; k < modeCount; k++){  
 offsetPosition = (offsetof(storeInEEPROM, changeSpeed3[0])) + (k*sizeof(unsigned long)); 
 //BriSPreset = EEPROM.read(offsetPosition);
+#ifdef ESP8266 
+
+#else
 EEPROM_PRINT(EEPROM.readLong(offsetPosition));
+#endif
+
 EEPROM_PRINT(", ");
 }
 EEPROM_PRINTLN(" ");
@@ -1141,7 +1185,12 @@ EEPROM_PRINTLN("varON: ");
 for (int k = 0; k < modeCount; k++){  
 offsetPosition = (offsetof(storeInEEPROM, varON[0])) + k; 
 //BriSPreset = EEPROM.read(offsetPosition);
+#ifdef ESP8266 
+
+#else
 EEPROM_PRINT(EEPROM.read(offsetPosition));
+#endif
+
 EEPROM_PRINT(", ");
 }
 EEPROM_PRINTLN(" ");
@@ -1170,7 +1219,12 @@ EEPROM_PRINTLN("colorMode: ");
 for (int k = 0; k < modeCount; k++){  
 offsetPosition = (offsetof(storeInEEPROM, colorMode[0])) + (k*sizeof(int)); 
 //BriSPreset = EEPROM.read(offsetPosition);
+
+#ifdef ESP8266 
+
+#else
 EEPROM_PRINT(EEPROM.readInt(offsetPosition));
+#endif
 EEPROM_PRINT(", ");
 }
 EEPROM_PRINTLN(" ");
@@ -1179,7 +1233,12 @@ EEPROM_PRINTLN("colorMode2: ");
 for (int k = 0; k < modeCount; k++){  
 offsetPosition = (offsetof(storeInEEPROM, colorMode2[0])) + (k*sizeof(int)); 
 //BriSPreset = EEPROM.read(offsetPosition);
+#ifdef ESP8266 
+
+#else
 EEPROM_PRINT(EEPROM.readInt(offsetPosition));
+#endif
+
 EEPROM_PRINT(", ");
 }
 EEPROM_PRINTLN(" ");
@@ -1188,7 +1247,12 @@ EEPROM_PRINTLN("colorMode3: ");
 for (int k = 0; k < modeCount; k++){  
 offsetPosition = (offsetof(storeInEEPROM, colorMode3[0])) + (k*sizeof(int)); 
 //BriSPreset = EEPROM.read(offsetPosition);
+#ifdef ESP8266 
+
+#else
 EEPROM_PRINT(EEPROM.readInt(offsetPosition));
+#endif
+
 EEPROM_PRINT(", ");
 }
 EEPROM_PRINTLN(" ");
@@ -1357,7 +1421,14 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
 }
 
 // Callback when data is sent
-void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
+
+  #ifdef ESP8266
+  void onSent(uint8_t *mac_addr, uint8_t sendStatus) {
+  Serial.println("Status:");
+  Serial.println(sendStatus);
+  }
+  #else
+  void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
   DEBUG_PRINT("\r\nLast Packet Send Status:\t");
   DEBUG_PRINTLN(status == ESP_NOW_SEND_SUCCESS ? "Delivery Success" : "Delivery Fail");
 
@@ -1375,6 +1446,8 @@ void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
         inSync = false;
       } // perhaps this is on the wrong end. It needs to be on the receivers end.
   }
+  }
+  #endif
   
   // if (status ==0){
   //   success = "Delivery Success :)";
@@ -1382,6 +1455,6 @@ void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
   // else{
   //   success = "Delivery Fail :(";
   // }
-}
+//}
 
   
