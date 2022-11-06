@@ -237,7 +237,8 @@ void processWebSocketMessage(String str, int dataVar);
 void processWebSocketMessageS(String str, int stringLength, String dataString);
 void notifyClients();
 #ifdef ESP8266
-void onSent(uint8_t *mac_addr, uint8_t sendStatus);
+void OnDataSent(uint8_t *mac_addr, uint8_t sendStatus);
+void onDataRecv(uint8_t * mac, uint8_t *incomingData, uint8_t len);
 #else
 void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status);
 void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len);
@@ -306,6 +307,12 @@ handleWebsocketUpdate();
 void handleEspNowMessage(){
   if (millis() - previousMillis7 > 30) { 
   previousMillis7 = millis();
+
+  if ((!syncEsp) && (inSync)){
+    if (millis() - previousMillis15 > 900000) { // set to 15 minutes. If no message received turn inSync mode to false
+    inSync = false;
+  }
+  }
 
   if (espNowMessage){
 

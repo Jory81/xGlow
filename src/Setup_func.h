@@ -133,19 +133,20 @@ void espNow(){
     Serial.println("Problem during ESP-NOW init");
     return;
   }
-  esp_now_set_self_role(ESP_NOW_ROLE_CONTROLLER);
+  //esp_now_set_self_role(ESP_NOW_ROLE_CONTROLLER);
+  esp_now_set_self_role(ESP_NOW_ROLE_MAX);
   // Register the peer
     for (int i = 0; i < num_esp; i++){
     uint8_t broadcastAddress[6] = {Mac[i*6], Mac[(i*6)+1], Mac[(i*6)+2], Mac[(i*6)+3], Mac[(i*6)+4], Mac[(i*6)+5]};
       Serial.println("Registering a peer");
-      esp_now_add_peer(broadcastAddress, ESP_NOW_ROLE_SLAVE, 1, NULL, 0);
+      //esp_now_add_peer(broadcastAddress, ESP_NOW_ROLE_SLAVE, 1, NULL, 0);
+      esp_now_add_peer(broadcastAddress, ESP_NOW_ROLE_MAX, 1, NULL, 0);
     }
 
     Serial.println("Registering send callback function");
-    esp_now_register_send_cb(onSent);
-    //esp_now_register_send_cb(OnDataSent);
+    esp_now_register_send_cb(OnDataSent);
 
-    //esp_now_register_recv_cb(OnDataRecv);
+    esp_now_register_recv_cb(onDataRecv);
 
   #else
   if (esp_now_init() != ESP_OK) {
