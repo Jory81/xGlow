@@ -1506,10 +1506,15 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
   if (sendStatus == 0){
     DEBUG_PRINTLN("Delivery success");
     espNowMessage = false;
+    inSyncCounter = 0;
   }
   else{
     DEBUG_PRINTLN("Delivery fail");
     espNowMessage = true;
+    inSyncCounter++;
+      if (inSyncCounter > 100){
+        syncEsp = false;
+      } 
   }
 }
   #else
@@ -1522,14 +1527,14 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
 
   if (status == ESP_NOW_SEND_SUCCESS){
       espNowMessage = false;
-      //inSyncCounter = 0;
+      inSyncCounter = 0;
   }
   else {
       espNowMessage = true;
-      //inSyncCounter++;
-      // if (inSyncCounter > 100){
-      //   inSync = false;
-      // } // perhaps this is on the wrong end. It needs to be on the receivers end.
+      inSyncCounter++;
+      if (inSyncCounter > 100){
+        syncEsp = false;
+      } 
   }
   }
   #endif
