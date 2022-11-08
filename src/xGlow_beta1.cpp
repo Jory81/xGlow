@@ -321,6 +321,9 @@ void handleEspNowMessage(){
     case 0:    {
                 doc["SPST"] = selectedPresetVariable;
                 doc["SPGM"] = programMode;
+                doc["SHUY"] = yval1;
+                doc["SHYY"] = y0r;
+                doc["SHYR"] = ysr;
                 doc["TCON"] = false;
     } break;
     case 1:    {doc["SBSM"] = BriSPreset;}break;

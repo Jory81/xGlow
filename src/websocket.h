@@ -287,6 +287,7 @@ DynamicJsonDocument doc(2000);
     break;
     case 3:{
       #ifdef ESP8266
+      doc["MAC"] = WiFi.macAddressDec().c_str();
       #else
       doc["MAC"] = WiFi.macAddressDec().c_str();
       #endif
@@ -1494,6 +1495,8 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
           else if (variable == "SSCO"){z5 = json["SSCO"]; }
           else if (variable == "CSYN"){colourSync = json["CSYN"];}
           else if (variable == "SHYX"){yx = json["SHYX"];}
+          else if (variable == "SHYY"){y0r = json["SHYX"];}
+          else if (variable == "SHYR"){ysr = json["SHYX"];}
         }
 
 }
