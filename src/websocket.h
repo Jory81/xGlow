@@ -287,7 +287,7 @@ DynamicJsonDocument doc(2000);
     break;
     case 3:{
       #ifdef ESP8266
-      doc["MAC"] = WiFi.macAddressDec().c_str();
+      doc["MAC"] = WiFi.macAddress().c_str();
       #else
       doc["MAC"] = WiFi.macAddressDec().c_str();
       #endif

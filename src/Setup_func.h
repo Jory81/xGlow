@@ -92,6 +92,7 @@ void wifi(){
   const char *WIFI_PASS = &wifiPASS[0];
   WiFi.begin(WIFI_SSID, WIFI_PASS);  
   Serial.printf("Trying to connect [%s] ", WiFi.macAddress().c_str());
+  
 
   while (WiFi.status() != WL_CONNECTED) {
       Serial.print(".");
