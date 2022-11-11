@@ -177,7 +177,13 @@ if (changeModus){
       fillArrayRainbow(2);
     }
     readBriSData(BriSPreset);
-    colourSync = false;
+    if (inColourSync){
+      colourSync = true;
+    }
+    else {
+      colourSync = false;
+    }
+    forcedColourChange = true;
     slowFactor=0;
     INTERVAL7=5000;
     outOfModus = true;

@@ -277,6 +277,7 @@ function onMessage(event) {
 		else if (variable == 'TAAM'){document.getElementById('TAAM').checked = data.TAAM;}
 		else if (variable == 'TDAM'){document.getElementById('TDAM').checked = data.TDAM;}
 		else if (variable == 'TSYN'){document.getElementById('TSYN').checked = data.TSYN;}
+		else if (variable == 'TSCN'){document.getElementById('TSCN').checked = data.TSCN;}
 
 		else if (variable == 'HNUM'){document.getElementById('HNUMS').innerHTML = data.HNUM;}
 		else if (variable == 'MAC'){document.getElementById('MAC').innerHTML = data.MAC;}
@@ -729,6 +730,10 @@ $(document).ready(function() {
 <span class="switchcontainer">
 	SYNC
 	<input type="checkbox" id="TSYN" onclick="updateButton(this.id, this.checked)"> 
+	</label>
+</span>
+<span class="switchcontainer">
+	<input type="checkbox" id="TSCN" onclick="updateButton(this.id, this.checked)"> 
 	</label>
 </span>
 

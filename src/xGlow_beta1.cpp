@@ -311,6 +311,7 @@ void handleEspNowMessage(){
   if ((!syncEsp) && (inSync)){
     if (millis() - previousMillis15 > 900000) { // set to 15 minutes. If no message received turn inSync mode to false
     inSync = false;
+    inColourSync = false;
   }
   }
 
@@ -322,6 +323,7 @@ void handleEspNowMessage(){
                 doc["SPST"] = selectedPresetVariable;
                 doc["SPGM"] = programMode;
                 doc["SHUY"] = yval1;
+                doc["SYOL"] = yold;
                 doc["SHYY"] = y0r;
                 doc["SHYR"] = ysr;
                 doc["TCON"] = false;
@@ -353,9 +355,34 @@ void handleEspNowMessage(){
     case 15:   {doc["SHUY"] = yval1;
                 doc["CSYN"] = true;
                } break;
-    case 16:   {doc["SHYX"] = yx;} break;                         
+    case 16:   {doc["SHYX"] = yx;} break;  
+    case 17:   {doc["rdy"] = true;
+                doc["rn6"] = rn6;
+                doc["SHYS"] = yval1; // yold = yval1
+                doc["CSYN"] = true;
+    }
+    break;
+    case 18:   {doc["cn"] = cn;
+                doc["SHYT"] = yval1; // yold = yval1  hh=NUM_LEDS;  flakeCounter=0;  for (int s=0; s < numsparks; s++){num17[s]=NUM_LEDS; num26[s]=0; rn[s]=random(NUM_LEDS);}
+                doc["CSYN"] = true;
+    }
+    break;
+    case 19:   {
+                doc["CSYN"] = true;
+                doc["SHYP"] = yval1; // snow_flakes_2 // yold = yval1  partialArrayCounter=0;                
+    }
+    break;
+    case 20:   {
+                doc["SYNE"] = false;               
+    }     
+    break;  
+    case 21:   {
+                doc["SYNC"] = false;                
+    }     
+    break;                       
   } 
-  doc["TSYN"] = false;  
+  doc["TSYN"] = false;
+  doc["TSCN"] = false;  
                                         
     char data[250]; // 250
     size_t len = serializeJson(doc, data);

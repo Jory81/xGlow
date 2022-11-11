@@ -159,7 +159,8 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
       else if (json.containsKey("mac8")){for (int i = 42; i < 48; i++){Mac[i] = json["mac8"][i%6];} writeMacTooEEPROM(7);}
       else if (json.containsKey("mac9")){for (int i = 48; i < 54; i++){Mac[i] = json["mac9"][i%6];} writeMacTooEEPROM(8);}
       else if (json.containsKey("mac10")){for (int i = 54; i < 60; i++){Mac[i] = json["mac10"][i%6];} writeMacTooEEPROM(9);}
-      else if (json.containsKey("TSYN")){syncEsp = json["TSYN"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, syncEsp), syncEsp);  EEPROM.commit();};}
+      else if (json.containsKey("TSYN")){syncEsp = json["TSYN"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, syncEsp), syncEsp);  EEPROM.commit();} if (!syncEsp){espNowMessage = true;   EspNowMessageType = 20;};}
+      else if (json.containsKey("TSCN")){colourSyncToggle = json["TSCN"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, colourSyncToggle), colourSyncToggle);  EEPROM.commit();} if (!colourSyncToggle){espNowMessage = true;   EspNowMessageType = 21;}}
       else if (json.containsKey("BOOT")){ESP.restart();};
       notifyClientsSingleObject("recMsg", true);
     }
@@ -256,6 +257,7 @@ DynamicJsonDocument doc(2000);
         doc["TCPM"] = saveForAllModes;
         doc["HCOL"] = RGBCOLOR;
         doc["TSYN"] = syncEsp;
+        doc["TSCN"] = colourSyncToggle;
       }
       break;
       case 2:{
@@ -1422,6 +1424,16 @@ void onDataRecv(uint8_t * mac, uint8_t *incomingData, uint8_t len) {
           else if (variable == "SSCO"){z5 = json["SSCO"]; }
           else if (variable == "CSYN"){colourSync = json["CSYN"];}
           else if (variable == "SHYX"){yx = json["SHYX"];}
+          else if (variable == "SHYY"){y0r = json["SHYX"];}
+          else if (variable == "SHYR"){ysr = json["SHYX"];}
+          else if (variable == "rdy"){readyToChange = json["rdy"];}
+          else if (variable == "rn6"){rn6 = json["rn6"];}
+          else if (variable == "SHYS"){yold = yval1; yval1 = json["SHYS"]; inColourSync = true;}
+          else if (variable == "cn"){cn = json["cn"];}
+          else if (variable == "SHYT"){yold = yval1; yval1 = json["SHYT"]; inColourSync = true; hh=NUM_LEDS;  flakeCounter=0;  for (int s=0; s < numsparks; s++){num17[s]=NUM_LEDS; num26[s]=0; rn[s]=random(NUM_LEDS);}}
+          else if (variable == "SHYP"){yold = yval1; yval1 = json["SHYP"]; inColourSync = true; partialArrayCounter=0;}
+          else if (variable == "SYNE"){inSync = json["SYNE"];}
+          else if (variable == "SYNC"){inColourSync = json["SYNC"];} 
         }
 }
 #else
@@ -1488,7 +1500,9 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
           else if (variable =="SCOM"){colorMode = json["SCOM"]; colorMode = colorMode-1; procesColourMode();} // memoryByte = 'c'; processChange();} // THIS ONE
           else if (variable =="SHUE"){yval = json["SHUE"]; forcedColourChange = true;}// if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, yval), yval);  EEPROM.commit();};}
           else if (variable == "TSYN"){syncEsp = json["TSYN"];}
+          else if (variable == "TSCN"){colourSyncToggle = json["TSCN"];}
           else if (variable == "SHUY"){yval1 = json["SHUY"];}
+          else if (variable == "SYOL"){yold = json["SYOL"];}
           else if (variable == "ZVAL"){for (int n = 0; n < 30; n++){z[n] = json["ZVAL"][n];};}
           else if (variable == "SNCO"){numcolor = json["SNCO"];   newColors++; if (whiteON){for (int t=0; t<15; t++){satval[t]=S; satval[0]=0;}}      else if (!whiteON){for (int t=0; t<15; t++){satval[t]=S;}}}
           else if (variable == "SNCL"){colorlength = json["SNCL"]; newColors++; }// if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, colorlength), colorlength);  EEPROM.commit();};}
@@ -1497,8 +1511,15 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
           else if (variable == "SHYX"){yx = json["SHYX"];}
           else if (variable == "SHYY"){y0r = json["SHYX"];}
           else if (variable == "SHYR"){ysr = json["SHYX"];}
-        }
-
+          else if (variable == "rdy"){readyToChange = json["rdy"];}
+          else if (variable == "rn6"){rn6 = json["rn6"];}
+          else if (variable == "SHYS"){yold = yval1; yval1 = json["SHYS"]; inColourSync = true;}
+          else if (variable == "cn"){cn = json["cn"];}
+          else if (variable == "SHYT"){yold = yval1; yval1 = json["SHYT"]; inColourSync = true; hh=NUM_LEDS;  flakeCounter=0;  for (int s=0; s < numsparks; s++){num17[s]=NUM_LEDS; num26[s]=0; rn[s]=random(NUM_LEDS);}}
+          else if (variable == "SHYP"){yold = yval1; yval1 = json["SHYP"]; inColourSync = true; partialArrayCounter=0;}
+          else if (variable == "SYNE"){inSync = json["SYNE"];}
+          else if (variable == "SYNC"){inColourSync = json["SYNC"];} 
+}
 }
 #endif
 // Callback when data is sent

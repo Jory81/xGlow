@@ -1038,52 +1038,70 @@ fillNUM_LEDS1(colour, NUM_LEDS);
 
 void sparkling(void){
 if (readyToChange){
+  if (!inColourSync){
   rn6=random(0,24);
+  }
   //rn6 = 12;  
     if (rn6==0){
       variant=0;
+      yy=0;
+      slowFactor=0;
       offmin=random(12,17)*cfactor3;
       offmax=random(12,17)*cfactor3;
       slingerSpeed=timeArray3[random(0,5)]*changeSpeed/cfactor3;
       }
     else if (rn6==1){
-      variant=1;   
+      variant=1;  
+      yy=0;
+      slowFactor=0; 
       offmax=-1;
       offmin=(random(25,32)*cfactor3)+10; 
       slingerSpeed=45/cfactor3;   
       }
     else if (rn6==2){
       variant=2;
+      yy=0;
+      slowFactor=0;
       offmin=-1;
       offmax=random(22,32)*cfactor3;
       slingerSpeed=timeArray3[random(0,5)]*changeSpeed/cfactor3;
       }
     else if (rn6==3){
       variant=3;
+      hh=NUM_LEDS;
+      slowFactor=0;
       offmin=random(12,17)*cfactor3;
       offmax=random(12,17)*cfactor3;
       slingerSpeed=timeArray3[random(0,5)]*changeSpeed/cfactor3;
       }
     else if (rn6==4){
       variant=4;
+      hh=NUM_LEDS;
+      slowFactor=0;
       offmax=-1;
       offmin=(random(25,32)*cfactor3)+10;; 
       slingerSpeed=45/cfactor3;
       }
     else if (rn6==5){
       variant=5;
+      hh=NUM_LEDS;
+      slowFactor=0;
       offmin=-1;
       offmax=random(22,32)*cfactor3;
       slingerSpeed=timeArray3[random(0,5)]*changeSpeed/cfactor3;
       }
     else if ((rn6 == 6) || (rn6 == 7)){
       variant=6;
+      xx=0;
+      slowFactor=0;
       offmin=random(8,14)*cfactor3;
       offmax=random(8,14)*cfactor3;
       slingerSpeed=timeArray3[random(0,5)]*changeSpeed/cfactor3;
     }
     else if (rn6 == 8 || rn6 == 9){
       variant=7;
+      xx=0;
+      slowFactor=0;
       offmin=random(8,14)*cfactor3;
       offmax=random(8,14)*cfactor3;
       slingerSpeed=timeArray3[random(0,5)]*changeSpeed/cfactor3;
@@ -1093,12 +1111,15 @@ if (readyToChange){
       yy=NUM_LEDS;
     }
     else if (rn6 > 12 && rn6 < 17){
+      xx=0;
       variant=8;
     }
     else if (rn6 > 16 && rn6 < 21){
+      xx=0;
       variant=9;
     } 
     else if (rn6 > 20 && rn6 < 25){
+      xx=0;
       variant=10;
     }      
   if (tower){
@@ -1108,11 +1129,15 @@ if (readyToChange){
 }   
   
 if ((variant == 0 || variant == 1 || variant == 2) && (!readyToChange)){
-    if (millis() - previousMillis36 >= INTERVAL7){ 
+    if ((millis() - previousMillis36 >= INTERVAL7 && (!inColourSync)) || (colourSync)){ 
       outOfModus = false;
+      
       if (forcedColourChange){
+        if (!colourSync){
         yval1 = changeColourFcn2(colorMode, yval1, yold, 40, 210);               
         updateOled(102, 56, &yval1);
+        if ((syncEsp) && (colourSyncToggle)){espNowMessage = true;   EspNowMessageType = 17;  };
+        }
         forcedColourChange = false; 
       }
       if (millis() - previousMillis37 >= (slingerSpeed+slowFactor)){
@@ -1127,7 +1152,7 @@ if ((variant == 0 || variant == 1 || variant == 2) && (!readyToChange)){
         }
         if (yy>NUM_LEDS-1){ 
         yy=0;
-        slowFactor=0;
+        //slowFactor=0;
         evenOddCounter++;
 
         // if (variant == 0){
@@ -1153,6 +1178,7 @@ if ((variant == 0 || variant == 1 || variant == 2) && (!readyToChange)){
         T=0;
         readyToChange = true;
         forcedColourChange = true;
+        colourSync = false;
         num15=0;
         }
         } 
@@ -1200,13 +1226,17 @@ if ((variant == 0 || variant == 1 || variant == 2) && (!readyToChange)){
    }
 
 else if ((variant == 3 || variant == 4 || variant == 5) && (!readyToChange)){
-     if (millis() - previousMillis36 >= INTERVAL7){ 
-       outOfModus = false;
-       if (forcedColourChange){
-          yval1 = changeColourFcn2(colorMode, yval1, yold, 40, 210);  
-          updateOled(102, 56, &yval1); 
-          forcedColourChange = false;
-       }
+     if ((millis() - previousMillis36 >= INTERVAL7 && (!inColourSync)) || (colourSync)){ 
+      outOfModus = false;
+      
+      if (forcedColourChange){
+        if (!colourSync){
+        yval1 = changeColourFcn2(colorMode, yval1, yold, 40, 210);               
+        updateOled(102, 56, &yval1);
+        if ((syncEsp) && (colourSyncToggle)){espNowMessage = true;   EspNowMessageType = 17;  };
+        }
+        forcedColourChange = false; 
+      }
         if (millis() - previousMillis37 >= (slingerSpeed+slowFactor)){ // 200 is slingerSpeed
           previousMillis37 = millis();
           longxArray[hh]=yval1;
@@ -1219,7 +1249,7 @@ else if ((variant == 3 || variant == 4 || variant == 5) && (!readyToChange)){
           }
           if (hh<0){
           hh=NUM_LEDS;
-          slowFactor=0;
+          //slowFactor=0;
           evenOddCounter++;
           // if (variant == 3){
           //   fadeIsActive = true;
@@ -1243,6 +1273,7 @@ else if ((variant == 3 || variant == 4 || variant == 5) && (!readyToChange)){
           T=0;
           readyToChange = true;
           forcedColourChange = true;
+          colourSync = false;
           num15=0;
           previousMillis36 = millis();
           }
@@ -1290,13 +1321,17 @@ else if ((variant == 3 || variant == 4 || variant == 5) && (!readyToChange)){
     }
 
     else if ((variant == 6 || variant == 7) && (!readyToChange)){
-     if (millis() - previousMillis36 >= INTERVAL7){ 
-       outOfModus = false;
-       if (forcedColourChange){
-          yval1 = changeColourFcn2(colorMode, yval1, yold, 40, 210);  
-          updateOled(102, 56, &yval1); 
-          forcedColourChange = false;
-       }
+     if ((millis() - previousMillis36 >= INTERVAL7 && (!inColourSync)) || (colourSync)){ 
+      outOfModus = false;
+      
+      if (forcedColourChange){
+        if (!colourSync){
+        yval1 = changeColourFcn2(colorMode, yval1, yold, 40, 210);               
+        updateOled(102, 56, &yval1);
+        if ((syncEsp) && (colourSyncToggle)){espNowMessage = true;   EspNowMessageType = 17;  };
+        }
+        forcedColourChange = false; 
+      }
         if (millis() - previousMillis37 >= (slingerSpeed+slowFactor)){ // 200 is slingerSpeed
           previousMillis37 = millis();
           longxArray[NUM_LEDS/2+xx]=yval1;
@@ -1308,7 +1343,7 @@ else if ((variant == 3 || variant == 4 || variant == 5) && (!readyToChange)){
 
       if (xx>NUM_LEDS/2){
           xx=0;
-          slowFactor=0;
+          //slowFactor=0;
           evenOddCounter++;
           updateOled(44, 40, &yold);         
           yold=yval1;  
@@ -1319,6 +1354,7 @@ else if ((variant == 3 || variant == 4 || variant == 5) && (!readyToChange)){
           T=0;
           readyToChange = true;
           forcedColourChange = true;
+          colourSync = false;
           num15=0;
           previousMillis36 = millis();
           }
@@ -1418,13 +1454,17 @@ else if ((variant == 3 || variant == 4 || variant == 5) && (!readyToChange)){
   }
 
   else if ((variant == 8) && (!readyToChange)){
-     if (millis() - previousMillis36 >= INTERVAL7){ 
-       outOfModus = false;
-       if (forcedColourChange){
-          yval1 = changeColourFcn2(colorMode, yval1, yold, 40, 210);  
-          updateOled(102, 56, &yval1); 
-          forcedColourChange = false;
-       }
+     if ((millis() - previousMillis36 >= INTERVAL7 && (!inColourSync)) || (colourSync)){ 
+      outOfModus = false;
+      
+      if (forcedColourChange){
+        if (!colourSync){
+        yval1 = changeColourFcn2(colorMode, yval1, yold, 40, 210);               
+        updateOled(102, 56, &yval1);
+        if ((syncEsp) && (colourSyncToggle)){espNowMessage = true;   EspNowMessageType = 17;  };
+        }
+        forcedColourChange = false; 
+      }
         if (millis() - previousMillis37 >= FPS){ // 200 is slingerSpeed
           previousMillis37 = millis();
 
@@ -1454,19 +1494,24 @@ else if ((variant == 3 || variant == 4 || variant == 5) && (!readyToChange)){
           num15=0;
           previousMillis36 = millis();
           changeColor = true;
+          colourSync = false;
           }
           }
      }
   }
 
     else if ((variant == 9) && (!readyToChange)){
-     if (millis() - previousMillis36 >= INTERVAL7){ 
-       outOfModus = false;
-       if (forcedColourChange){
-          yval1 = changeColourFcn2(colorMode, yval1, yold, 40, 210);  
-          updateOled(102, 56, &yval1); 
-          forcedColourChange = false;
-       }
+     if ((millis() - previousMillis36 >= INTERVAL7 && (!inColourSync)) || (colourSync)){ 
+      outOfModus = false;
+      
+      if (forcedColourChange){
+        if (!colourSync){
+        yval1 = changeColourFcn2(colorMode, yval1, yold, 40, 210);               
+        updateOled(102, 56, &yval1);
+        if ((syncEsp) && (colourSyncToggle)){espNowMessage = true;   EspNowMessageType = 17;  };
+        }
+        forcedColourChange = false; 
+      }
         if (millis() - previousMillis37 >= FPS){ // 200 is slingerSpeed
           previousMillis37 = millis();
 
@@ -1490,19 +1535,24 @@ else if ((variant == 3 || variant == 4 || variant == 5) && (!readyToChange)){
           num15=0;
           previousMillis36 = millis();
           changeColor = true;
+          colourSync = false;
           }
           }
      }
   }
 
     else if ((variant == 10) && (!readyToChange)){
-     if (millis() - previousMillis36 >= INTERVAL7){ 
-       outOfModus = false;
-       if (forcedColourChange){
-          yval1 = changeColourFcn2(colorMode, yval1, yold, 40, 210);  
-          updateOled(102, 56, &yval1); 
-          forcedColourChange = false;
-       }
+     if ((millis() - previousMillis36 >= INTERVAL7 && (!inColourSync)) || (colourSync)){ 
+      outOfModus = false;
+      
+      if (forcedColourChange){
+        if (!colourSync){
+        yval1 = changeColourFcn2(colorMode, yval1, yold, 40, 210);               
+        updateOled(102, 56, &yval1);
+        if ((syncEsp) && (colourSyncToggle)){espNowMessage = true;   EspNowMessageType = 17;  };
+        }
+        forcedColourChange = false; 
+      }
         if (millis() - previousMillis37 >= FPS){ // 200 is slingerSpeed
           previousMillis37 = millis();
 
@@ -1526,6 +1576,7 @@ else if ((variant == 3 || variant == 4 || variant == 5) && (!readyToChange)){
           num15=0;
           previousMillis36 = millis();
           changeColor = true;
+          colourSync = false;
           }
           }
      }
@@ -1598,14 +1649,17 @@ else if ((variant == 3 || variant == 4 || variant == 5) && (!readyToChange)){
 }
 
 void snow_storm(void){
-     if (millis() - previousMillis36 >= INTERVAL7){
-       outOfModus = false;
+     if ((millis() - previousMillis36 >= INTERVAL7 && (!inColourSync)) || (colourSync)){ 
+      outOfModus = false;
+      
       if (forcedColourChange){
-        yval1 = changeColourFcn2(colorMode, yval1, yold, 40, 210);         
-        updateOled(102, 56, &yval1); 
-        forcedColourChange = false;
-        //Serial.print("New colour is: "); Serial.println(yval1);
-      } 
+        if (!colourSync){
+        yval1 = changeColourFcn2(colorMode, yval1, yold, 40, 210);               
+        updateOled(102, 56, &yval1);
+        if ((syncEsp) && (colourSyncToggle)){espNowMessage = true;   EspNowMessageType = 18;  };
+        }
+        forcedColourChange = false; 
+      }
       if (fadeIsActive){
         if (varON == 2){
           if (millis() - previousMillis38 >= 2*changeSpeed) {
@@ -1680,6 +1734,7 @@ void snow_storm(void){
               rn[s]=random(NUM_LEDS);
               }
               fadeIsActive = true;
+              colourSync = false;
               flakeCounter=0;
                           
               if (NUM_LEDS <= 100){
@@ -1694,7 +1749,7 @@ void snow_storm(void){
     }
 } 
       
-if (millis() - previousMillis36 >= INTERVAL7 && ((num17[0] > 0) || (hh > 0 && hh < NUM_LEDS-1))){             
+if ((millis() - previousMillis36 >= INTERVAL7 && (!inColourSync)) || (colourSync)){              //&& ((num17[0] > 0) || (hh > 0 && hh < NUM_LEDS-1))
     if (millis() - previousMillis35 >= sparkSpeed) { // sparkSpeed = changeSpeed/DF
     //Serial.println("does it spark in flake mode");
     previousMillis35 = millis();
@@ -1756,6 +1811,8 @@ if (millis() - previousMillis36 >= INTERVAL7 && ((num17[0] > 0) || (hh > 0 && hh
    }
 }
 
+if (millis() - previousMillis39 >= FPS) { 
+previousMillis39 = millis();  
    for (int s=0; s < numsparks; s++){    
         if (num17[s] == NUM_LEDS && num23[s] < 1){  // CHANGED_HERE adjusted
         num23[s]=num23[s]+1;
@@ -1778,6 +1835,7 @@ if (millis() - previousMillis36 >= INTERVAL7 && ((num17[0] > 0) || (hh > 0 && hh
           pos[s]=NUM_LEDS; // adjusted
         }
     }
+}
      
     if (millis() - previousMillis2 >= FPS) { 
     previousMillis2 = millis();  
@@ -2426,7 +2484,7 @@ if ((millis() - previousMillis1 > INTERVAL7 && (!inSync)) || (colourSync)) {
         for (int i = 0; i < seedNumber; i++){
          seedArray[i]=random(NUM_LEDS);
         }
-        forcedColourChange = false;
+      forcedColourChange = false;
     }
     yTrans = fadeFnc(yTrans, yval1);     
     if (yTrans == yval1) {
@@ -2478,10 +2536,13 @@ if ((millis() - previousMillis1 > INTERVAL7 && (!inSync)) || (colourSync)) {
 
 void sparkling_2(void){
 if (readyToChange){
-    if (dir == 2){
-      rn6=random(0,5);
+  if (!inColourSync){
+  rn6=random(0,5);
+  }
         if (rn6 == 0){
           variant = 0;
+          yy=0;
+          slowFactor = 0;
           offmin = random(11,17)*cfactor3;
           offmax = random(11,17)*cfactor3;
           slingerSpeed = timeArray3[random(0,5)]*changeSpeed/cfactor3;
@@ -2492,6 +2553,8 @@ if (readyToChange){
           }  
         else if (rn6 == 2){
           variant = 1;
+          hh=NUM_LEDS;
+          slowFactor = 0;
           offmin = random(11,17)*cfactor3;
           offmax = random(11,17)*cfactor3;
           slingerSpeed = timeArray3[random(0,5)]*changeSpeed/cfactor3;
@@ -2502,6 +2565,8 @@ if (readyToChange){
         }
         else if (rn6 == 4){
           variant = 2;
+          xx=0;
+          slowFactor = 0;
           offmin = random(8,14)*cfactor3;
           offmax = random(8,14)*cfactor3;
           slingerSpeed = timeArray3[random(0,5)]*changeSpeed/cfactor3;
@@ -2509,24 +2574,20 @@ if (readyToChange){
       if (tower){
         slingerSpeed=45/cfactor3;    
       }
-      readyToChange = false; 
-      }
-    else if (dir == 1){
-      variant=variant;
-    }
-  if (tower){
-    slingerSpeed=45/cfactor3;    
-  }
 readyToChange = false; 
 }   
   
 if (variant == 0 && (!readyToChange)){
-    if (millis() - previousMillis36 >= INTERVAL7){ 
+    if ((millis() - previousMillis36 >= INTERVAL7 && (!inColourSync)) || (colourSync)){ 
       outOfModus = false;
+      
       if (forcedColourChange){
-        yval1 = changeColourFcn2(colorMode, yval1, yold, 40, 210);
-        updateOled(102, 56, &yval1);  
-        forcedColourChange = false;
+        if (!colourSync){
+        yval1 = changeColourFcn2(colorMode, yval1, yold, 40, 210);               
+        updateOled(102, 56, &yval1);
+        if ((syncEsp) && (colourSyncToggle)){espNowMessage = true;   EspNowMessageType = 17;  };
+        }
+        forcedColourChange = false; 
       }
 
       if (millis() - previousMillis37 >= (slingerSpeed+slowFactor)){
@@ -2538,7 +2599,7 @@ if (variant == 0 && (!readyToChange)){
         }
         if (yy>NUM_LEDS-1){ 
             yy=0;
-            slowFactor=0;
+            //slowFactor=0;
             evenOddCounter++;  
             updateOled(44, 40, &yold);
             yold=yval1;
@@ -2550,6 +2611,7 @@ if (variant == 0 && (!readyToChange)){
             T=0;
             readyToChange = true;
             forcedColourChange = true;
+            colourSync = false;
             num15=0;
         }
        }
@@ -2605,13 +2667,16 @@ if (variant == 0 && (!readyToChange)){
 
 
 else if (variant == 1 && (!readyToChange)){
-     if (millis() - previousMillis36 >= INTERVAL7){ 
-       outOfModus = false;
-
+     if ((millis() - previousMillis36 >= INTERVAL7 && (!inColourSync)) || (colourSync)){ 
+      outOfModus = false;
+      
       if (forcedColourChange){
-        yval1 = changeColourFcn2(colorMode, yval1, yold, 40, 210);
-        updateOled(102, 56, &yval1);  
-        forcedColourChange = false;
+        if (!colourSync){
+        yval1 = changeColourFcn2(colorMode, yval1, yold, 40, 210);               
+        updateOled(102, 56, &yval1);
+        if ((syncEsp) && (colourSyncToggle)){espNowMessage = true;   EspNowMessageType = 17;  };
+        }
+        forcedColourChange = false; 
       }
 
         if (millis() - previousMillis37 >= (slingerSpeed+slowFactor)){
@@ -2623,7 +2688,7 @@ else if (variant == 1 && (!readyToChange)){
           }  
           if (hh<0){
               hh=NUM_LEDS;
-              slowFactor=0;
+              //slowFactor=0;
               evenOddCounter++; 
               updateOled(44, 40, &yold);
               yold=yval1;         
@@ -2635,6 +2700,7 @@ else if (variant == 1 && (!readyToChange)){
               T=0;
               readyToChange = true;
               forcedColourChange = true;
+              colourSync = false;
               num15=0;
           }
         }
@@ -2690,13 +2756,16 @@ else if (variant == 1 && (!readyToChange)){
   }
 
   else if (variant == 2 && (!readyToChange)){
-     if (millis() - previousMillis36 >= INTERVAL7){ 
-       outOfModus = false;
-
+     if ((millis() - previousMillis36 >= INTERVAL7 && (!inColourSync)) || (colourSync)){ 
+      outOfModus = false;
+      
       if (forcedColourChange){
-        yval1 = changeColourFcn2(colorMode, yval1, yold, 40, 210);
-        updateOled(102, 56, &yval1);  
-        forcedColourChange = false;
+        if (!colourSync){
+        yval1 = changeColourFcn2(colorMode, yval1, yold, 40, 210);               
+        updateOled(102, 56, &yval1);
+        if ((syncEsp) && (colourSyncToggle)){espNowMessage = true;   EspNowMessageType = 17;  };
+        }
+        forcedColourChange = false; 
       }
 
         if (millis() - previousMillis37 >= (slingerSpeed+slowFactor)){
@@ -2709,7 +2778,7 @@ else if (variant == 1 && (!readyToChange)){
           }  
           if (xx>NUM_LEDS/2){
               xx=0;
-              slowFactor=0;
+              //slowFactor=0;
               evenOddCounter++; 
               updateOled(44, 40, &yold);
               yold=yval1;         
@@ -2721,6 +2790,7 @@ else if (variant == 1 && (!readyToChange)){
               T=0;
               readyToChange = true;
               forcedColourChange = true;
+              colourSync = false;
               num15=0;
           }
         }
@@ -3156,14 +3226,19 @@ if (millis() - previousMillisLN[k] >= rtAM[k]/df){
 }
 }
 
-if (forcedColourChange){ 
-    evenOddCounter++;
-    yold=yval1;
-    yval1 = changeColourFcn2(colorMode, yval1, yold, 40, 210);
-    updateOled(44, 40, &yold);      
-    updateOled(102, 56, &yval1);    
-    forcedColourChange = false;        
+if (((forcedColourChange) && (!inColourSync)) || (colourSync)){ 
+
+    if (!colourSync){
+        evenOddCounter++;
+        yold=yval1;
+        yval1 = changeColourFcn2(colorMode, yval1, yold, 40, 210);
+        updateOled(44, 40, &yold);      
+        updateOled(102, 56, &yval1);    
+      if ((syncEsp) && (colourSyncToggle)){espNowMessage = true;   EspNowMessageType = 19;  };
     }
+  forcedColourChange = false; 
+  }
+
   
 if (millis() - previousMillis2 >= FPS) {
     previousMillis2 = millis();  

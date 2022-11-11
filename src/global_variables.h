@@ -165,6 +165,7 @@ struct storeInEEPROM {
   uint8_t num_esp;
   uint8_t Mac[60];  
   boolean syncEsp;
+  boolean colourSyncToggle;
   // uint8_t mac2[6]; 
   // uint8_t mac3[6]; 
   // uint8_t mac4[6]; 
@@ -491,7 +492,8 @@ storeInEEPROM customVar = {
       0, 0, 0, 0, 0, 0, //mac8
       0, 0, 0, 0, 0, 0, //mac9
       0, 0, 0, 0, 0, 0, //mac10  
-      0 // syncEsp   
+      0, // syncEsp 
+      0 // colourSyncToggle  
     };
 
 
@@ -800,7 +802,9 @@ boolean     espNowMessage = false; // tells the Esp_now void function there's a 
 //boolean     incomingMessage = false;
 boolean     syncEsp = false; // syncs the Esps
 boolean     alertColor = false; // alertsColor change in runmode (needed to sync color in 3 modes)
-boolean     colourSync = false; // sometimes timing determines colour, with this varianle timing and colour can be synced too
+boolean     colourSync = false; // sometimes timing determines colour, with this variable timing and colour can be synced too
+boolean     colourSyncToggle = false; // sometimes modes are nice when they run on their own, but this switch allows modes to be fully synced
+boolean     inColourSync = false;
 boolean     randomCycle = false; // EEPROM.readByte(96);
 boolean     changeModus = false;
 boolean     fadeFirst = true;
@@ -1034,6 +1038,7 @@ unsigned long previousMillis35 = 0;
 unsigned long previousMillis36 = 0;
 unsigned long previousMillis37 = 0;
 unsigned long previousMillis38 = 0;
+unsigned long previousMillis39 = 0;
 unsigned long previousMillis43 = 0;
 unsigned long previousMillis44 = 0;
 unsigned long previousMillis45 = 0;
@@ -1131,6 +1136,8 @@ Bees = EEPROM.read(offsetof(storeInEEPROM, Bees));
 range = EEPROM.read(offsetof(storeInEEPROM, range));
 offdisC = EEPROM.read(offsetof(storeInEEPROM, offdisC));
 num_esp = EEPROM.read(offsetof(storeInEEPROM, num_esp));
+syncEsp = EEPROM.read(offsetof(storeInEEPROM, syncEsp));
+colourSyncToggle = EEPROM.read(offsetof(storeInEEPROM, colourSyncToggle));
 //personalizedModes = EEPROM.read(offsetof(storeInEEPROM, personalizedModes));
 
 #ifdef ESP8266 
