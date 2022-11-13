@@ -360,16 +360,19 @@ void handleEspNowMessage(){
                 doc["rn6"] = rn6;
                 doc["SHYS"] = yval1; // yold = yval1
                 doc["CSYN"] = true;
+                doc["SYOL"] = yold;
     }
     break;
     case 18:   {doc["cn"] = cn;
                 doc["SHYT"] = yval1; // yold = yval1  hh=NUM_LEDS;  flakeCounter=0;  for (int s=0; s < numsparks; s++){num17[s]=NUM_LEDS; num26[s]=0; rn[s]=random(NUM_LEDS);}
                 doc["CSYN"] = true;
+                doc["SYOL"] = yold;
     }
     break;
     case 19:   {
                 doc["CSYN"] = true;
-                doc["SHYP"] = yval1; // snow_flakes_2 // yold = yval1  partialArrayCounter=0;                
+                doc["SHYP"] = yval1; // snow_flakes_2 // yold = yval1  partialArrayCounter=0;
+                doc["SYOL"] = yold;                
     }
     break;
     case 20:   {

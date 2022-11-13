@@ -1513,10 +1513,10 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
           else if (variable == "SHYR"){ysr = json["SHYX"];}
           else if (variable == "rdy"){readyToChange = json["rdy"];}
           else if (variable == "rn6"){rn6 = json["rn6"];}
-          else if (variable == "SHYS"){yold = yval1; yval1 = json["SHYS"]; inColourSync = true;}
+          else if (variable == "SHYS"){yval1 = json["SHYS"]; inColourSync = true;}
           else if (variable == "cn"){cn = json["cn"];}
-          else if (variable == "SHYT"){yold = yval1; yval1 = json["SHYT"]; inColourSync = true; hh=NUM_LEDS;  flakeCounter=0;  for (int s=0; s < numsparks; s++){num17[s]=NUM_LEDS; num26[s]=0; rn[s]=random(NUM_LEDS);}}
-          else if (variable == "SHYP"){yold = yval1; yval1 = json["SHYP"]; inColourSync = true; partialArrayCounter=0;}
+          else if (variable == "SHYT"){yval1 = json["SHYT"]; inColourSync = true; hh=NUM_LEDS;  flakeCounter=0;  for (int s=0; s < numsparks; s++){num17[s]=NUM_LEDS; num26[s]=0; rn[s]=random(NUM_LEDS);}}
+          else if (variable == "SHYP"){yval1 = json["SHYP"]; inColourSync = true; partialArrayCounter=0;}
           else if (variable == "SYNE"){inSync = json["SYNE"];}
           else if (variable == "SYNC"){inColourSync = json["SYNC"];} 
 }
