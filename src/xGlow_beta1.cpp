@@ -326,6 +326,7 @@ void handleEspNowMessage(){
                 doc["SYOL"] = yold;
                 doc["SHYY"] = y0r;
                 doc["SHYR"] = ysr;
+                doc["dir1"] = dir1;
                 doc["TCON"] = false;
     } break;
     case 1:    {doc["SBSM"] = BriSPreset;}break;

@@ -189,10 +189,10 @@ if (changeModus){
     outOfModus = true;
     evenOddCounter = 0;
     if ((effect_function == *static_glow && programMode == 3)  || effect_function == colourSplash){
-    dir = 1; xdir = 0;
+    dir = 1;
     }
     else {
-    dir = 2; xdir = 1;
+    dir = 2;
     }
     diff1 = 0;
     diff2 = 0;

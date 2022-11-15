@@ -1519,6 +1519,7 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
           else if (variable == "SHYP"){yval1 = json["SHYP"]; inColourSync = true; partialArrayCounter=0;}
           else if (variable == "SYNE"){inSync = json["SYNE"];}
           else if (variable == "SYNC"){inColourSync = json["SYNC"];} 
+          else if (variable == "dir1"){dir1 = json["dir1"];} 
 }
 }
 #endif
