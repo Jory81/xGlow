@@ -1484,7 +1484,6 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
       
           if (variable == "SPST"){selectedPreset[programMode] = json["SPST"]; selectedPresetVariable = selectedPreset[programMode];}// Serial.println("selectbrispreset"); cycleT=0;  previousMillis44 = millis();  previousMillis45 = millis();  if (saveToEEPROM){int offsetPosition = offsetof(storeInEEPROM, selectedPreset[0]); EEPROM.put((offsetPosition + programMode), selectedPresetVariable);  EEPROM.commit();} changeState();}
       
-          else if (variable =="SPGM"){programMode = json["SPGM"]; cycleT=0;  previousMillis44 = millis();  previousMillis45 = millis(); changeState();} //Serial.print("containsprogramMode"); Serial.println(programMode); // if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, programMode), programMode);  EEPROM.commit();};          
           else if (variable =="SBSM"){BriSPreset = json["SBSM"]; readBriSData(BriSPreset);}// sendProgramInfo(1);}
           else if (variable =="SRED"){Red = json["SRED"]; loadHSV = true;}// if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, Red), Red);  EEPROM.commit();};} 
           else if (variable =="SGRE"){Green = json["SGRE"]; loadHSV = true;}// if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, Green), Green);  EEPROM.commit();};}   
@@ -1513,14 +1512,16 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
           else if (variable == "SHYY"){y0r = json["SHYX"];}
           else if (variable == "SHYR"){ysr = json["SHYX"];}
           else if (variable == "rdy"){readyToChange = json["rdy"];}
-          else if (variable == "rn6"){rn6 = json["rn6"];}
+          else if (variable == "rn6"){rn6 = json["rn6"]; fillLongxArray(yold, NUM_LEDS);}
           else if (variable == "SHYS"){yval1 = json["SHYS"]; inColourSync = true;}
-          else if (variable == "cn"){cn = json["cn"];}
+          else if (variable == "cn"){cn = json["cn"]; fillLongxArray(yold, NUM_LEDS);}
           else if (variable == "SHYT"){yval1 = json["SHYT"]; inColourSync = true; hh=NUM_LEDS;  flakeCounter=0;  for (int s=0; s < numsparks; s++){num17[s]=NUM_LEDS; num26[s]=0; rn[s]=random(NUM_LEDS);}}
           else if (variable == "SHYP"){yval1 = json["SHYP"]; inColourSync = true; partialArrayCounter=0;}
           else if (variable == "SYNE"){inSync = json["SYNE"];}
           else if (variable == "SYNC"){inColourSync = json["SYNC"];} 
-          else if (variable == "dir1"){dir1 = json["dir1"];} 
+          else if (variable == "dir1"){dir1 = json["dir1"];}
+          else if (variable =="SPGM"){programMode = json["SPGM"]; cycleT=0;  previousMillis44 = millis();  previousMillis45 = millis(); changeState();} //Serial.print("containsprogramMode"); Serial.println(programMode); // if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, programMode), programMode);  EEPROM.commit();};          
+ 
 }
 }
 #endif
