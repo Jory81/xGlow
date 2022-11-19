@@ -320,9 +320,9 @@ void handleEspNowMessage(){
   DynamicJsonDocument doc(250);
   switch (EspNowMessageType){
     case 0:    {
+                doc["SYOL"] = yold;
                 doc["SPST"] = selectedPresetVariable;
                 doc["SHUY"] = yval1;
-                doc["SYOL"] = yold;
                 doc["SHYY"] = y0r;
                 doc["SHYR"] = ysr;
                 doc["dir1"] = dir1;

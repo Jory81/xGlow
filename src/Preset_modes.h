@@ -487,7 +487,7 @@ if (millis() - previousMillis6 >= INTERVAL7 && (!inSync)){
         for (int p=0; p<numsparks; p++){
         z[p]=zr[3];}
         }
-      }
+  }
   else if ((varON == 1) && (colorMode == 1 || colorMode == 2 || colorMode == 3 || colorMode == 4 )){ // colorMode != 5
        z[0] = yval1 + random(35,225);
         for (int p=0; p<numsparks; p++){
@@ -495,7 +495,9 @@ if (millis() - previousMillis6 >= INTERVAL7 && (!inSync)){
   }
   else if ((varON == 2) && (colorMode != 5)){
         for (int p=0; p<numsparks; p++){
-        z[p] = yval1 + random(35,225);}
+        z[p] = yval1 + random(35,225);
+        //Serial.println(z[p]);}
+        }
   }
   
      
@@ -611,6 +613,7 @@ if (millis() - previousMillisLN[k] >= rtAM[k]/df){
 
       if ((varON == 2) && (colorMode != 5)){
         z[k] = yval1 + random(35,225);
+        //Serial.println(z[k]);
       }
 
     interRun[k]=1.1;
@@ -685,7 +688,17 @@ if (millis() - previousMillis11 >= interval8) {
 
 if (millis() - previousMillis6 >= INTERVAL7 && (!inSync)){
       
-    if (colorMode == 5 && varON != 2){
+     if (colorMode == 0 && varON == 0){
+      yval1=yval;
+      for (int p=0; p<numsparks; p++){
+      z[p]=yval;}
+      }
+    else if (colorMode == 0 && varON == 1){
+      yval1 = yval1 + random(25,230);
+      for (int p=0; p<numsparks; p++){
+      z[p]=yval1;}
+    }  
+    else if (colorMode == 5 && varON != 2){ //varON != 2
       yval1=yval;
       for (int p=0; p<numsparks; p++){
         z[p]=z5;
@@ -716,15 +729,17 @@ if (millis() - previousMillis6 >= INTERVAL7 && (!inSync)){
         for (int p=0; p<numsparks; p++){
         z[p]=zr[3];}
         }
-      }
-  else if ((varON == 1) && (colorMode == 1 || colorMode == 2 || colorMode == 3 || colorMode == 4 )){
+  }
+  else if ((varON == 1) && (colorMode == 1 || colorMode == 2 || colorMode == 3 || colorMode == 4 )){ // colorMode != 5
        z[0] = yval1 + random(35,225);
         for (int p=0; p<numsparks; p++){
         z[p] = z[0];}
   }
-  else if ((varON == 2) && (colorMode == 2 || colorMode == 3 || colorMode == 4 )){
+  else if ((varON == 2) && (colorMode != 5)){
         for (int p=0; p<numsparks; p++){
-        z[p] = yval1 + random(35,225);}
+        z[p] = yval1 + random(35,225);
+        //Serial.println(z[p]);
+        }
   }
   
      
@@ -799,7 +814,7 @@ if (millis() - previousMillisLN[k] >= rtAM[k]/df){
         z[k] = z7;
       }
 
-      if ((varON == 2) && (colorMode == 2 || colorMode == 3 || colorMode == 4 )){
+      if ((varON == 2) && (colorMode != 5)){
           z[k] = yval1 + random(35,225);
       }
 
@@ -1135,9 +1150,9 @@ if ((variant == 0 || variant == 1 || variant == 2) && (!readyToChange)){
       if (forcedColourChange){
         if (!colourSync){
         yval1 = changeColourFcn2(colorMode, yval1, yold, 40, 210);               
-        updateOled(102, 56, &yval1);
         if ((syncEsp) && (colourSyncToggle)){espNowMessage = true;   EspNowMessageType = 17;  };
         }
+        updateOled(102, 56, &yval1);
         forcedColourChange = false; 
       }
       if (millis() - previousMillis37 >= (slingerSpeed+slowFactor)){
@@ -1171,9 +1186,9 @@ if ((variant == 0 || variant == 1 || variant == 2) && (!readyToChange)){
         INTERVAL7=interval9*timeArray2[random(0,6)]*timefactor3;
         outOfModus = true;
         updateOledFloat(88, 0, &INTERVAL7, 0); 
-        if (variant != 0){
-          fillLongxArray(yold, NUM_LEDS);
-          }
+        // if (variant != 0){
+        //   fillLongxArray(yold, NUM_LEDS);
+        //   }
         previousMillis36 = millis();
         T=0;
         readyToChange = true;
@@ -1232,9 +1247,10 @@ else if ((variant == 3 || variant == 4 || variant == 5) && (!readyToChange)){
       if (forcedColourChange){
         if (!colourSync){
         yval1 = changeColourFcn2(colorMode, yval1, yold, 40, 210);               
-        updateOled(102, 56, &yval1);
+        //updateOled(102, 56, &yval1);
         if ((syncEsp) && (colourSyncToggle)){espNowMessage = true;   EspNowMessageType = 17;  };
         }
+        updateOled(102, 56, &yval1);
         forcedColourChange = false; 
       }
         if (millis() - previousMillis37 >= (slingerSpeed+slowFactor)){ // 200 is slingerSpeed
@@ -1267,9 +1283,9 @@ else if ((variant == 3 || variant == 4 || variant == 5) && (!readyToChange)){
           INTERVAL7=interval9*timeArray2[random(0,6)]*timefactor3;
           outOfModus = true;
           updateOledFloat(88, 0, &INTERVAL7, 0); 
-          if (variant != 3){
-          fillLongxArray(yold, NUM_LEDS);
-          }
+          // if (variant != 3){
+          // fillLongxArray(yold, NUM_LEDS);
+          // }
           T=0;
           readyToChange = true;
           forcedColourChange = true;
@@ -1327,9 +1343,10 @@ else if ((variant == 3 || variant == 4 || variant == 5) && (!readyToChange)){
       if (forcedColourChange){
         if (!colourSync){
         yval1 = changeColourFcn2(colorMode, yval1, yold, 40, 210);               
-        updateOled(102, 56, &yval1);
+        //updateOled(102, 56, &yval1);
         if ((syncEsp) && (colourSyncToggle)){espNowMessage = true;   EspNowMessageType = 17;  };
         }
+        updateOled(102, 56, &yval1);
         forcedColourChange = false; 
       }
         if (millis() - previousMillis37 >= (slingerSpeed+slowFactor)){ // 200 is slingerSpeed
@@ -1460,9 +1477,10 @@ else if ((variant == 3 || variant == 4 || variant == 5) && (!readyToChange)){
       if (forcedColourChange){
         if (!colourSync){
         yval1 = changeColourFcn2(colorMode, yval1, yold, 40, 210);               
-        updateOled(102, 56, &yval1);
+        //updateOled(102, 56, &yval1);
         if ((syncEsp) && (colourSyncToggle)){espNowMessage = true;   EspNowMessageType = 17;  };
         }
+        updateOled(102, 56, &yval1);
         forcedColourChange = false; 
       }
         if (millis() - previousMillis37 >= FPS){ // 200 is slingerSpeed
@@ -1507,9 +1525,10 @@ else if ((variant == 3 || variant == 4 || variant == 5) && (!readyToChange)){
       if (forcedColourChange){
         if (!colourSync){
         yval1 = changeColourFcn2(colorMode, yval1, yold, 40, 210);               
-        updateOled(102, 56, &yval1);
+        //updateOled(102, 56, &yval1);
         if ((syncEsp) && (colourSyncToggle)){espNowMessage = true;   EspNowMessageType = 17;  };
         }
+        updateOled(102, 56, &yval1);
         forcedColourChange = false; 
       }
         if (millis() - previousMillis37 >= FPS){ // 200 is slingerSpeed
@@ -1548,9 +1567,10 @@ else if ((variant == 3 || variant == 4 || variant == 5) && (!readyToChange)){
       if (forcedColourChange){
         if (!colourSync){
         yval1 = changeColourFcn2(colorMode, yval1, yold, 40, 210);               
-        updateOled(102, 56, &yval1);
+        //updateOled(102, 56, &yval1);
         if ((syncEsp) && (colourSyncToggle)){espNowMessage = true;   EspNowMessageType = 17;  };
         }
+        updateOled(102, 56, &yval1);
         forcedColourChange = false; 
       }
         if (millis() - previousMillis37 >= FPS){ // 200 is slingerSpeed
@@ -1655,9 +1675,10 @@ void snow_storm(void){
       if (forcedColourChange){
         if (!colourSync){
         yval1 = changeColourFcn2(colorMode, yval1, yold, 40, 210);               
-        updateOled(102, 56, &yval1);
+        //updateOled(102, 56, &yval1);
         if ((syncEsp) && (colourSyncToggle)){espNowMessage = true;   EspNowMessageType = 18;  };
         }
+        updateOled(102, 56, &yval1);
         forcedColourChange = false; 
       }
       if (fadeIsActive){

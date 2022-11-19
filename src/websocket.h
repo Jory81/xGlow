@@ -1512,9 +1512,9 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
           else if (variable == "SHYY"){y0r = json["SHYX"];}
           else if (variable == "SHYR"){ysr = json["SHYX"];}
           else if (variable == "rdy"){readyToChange = json["rdy"];}
-          else if (variable == "rn6"){rn6 = json["rn6"]; fillLongxArray(yold, NUM_LEDS);}
+          else if (variable == "rn6"){rn6 = json["rn6"];}// fillLongxArray(yold, NUM_LEDS);}
           else if (variable == "SHYS"){yval1 = json["SHYS"]; inColourSync = true;}
-          else if (variable == "cn"){cn = json["cn"]; fillLongxArray(yold, NUM_LEDS);}
+          else if (variable == "cn"){cn = json["cn"];}// fillLongxArray(yold, NUM_LEDS);}
           else if (variable == "SHYT"){yval1 = json["SHYT"]; inColourSync = true; hh=NUM_LEDS;  flakeCounter=0;  for (int s=0; s < numsparks; s++){num17[s]=NUM_LEDS; num26[s]=0; rn[s]=random(NUM_LEDS);}}
           else if (variable == "SHYP"){yval1 = json["SHYP"]; inColourSync = true; partialArrayCounter=0;}
           else if (variable == "SYNE"){inSync = json["SYNE"];}
