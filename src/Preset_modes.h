@@ -1060,7 +1060,6 @@ if (readyToChange){
     if (rn6==0){
       variant=0;
       yy=0;
-      slowFactor=0;
       offmin=random(12,17)*cfactor3;
       offmax=random(12,17)*cfactor3;
       slingerSpeed=timeArray3[random(0,5)]*changeSpeed/cfactor3;
@@ -1068,7 +1067,6 @@ if (readyToChange){
     else if (rn6==1){
       variant=1;  
       yy=0;
-      slowFactor=0; 
       offmax=-1;
       offmin=(random(25,32)*cfactor3)+10; 
       slingerSpeed=45/cfactor3;   
@@ -1076,7 +1074,6 @@ if (readyToChange){
     else if (rn6==2){
       variant=2;
       yy=0;
-      slowFactor=0;
       offmin=-1;
       offmax=random(22,32)*cfactor3;
       slingerSpeed=timeArray3[random(0,5)]*changeSpeed/cfactor3;
@@ -1084,7 +1081,6 @@ if (readyToChange){
     else if (rn6==3){
       variant=3;
       hh=NUM_LEDS;
-      slowFactor=0;
       offmin=random(12,17)*cfactor3;
       offmax=random(12,17)*cfactor3;
       slingerSpeed=timeArray3[random(0,5)]*changeSpeed/cfactor3;
@@ -1092,7 +1088,6 @@ if (readyToChange){
     else if (rn6==4){
       variant=4;
       hh=NUM_LEDS;
-      slowFactor=0;
       offmax=-1;
       offmin=(random(25,32)*cfactor3)+10;; 
       slingerSpeed=45/cfactor3;
@@ -1100,7 +1095,6 @@ if (readyToChange){
     else if (rn6==5){
       variant=5;
       hh=NUM_LEDS;
-      slowFactor=0;
       offmin=-1;
       offmax=random(22,32)*cfactor3;
       slingerSpeed=timeArray3[random(0,5)]*changeSpeed/cfactor3;
@@ -1108,7 +1102,6 @@ if (readyToChange){
     else if ((rn6 == 6) || (rn6 == 7)){
       variant=6;
       xx=0;
-      slowFactor=0;
       offmin=random(8,14)*cfactor3;
       offmax=random(8,14)*cfactor3;
       slingerSpeed=timeArray3[random(0,5)]*changeSpeed/cfactor3;
@@ -1116,7 +1109,6 @@ if (readyToChange){
     else if (rn6 == 8 || rn6 == 9){
       variant=7;
       xx=0;
-      slowFactor=0;
       offmin=random(8,14)*cfactor3;
       offmax=random(8,14)*cfactor3;
       slingerSpeed=timeArray3[random(0,5)]*changeSpeed/cfactor3;
@@ -1140,6 +1132,7 @@ if (readyToChange){
   if (tower){
     slingerSpeed=45/cfactor3;    
   }
+  slowFactor=0;
   readyToChange = false; 
 }   
   
@@ -2565,7 +2558,6 @@ if (readyToChange){
         if (rn6 == 0){
           variant = 0;
           yy=0;
-          slowFactor = 0;
           offmin = random(11,17)*cfactor3;
           offmax = random(11,17)*cfactor3;
           slingerSpeed = timeArray3[random(0,5)]*changeSpeed/cfactor3;
@@ -2577,7 +2569,6 @@ if (readyToChange){
         else if (rn6 == 2){
           variant = 1;
           hh=NUM_LEDS;
-          slowFactor = 0;
           offmin = random(11,17)*cfactor3;
           offmax = random(11,17)*cfactor3;
           slingerSpeed = timeArray3[random(0,5)]*changeSpeed/cfactor3;
@@ -2589,7 +2580,6 @@ if (readyToChange){
         else if (rn6 == 4){
           variant = 2;
           xx=0;
-          slowFactor = 0;
           offmin = random(8,14)*cfactor3;
           offmax = random(8,14)*cfactor3;
           slingerSpeed = timeArray3[random(0,5)]*changeSpeed/cfactor3;
@@ -2597,6 +2587,7 @@ if (readyToChange){
       if (tower){
         slingerSpeed=45/cfactor3;    
       }
+slowFactor=0;
 readyToChange = false; 
 }   
   
@@ -3875,40 +3866,47 @@ if (readyToChange){
       offmin=13*cfactor3;
       offmax=13*cfactor3;
       slingerSpeed=changeSpeed/cfactor3;
+      yy=0;
       }
     else if (rn6==1){
       variant=1;   
       offmax=-1;
       offmin=(30*cfactor3)+10; 
-      slingerSpeed=45/cfactor3;   
+      slingerSpeed=45/cfactor3; 
+      yy=0;  
       }
     else if (rn6==2){
       variant=2;
       offmin=-1;
       offmax=25*cfactor3;
       slingerSpeed=changeSpeed/cfactor3;
+      yy=0;
       }
     else if (rn6==3){
       variant=3;
       offmin=13*cfactor3;
       offmax=13*cfactor3;
       slingerSpeed=changeSpeed/cfactor3;
+      hh=NUM_LEDS;
       }
     else if (rn6==4){
       variant=4;
       offmax=-1;
       offmin=(30*cfactor3)+10;; 
       slingerSpeed=45/cfactor3;
+      hh=NUM_LEDS;
       }
     else if (rn6==5){
       variant=5;
       offmin=-1;
       offmax=25*cfactor3;
       slingerSpeed=changeSpeed/cfactor3;
+      hh=NUM_LEDS;
       }
   if (tower){
     slingerSpeed=45/cfactor3;    
   }
+  slowFactor=0;
   readyToChange = false; 
 }   
   
@@ -3928,7 +3926,7 @@ if ((variant == 0 || variant == 1 || variant == 2) && (!readyToChange)){
         }
         if (yy>NUM_LEDS-1){ 
         yy=0;
-        slowFactor=0;
+        //slowFactor=0;
         evenOddCounter++;
         INTERVAL7=interval9*timeArray2[random(0,6)]*timefactor3;
         outOfModus = true;
@@ -3984,7 +3982,7 @@ else if ((variant==3 || variant ==4 || variant ==5) && (!readyToChange)){
           }
           if (hh<0){
           hh=NUM_LEDS;
-          slowFactor=0;
+          //slowFactor=0;
           evenOddCounter++;
           INTERVAL7=interval9*timeArray2[random(0,6)]*timefactor3;
           outOfModus = true;

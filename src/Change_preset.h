@@ -29,14 +29,14 @@ void handleModeSwitch(){ // HANDLE SWITCHING MODUS
         }
       }
       else if (randomCycle){
-        uint8_t newProgramMode = random(0,modeCount+1);   
+        uint8_t newProgramMode = random(0,modeCount);   
         if (((cmode[newProgramMode]) && (newProgramMode != programMode)) || (!excludeModes)){
           programMode = newProgramMode;
           selectPreset();
           if (syncEsp){espNowMessage = true;   EspNowMessageType = 0;};
           changeState();} 
         else if ((!cmode[newProgramMode]) || (newProgramMode == programMode)){
-          while ((!cmode[newProgramMode]) || (newProgramMode == programMode)){ newProgramMode = random(0,modeCount+1); }
+          while ((!cmode[newProgramMode]) || (newProgramMode == programMode)){ newProgramMode = random(0,modeCount); }
        programMode = newProgramMode;
        selectPreset();
        if (syncEsp){espNowMessage = true;   EspNowMessageType = 0;};
@@ -82,10 +82,10 @@ void selectPreset(){
 void handleModeInitialization(){ // HANDLE MODUS SETTINGS
 if (changeModus){
   switch (programMode){ 
-      case 0: {        effect_function = static_glow;       if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=22;          changeSpeed=100;        setDifference=7;      colorMode=0;      yval=10;     varON=1;      }; forcedColourChange = true  ;} break;
+      case 0: {        effect_function = static_glow;       if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=22;          changeSpeed=100;        setDifference=7;      colorMode=0;      yval=10;     varON=1;      }; } break;
       case 1: {        effect_function = static_glow_2;     if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=23;          changeSpeed=100;        setDifference=7;      colorMode=2;                   varON=1;   };  }  break; 
-      case 2: {        effect_function = static_glow;       if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=23;          changeSpeed=100;        setDifference=7;      colorMode=0;      yval=18;     varON=1;   }; forcedColourChange = true ;} break;
-      case 3: {        effect_function = static_glow;       if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=100;        setDifference=80;     colorMode=0;      yval=217;    varON=1;   }; forcedColourChange = true  ;} break;                                                             
+      case 2: {        effect_function = static_glow;       if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=23;          changeSpeed=100;        setDifference=7;      colorMode=0;      yval=18;     varON=1;   }; } break;
+      case 3: {        effect_function = static_glow;       if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=100;        setDifference=80;     colorMode=0;      yval=217;    varON=1;   }; } break;                                                             
       case 4: {        effect_function = static_glow_2;     if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=100;        setDifference=80;     colorMode=1;                   varON=1;   };  } break;
       case 5: {        effect_function = colourSplash;      if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=3;           changeSpeed=35;         setDifference=7;      colorMode=2;                   varON=1;   };  } break;
       case 6: {        effect_function = palettes;          if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=11;          changeSpeed=50;         setDifference=1;      gCurrentPaletteNumber=7;       varON=1;   };    gTargetPalette = gGradientPalettes[gCurrentPaletteNumber];  y0r=0;   } break;
@@ -99,25 +99,25 @@ if (changeModus){
       case 12: {       effect_function = rainbow_6;         if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=1500;       setDifference=25;                                    varON=1;   colorlength=10*cfactor2; };  y0rCounter=0;         numcolor=1;        yint=0;        colour[0] = 75;        colour[1] = 230;        colour[2] = 175;        colour[3] = 25;        colour[4] = 100;        colour[5] = 200;        colour[6] = 50;        colour[7] = 150;        colour[8] = 0;        colour[9] = 125;} break;    
       case 13: {       effect_function = rainbow_7;         if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=100;        setDifference=1;                                     varON=1;   }; dir1 = 1;    offdis=5;        y0r=ymin3+10;        colorCount=0;        ledspercolor=NUM_LEDS/range; if (ledspercolor > 3){ledspercolor=3;} ;} break;   
       case 14: {       effect_function = gradient;          if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=6;           changeSpeed=200;                              colorMode=0;                   varON=1;   selectColor = 0;   dir1=1;    ymax4 = pgm_read_byte(&selectColor_data[selectColor].ymax4);  ymin4 = pgm_read_byte(&selectColor_data[selectColor].ymin4);   setDifference = pgm_read_byte(&selectColor_data[selectColor].setDifference);    yval1=ymin4;   dir0=1;};       } break;
-      case 15: {       effect_function = s7_strings;        if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=110;        setDifference=10;     colorMode=4;    arrayn=0;      varON=1;   selectcolorArray();   }; if (selectedPresetVariable == 0 || numsparks == 10){numsparks=5*cfactor2;  };     ir[0]=0;        ir[1]=0;    previousMillis9=millis();        previousMillis10=millis();        previousMillis12=millis();          } break;
-      case 16: {       effect_function = s7_strings;        if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=110;        setDifference=15;     colorMode=4;    arrayn=0;      varON=1;   selectcolorArray();  numsparks=1;   };     i[0]=NUM_LEDS;               previousMillis9=millis();        previousMillis10=millis();        previousMillis12=millis();    } break;                   
-      case 17: {       effect_function = s7_strings_2;        if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=135;        setDifference=10;     colorMode=4;    arrayn=0;      varON=1;   selectcolorArray();   }; if (selectedPresetVariable == 0 || numsparks == 10){numsparks=5*cfactor2;  };     ir[0]=0;        ir[1]=0;    previousMillis9=millis();        previousMillis10=millis();        previousMillis12=millis();          } break;
+      case 15: {       effect_function = s7_strings;        if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=110;        setDifference=10;     colorMode=4;    arrayn=0;      varON=1;   selectcolorArray();   }; if (selectedPresetVariable == 0 || numsparks == 10){numsparks=5*cfactor2;  };     ir[0]=0;        ir[1]=0;    } break;
+      case 16: {       effect_function = s7_strings;        if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=110;        setDifference=15;     colorMode=4;    arrayn=0;      varON=1;   selectcolorArray();  numsparks=1;   };     i[0]=NUM_LEDS;             } break;                   
+      case 17: {       effect_function = s7_strings_2;      if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=135;        setDifference=10;     colorMode=4;    arrayn=0;      varON=1;   selectcolorArray();   }; if (selectedPresetVariable == 0 || numsparks == 10){numsparks=5*cfactor2;  };     ir[0]=0;        ir[1]=0;   } break;
 
-      case 18: {       effect_function = s7_strings;        if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=110;        setDifference=95;     colorMode=4;    arrayn=0;      varON=1;   selectcolorArray();    }; if (selectedPresetVariable == 0 || numsparks == 10){numsparks=5*cfactor2;  };     ir[0]=0;        ir[1]=0;    previousMillis9=millis();        previousMillis10=millis();        previousMillis12=millis();           } break;
-      case 19: {       effect_function = snow_flakes;       if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=26;           changeSpeed=125;        setDifference=7;      yval=10;     colorMode=0;    arrayn=0;      varON=0;   selectcolorArray();    }; if (selectedPresetVariable == 0 || numsparks == 10){numsparks=7*cfactor2;  };   offdis = offdisC;       sF=1;           previousMillis8=millis();     } break;        
+      case 18: {       effect_function = s7_strings;        if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=110;        setDifference=95;     colorMode=4;    arrayn=0;      varON=1;   selectcolorArray();    }; if (selectedPresetVariable == 0 || numsparks == 10){numsparks=5*cfactor2;  };     ir[0]=0;        ir[1]=0;    } break;
+      case 19: {       effect_function = snow_flakes;       if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=26;           changeSpeed=125;        setDifference=7;      yval=10;     colorMode=0;    arrayn=0;      varON=0;   selectcolorArray();    }; if (selectedPresetVariable == 0 || numsparks == 10){numsparks=7*cfactor2;  };   offdis = offdisC;       sF=1;     } break;        
       
-      case 20: {       effect_function = snow_flakes;       if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=3;           changeSpeed=125;        setDifference=7;      yval=10 ; z5=92; colorMode=5;    arrayn=0;      varON=1;   selectcolorArray();    }; if (selectedPresetVariable == 0 || numsparks == 10){numsparks=7*cfactor2;  };   offdis = offdisC;       sF=1;           previousMillis8=millis();     } break;        
+      case 20: {       effect_function = snow_flakes;       if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=3;           changeSpeed=125;        setDifference=7;      yval=10 ; z5=92; colorMode=5;    arrayn=0;      varON=1;   selectcolorArray();    }; if (selectedPresetVariable == 0 || numsparks == 10){numsparks=7*cfactor2;  };   offdis = offdisC;       sF=1;    } break;        
 
-      case 21: {       effect_function = snow_flakes_2;     if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=125;        setDifference=7;      colorMode=1;                   varON=1;   }; if (selectedPresetVariable == 0 || numsparks == 10){numsparks=7*cfactor2;  }; sF=1;      offdis = offdisC;      partialArrayCounter=0;     forcedColourChange = true;      } break;
-      case 22: {       effect_function = snow_storm;        if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=130;        setDifference=7;      colorMode=1;                   varON=1;   };  if (selectedPresetVariable == 0 || numsparks == 10){numsparks=5*cfactor2;  }; if (!colourSync){yval1=random(125,225);}        hh=NUM_LEDS;        offmin=1;        offmax=1;     sparkSpeed=120;       rrhh=-1;        poshh=-1;        flakeCounter=0;    offdis=cfactor2;   } break;       
-      case 23: {       effect_function = snow_flakesR;      if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=125;        setDifference=7;                                     varON=1;   }; if (selectedPresetVariable == 0 || numsparks == 10){numsparks=7*cfactor2;  }; offdis = offdisC;           sF=1;         previousMillis8=millis();     } break;
+      case 21: {       effect_function = snow_flakes_2;     if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=125;        setDifference=7;      colorMode=1;                   varON=1;   }; if (selectedPresetVariable == 0 || numsparks == 10){numsparks=7*cfactor2;  }; sF=1;      offdis = offdisC;      partialArrayCounter=0;      } break;
+      case 22: {       effect_function = snow_storm;        if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=130;        setDifference=7;      colorMode=1;                   varON=1;   };  if (selectedPresetVariable == 0 || numsparks == 10){numsparks=5*cfactor2;  };       hh=NUM_LEDS;        offmin=1;        offmax=1;     sparkSpeed=120;       rrhh=-1;        poshh=-1;        flakeCounter=0;    offdis=cfactor2;   } break;       
+      case 23: {       effect_function = snow_flakesR;      if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=125;        setDifference=7;                                     varON=1;   }; if (selectedPresetVariable == 0 || numsparks == 10){numsparks=7*cfactor2;  }; offdis = offdisC;           sF=1;      } break;
       
-      case 24: {       effect_function = snow_flakes2;       if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=155;        setDifference=7;      colorMode=0;   yval = 168;    arrayn=1;      varON=2;   selectcolorArray();    }; if (selectedPresetVariable == 0 || numsparks == 10){numsparks=7*cfactor2;  };   offdis = offdisC;       sF=1;           previousMillis8=millis();     } break;
+      case 24: {       effect_function = snow_flakes2;      if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=155;        setDifference=7;      colorMode=0;   yval = 168;    arrayn=1;      varON=2;   selectcolorArray();    }; if (selectedPresetVariable == 0 || numsparks == 10){numsparks=7*cfactor2;  };   offdis = offdisC;       sF=1;        } break;
 
       
-      case 25: {       effect_function = sparkling;         if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=130;        setDifference=7;      colorMode=2;                   varON=1;   }; if (selectedPresetVariable == 0 || numsparks == 10){numsparks=10*cfactor2;  };  sparkSpeed=78;                        sparkSpeed=98;        if (!colourSync){yval1=random(125,225);}        yy=0;        hh=NUM_LEDS;    variant=0;        offmin=15*cfactor2;        offmax=15*cfactor2;        offdis=1;       readyToChange = true;      } break;                 
-      case 26: {       effect_function = sparkling_2;       if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=125;        setDifference=7;      colorMode=1;                   varON=1;   }; if (selectedPresetVariable == 0 || numsparks == 10){numsparks=3*cfactor2;  }; if (!colourSync){yval1=random(125,225);}       sparkSpeed=98;      yy=0;        hh=NUM_LEDS;        variant=0;        offmin=13*cfactor2;        offmax=10*cfactor2;        offdis=1;        readyToChange = true;        } break;                       
-      case 27: {       effect_function = sparklingR;        if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=130;        setDifference=7;                                     varON=1;   }; if (selectedPresetVariable == 0 || numsparks == 10){numsparks=10*cfactor2;  };  sparkSpeed=78;                 sparkSpeed=98;        if (!colourSync){yval1=random(125,225);}        yy=0;        hh=NUM_LEDS;    variant=0; offmin=15*cfactor2;        offmax=15*cfactor2;        offdis=1;       readyToChange = true;     } break;
+      case 25: {       effect_function = sparkling;         if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=130;        setDifference=7;      colorMode=2;                   varON=1;   }; if (selectedPresetVariable == 0 || numsparks == 10){numsparks=10*cfactor2;  };  sparkSpeed=98;        offdis=1;       readyToChange = true;     } break;                 
+      case 26: {       effect_function = sparkling_2;       if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=125;        setDifference=7;      colorMode=1;                   varON=1;   }; if (selectedPresetVariable == 0 || numsparks == 10){numsparks=3*cfactor2;  };   sparkSpeed=98;        offdis=1;       readyToChange = true;     } break;                       
+      case 27: {       effect_function = sparklingR;        if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=130;        setDifference=7;                                     varON=1;   }; if (selectedPresetVariable == 0 || numsparks == 10){numsparks=10*cfactor2;  };  sparkSpeed=98;        offdis=1;       readyToChange = true;     } break;
       case 28: {       effect_function = twinkle;           if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=30;         setDifference = qmul8(cfactor2, 85);      colorMode=1;  varON=1;};} break;
       case 29: {       effect_function = random_led;        if (selectedPresetVariable != 0){ loadPersonalSettings(); } else { BriSPreset=0;           changeSpeed=30;         setDifference=40;     colorMode=5;                      varON=1;};} break;                   
       
@@ -157,8 +157,8 @@ if (changeModus){
       pos7[s]=NUM_LEDS;
       INTERVALf[s]=100;
       }
-    fill_solid(leds, NUM_SET, CRGB::Black);
-    FastLED.show();
+    // fill_solid(leds, NUM_SET, CRGB::Black);
+    // FastLED.show();
 
     if (selectedPresetVariable == 0){
       if (effect_function == xmas_string || effect_function == xmas_singles || effect_function == xmas_solid){
@@ -176,7 +176,9 @@ if (changeModus){
     if (effect_function != *xmas_string && effect_function != *xmas_singles){
       fillArrayRainbow(2);
     }
+    if (selectedPresetVariable == 0){
     readBriSData(BriSPreset);
+    }
     // if (inColourSync){
     //   colourSync = true;
     // }
@@ -184,8 +186,7 @@ if (changeModus){
     //   colourSync = false;
     // }
     forcedColourChange = true;
-    slowFactor=0;
-    INTERVAL7=5000;
+    INTERVAL7=1000;
     outOfModus = true;
     evenOddCounter = 0;
     if ((effect_function == *static_glow && programMode == 3)  || effect_function == colourSplash){
