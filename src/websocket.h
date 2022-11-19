@@ -1400,7 +1400,6 @@ void onDataRecv(uint8_t * mac, uint8_t *incomingData, uint8_t len) {
       
           if (variable == "SPST"){selectedPreset[programMode] = json["SPST"]; selectedPresetVariable = selectedPreset[programMode];}// Serial.println("selectbrispreset"); cycleT=0;  previousMillis44 = millis();  previousMillis45 = millis();  if (saveToEEPROM){int offsetPosition = offsetof(storeInEEPROM, selectedPreset[0]); EEPROM.put((offsetPosition + programMode), selectedPresetVariable);  EEPROM.commit();} changeState();}
       
-          else if (variable =="SPGM"){programMode = json["SPGM"]; cycleT=0;  previousMillis44 = millis();  previousMillis45 = millis(); changeState();} //Serial.print("containsprogramMode"); Serial.println(programMode); // if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, programMode), programMode);  EEPROM.commit();};          
           else if (variable =="SBSM"){BriSPreset = json["SBSM"]; readBriSData(BriSPreset);}// sendProgramInfo(1);}
           else if (variable =="SRED"){Red = json["SRED"]; loadHSV = true;}// if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, Red), Red);  EEPROM.commit();};} 
           else if (variable =="SGRE"){Green = json["SGRE"]; loadHSV = true;}// if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, Green), Green);  EEPROM.commit();};}   
@@ -1417,7 +1416,9 @@ void onDataRecv(uint8_t * mac, uint8_t *incomingData, uint8_t len) {
           else if (variable =="SCOM"){colorMode = json["SCOM"]; colorMode = colorMode-1; procesColourMode();} // memoryByte = 'c'; processChange();} // THIS ONE
           else if (variable =="SHUE"){yval = json["SHUE"]; forcedColourChange = true;}// if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, yval), yval);  EEPROM.commit();};}
           else if (variable == "TSYN"){syncEsp = json["TSYN"];}
+          else if (variable == "TSCN"){colourSyncToggle = json["TSCN"];}
           else if (variable == "SHUY"){yval1 = json["SHUY"];}
+          else if (variable == "SYOL"){yold = json["SYOL"];}
           else if (variable == "ZVAL"){for (int n = 0; n < 30; n++){z[n] = json["ZVAL"][n];};}
           else if (variable == "SNCO"){numcolor = json["SNCO"];   newColors++; if (whiteON){for (int t=0; t<15; t++){satval[t]=S; satval[0]=0;}}      else if (!whiteON){for (int t=0; t<15; t++){satval[t]=S;}}}
           else if (variable == "SNCL"){colorlength = json["SNCL"]; newColors++; }// if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, colorlength), colorlength);  EEPROM.commit();};}
@@ -1428,13 +1429,15 @@ void onDataRecv(uint8_t * mac, uint8_t *incomingData, uint8_t len) {
           else if (variable == "SHYR"){ysr = json["SHYX"];}
           else if (variable == "rdy"){readyToChange = json["rdy"];}
           else if (variable == "rn6"){rn6 = json["rn6"];}
-          else if (variable == "SHYS"){yold = yval1; yval1 = json["SHYS"]; inColourSync = true;}
+          else if (variable == "SHYS"){yval1 = json["SHYS"]; inColourSync = true;}
           else if (variable == "cn"){cn = json["cn"];}
-          else if (variable == "SHYT"){yold = yval1; yval1 = json["SHYT"]; inColourSync = true; hh=NUM_LEDS;  flakeCounter=0;  for (int s=0; s < numsparks; s++){num17[s]=NUM_LEDS; num26[s]=0; rn[s]=random(NUM_LEDS);}}
-          else if (variable == "SHYP"){yold = yval1; yval1 = json["SHYP"]; inColourSync = true; partialArrayCounter=0;}
+          else if (variable == "SHYT"){yval1 = json["SHYT"]; inColourSync = true; hh=NUM_LEDS;  flakeCounter=0;  for (int s=0; s < numsparks; s++){num17[s]=NUM_LEDS; num26[s]=0; rn[s]=random(NUM_LEDS);}}
+          else if (variable == "SHYP"){yval1 = json["SHYP"]; inColourSync = true; partialArrayCounter=0;}
           else if (variable == "SYNE"){inSync = json["SYNE"];}
           else if (variable == "SYNC"){inColourSync = json["SYNC"];} 
           else if (variable == "dir1"){dir1 = json["dir1"];} 
+          else if (variable =="SPGM"){programMode = json["SPGM"]; cycleT=0;  previousMillis44 = millis();  previousMillis45 = millis(); changeState();} //Serial.print("containsprogramMode"); Serial.println(programMode); // if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, programMode), programMode);  EEPROM.commit();};          
+
         }
 }
 #else
@@ -1513,7 +1516,7 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
           else if (variable == "SHYR"){ysr = json["SHYX"];}
           else if (variable == "rdy"){readyToChange = json["rdy"];}
           else if (variable == "rn6"){rn6 = json["rn6"];}// fillLongxArray(yold, NUM_LEDS);}
-          else if (variable == "SHYS"){yval1 = json["SHYS"]; inColourSync = true;}
+          else if (variable == "SHYS"){yval1 = json["SHYS"]; inColourSync = true; }
           else if (variable == "cn"){cn = json["cn"];}// fillLongxArray(yold, NUM_LEDS);}
           else if (variable == "SHYT"){yval1 = json["SHYT"]; inColourSync = true; hh=NUM_LEDS;  flakeCounter=0;  for (int s=0; s < numsparks; s++){num17[s]=NUM_LEDS; num26[s]=0; rn[s]=random(NUM_LEDS);}}
           else if (variable == "SHYP"){yval1 = json["SHYP"]; inColourSync = true; partialArrayCounter=0;}
