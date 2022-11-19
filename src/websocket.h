@@ -1371,12 +1371,12 @@ void onDataRecv(uint8_t * mac, uint8_t *incomingData, uint8_t len) {
 //         incomingMessage = true;
 // }
 
-        // DEBUG_PRINTLN(F("received JSON espnow message: "));
-        // for (int i = 0; i < len; i++){
-        // //strval[i]=(char)data[i];    
-        // DEBUG_PRINT((char)incomingData[i]);
-        // }
-        // DEBUG_PRINTLN(" ");
+        DEBUG_PRINTLN(F("received JSON espnow message: "));
+        for (int i = 0; i < len; i++){
+        //strval[i]=(char)data[i];    
+        DEBUG_PRINT((char)incomingData[i]);
+        }
+        DEBUG_PRINTLN(" ");
 
         StaticJsonDocument<255> json;
         //DeserializationError err = deserializeJson(json, incomingData);
@@ -1455,12 +1455,12 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
 //         incomingMessage = true;
 // }
 
-        // DEBUG_PRINTLN(F("received JSON espnow message: "));
-        // for (int i = 0; i < len; i++){
-        // //strval[i]=(char)data[i];    
-        // DEBUG_PRINT((char)incomingData[i]);
-        // }
-        // DEBUG_PRINTLN(" ");
+        DEBUG_PRINTLN(F("received JSON espnow message: "));
+        for (int i = 0; i < len; i++){
+        //strval[i]=(char)data[i];    
+        DEBUG_PRINT((char)incomingData[i]);
+        }
+        DEBUG_PRINTLN(" ");
 
         StaticJsonDocument<255> json;
         //DeserializationError err = deserializeJson(json, incomingData);
@@ -1561,6 +1561,8 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
       inSyncCounter++;
       if (inSyncCounter > 100){
         syncEsp = false;
+        colourSyncToggle = false;
+        espNowMessage = false;
       } 
   }
   }

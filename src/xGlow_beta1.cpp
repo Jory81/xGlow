@@ -327,6 +327,7 @@ void handleEspNowMessage(){
                 doc["SHYR"] = ysr;
                 doc["dir1"] = dir1;
                 doc["TCON"] = false;
+                doc["CSYN"] = colourSyncToggle;
                 doc["SPGM"] = programMode;
     } break;
     case 1:    {doc["SBSM"] = BriSPreset;}break;

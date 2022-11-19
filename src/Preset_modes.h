@@ -1674,10 +1674,12 @@ void snow_storm(void){
       
       if (forcedColourChange){
         if (!colourSync){
-        yval1 = changeColourFcn2(colorMode, yval1, yold, 40, 210);               
+        yval1 = changeColourFcn2(colorMode, yval1, yold, 40, 210);    
+        // DEBUG_PRINTLN("does it enter here YVAL1");           
         //updateOled(102, 56, &yval1);
         if ((syncEsp) && (colourSyncToggle)){espNowMessage = true;   EspNowMessageType = 18;  };
         }
+        // DEBUG_PRINTLN("does it enter ONLY here YVAL1: ");  DEBUG_PRINTLN(yval1);
         updateOled(102, 56, &yval1);
         forcedColourChange = false; 
       }
@@ -1740,7 +1742,7 @@ void snow_storm(void){
               yold=yval1;  
               yval1=yval1+1;
               updateOled(44, 40, &yold);
-
+              //DEBUG_PRINTLN("AND does it enter here YOLD");
               outOfModus = true;
               updateOledFloat(88, 0, &INTERVAL7, 0); 
               T=0;
