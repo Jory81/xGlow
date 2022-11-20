@@ -2455,11 +2455,11 @@ void twinkle(void){
 }
 
 void static_glow_2(void){
-  if (millis() - previousMillis1 > INTERVAL7){
-      if (!inSync){ // && setDifference > 20
-        yx = changeColourFcn(colorMode, yx, 0, 255);
-        if (syncEsp){espNowMessage = true;   EspNowMessageType = 16;  };
-      }
+  if (millis() - previousMillis1 > INTERVAL7 && (!inSync)){
+      // if (!inSync){ // && setDifference > 20
+      yx = changeColourFcn(colorMode, yx, 0, 255);
+      if (syncEsp){espNowMessage = true;   EspNowMessageType = 16;  };
+      // }
       // else if (setDifference < 21){
       //   yx = changeColourFcn(colorMode, yx, 0, 255);
       // }  
