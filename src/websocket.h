@@ -1532,14 +1532,14 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
 
   #ifdef ESP8266
   void OnDataSent(uint8_t *mac_addr, uint8_t sendStatus) {
-  Serial.print("Last Packet Send Status: ");
+  //Serial.print("Last Packet Send Status: ");
   if (sendStatus == 0){
-    DEBUG_PRINTLN("Delivery success");
+    //DEBUG_PRINTLN("Delivery success");
     espNowMessage = false;
     inSyncCounter = 0;
   }
   else{
-    DEBUG_PRINTLN("Delivery fail");
+    //DEBUG_PRINTLN("Delivery fail");
     espNowMessage = true;
     inSyncCounter++;
       if (inSyncCounter > 10){
@@ -1549,8 +1549,8 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
 }
   #else
   void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
-  DEBUG_PRINT("\r\nLast Packet Send Status:\t");
-  DEBUG_PRINTLN(status == ESP_NOW_SEND_SUCCESS ? "Delivery Success" : "Delivery Fail");
+  // DEBUG_PRINT("\r\nLast Packet Send Status:\t");
+  // DEBUG_PRINTLN(status == ESP_NOW_SEND_SUCCESS ? "Delivery Success" : "Delivery Fail");
 
   //   Serial.print("\r\nLast Packet Send Status:\t");
   // Serial.println(status == ESP_NOW_SEND_SUCCESS ? "Delivery Success" : "Delivery Fail");
