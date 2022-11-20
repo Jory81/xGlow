@@ -1425,8 +1425,8 @@ void onDataRecv(uint8_t * mac, uint8_t *incomingData, uint8_t len) {
           else if (variable == "SSCO"){z5 = json["SSCO"]; }
           else if (variable == "CSYN"){colourSync = json["CSYN"];}
           else if (variable == "SHYX"){yx = json["SHYX"];}
-          else if (variable == "SHYY"){y0r = json["SHYX"];}
-          else if (variable == "SHYR"){ysr = json["SHYX"];}
+          else if (variable == "SHYY"){y0r = json["SHYY"];}
+          else if (variable == "SHYR"){ysr = json["SHYR"];}
           else if (variable == "rdy"){readyToChange = json["rdy"];}
           else if (variable == "rn6"){rn6 = json["rn6"];}
           else if (variable == "SHYS"){yval1 = json["SHYS"]; inColourSync = true;}
@@ -1512,8 +1512,8 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
           else if (variable == "SSCO"){z5 = json["SSCO"]; }
           else if (variable == "CSYN"){colourSync = json["CSYN"];}
           else if (variable == "SHYX"){yx = json["SHYX"];}
-          else if (variable == "SHYY"){y0r = json["SHYX"];}
-          else if (variable == "SHYR"){ysr = json["SHYX"];}
+          else if (variable == "SHYY"){y0r = json["SHYY"];}
+          else if (variable == "SHYR"){ysr = json["SHYR"];}
           else if (variable == "rdy"){readyToChange = json["rdy"];}
           else if (variable == "rn6"){rn6 = json["rn6"];}// fillLongxArray(yold, NUM_LEDS);}
           else if (variable == "SHYS"){yval1 = json["SHYS"]; inColourSync = true; }
