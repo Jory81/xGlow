@@ -196,8 +196,8 @@ if (changeModus){
     dir = 2;
     }
     diff1 = 0;
-    diff2 = 0;
     dir2 = 1;
+    diff2 = 0;
     dir3 = 1;           
     setDifference2 = setDifference+5;
     changeModus=false;

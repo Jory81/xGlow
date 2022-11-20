@@ -305,7 +305,7 @@ handleWebsocketUpdate();
 }
 
 void handleEspNowMessage(){
-  if (millis() - previousMillis7 > 30) { 
+  if (millis() - previousMillis7 > 5) { 
   previousMillis7 = millis();
 
   if ((!syncEsp) && (inSync)){
@@ -357,7 +357,9 @@ void handleEspNowMessage(){
     case 15:   {doc["SHUY"] = yval1;
                 doc["CSYN"] = true;
                } break;
-    case 16:   {doc["SHYX"] = yx;} break;  
+    case 16:   {doc["SHYX"] = yx;
+                doc["SHUY"] = yval1;
+    } break;  
     case 17:   {doc["SYOL"] = yold;
                 doc["rdy"] = true;
                 doc["rn6"] = rn6;
