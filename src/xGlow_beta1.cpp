@@ -28,6 +28,8 @@ FASTLED_USING_NAMESPACE
 #include <IRrecv.h>
 #include <IRutils.h>
 #include <ESPAsyncWebServer.h>
+#include <AsyncElegantOTA.h>
+//#include <ArduinoOTA.h> 
 
 #define print_EEPROM
 
@@ -119,6 +121,7 @@ void eeprom();
 void initializeEEPROM();
 void printEEPROM();
 void wifi();
+//void initOTA();
 void espNow();
 void LED_properties();
 void initialize_preset();
@@ -281,6 +284,7 @@ spiffs();
 eeprom();
 initializeEEPROM();
 wifi();
+//initOTA();
 espNow();
 LED_properties();
 initialize_preset();
@@ -290,6 +294,7 @@ endSetup();
 
 void loop() {
 ws.cleanupClients();
+//ArduinoOTA.handle();
 handleEspNowMessage();
 handleIR();
 handleProgramTimer(); // contains display.display function. Printing to the OLED display, even tiny bits of text, take about 29000 micro seconds (29ms). 
@@ -399,15 +404,16 @@ void handleEspNowMessage(){
         }
         DEBUG_PRINTLN(" ");
 
-      //for (int i = 0; i < num_esp; i++){
-        //uint8_t broadcastAddress[6] = {Mac[i*6], Mac[(i*6)+1], Mac[(i*6)+2], Mac[(i*6)+3], Mac[(i*6)+4], Mac[(i*6)+5]};
-        //Serial.println(broadcastAddress[i]);
-        esp_now_send(NULL, (uint8_t *) &data, len);
-      //}
+      for (int i = 0; i < 10; i++){
+        if (macConnected[i]){
+          uint8_t broadcastAddress[6] = {Mac[i*6], Mac[(i*6)+1], Mac[(i*6)+2], Mac[(i*6)+3], Mac[(i*6)+4], Mac[(i*6)+5]};
+          esp_now_send(broadcastAddress, (uint8_t *) &data, len);
+          //Serial.println(broadcastAddress[i]);
+        }
+      }        
+        
+        //esp_now_send(NULL, (uint8_t *) &data, len); // this is useful, but requiers reboot after initialization. can also add all and validate during runtime
+
   }
 }
 }
-
-
-
-

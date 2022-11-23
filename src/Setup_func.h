@@ -126,6 +126,41 @@ void wifi(){
   initWebServer();
 }
 
+// void uploadOTA(){
+//   ArduinoOTA.onStart([]() {  
+//    String type;  
+//    if (ArduinoOTA.getCommand() == U_FLASH) {  
+//     type = "sketch";  
+//    } else { // U_SPIFFS  
+//     type = "filesystem";  
+//    }  
+   
+//    // NOTE: if updating SPIFFS this would be the place to unmount SPIFFS using SPIFFS.end()  
+//    Serial.println("Start updating " + type);  
+//   });  
+//   ArduinoOTA.onEnd([]() {  
+//    Serial.println("\nEnd");  
+//   });  
+//   ArduinoOTA.onProgress([](unsigned int progress, unsigned int total) {  
+//    Serial.printf("Progress: %u%%\r", (progress / (total / 100)));  
+//   });  
+//   ArduinoOTA.onError([](ota_error_t error) {  
+//    Serial.printf("Error[%u]: ", error);  
+//    if (error == OTA_AUTH_ERROR) {  
+//     Serial.println("Auth Failed");  
+//    } else if (error == OTA_BEGIN_ERROR) {  
+//     Serial.println("Begin Failed");  
+//    } else if (error == OTA_CONNECT_ERROR) {  
+//     Serial.println("Connect Failed");  
+//    } else if (error == OTA_RECEIVE_ERROR) {  
+//     Serial.println("Receive Failed");  
+//    } else if (error == OTA_END_ERROR) {  
+//     Serial.println("End Failed");  
+//    }  
+//   });  
+//   ArduinoOTA.begin();  
+// }
+
 void espNow(){
   // Initilize ESP-NOW
   #ifdef ESP8266
@@ -137,38 +172,42 @@ void espNow(){
   //esp_now_set_self_role(ESP_NOW_ROLE_CONTROLLER);
   esp_now_set_self_role(ESP_NOW_ROLE_MAX);
   // Register the peer
-    for (int i = 0; i < num_esp; i++){
-    uint8_t broadcastAddress[6] = {Mac[i*6], Mac[(i*6)+1], Mac[(i*6)+2], Mac[(i*6)+3], Mac[(i*6)+4], Mac[(i*6)+5]};
-      Serial.println("Registering a peer");
-      //esp_now_add_peer(broadcastAddress, ESP_NOW_ROLE_SLAVE, 1, NULL, 0);
-      esp_now_add_peer(broadcastAddress, ESP_NOW_ROLE_MAX, 1, NULL, 0);
+    for (int i = 0; i < 10; i++){
+      if (Mac[i*6] + Mac[(i*6)+1] + Mac[(i*6)+2] + Mac[(i*6)+3] + Mac[(i*6)+4] + Mac[(i*6)+5]){
+      //if (macConnected[i]){
+        uint8_t broadcastAddress[6] = {Mac[i*6], Mac[(i*6)+1], Mac[(i*6)+2], Mac[(i*6)+3], Mac[(i*6)+4], Mac[(i*6)+5]};
+          //Serial.println("Registering a peer");
+          //esp_now_add_peer(broadcastAddress, ESP_NOW_ROLE_SLAVE, 1, NULL, 0);
+          esp_now_add_peer(broadcastAddress, ESP_NOW_ROLE_MAX, 1, NULL, 0);
+      }
     }
 
-    Serial.println("Registering send callback function");
+    //Serial.println("Registering send callback function");
     esp_now_register_send_cb(OnDataSent);
 
     esp_now_register_recv_cb(onDataRecv);
 
   #else
   if (esp_now_init() != ESP_OK) {
-    Serial.println("Error initializing ESP-NOW");
+    //Serial.println("Error initializing ESP-NOW");
     return;
   }
 
   esp_now_register_send_cb(OnDataSent);
   
   // Register peer
-  for (int i = 0; i < num_esp; i++){
-    uint8_t broadcastAddress[6] = {Mac[i*6], Mac[(i*6)+1], Mac[(i*6)+2], Mac[(i*6)+3], Mac[(i*6)+4], Mac[(i*6)+5]};
-    memcpy(peerInfo.peer_addr, broadcastAddress, 6);
-    peerInfo.channel = 0;  
-    peerInfo.encrypt = false;
-    Serial.print("added peer: ");// Serial.print(i); Serial.print(" "); Serial.print(broadcastAddress[0]); Serial.print(" "); Serial.print(broadcastAddress[1]); Serial.print(" "); Serial.print(broadcastAddress[2]); Serial.print(" "); Serial.print(broadcastAddress[3]); Serial.print(" "); Serial.print(broadcastAddress[4]); Serial.print(" "); Serial.println(broadcastAddress[5]);
-    
+  for (int i = 0; i < 10; i++){
+    if (Mac[i*6] + Mac[(i*6)+1] + Mac[(i*6)+2] + Mac[(i*6)+3] + Mac[(i*6)+4] + Mac[(i*6)+5]){
+        uint8_t broadcastAddress[6] = {Mac[i*6], Mac[(i*6)+1], Mac[(i*6)+2], Mac[(i*6)+3], Mac[(i*6)+4], Mac[(i*6)+5]};
+        memcpy(peerInfo.peer_addr, broadcastAddress, 6);
+        peerInfo.channel = 0;  
+        peerInfo.encrypt = false;
+        Serial.print("added peer: "); Serial.print(i); Serial.print(" "); Serial.print(broadcastAddress[0]); Serial.print(" "); Serial.print(broadcastAddress[1]); Serial.print(" "); Serial.print(broadcastAddress[2]); Serial.print(" "); Serial.print(broadcastAddress[3]); Serial.print(" "); Serial.print(broadcastAddress[4]); Serial.print(" "); Serial.println(broadcastAddress[5]);
     // Add peer        
     if (esp_now_add_peer(&peerInfo) != ESP_OK){
       Serial.println("Failed to add peer");
       return;
+    }
     }
   }
 

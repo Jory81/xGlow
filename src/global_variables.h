@@ -166,6 +166,7 @@ struct storeInEEPROM {
   uint8_t Mac[60];  
   boolean syncEsp;
   boolean colourSyncToggle;
+  boolean macConnected[10];
   // uint8_t mac2[6]; 
   // uint8_t mac3[6]; 
   // uint8_t mac4[6]; 
@@ -336,10 +337,10 @@ storeInEEPROM customVar = {
       4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
       4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 
       4, 4, 4, 4, 4, 4, 4, 4, 
-      300000, 240000, 300000, 240000, 300000,   240000, 600000, 240000, 300000, 300000, // cycleTime
-      300000, 120000, 240000, 240000, 240000,   300000, 300000, 300000, 240000, 240000,
-      300000, 300000, 300000, 300000, 300000,   300000, 300000, 300000, 120000, 180000, 
-      240000, 120000, 120000, 60000, 120000,   60000, 450000, 60000,
+      600000, 480000, 600000, 480000, 600000,   480000, 800000, 480000, 600000, 600000, // cycleTime
+      600000, 300000, 480000, 480000, 480000,   600000, 600000, 600000, 480000, 480000,
+      600000, 600000, 600000, 600000, 600000,   600000, 600000, 600000, 300000, 400000, 
+      700000, 700000, 400000, 400000, 400000,   180000, 600000, 180000,
       0, // programMode      
       0, // tower
       92, // z5
@@ -414,8 +415,8 @@ storeInEEPROM customVar = {
       60, // range
 
       7, // FastLDPalet;
-      7, // FastLDPalet2;
-      7, // FastLDPalet3;
+      4, // FastLDPalet2;
+      10, // FastLDPalet3;
 
       14, // offdisC
 
@@ -446,13 +447,13 @@ storeInEEPROM customVar = {
       100, 100, 100, 100, 100,       35, 50,  20, 46,      100, 70, 108, 53, 100,       200, 40, 30, 40, 110, 125, 125,       125, 130, 125, 125, 130, 135,      130, 70, 30,  2000,       1000, 200, 100,  30,       15, 50, 50,  
 
       // int setDifference
-      7, 7, 7, 78, 80,       7, 1,  1, 2,       4, 7, 2, 25, 1,      1, 10, 6, 10, 147, 7, 7,       7, 7, 1, 7, 7, 7,      7, 200, 40,  1,       1, 7, 7,  40,      5, 3, 1,
+      7, 7, 7, 78, 80,       7, 1,  1, 2,       4, 7, 2, 25, 1,      1, 10, 6, 10, 147, 7, 7,       7, 7, 1, 7, 7, 7,      1, 200, 40,  1,       1, 7, 7,  40,      5, 3, 1,
       
       // int setDifference2
-      7, 7, 7, 78, 80,      7, 1,  1, 2,      4, 7, 2, 25, 1,       1, 1, 6, 1, 95, 7, 7,      7, 7, 1, 7, 7, 7,       7, 255, 40,  1,       1, 7, 7,  40,       15, 10, 1,
+      7, 7, 7, 78, 80,      7, 1,  1, 2,      4, 7, 2, 25, 1,       3, 1, 6, 1, 95, 7, 7,      7, 7, 3, 7, 7, 7,       3, 255, 40,  1,       1, 7, 7,  40,       15, 10, 1,
       
       // int setDifference3
-      1, 7, 1, 78, 80,       7, 1,  1, 2,       4, 7, 2, 25, 1,       1, 10, 6, 10, 95, 7, 7,      7, 7, 1, 7, 7, 7,      7, 255, 40,  1,       1, 7, 7,  40,       20, 10, 1,  
+      1, 7, 1, 78, 80,       7, 1,  1, 2,       4, 7, 2, 25, 1,       3, 10, 6, 10, 95, 7, 7,      7, 7, 3, 7, 7, 7,      3, 255, 40,  1,       1, 7, 7,  40,       20, 10, 1,  
 
       // int colorMode
       0, 2, 0, 0, 1,      2, 1,  0, 0,       0, 0, 0, 0, 0,      0, 1, 5, 1, 4, 4, 4,      1, 1, 0, 1, 2, 1,      0, 4, 1,  4,       1, 1, 1,  1,      5, 1, 0,
@@ -464,22 +465,22 @@ storeInEEPROM customVar = {
       0, 2, 0, 0, 1,      1, 1,  0, 0,       0, 0, 0, 0, 0,      0, 4, 4, 4, 4, 5, 2,      1, 1, 0, 4, 2, 1,      0, 1, 1,  4,       1, 1, 1,  4,      2, 4, 0,  
       
       // byte arrayn
-      1, 1, 1, 1, 1,      1, 1,  7, 7,       1, 1, 1, 1, 1,       1, 0, 0, 0, 0, 0, 0,      1, 1, 1, 0, 1, 1,       1, 1, 1,  25,      4, 1, 1,  1,       0, 0, 0,
+      1, 1, 1, 1, 1,      1, 1,  7, 7,       1, 1, 1, 1, 1,       4, 0, 0, 0, 0, 0, 0,      1, 1, 4, 0, 1, 1,       4, 1, 1,  25,      4, 1, 1,  1,       0, 0, 0,
       
       // byte arrayn2
-      4, 1, 1, 1, 1,      1, 1,  7, 7,       1, 1, 1, 1, 1,      1, 27, 32, 27, 0, 0, 0,       1, 1, 1, 0, 1, 1,       1, 57, 1,  25,      4, 1, 1,  27,       0, 0, 0,
+      4, 1, 1, 1, 1,      1, 1,  7, 7,       1, 1, 1, 1, 1,      7, 27, 32, 27, 0, 0, 0,       1, 1, 7, 0, 1, 1,       7, 57, 1,  25,      4, 1, 1,  27,       0, 0, 0,
       
       // byte arrayn3
-      1, 52, 1, 1, 1,       1, 1,  7, 7,       1, 1, 1, 1, 1,      1, 19, 17, 19, 0, 0, 0,     1, 1, 1, 0, 1, 1,      1, 29, 1,  25,       4, 1, 1,  27,      0, 38, 0,  
+      1, 52, 1, 1, 1,       1, 1,  7, 7,       1, 1, 1, 1, 1,      8, 19, 17, 19, 0, 0, 0,     1, 1, 8, 0, 1, 1,      8, 29, 1,  25,       4, 1, 1,  27,      0, 38, 0,  
       
       // varON byte
-      1, 1, 1, 1, 1,       1, 1,  1, 1,      1, 1, 1, 1, 1,      1, 1, 1, 1, 1, 1, 0,      1, 1, 2, 2, 1, 1,      1, 2, 1,  2,      2, 1, 1,  1,      1, 2, 1,
+      1, 1, 1, 1, 1,       1, 1,  1, 1,      1, 1, 1, 1, 1,      1, 1, 1, 1, 1, 1, 0,      1, 1, 0, 2, 1, 1,      0, 2, 1,  2,      2, 1, 1,  1,      1, 2, 1,
       
       // varON byte
-      1, 1, 1, 1, 1,       1, 1,  1, 1,      1, 1, 1, 1, 1,      1, 1, 2, 1, 1, 2, 2,       1, 1, 0, 2, 1, 1,      1, 2, 1,  2,       2, 1, 1,  1,      1, 1, 1,  
+      1, 1, 1, 1, 1,       1, 1,  1, 1,      1, 1, 1, 1, 1,      1, 1, 2, 1, 1, 2, 2,       1, 1, 0, 2, 1, 1,      0, 2, 1,  2,       2, 1, 1,  1,      1, 1, 1,  
       
       // varON3 byte
-      1, 1, 1, 1, 1,      0, 1,  1, 1,       1, 1, 1, 1, 1,      1, 2, 2, 2, 1, 2, 2,      1, 1, 1, 2, 1, 1,      1, 2, 1,  2,      2, 1, 1,  2,      2, 1, 1,
+      1, 1, 1, 1, 1,      0, 1,  1, 1,       1, 1, 1, 1, 1,      1, 2, 2, 2, 1, 2, 2,      1, 1, 0, 2, 1, 1,      0, 2, 1,  2,      2, 1, 1,  2,      2, 1, 1,
       50, // NUM_LEDS   
       0, // num_esp
       0, 0, 0, 0, 0, 0, //mac1
@@ -493,7 +494,8 @@ storeInEEPROM customVar = {
       0, 0, 0, 0, 0, 0, //mac9
       0, 0, 0, 0, 0, 0, //mac10  
       0, // syncEsp 
-      0 // colourSyncToggle  
+      0, // colourSyncToggle  
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0 // macConnected
     };
 
 
@@ -801,10 +803,11 @@ uint8_t     inSyncCounter = 0; // this is a counter to get the esp out of sync, 
 boolean     espNowMessage = false; // tells the Esp_now void function there's a message waiting to be sent.
 //boolean     incomingMessage = false;
 boolean     syncEsp = false; // syncs the Esps
-boolean     alertColor = false; // alertsColor change in runmode (needed to sync color in 3 modes)
+boolean     alertColor = false; // alertsColor change in runmode (needed to sync color in 3 modes, can be substituted with colourSync if needed)
 boolean     colourSync = false; // sometimes timing determines colour, with this variable timing and colour can be synced too
 boolean     colourSyncToggle = false; // sometimes modes are nice when they run on their own, but this switch allows modes to be fully synced
 boolean     inColourSync = false;
+boolean     macConnected[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 boolean     randomCycle = false; // EEPROM.readByte(96);
 boolean     changeModus = false;
 boolean     fadeFirst = true;
@@ -1098,8 +1101,8 @@ ymin2 = EEPROM.read(offsetof(storeInEEPROM, ymin2));
 ymax2 = EEPROM.read(offsetof(storeInEEPROM, ymax2));
 ymin3 = EEPROM.read(offsetof(storeInEEPROM, ymin3));
 ymax3 = EEPROM.read(offsetof(storeInEEPROM, ymax3));
-ymin4 = EEPROM.read(offsetof(storeInEEPROM, ymin4));
-ymax4 = EEPROM.read(offsetof(storeInEEPROM, ymax4));
+// ymin4 = EEPROM.read(offsetof(storeInEEPROM, ymin4));
+// ymax4 = EEPROM.read(offsetof(storeInEEPROM, ymax4));
 yminrood = EEPROM.read(offsetof(storeInEEPROM, yminrood));
 ymaxrood = EEPROM.read(offsetof(storeInEEPROM, ymaxrood));
 ymingroen = EEPROM.read(offsetof(storeInEEPROM, ymingroen));
@@ -1175,6 +1178,13 @@ colourSyncToggle = EEPROM.read(offsetof(storeInEEPROM, colourSyncToggle));
       wifiPASS = String(passStorage);
       Serial.print("wifiPASS "); Serial.println(wifiPASS);
 
+      for (int m = 0; m < 10; m++){
+      int offsetPosition = offsetof(storeInEEPROM, macConnected[0]);
+      EEPROM.get(offsetPosition+m, macConnected[m]); 
+      //Serial.print(offsetPosition+m); Serial.print(" "); Serial.println(cmode[m]);
+      //Serial.println("heeree in setupp 222");
+      }
+
 #else
       for (int m = 0; m < modeCount; m++){
       int offsetPosition = offsetof(storeInEEPROM, cmode[0]);
@@ -1206,5 +1216,10 @@ colourSyncToggle = EEPROM.read(offsetof(storeInEEPROM, colourSyncToggle));
       }
       wifiPASS = String(passStorage);
       Serial.print("wifiPASS "); Serial.println(wifiPASS);
+
+      for (int m = 0; m < 10; m++){
+      int offsetPosition = offsetof(storeInEEPROM, macConnected[0]);
+      macConnected[m]  = EEPROM.read(offsetPosition+m);
+      }
 #endif
 } 

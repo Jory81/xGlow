@@ -144,21 +144,40 @@ void handleAdditionalVariables(){ // HANDLE ADDITIONAL DEVIATION OF THE LED COLO
 void fillxmasArray(){
         numfirstcycle=0;
         yxmas=0;
-        
-        for (int i = 0; i < 256; i++){
-        longxArray[i]=yxmas;
-        yxmasold=yxmas; 
-        {if ((yxmas < ymaxrood) || (yxmas > ymingroen && yxmas < ymaxgroen) || (yxmas > yminblauw && yxmas < ymaxblauw) || (yxmas > yminrood)){  
-          yxmas=yxmas+setDifference+offdis; 
-        }
-        else {
-          yxmas+=offdis;
-        }
-        if (yxmasold > yxmas && numfirstcycle == 0){
-          numAmax=i;
-          numfirstcycle++;
-        }
-        }
+
+        if (ymaxrood < yminrood){        
+          for (int i = 0; i < 256; i++){
+          longxArray[i]=yxmas;
+          yxmasold=yxmas; 
+          {if ((yxmas < ymaxrood) || (yxmas > ymingroen && yxmas < ymaxgroen) || (yxmas > yminblauw && yxmas < ymaxblauw) || (yxmas > yminrood)){  
+            yxmas=yxmas+setDifference+offdis; 
+          }
+          else {
+            yxmas+=offdis;
+          }
+          if (yxmasold > yxmas && numfirstcycle == 0){
+            numAmax=i;
+            numfirstcycle++;
+          }
+          }
+          }
+        }         
+        else if (yminrood <= ymaxrood){        
+          for (int i = 0; i < 256; i++){
+          longxArray[i]=yxmas;
+          yxmasold=yxmas; 
+          {if ((yxmas > yminrood && yxmas < ymaxrood) || (yxmas > ymingroen && yxmas < ymaxgroen) || (yxmas > yminblauw && yxmas < ymaxblauw)){  
+            yxmas=yxmas+setDifference+offdis; 
+          }
+          else {
+            yxmas+=offdis;
+          }
+          if (yxmasold > yxmas && numfirstcycle == 0){
+            numAmax=i;
+            numfirstcycle++;
+          }
+          }
+          }
         }
 }
 
