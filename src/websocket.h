@@ -162,16 +162,16 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
       else if (json.containsKey("mac10")){for (int i = 54; i < 60; i++){Mac[i] = json["mac10"][i%6];} writeMacTooEEPROM(9);}
       else if (json.containsKey("TSYN")){syncEsp = json["TSYN"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, syncEsp), syncEsp);  EEPROM.commit();} if (!syncEsp){espNowMessage = true;   EspNowMessageType = 20;};}
       else if (json.containsKey("TSCN")){colourSyncToggle = json["TSCN"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, colourSyncToggle), colourSyncToggle);  EEPROM.commit();} if (!colourSyncToggle){espNowMessage = true;   EspNowMessageType = 21;}}
-      else if {json.containsKey("m1c")}{macConnected[0] = json["m1c"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, macConnected[0]), macConnected[0]); EEPROM.commit();};}
-      else if {json.containsKey("m2c")}{macConnected[1] = json["m2c"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, macConnected[1]), macConnected[1]); EEPROM.commit();};}
-      else if {json.containsKey("m3c")}{macConnected[2] = json["m3c"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, macConnected[2]), macConnected[2]); EEPROM.commit();};}
-      else if {json.containsKey("m4c")}{macConnected[3] = json["m4c"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, macConnected[3]), macConnected[3]); EEPROM.commit();};}
-      else if {json.containsKey("m5c")}{macConnected[4] = json["m5c"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, macConnected[4]), macConnected[4]); EEPROM.commit();};}
-      else if {json.containsKey("m6c")}{macConnected[5] = json["m6c"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, macConnected[5]), macConnected[5]); EEPROM.commit();};}
-      else if {json.containsKey("m7c")}{macConnected[6] = json["m7c"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, macConnected[6]), macConnected[6]); EEPROM.commit();};}
-      else if {json.containsKey("m8c")}{macConnected[7] = json["m8c"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, macConnected[7]), macConnected[7]); EEPROM.commit();};}
-      else if {json.containsKey("m9c")}{macConnected[8] = json["m9c"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, macConnected[8]), macConnected[8]); EEPROM.commit();};}
-      else if {json.containsKey("m10c")}{macConnected[9] = json["m10c"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, macConnected[9]), macConnected[9]); EEPROM.commit();};}
+      else if (json.containsKey("m1c")){macConnected[0] = json["m1c"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, macConnected[0]), macConnected[0]); EEPROM.commit();};}
+      else if (json.containsKey("m2c")){macConnected[1] = json["m2c"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, macConnected[1]), macConnected[1]); EEPROM.commit();};}
+      else if (json.containsKey("m3c")){macConnected[2] = json["m3c"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, macConnected[2]), macConnected[2]); EEPROM.commit();};}
+      else if (json.containsKey("m4c")){macConnected[3] = json["m4c"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, macConnected[3]), macConnected[3]); EEPROM.commit();};}
+      else if (json.containsKey("m5c")){macConnected[4] = json["m5c"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, macConnected[4]), macConnected[4]); EEPROM.commit();};}
+      else if (json.containsKey("m6c")){macConnected[5] = json["m6c"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, macConnected[5]), macConnected[5]); EEPROM.commit();};}
+      else if (json.containsKey("m7c")){macConnected[6] = json["m7c"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, macConnected[6]), macConnected[6]); EEPROM.commit();};}
+      else if (json.containsKey("m8c")){macConnected[7] = json["m8c"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, macConnected[7]), macConnected[7]); EEPROM.commit();};}
+      else if (json.containsKey("m9c")){macConnected[8] = json["m9c"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, macConnected[8]), macConnected[8]); EEPROM.commit();};}
+      else if (json.containsKey("m10c")){macConnected[9] = json["m10c"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, macConnected[9]), macConnected[9]); EEPROM.commit();};}
       else if (json.containsKey("BOOT")){ESP.restart();};
       notifyClientsSingleObject("recMsg", true);
     }
