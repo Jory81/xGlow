@@ -162,16 +162,16 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
       else if (json.containsKey("mac10")){for (int i = 54; i < 60; i++){Mac[i] = json["mac10"][i%6];} writeMacTooEEPROM(9);}
       else if (json.containsKey("TSYN")){syncEsp = json["TSYN"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, syncEsp), syncEsp);  EEPROM.commit();} if (!syncEsp){espNowMessage = true;   EspNowMessageType = 20;};}
       else if (json.containsKey("TSCN")){colourSyncToggle = json["TSCN"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, colourSyncToggle), colourSyncToggle);  EEPROM.commit();} if (!colourSyncToggle){espNowMessage = true;   EspNowMessageType = 21;}}
-      else if (json.containsKey("m1c")){macConnected[0] = json["m1c"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, macConnected[0]), macConnected[0]); EEPROM.commit();};}
-      else if (json.containsKey("m2c")){macConnected[1] = json["m2c"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, macConnected[1]), macConnected[1]); EEPROM.commit();};}
-      else if (json.containsKey("m3c")){macConnected[2] = json["m3c"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, macConnected[2]), macConnected[2]); EEPROM.commit();};}
-      else if (json.containsKey("m4c")){macConnected[3] = json["m4c"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, macConnected[3]), macConnected[3]); EEPROM.commit();};}
-      else if (json.containsKey("m5c")){macConnected[4] = json["m5c"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, macConnected[4]), macConnected[4]); EEPROM.commit();};}
-      else if (json.containsKey("m6c")){macConnected[5] = json["m6c"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, macConnected[5]), macConnected[5]); EEPROM.commit();};}
-      else if (json.containsKey("m7c")){macConnected[6] = json["m7c"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, macConnected[6]), macConnected[6]); EEPROM.commit();};}
-      else if (json.containsKey("m8c")){macConnected[7] = json["m8c"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, macConnected[7]), macConnected[7]); EEPROM.commit();};}
-      else if (json.containsKey("m9c")){macConnected[8] = json["m9c"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, macConnected[8]), macConnected[8]); EEPROM.commit();};}
-      else if (json.containsKey("m10c")){macConnected[9] = json["m10c"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, macConnected[9]), macConnected[9]); EEPROM.commit();};}
+      else if (json.containsKey("m1c")){macConnected[0] = json["m1c"]; inSyncCounter[0] = 0; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, macConnected[0]), macConnected[0]); EEPROM.commit();};}
+      else if (json.containsKey("m2c")){macConnected[1] = json["m2c"]; inSyncCounter[1] = 0; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, macConnected[1]), macConnected[1]); EEPROM.commit();};}
+      else if (json.containsKey("m3c")){macConnected[2] = json["m3c"]; inSyncCounter[2] = 0; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, macConnected[2]), macConnected[2]); EEPROM.commit();};}
+      else if (json.containsKey("m4c")){macConnected[3] = json["m4c"]; inSyncCounter[3] = 0; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, macConnected[3]), macConnected[3]); EEPROM.commit();};}
+      else if (json.containsKey("m5c")){macConnected[4] = json["m5c"]; inSyncCounter[4] = 0; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, macConnected[4]), macConnected[4]); EEPROM.commit();};}
+      else if (json.containsKey("m6c")){macConnected[5] = json["m6c"]; inSyncCounter[5] = 0; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, macConnected[5]), macConnected[5]); EEPROM.commit();};}
+      else if (json.containsKey("m7c")){macConnected[6] = json["m7c"]; inSyncCounter[6] = 0; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, macConnected[6]), macConnected[6]); EEPROM.commit();};}
+      else if (json.containsKey("m8c")){macConnected[7] = json["m8c"]; inSyncCounter[7] = 0; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, macConnected[7]), macConnected[7]); EEPROM.commit();};}
+      else if (json.containsKey("m9c")){macConnected[8] = json["m9c"]; inSyncCounter[8] = 0; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, macConnected[8]), macConnected[8]); EEPROM.commit();};}
+      else if (json.containsKey("m10c")){macConnected[9] = json["m10c"]; inSyncCounter[9] = 0; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, macConnected[9]), macConnected[9]); EEPROM.commit();};}
       else if (json.containsKey("BOOT")){ESP.restart();};
       notifyClientsSingleObject("recMsg", true);
     }
@@ -300,7 +300,8 @@ DynamicJsonDocument doc(2000);
     break;
     case 3:{
       #ifdef ESP8266
-      //doc["MAC"] = WiFi.macAddressDec().c_str();
+      doc["MAC"] = macAdress;
+      // DEBUG_PRINTLN(WiFi.macAddress().c_str());
       #else
       doc["MAC"] = WiFi.macAddressDec().c_str();
       #endif
@@ -1594,19 +1595,31 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
 
   #ifdef ESP8266
   void OnDataSent(uint8_t *mac_addr, uint8_t sendStatus) {
+
+  //     for (int i = 0; i < 6; i++ ){
+  // DEBUG_PRINTLN((uint8_t)mac_addr[i]);
+  // }
   //Serial.print("Last Packet Send Status: ");
   if (sendStatus == 0){
-    //DEBUG_PRINTLN("Delivery success");
-    espNowMessage = false;
-    inSyncCounter = 0;
+    DEBUG_PRINTLN("Delivery success");
+      for (int i = 0; i < 10; i++){
+          if (Mac[i*6] == macMem[0] && Mac[(i*6)+1] == macMem[1] && Mac[(i*6)+2] == macMem[2] && Mac[(i*6)+3] == macMem[3] && Mac[(i*6)+4] == macMem[4] && Mac[(i*6)+5] == macMem[5]) {
+            inSyncCounter[i] = 0;
+          }
+        }
+      espNowMessage = false;
   }
   else{
-    //DEBUG_PRINTLN("Delivery fail");
-    espNowMessage = true;
-    inSyncCounter++;
-      if (inSyncCounter > 10){
-        espNowMessage = false;
-      } 
+    DEBUG_PRINTLN("Delivery fail");
+      for (int i = 0; i < 10; i++){
+          if (Mac[i*6] == macMem[0] && Mac[(i*6)+1] == macMem[1] && Mac[(i*6)+2] == macMem[2] && Mac[(i*6)+3] == macMem[3] && Mac[(i*6)+4] == macMem[4] && Mac[(i*6)+5] == macMem[5]) {
+            inSyncCounter[i]++;
+            if (inSyncCounter[i] > 10){
+              macConnected[i] = false;
+            }
+          }
+        }
+      espNowMessage = true;
   }
 }
   #else
@@ -1616,29 +1629,38 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
 
   //   Serial.print("\r\nLast Packet Send Status:\t");
   // Serial.println(status == ESP_NOW_SEND_SUCCESS ? "Delivery Success" : "Delivery Fail");
+    for (int i = 0; i < 6; i++){
+    macMem[i] = (uint8_t)mac_addr[i];
+    DEBUG_PRINTLN((uint8_t)mac_addr[i]);
+    }
+
 
   if (status == ESP_NOW_SEND_SUCCESS){
+    DEBUG_PRINTLN("Delivery success");
+      for (int i = 0; i < 10; i++){
+          if (Mac[i*6] == macMem[0] && Mac[(i*6)+1] == macMem[1] && Mac[(i*6)+2] == macMem[2] && Mac[(i*6)+3] == macMem[3] && Mac[(i*6)+4] == macMem[4] && Mac[(i*6)+5] == macMem[5]) {
+            inSyncCounter[i] = 0;
+          }
+        }
       espNowMessage = false;
-      inSyncCounter = 0;
   }
   else {
+    DEBUG_PRINTLN("Delivery fail");
+      for (int i = 0; i < 10; i++){
+          if (Mac[i*6] == macMem[0] && Mac[(i*6)+1] == macMem[1] && Mac[(i*6)+2] == macMem[2] && Mac[(i*6)+3] == macMem[3] && Mac[(i*6)+4] == macMem[4] && Mac[(i*6)+5] == macMem[5]) {
+            inSyncCounter[i]++;
+            if (inSyncCounter[i] > 10){
+              macConnected[i] = false;
+            }
+          }
+        }
       espNowMessage = true;
-      inSyncCounter++;
-      if (inSyncCounter > 10){
-        // syncEsp = false;
-        // colourSyncToggle = false;
-        espNowMessage = false;
+      // inSyncCounter++;
+      // if (inSyncCounter > 10){
+      //   // syncEsp = false;
+      //   // colourSyncToggle = false;
+      //   espNowMessage = false;
+        
       } 
   }
-  }
   #endif
-  
-  // if (status ==0){
-  //   success = "Delivery Success :)";
-  // }
-  // else{
-  //   success = "Delivery Fail :(";
-  // }
-//}
-
-  

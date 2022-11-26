@@ -43,7 +43,7 @@ FASTLED_USING_NAMESPACE
   #define EEPROM_PRINTF(x...)
 #endif
 
-//#define DEBUG_OUTPUT // comment out for debugging mode (mainly for checking memory issues and JSON communication)
+#define DEBUG_OUTPUT // comment out for debugging mode (mainly for checking memory issues and JSON communication)
 
 #ifdef DEBUG_OUTPUT
   #define DEBUG_PRINT(x) Serial.print(x)
@@ -66,6 +66,8 @@ int NUM_LEDS = 100; //EEPROM.readInt(93); THIS ONE WILL BE RE-INITIALIZED DURING
   const int DATA_PIN = 3; // This is GPIO3 jumper set to the right
 #else
   const int DATA_PIN = 16; // GPIO2 - jumper set to the left
+  const int DATA_PIN2 = 3; // GPIO2 - jumper set to the left
+  const int DATA_PIN3 = 26; // GPIO2 - jumper set to the left
   //const int DATA_PIN = 3; // This is GPIO3 jumper set to the right
 
 #endif

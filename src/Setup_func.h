@@ -91,6 +91,8 @@ void wifi(){
   const char *WIFI_SSID = &wifiID[0];
   const char *WIFI_PASS = &wifiPASS[0];
   WiFi.begin(WIFI_SSID, WIFI_PASS);  
+  macAdress = WiFi.macAddress().c_str();
+  Serial.println(macAdress);
   Serial.printf("Trying to connect [%s] ", WiFi.macAddress().c_str());
   
 
@@ -179,6 +181,8 @@ void espNow(){
           //Serial.println("Registering a peer");
           //esp_now_add_peer(broadcastAddress, ESP_NOW_ROLE_SLAVE, 1, NULL, 0);
           esp_now_add_peer(broadcastAddress, ESP_NOW_ROLE_MAX, 1, NULL, 0);
+          Serial.print("added peer: "); Serial.print(i); Serial.print(" "); Serial.print(broadcastAddress[0]); Serial.print(" "); Serial.print(broadcastAddress[1]); Serial.print(" "); Serial.print(broadcastAddress[2]); Serial.print(" "); Serial.print(broadcastAddress[3]); Serial.print(" "); Serial.print(broadcastAddress[4]); Serial.print(" "); Serial.println(broadcastAddress[5]);
+
       }
     }
 
@@ -228,8 +232,16 @@ void LED_properties(){
     #endif
 
     switch (rgbcolor){
-      case 0: FastLED.addLeds<WS2811,DATA_PIN, RGB>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip); break; // RGB is also COL_ORD[0] - old definition.
-      case 1: FastLED.addLeds<WS2811,DATA_PIN, GRB>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip); break;
+      case 0: FastLED.addLeds<WS2811,DATA_PIN, RGB>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
+              //FastLED.addLeds<WS2811,DATA_PIN2, GRB>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
+              //FastLED.addLeds<WS2811,DATA_PIN3, GRB>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
+      
+      break; // RGB is also COL_ORD[0] - old definition.
+      case 1: FastLED.addLeds<WS2811,DATA_PIN, GRB>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip); 
+              //FastLED.addLeds<WS2811,DATA_PIN2, GRB>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
+              //FastLED.addLeds<WS2811,DATA_PIN3, GRB>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
+      
+      break;
       case 2: FastLED.addLeds<WS2811,DATA_PIN, BRG>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip); break;
       case 3: FastLED.addLeds<WS2811,DATA_PIN, BGR>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip); break;
       case 4: FastLED.addLeds<WS2811,DATA_PIN, RBG>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip); break;

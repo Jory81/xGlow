@@ -755,6 +755,9 @@ uint8_t yMA[30]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 String dataString;
 String wifiID;
 String wifiPASS;
+String macAdress;
+uint8_t inSyncCounter[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+uint8_t macMem[6] = {0};
 uint8_t num_esp = 0;
 uint8_t Mac[60] = {0};
 // uint8_t mac2[6] = {0};
@@ -799,7 +802,7 @@ String mergedString;
 char msg_buf[11];
 
 boolean     inSync = false; // if the decives receives messages from another esp, it turns 'inSync'
-uint8_t     inSyncCounter = 0; // this is a counter to get the esp out of sync, if the messages fail to send
+//uint8_t     inSyncCounter = 0; // this is a counter to get the esp out of sync, if the messages fail to send
 boolean     espNowMessage = false; // tells the Esp_now void function there's a message waiting to be sent.
 //boolean     incomingMessage = false;
 boolean     syncEsp = false; // syncs the Esps
