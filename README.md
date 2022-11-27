@@ -1,13 +1,16 @@
 # xGlow
- Standalone LED firmware for ESP8266 and ESP32 boards build on the FastLED library - all ESP nodes can be synchronized via ESP-NOW. The code is quite amateurish, but it works, it's stable, the effects are very neat and once initialized (and personalized if you like) you only have to power the LEDS, and it will cycle through all the (selected) presets for hours without getting bored. I use Quindor's DigUno and DigQuad controllers.
+Produced for Christmas lighting: many glow effects, and ever changing colours\
+
+ Standalone LED firmware for ESP8266 and ESP32 boards build on the FastLED library - all ESP nodes can be synchronized via ESP-NOW. The code is quite amateurish, but it works, it's stable, the effects are very neat and when flashed you only have to power the LEDS, and it will cycle through all the (selected) presets for hours without getting bored. I use Quindor's DigUno and DigQuad controllers.
 
  Summary:\
- -Produced for Christmas lighting: many glow effects, and ever changing colours\
+ -ESP32/ESP8266 (I use wemos boards)
+ -ESP-NOW: All ESP32 and ESP8266 nodes can be synchronized via ESP-NOW\
+ -WEBSERVER interface (websockets) and OLED display (OLED isn't necessary)\
+ -OTA updates (ElegantOTA)
  -38 modes\
  -4 presets per mode (thus a total of ~150 different amazing effects)\
- -A lot of options and presets can be personalized and saved to EEPROM\
- -webserver (websockets) and OLED interface (OLED isn't necessary)\
- -All ESP32 and ESP8266 nodes can be synchronized via ESP-NOW\
+ -EEPROM: A lot of options and presets can be personalized and saved to EEPROM\
  -Cycle options: random, fade, time, and every preset can be excluded if disliked\
  -IR (not necessary)\
  -And more\
