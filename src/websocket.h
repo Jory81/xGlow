@@ -1636,10 +1636,16 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
             inSyncCounter[i]++;
             if (inSyncCounter[i] > 10){
               macConnected[i] = false;
+              //sendProgramInfo(3);
             }
           }
         }
-      espNowMessage = true;
+      if ((!macConnected[0]) && (!macConnected[1]) && (!macConnected[2]) && (!macConnected[3]) && (!macConnected[4]) && (!macConnected[5]) && (!macConnected[6]) && (!macConnected[7]) && (!macConnected[8]) && (!macConnected[9])){
+        espNowMessage = false;
+      }
+      else {  
+        espNowMessage = true;
+      }
   }
 }
   #else
@@ -1671,16 +1677,16 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
             inSyncCounter[i]++;
             if (inSyncCounter[i] > 10){
               macConnected[i] = false;
+              //sendProgramInfo(3);
             }
           }
         }
-      espNowMessage = true;
-      // inSyncCounter++;
-      // if (inSyncCounter > 10){
-      //   // syncEsp = false;
-      //   // colourSyncToggle = false;
-      //   espNowMessage = false;
-        
+      if ((!macConnected[0]) && (!macConnected[1]) && (!macConnected[2]) && (!macConnected[3]) && (!macConnected[4]) && (!macConnected[5]) && (!macConnected[6]) && (!macConnected[7]) && (!macConnected[8]) && (!macConnected[9])){
+        espNowMessage = false;
+      }
+      else {  
+        espNowMessage = true;
+      }        
       } 
   }
   #endif
