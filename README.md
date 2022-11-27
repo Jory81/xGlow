@@ -7,7 +7,7 @@ Produced for Christmas lighting: many glow effects, and ever changing colours\
  -ESP32/ESP8266 (I use wemos boards)\
  -ESP-NOW: All ESP32 and ESP8266 nodes can be synchronized via ESP-NOW\
  -WEBSERVER interface (websockets) and OLED display (OLED isn't necessary)\
- -OTA updates (ElegantOTA)
+ -OTA updates (ElegantOTA)\
  -38 modes\
  -4 presets per mode (thus a total of ~150 different amazing effects)\
  -EEPROM: A lot of options and presets can be personalized and saved to EEPROM\
