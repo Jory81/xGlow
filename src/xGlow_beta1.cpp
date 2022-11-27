@@ -392,7 +392,29 @@ void handleEspNowMessage(){
     case 21:   {
                 doc["SYNC"] = false;                
     }     
-    break;                       
+    break;
+    case 22:  {
+                doc["SBRI"] = BRIGH;
+                doc["SGLO"] = glowON;
+                doc["SOBR"] = offBr;
+                doc["SNBR"] = numbrigh;
+                doc["SBWS"] = waveTimeBr;
+                doc["SSBS"] = BPMB;
+                doc["SSBR"] = BrF;
+                doc["CONB"] = convBrigh;
+    } 
+    break; 
+    case 23:  {
+                doc["SSAT"] = S;
+                doc["SSTM"] = satON;
+                doc["SOST"] = offS;
+                doc["SSTN"] = numsat;
+                doc["SSWS"] = waveTimeS;
+                doc["SSSS"] = BPMS;
+                doc["SSSF"] = SF;
+                doc["CONS"] = convSat;
+    } 
+    break;                         
   } 
   doc["TSYN"] = false;
   doc["TSCN"] = false;  

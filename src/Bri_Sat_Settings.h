@@ -1,5 +1,5 @@
 /*
- * handles all the glow modes. Some mode can likely be put in for loops, but that didn't work yet.
+ * handles all the glow modes. 
  */
 
 
@@ -13,27 +13,14 @@ if (glowON == 0 || lastBRIGH != BRIGH){
 else if (glowON == 1){
   for (int i = 0; i < numbrigh; i++){
       int ii = i % 16;
-      brigh[i] = beatsin8(brivalbpm[ii], qsub8(BRIGH,offBr),qadd8(BRIGH,offBr)); 
-    // if (i < 16){
-    // brigh[i] = beatsin8(brivalbpm[i], brivalmin[i], brivalmax[i]);
-    // }
-    // else{
-    // brigh[i] = brigh[i-16];     
-    // } 
+      brigh[i] = beatsin8(brivalbpm[ii], qsub8(BRIGH,offBr),qadd8(BRIGH,offBr));  
   }
 }
   
 else if (glowON == 2){   
-
     for (int i = 0; i < numbrigh; i++){
       int ii = i % 16;
       brigh[i] = beatsin8(brivalbpm[ii], qsub8(BRIGH,offBr),qadd8(BRIGH,offBr)); 
-    // if (i < 16){
-    // brigh[i] = beatsin8(brivalbpm[i], qsub8(BRIGH,offBr),qadd8(BRIGH,offBr));
-    // }
-    // else{
-    // brigh[i] = brigh[i-16];    
-    // } 
   }
 }
 
@@ -98,6 +85,18 @@ else if (glowON == 7){
 else if (glowON == 8){
   for (int i = 0; i < numbrigh; i++){
     brigh[i]=beatsin8(BPMB, 0, qadd8(BRIGH,offBr), ((i+1)*convBrigh));
+  }
+}
+
+else if (glowON == 9){
+  for (int i = 0; i < numbrigh; i++){
+    brigh[i]=beatsin8(BPMB, 0, qadd8(BRIGH,offBr), ((i/2)*convBrigh));
+  }
+}
+
+else if (glowON == 10){
+  for (int i = 0; i < numbrigh; i++){
+    brigh[i]=beatsin8(BPMB, 0, qadd8(BRIGH,offBr), ((i/3)*convBrigh));
   }
 }
 }
@@ -204,6 +203,18 @@ else if (satON == 7){
 else if (satON == 8){
   for (int i = 0; i < numsat; i++){
     satval[i]=beatsin8(BPMS, 0, qadd8(S,offS), ((i+1)*convSat));
+  }
+}
+
+else if (satON == 9){
+  for (int i = 0; i < numsat; i++){
+    satval[i]=beatsin8(BPMS, 0, qadd8(S,offS), ((i/2)*convSat));
+  }
+}
+
+else if (satON == 10){
+  for (int i = 0; i < numsat; i++){
+    satval[i]=beatsin8(BPMS, 0, qadd8(S,offS), ((i/3)*convSat));
   }
 }
 
