@@ -4,7 +4,7 @@ Produced for Christmas lighting: many glow effects, and ever changing colours\
  Standalone LED firmware for ESP8266 and ESP32 boards build on the FastLED library - all ESP nodes can be synchronized via ESP-NOW. The code is quite amateurish, but it works, it's stable, the effects are very neat and when flashed you only have to power the LEDS, and it will cycle through all the (selected) presets for hours without getting bored. I use Quindor's DigUno and DigQuad controllers.
 
  Summary:\
- -ESP32/ESP8266 (I use wemos boards)
+ -ESP32/ESP8266 (I use wemos boards)\
  -ESP-NOW: All ESP32 and ESP8266 nodes can be synchronized via ESP-NOW\
  -WEBSERVER interface (websockets) and OLED display (OLED isn't necessary)\
  -OTA updates (ElegantOTA)
