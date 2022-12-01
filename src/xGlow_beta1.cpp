@@ -64,6 +64,8 @@ int NUM_LEDS = 100; //EEPROM.readInt(93); THIS ONE WILL BE RE-INITIALIZED DURING
 #ifdef ESP8266
   //const int DATA_PIN = 2; // GPIO2 - jumper set to the left
   const int DATA_PIN = 3; // This is GPIO3 jumper set to the right
+  const int DATA_PIN2 = 2;
+  const int DATA_PIN3 = 16;
 #else
   const int DATA_PIN = 16; // GPIO2 - jumper set to the left
   const int DATA_PIN2 = 3; // GPIO2 - jumper set to the left
@@ -343,7 +345,13 @@ void handleEspNowMessage(){
     case 4:    {doc["SVAR"] = varON;}  break;
     case 5:    {doc["SDIF"] = setDifference;}  break;
     case 6:    {doc["SLSP"] = changeSpeed;}  break;
-    case 7:    {doc["SCAR"] = arrayn;}  break;
+    case 7:    {doc["SCAR"] = arrayn;
+               if (colorMode != 4){
+                for (int i = 0; i < 15; i++){
+                    doc["YV"][i] = newColour[i];
+                  }
+               }
+               }  break;
     case 8:    {doc["SPAL"] = gCurrentPaletteNumber;}  break;
     case 9:    {doc["SGRA"] = selectColor;}  break;
     case 10:   {
@@ -414,7 +422,13 @@ void handleEspNowMessage(){
                 doc["SSSF"] = SF;
                 doc["CONS"] = convSat;
     } 
-    break;                         
+    break; 
+    case 24:  {
+                doc["SBOV"] = overLay;
+                doc["SBOF"] = ledOffset;
+                doc["SOSS"] = overlaySpeed;
+    } 
+    break;                            
   } 
   doc["TSYN"] = false;
   doc["TSCN"] = false;  

@@ -90,13 +90,31 @@ else if (glowON == 8){
 
 else if (glowON == 9){
   for (int i = 0; i < numbrigh; i++){
-    brigh[i]=beatsin8(BPMB, 0, qadd8(BRIGH,offBr), ((i/2)*convBrigh));
+    brigh[i]=beatsin8(BPMB, 0, qadd8(BRIGH,offBr), ((i/ledOffset)*convBrigh));
   }
 }
 
-else if (glowON == 10){
-  for (int i = 0; i < numbrigh; i++){
-    brigh[i]=beatsin8(BPMB, 0, qadd8(BRIGH,offBr), ((i/3)*convBrigh));
+if (overLay > 0){
+  if (overLay == 1){
+    for (int i = 0; i < numbrigh; i++){
+      if (i % ledOffset != 0){
+      brigh[i] = 0;
+      }
+    }
+  }
+  else if (overLay == 2){
+   if (millis() - previousMillis8 > overlaySpeed){ // BPS 8 is timer modifier
+    previousMillis8 = millis(); 
+    blackPos++;
+    if (blackPos >= ledOffset){
+      blackPos = 0;
+    }
+   }
+    for (int i = 0; i < numbrigh; i++){
+      if (i % ledOffset == blackPos){
+      brigh[i] = 0;
+      }
+    }
   }
 }
 }

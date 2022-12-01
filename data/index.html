@@ -245,11 +245,12 @@ function onMessage(event) {
 		else if (variable == 'SM3R'){document.getElementById('SM3R').value = data.SM3R; document.getElementById('SM3RS').innerHTML = data.SM3R;}
 		else if (variable == 'SBSM'){document.getElementById('SBSM').value = data.SBSM; document.getElementById('SBSMS').innerHTML = data.SBSM;}
 		else if (variable == 'SSSF'){document.getElementById('SSSF').value = data.SSSF; document.getElementById('SSSFS').innerHTML = data.SSSF;}
-		else if (variable == 'SHUE'){document.getElementById('SHUE').value = data.SHUE; document.getElementById('SHUES').innerHTML = data.SHUE;}
-		else if (variable == 'SHUE'){document.getElementById('SHUE').value = data.SHUE; document.getElementById('SHUES').innerHTML = data.SHUE;}
-		else if (variable == 'SHUE'){document.getElementById('SHUE').value = data.SHUE; document.getElementById('SHUES').innerHTML = data.SHUE;}
-		else if (variable == 'SHUE'){document.getElementById('SHUE').value = data.SHUE; document.getElementById('SHUES').innerHTML = data.SHUE;}
+
 		else if (variable == 'SPST'){document.getElementById('SPST').value = data.SPST; document.getElementById('SPSTS').innerHTML = data.SPST;}
+
+		else if (variable == 'SBOF'){document.getElementById('SBOF').value = data.SBOF; document.getElementById('SBOFS').innerHTML = data.SBOF;}
+		else if (variable == 'SBOV'){document.getElementById('SBOV').value = data.SBOV; document.getElementById('SBOVS').innerHTML = data.SBOV;}
+		else if (variable == 'SOSS'){document.getElementById('SOSS').value = data.SOSS; document.getElementById('SOSSS').innerHTML = data.SOSS;}
 
 		else if (variable == 'TCON'){document.getElementById('TCON').checked = data.TCON;}
 		else if (variable == 'TCFA'){document.getElementById('TCFA').checked = data.TCFA;}
@@ -1421,9 +1422,9 @@ _**Bri Value (0-255) :
 
 <div class="slidecontainerx">
 <div class="titlex">
-_**Glow Mode (0-10):
+_**Glow Mode (0-9):
 </div>
-<input id="SGLO" class="sliderx" type="range" min="0" max="10" step="1" value="0" onchange="updateSlider(this.id, this.value)">
+<input id="SGLO" class="sliderx" type="range" min="0" max="9" step="1" value="0" onchange="updateSlider(this.id, this.value)">
 <div class="varvaluex" id="SGLOS"></div><div class="infox">
 <div class="dropdown">
 	<button class="dropbtn">info list:</button>
@@ -1437,8 +1438,7 @@ _**Glow Mode (0-10):
 		<li value="6">6: offset glow</li>
 		<li value="7">7: half wave</li>	
 		<li value="8">8: full wave</li>
-		<li value="9">9: long wave</li>
-		<li value="10">10: XL wave</li>
+		<li value="9">9: xl wave</li>
 	</div>
 	</div>
 </div>
@@ -1458,7 +1458,6 @@ _**Glow Mode (0-10):
 	<p></p>	
 	<p></p>
 	<p></p>	
-	<p></p>
 	</div>
 	<div class="varvaluex"></div><div class="infox"></div>
 </div>
@@ -1595,6 +1594,79 @@ _**Wave BPM(br):
   </div>
   <div class="varvaluex"></div><div class="infox"></div>  
 </div>
+<br>
+<div class="slidecontainerx">
+	<div class="titlex">
+	ledOffset:
+	</div>
+	<input id="SBOF" class="sliderx" type="range" min="1" max="20" step="1" value="0" onchange="updateSlider(this.id, this.value)">
+	<div class="varvaluex" id="SBOFS"></div><div class="infox"></div>
+</div>
+
+<div class="slidecontainerx">
+	<div class="titlex">
+	</div>
+		<div class="sliderticksEmptyx">
+		<p></p>	
+		<p></p>
+		<p></p>
+		<p></p>
+		<p></p>
+		<p></p>
+		<p></p>
+		<p></p>
+		<p></p>	
+		<p></p>
+		<p></p>
+		<p></p>
+		<p></p>
+		<p></p>
+		<p></p>
+		<p></p>
+		<p></p>
+		<p></p>	
+		<p></p>
+		<p></p>
+		</div>
+		<div class="varvaluex"></div><div class="infox"></div>
+	</div>
+		
+<div class="slidecontainerx">
+	<div class="titlex">
+	Overlay (0-2):
+	</div>
+	<input id="SBOV" class="sliderx" type="range" min="0" max="2" step="1" value="0" onchange="updateSlider(this.id, this.value)">
+	<div class="varvaluex" id="SBOVS"></div><div class="infox">
+	<div class="dropdown">
+		<button class="dropbtn">info list:</button>
+		<div class="dropdown-content">
+			<li value="0">0: no overay</li>
+			<li value="1">1: little light</li>
+			<li value="2">2: jumping dot</li>
+		</div>
+		</div>
+	</div>
+	</div>
+		
+	<div class="slidecontainerx">
+	<div class="titlex">
+	</div>
+		<div class="sliderticksEmptyx">
+		<p></p>
+		<p></p>
+		<p></p>
+		</div>
+		<div class="varvaluex"></div><div class="infox"></div>
+	</div>
+
+<div class="slidecontainerx">
+	<div class="titlex">
+	overlay speed (ms):
+	</div>
+	<input id="SOSS" class="sliderx" type="range" min="200" max="10000" step="50" value="500" onchange="updateSlider(this.id, this.value)">
+	<div class="varvaluex" id="SOSSS"></div><div class="infox"></div>
+</div>
+
 <br>
 <p class="sliderwindow"> SATURATION:</P>
 
@@ -1937,12 +2009,14 @@ _Bees (19, 22)
 <span class="textinfo"> color order: </span> &nbsp 
 <span class="inputparam">
 <select onchange="changeColor('SETT', this.value)">
-    <option value="0. RGB">RGB</option>
-    <option value="1. GRB">GRB</option>
-    <option value="2. BRG">BRG</option>
-    <option value="3. BGR">BGR</option>
-    <option value="4. RBG">RBG</option>
-    <option value="5. GBR">GBR</option>
+    <option value="0. RGB">pin 16 RGB</option>
+    <option value="1. GRB">pin 16 GRB</option>
+    <option value="2. BRG">pin 16 BRG</option>
+    <option value="3. BGR">pin 16 BGR</option>
+    <option value="4. RBG">pin 16 RBG</option>
+    <option value="5. GBR">pin 16 GBR</option>
+    <option value="6. RGB">pin 16, 3, 26 RGB</option>
+    <option value="7. GRB">pin 16, 3, 26 GRB</option>	
 </select>
 </span>&nbsp
 <span class="textinfo" id="HCOLS">___</span> 

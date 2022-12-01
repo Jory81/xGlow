@@ -652,7 +652,7 @@ uint8_t   colour[15]={};
 //colour[4] = 0;   colour[0] = 55;     colour[1] = 158;     colour[2] = 88;     colour[3] = 217;
 
 uint8_t   colourS[6]={55, 164, 96, 217, 0, 140}; //  colourS[0]=217;        colourS[1]=164;        colourS[2]=0;        colourS[3]=96;        colourS[4]=55;            colour[5]=140;
-uint8_t   newColour[15]={};
+uint8_t   newColour[15]={0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 uint8_t   colourR[10]={0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 int       dirArray[10]={1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
 uint8_t   blockArray[750]={0};
@@ -1022,6 +1022,11 @@ uint16_t rn14=5000;
 uint16_t rn15=0;
 uint16_t rn16=0;
 
+uint8_t blackPos = 0;
+uint8_t ledOffset = 1;
+uint8_t overLay = 0;
+uint32_t overlaySpeed = 1000;
+
 int     T = 0;
 long    cycleT = 0;
 unsigned long irCheckedTime = 0;
@@ -1031,6 +1036,7 @@ unsigned long previousMillis2 = 0;
 unsigned long previousMillis5 = 0;  
 unsigned long previousMillis6 = 0;
 unsigned long previousMillis7 = 0;
+unsigned long previousMillis8 = 0;
 unsigned long previousMillis11 = 0;
 unsigned long previousMillis13 = 0;
 unsigned long previousMillis14 = 0;

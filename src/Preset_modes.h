@@ -2093,10 +2093,17 @@ else if (millis() - previousMillis36 > INTERVAL7 && varON == 2) {
         }      
       }
     else if ((!changeColor) && (!inSync)){
-      oldArrayn = arrayn;
-      arrayn = random(arrayCount);
-      updateOled(24, 40, &oldArrayn);
-      selectcolorArray();
+        if (colorMode == 4){
+          oldArrayn = arrayn;
+          arrayn = random(arrayCount);
+          updateOled(24, 40, &oldArrayn);
+          selectcolorArray();
+        }
+        else {
+          for (int i=0; i<15; i++){
+          newColour[i] = changeColourFcn(colorMode, newColour[i], 0, 255);
+          }
+        }
       alertColor = true;
       INTERVAL7=interval9*timeArray2[random(0,6)]*timefactor3;
       updateOledFloat(88, 0, &INTERVAL7, 0); 
@@ -3535,14 +3542,12 @@ if (millis() - previousMillis1 >= modeDelay) {
     yintm=yint;
     modeDelay = 1*changeSpeed;   
   }
-  else if (varON == 2){
-    if (millis() - previousMillis36 > INTERVAL7 && colorMode != 4) {
-      
+  else if (millis() - previousMillis36 > INTERVAL7 && varON == 2){ //  && colorMode != 4     
       if ((syncEsp) && (alertColor)){
         espNowMessage = true;
         EspNowMessageType = 7;
         alertColor = false;
-      }; 
+      }
 
       modeDelay = changeSpeed/10;
       newColors++;
@@ -3564,10 +3569,17 @@ if (millis() - previousMillis1 >= modeDelay) {
           }      
       }
         else if ((!changeColor) && (!inSync)){
-          oldArrayn = arrayn;
-          arrayn = random(arrayCount);
-          updateOled(24, 40, &oldArrayn);
-          selectcolorArray();
+          if (colorMode == 4){
+            oldArrayn = arrayn;
+            arrayn = random(arrayCount);
+            updateOled(24, 40, &oldArrayn);
+            selectcolorArray();
+          }
+          else {
+            for (int i=0; i<15; i++){
+            newColour[i] = changeColourFcn(colorMode, newColour[i], 0, 255);
+            }
+          }
           alertColor = true;
           INTERVAL7=interval9*timeArray2[random(0,6)]*timefactor3;
           updateOledFloat(88, 0, &INTERVAL7, 0); 
@@ -3575,11 +3587,10 @@ if (millis() - previousMillis1 >= modeDelay) {
           T=0;        
         }
       }
-    else if (colorMode == 4){
-      changePColors();
-      modeDelay = 3*changeSpeed;    
-    }
-  }
+    // else if (colorMode == 4){
+    //   changePColors();
+    //   modeDelay = 3*changeSpeed;    
+    // }
 
   if (newColors >= 1){
   colourlu=0;
@@ -4061,7 +4072,13 @@ else if ((variant==3 || variant ==4 || variant ==5) && (!readyToChange)){
 void RGBmode(void){
 if (millis() - previousMillis1 >= changeSpeed) {
   previousMillis1 = millis();
-  fill_solid( leds, NUM_LEDS, CRGB(Red,Green,Blue));
+  for (int i=0; i<NUM_LEDS; i++){
+    leds[i] = CRGB::Black;
+  }
+  for (int i=0; i<NUM_LEDS; i+=ledOffset){
+    leds[i] = CRGB(Red, Green, Blue);
+  }
+  //fill_solid( leds, NUM_LEDS, CRGB(Red,Green,Blue));
   FastLED.show();
 
   if (loadHSV == true && updateHSV == true){
