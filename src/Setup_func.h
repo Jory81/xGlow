@@ -239,16 +239,16 @@ void LED_properties(){
       case 4: FastLED.addLeds<WS2811,DATA_PIN, RBG>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip); break;
       case 5: FastLED.addLeds<WS2811,DATA_PIN, GBR>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip); break;
 
-      case 6: FastLED.addLeds<WS2811,DATA_PIN, RGB>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
-              FastLED.addLeds<WS2811,DATA_PIN2, RGB>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
-              FastLED.addLeds<WS2811,DATA_PIN3, RGB>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
+      // case 6: FastLED.addLeds<WS2811,DATA_PIN, RGB>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
+      //         FastLED.addLeds<WS2811,DATA_PIN2, RGB>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
+      //         FastLED.addLeds<WS2811,DATA_PIN3, RGB>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
       
-      break; // RGB is also COL_ORD[0] - old definition.
-      case 7: FastLED.addLeds<WS2811,DATA_PIN, GRB>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip); 
-              FastLED.addLeds<WS2811,DATA_PIN2, GRB>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
-              FastLED.addLeds<WS2811,DATA_PIN3, GRB>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
+      // break; // RGB is also COL_ORD[0] - old definition.
+      // case 7: FastLED.addLeds<WS2811,DATA_PIN, GRB>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip); 
+      //         FastLED.addLeds<WS2811,DATA_PIN2, GRB>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
+      //         FastLED.addLeds<WS2811,DATA_PIN3, GRB>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
       
-      break;      
+      // break;      
       default: FastLED.addLeds<WS2811,DATA_PIN, RGB>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip); break;
     } 
 
