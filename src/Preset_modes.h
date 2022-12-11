@@ -1220,7 +1220,7 @@ if ((variant == 0 || variant == 1 || variant == 2) && (!readyToChange)){
     }
     }
     
-    if (yy == 0 && num15 <1){
+    if (yy == 0 && num15 < 1){
     num15++;
     for (int s=0; s<numsparks; s++){
         if (variant != 0){
@@ -2013,7 +2013,7 @@ else if (fadeIsActive){
 
 void strobe(void){  
 if (millis() - previousMillis1 >= changeSpeed){
-     if (colorMode == 5){
+     if (colorMode == 5){i < numsparks
          colourChangeDelay++;
          if (colourChangeDelay >= setDifference*cfactor3){
          yval1+=10;
@@ -2024,14 +2024,18 @@ if (millis() - previousMillis1 >= changeSpeed){
      }
     
      if (colorMode == 5){
-          ig3=random(NUM_LEDS);
+            for (int i = 0; i < numsparks; i++){
+            ig3=random(NUM_LEDS);
             leds[ig3]=CHSV((yval1+random(-10,10)), S, BRIGH);
+            }
             handleGlitter();
             previousMillis1 = millis();
      }
      else {
-        ig3=random(NUM_LEDS);
-        leds[ig3]=CHSV(yval1, S, BRIGH);
+        for (int i = 0; i < numsparks; i++){
+          ig3=random(NUM_LEDS);
+          leds[ig3]=CHSV(yval1, S, BRIGH);
+        }
         handleGlitter();  
         previousMillis1 = millis();
       }   

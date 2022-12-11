@@ -487,12 +487,13 @@ if (colorMode == 0){
   //   DENSITY=170;}
   // else if (density == 3){
   //   DENSITY=255;}    
-
-  if( random(255) < setDifference ) {
-    int pos = random(NUM_LEDS);
-    if(!leds[pos]) {
-      leds[pos] = CHSV(yval1,Stwinkle,150);
-      setPixelDirection(pos, GETTING_BRIGHTER);
+  for (int k = 0; k<numsparks; k++){
+    if( random(255) < setDifference ) {
+      int pos = random(NUM_LEDS);
+      if(!leds[pos]) {
+        leds[pos] = CHSV(yval1,Stwinkle,150);
+        setPixelDirection(pos, GETTING_BRIGHTER);
+      }
     }
   }
 }
