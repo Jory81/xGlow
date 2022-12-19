@@ -2013,7 +2013,7 @@ else if (fadeIsActive){
 
 void strobe(void){  
 if (millis() - previousMillis1 >= changeSpeed){
-     if (colorMode == 5){i < numsparks
+     if (colorMode == 5){
          colourChangeDelay++;
          if (colourChangeDelay >= setDifference*cfactor3){
          yval1+=10;
