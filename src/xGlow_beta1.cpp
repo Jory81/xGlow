@@ -70,7 +70,10 @@ int NUM_LEDS = 100; //EEPROM.readInt(93); THIS ONE WILL BE RE-INITIALIZED DURING
   const int DATA_PIN = 16; // GPIO2 - jumper set to the left
   const int DATA_PIN2 = 3; // GPIO2 - jumper set to the left
   const int DATA_PIN3 = 26; // GPIO2 - jumper set to the left
+  
   //const int DATA_PIN = 3; // This is GPIO3 jumper set to the right
+  
+  //const int DATA_PIN = 1; // This is GPIO3 jumper set to the right
 
 #endif
 unsigned int FPS = 20; // Refresh time is 20 ms '20 FPS'. '20 FPS' is 50 FRAMES PER SECOND - sorry about the semantics.
