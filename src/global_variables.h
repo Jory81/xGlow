@@ -294,16 +294,16 @@ storeInEEPROM customVar = {
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, // ssid storage
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, // pass storage
       1, // empty byte so ymin loads correctly
-      42, // ymin
+      32, // ymin
       85, // ymax
       87, // ymin1
       206, // ymax1
-      245, // yminrood
-      10, // ymaxrood
-      55, // ymingroen
-      115,// ymaxgroen
-      145, // yminblauw
-      180, // ymaxblauw
+      35, // yminrood
+      78, // ymaxrood
+      100, // ymingroen
+      145,// ymaxgroen
+      180, // yminblauw
+      238, // ymaxblauw
       // cmodes (1 = active)
       1, 1, 1, 1, 1, 1, 1, 1, 1, 1, // cmodes (1 = active)
       1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
@@ -411,7 +411,7 @@ storeInEEPROM customVar = {
       110, // ymin3
       25, // ymax3
       248, // ymin4
-      47, // ymax4
+      32, // ymax4
       60, // range
 
       7, // FastLDPalet;

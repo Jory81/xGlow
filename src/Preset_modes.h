@@ -61,7 +61,7 @@ if (millis() - previousMillis36 > INTERVAL7 && varON == 2) {
     espNowMessage = true;
     EspNowMessageType = 7;
     alertColor = false;
-    };
+    }
   
     for (int i = 0;  i < 10; i++){
      if (colour[i] != newColour[i]) { 
@@ -2467,6 +2467,7 @@ void twinkle(void){
 
 void static_glow_2(void){
   if (millis() - previousMillis1 > INTERVAL7 && (!inSync)){
+      previousMillis1 = millis();
       // if (!inSync){ // && setDifference > 20
       yx = changeColourFcn(colorMode, yx, 0, 255);
       if (syncEsp){espNowMessage = true;   EspNowMessageType = 16;  };
@@ -2476,7 +2477,7 @@ void static_glow_2(void){
       // }  
       INTERVAL7=interval9*timeArray2[random(0,6)]*timefactor3;
       updateOledFloat(88, 0, &INTERVAL7, 0); 
-      previousMillis1 = millis();
+      // previousMillis1 = millis();
       updateOled(102, 56, &yx);
       T=0;
   }
