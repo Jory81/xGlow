@@ -23,7 +23,7 @@ void spiffs(){
 }
 
 void eeprom(){
-      EEPROM.begin(3200);
+      EEPROM.begin(3500);
 }
 
 void initializeEEPROM(){

@@ -247,10 +247,15 @@ function onMessage(event) {
 		else if (variable == 'SSSF'){document.getElementById('SSSF').value = data.SSSF; document.getElementById('SSSFS').innerHTML = data.SSSF;}
 
 		else if (variable == 'SPST'){document.getElementById('SPST').value = data.SPST; document.getElementById('SPSTS').innerHTML = data.SPST;}
+		else if (variable == 'SPSV'){document.getElementById('SPSV').innerHTML = data.SPSV;}
 
 		else if (variable == 'SBOF'){document.getElementById('SBOF').value = data.SBOF; document.getElementById('SBOFS').innerHTML = data.SBOF;}
 		else if (variable == 'SBOV'){document.getElementById('SBOV').value = data.SBOV; document.getElementById('SBOVS').innerHTML = data.SBOV;}
 		else if (variable == 'SOSS'){document.getElementById('SOSS').value = data.SOSS; document.getElementById('SOSSS').innerHTML = data.SOSS;}
+
+		else if (variable == 'SSOF'){document.getElementById('SSOF').value = data.SSOF; document.getElementById('SSOFS').innerHTML = data.SSOF;}
+		else if (variable == 'SSOV'){document.getElementById('SSOV').value = data.SSOV; document.getElementById('SSOVS').innerHTML = data.SSOV;}
+		else if (variable == 'SOSP'){document.getElementById('SOSP').value = data.SOSP; document.getElementById('SOSPS').innerHTML = data.SOSP;}		
 
 		else if (variable == 'TCON'){document.getElementById('TCON').checked = data.TCON;}
 		else if (variable == 'TCFA'){document.getElementById('TCFA').checked = data.TCFA;}
@@ -260,6 +265,7 @@ function onMessage(event) {
 		else if (variable == 'TRBO'){document.getElementById('TRBO').checked = data.TRBO;}
 		else if (variable == 'TRVO'){document.getElementById('TRVO').checked = data.TRVO;}
 		else if (variable == 'TWHO'){document.getElementById('TWHO').checked = data.TWHO;}
+		else if (variable == 'TSBS'){document.getElementById('TSBS').checked = data.TSBS;}
 		else if (variable == 'TDIR'){document.getElementById('TDIR').checked = data.TDIR;}
 		else if (variable == 'TCAC'){document.getElementById('TCAC').checked = data.TCAC;}
 		else if (variable == 'TSTE'){document.getElementById('TSTE').checked = data.TSTE;}
@@ -447,6 +453,18 @@ function onMessage(event) {
 				else if (data.BSMP[m] == 26){
 					document.getElementById("bs26").style.color = "blue";
 				}
+				else if (data.BSMP[m] == 27){
+					document.getElementById("bs27").style.color = "blue";
+				}
+				else if (data.BSMP[m] == 28){
+					document.getElementById("bs28").style.color = "blue";
+				}
+				else if (data.BSMP[m] == 29){
+					document.getElementById("bs29").style.color = "blue";
+				}
+				else if (data.BSMP[m] == 30){
+					document.getElementById("bs30").style.color = "blue";
+				}				
 				// else if (data.BSMP[m] == 6){
 				// 	document.getElementById(data.BSMP[m]).style.color = "green";
 				// }
@@ -559,6 +577,18 @@ function onMessage(event) {
 				else if (data.BSMY[m] == 26){
 					document.getElementById("bs26").style.color = "blue";
 				}
+				else if (data.BSMP[m] == 27){
+					document.getElementById("bs27").style.color = "blue";
+				}
+				else if (data.BSMP[m] == 28){
+					document.getElementById("bs28").style.color = "blue";
+				}
+				else if (data.BSMP[m] == 29){
+					document.getElementById("bs29").style.color = "blue";
+				}
+				else if (data.BSMP[m] == 30){
+					document.getElementById("bs30").style.color = "blue";
+				}
 				// else if (data.BSMY[m] == 6){
 				// 	document.getElementById(data.BSMY[m]).style.color = "green";
 				// }
@@ -670,6 +700,18 @@ function onMessage(event) {
 				}
 				else if (data.BSMX[m] == 26){
 					document.getElementById("bs26").style.color = "blue";
+				}
+				else if (data.BSMP[m] == 27){
+					document.getElementById("bs27").style.color = "blue";
+				}
+				else if (data.BSMP[m] == 28){
+					document.getElementById("bs28").style.color = "blue";
+				}
+				else if (data.BSMP[m] == 29){
+					document.getElementById("bs29").style.color = "blue";
+				}
+				else if (data.BSMP[m] == 30){
+					document.getElementById("bs30").style.color = "blue";
 				}
 				// else if (data.BSMX[m] == 6){
 				// 	document.getElementById(data.BSMX[m]).style.color = "green";
@@ -887,7 +929,7 @@ _selection
 		&nbsp;
 
 	  <div class="titlex1">
-		<p class="progwindows"> <span id="progn"></span><span>  (prog: </span><span id="SPGMS">___</span><span>)</span></p>
+		<p class="progwindows"> <span id="progn"></span><span>  (prog: </span><span id="SPGMS"></span>.<span id="SPSV"></span><span>)</span></p>
 		</div>
 </div>	
 
@@ -1027,6 +1069,10 @@ _Prog. Mode (0-37):
 			  <li id="bs24" value="24"  onclick="updateNumberS('SBSM', this.value)">24: no_glow_hiBr</li>
 			  <li id="bs25" value="25"  onclick="updateNumberS('SBSM', this.value)">25: no_glow_loBr</li>
 			  <li id="bs26" value="26"  onclick="updateNumberS('SBSM', this.value)">26: spark_3</li>
+			  <li id="bs27" value="27"  onclick="updateNumberS('SBSM', this.value)">27: random Br/S</li>
+			  <li id="bs28" value="28"  onclick="updateNumberS('SBSM', this.value)">28: empty</li>
+			  <li id="bs29" value="29"  onclick="updateNumberS('SBSM', this.value)">29: empty</li>
+			  <li id="bs30" value="30"  onclick="updateNumberS('SBSM', this.value)">30: empty</li>
 			</div>
 		  </div>
 		  </div>
@@ -1428,9 +1474,9 @@ _**Bri Value (0-255) :
 
 <div class="slidecontainerx">
 <div class="titlex">
-_**Glow Mode (0-9):
+_**Glow Mode (0-12):
 </div>
-<input id="SGLO" class="sliderx" type="range" min="0" max="9" step="1" value="0" onchange="updateSlider(this.id, this.value)">
+<input id="SGLO" class="sliderx" type="range" min="0" max="12" step="1" value="0" onchange="updateSlider(this.id, this.value)">
 <div class="varvaluex" id="SGLOS"></div><div class="infox">
 <div class="dropdown">
 	<button class="dropbtn">info list:</button>
@@ -1445,6 +1491,9 @@ _**Glow Mode (0-9):
 		<li value="7">7: half wave</li>	
 		<li value="8">8: full wave</li>
 		<li value="9">9: xl wave</li>
+		<li value="10">10: random</li>
+		<li value="11">11: strings</li>
+		<li value="12">12: s7_strings</li>
 	</div>
 	</div>
 </div>
@@ -1463,7 +1512,10 @@ _**Glow Mode (0-9):
 	<p></p>
 	<p></p>	
 	<p></p>
-	<p></p>	
+	<p></p>
+	<p></p>
+	<p></p>		
+	<p></p>
 	</div>
 	<div class="varvaluex"></div><div class="infox"></div>
 </div>
@@ -1686,9 +1738,9 @@ _**Wave BPM(br):
 	
 <div class="slidecontainerx">
 		<div class="titlex">
-		_**Sat Mode (0-10):
+		_**Sat Mode (0-12):
 		</div>
-		<input id="SSTM" class="sliderx" type="range" min="0" max="10" step="1" value="0" onchange="updateSlider(this.id, this.value)">
+		<input id="SSTM" class="sliderx" type="range" min="0" max="11" step="1" value="0" onchange="updateSlider(this.id, this.value)">
 		<div class="varvaluex" id="SSTMS"></div><div class="infox">
 		<div class="dropdown">
 			<button class="dropbtn">info list:</button>
@@ -1703,7 +1755,9 @@ _**Wave BPM(br):
 			  <li value="7">7: half wave</li>	
 			  <li value="8">8: full wave</li>
 			  <li value="9">9: long wave</li>
-			  <li value="10">10: XL wave</li>
+			  <li value="10">10: random</li>
+			  <li value="11">11: strings</li>
+			  <li value="12">12: s7_strings</li>
 			</div>
 		  </div>
 		</div>
@@ -1723,6 +1777,8 @@ _**Wave BPM(br):
 			<p></p>	
 			<p></p>
 			<p></p>	
+			<p></p>
+			<p></p>
 			<p></p>
 		  </div>
 		<div class="varvaluex"></div><div class="infox"></div>  
@@ -1862,6 +1918,79 @@ _**Wave BPM (sat):
   <div class="varvaluex"></div><div class="infox"></div>  
 </div>
 <br>
+<div class="slidecontainerx">
+	<div class="titlex">
+	ledOffset:
+	</div>
+	<input id="SSOF" class="sliderx" type="range" min="1" max="20" step="1" value="0" onchange="updateSlider(this.id, this.value)">
+	<div class="varvaluex" id="SSOFS"></div><div class="infox"></div>
+</div>
+
+<div class="slidecontainerx">
+	<div class="titlex">
+	</div>
+		<div class="sliderticksEmptyx">
+		<p></p>	
+		<p></p>
+		<p></p>
+		<p></p>
+		<p></p>
+		<p></p>
+		<p></p>
+		<p></p>
+		<p></p>	
+		<p></p>
+		<p></p>
+		<p></p>
+		<p></p>
+		<p></p>
+		<p></p>
+		<p></p>
+		<p></p>
+		<p></p>	
+		<p></p>
+		<p></p>
+		</div>
+		<div class="varvaluex"></div><div class="infox"></div>
+	</div>
+		
+<div class="slidecontainerx">
+	<div class="titlex">
+	Overlay (0-2):
+	</div>
+	<input id="SSOV" class="sliderx" type="range" min="0" max="2" step="1" value="0" onchange="updateSlider(this.id, this.value)">
+	<div class="varvaluex" id="SSOVS"></div><div class="infox">
+	<div class="dropdown">
+		<button class="dropbtn">info list:</button>
+		<div class="dropdown-content">
+			<li value="0">0: no overay</li>
+			<li value="1">1: little sat</li>
+			<li value="2">2: jumping dot</li>
+		</div>
+		</div>
+	</div>
+	</div>
+		
+	<div class="slidecontainerx">
+	<div class="titlex">
+	</div>
+		<div class="sliderticksEmptyx">
+		<p></p>
+		<p></p>
+		<p></p>
+		</div>
+		<div class="varvaluex"></div><div class="infox"></div>
+	</div>
+
+<div class="slidecontainerx">
+	<div class="titlex">
+	overlay speed (ms):
+	</div>
+	<input id="SOSP" class="sliderx" type="range" min="200" max="10000" step="50" value="500" onchange="updateSlider(this.id, this.value)">
+	<div class="varvaluex" id="SOSPS"></div><div class="infox"></div>
+</div>
+
+<br>
 <div class="switchcontainer">
 Maintain complete waveforms
 <label class="switch1">
@@ -1938,33 +2067,40 @@ Add.offset (1-15):
 
 <div class="switchcontainer">
 <div>
-_*Glitter
-<label class="switch1">
-  <input type="checkbox" id="TGLI" onclick="updateButton(this.id, this.checked)"> 
-  <span class="sliderround1"></span>
-</label>
-</div>
+	_*Glitter
+	<label class="switch1">
+	<input type="checkbox" id="TGLI" onclick="updateButton(this.id, this.checked)"> 
+	<span class="sliderround1"></span>
+	</label>
+	</div>
 <div>
-Rainbow (mode 16-18)
-<label class="switch1">
-  <input type="checkbox" id="TRBO" onclick="updateButton(this.id, this.checked)"> 
-  <span class="sliderround1"></span> 
-</label>
-</div>
+	Rainbow (mode 16-18)
+	<label class="switch1">
+	<input type="checkbox" id="TRBO" onclick="updateButton(this.id, this.checked)"> 
+	<span class="sliderround1"></span> 
+	</label>
+	</div>
 <div>
-Reverse (mode 16-18)
-<label class="switch1">
-  <input type="checkbox" id="TRVO" onclick="updateButton(this.id, this.checked)"> 
-  <span class="sliderround1"></span> 
-</label>
-</div>
+	Reverse (mode 16-18)
+	<label class="switch1">
+	<input type="checkbox" id="TRVO" onclick="updateButton(this.id, this.checked)"> 
+	<span class="sliderround1"></span> 
+	</label>
+	</div>
 <div>
-white (mode 29)
-<label class="switch1">
-  <input type="checkbox" id="TWHO" onclick="updateButton(this.id, this.checked)"> 
-  <span class="sliderround1"></span> 
-</label>
-</div>
+	white (mode 29)
+	<label class="switch1">
+	<input type="checkbox" id="TWHO" onclick="updateButton(this.id, this.checked)"> 
+	<span class="sliderround1"></span> 
+	</label>
+	</div>
+<div>
+	switch BrS (all modes)
+	<label class="switch1">
+	  <input type="checkbox" id="TSBS" onclick="updateButton(this.id, this.checked)"> 
+	  <span class="sliderround1"></span> 
+	</label>
+	</div>
 </div>
 <br>
 <div class="switchcontainer">	

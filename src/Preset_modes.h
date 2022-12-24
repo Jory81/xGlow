@@ -141,7 +141,16 @@ for (int k=0; k<numsparks; k++){
 if (millis() - previousMillisLN[0] >= INTERVAL7 && ((numsparks == 1) || (numsparks > 1))){       
 if (millis() - previousMillisAM[k] >= (INTERVALf[k]*timeSpeed[k])) {
     previousMillisAM[k] = millis();
+
     longxArray[i[k]]=yMA[k];//+random(-ydiff,ydiff);
+    if (satON == 12){
+        satval[i[k]] = sMA[k];
+    }
+    if (glowON == 12){
+        brigh[i[k]] = bMA[k];
+    }
+
+
     if (varON == 2 && i[k] > 0 && colorMode !=4){
       longxArray[i[k]-1]=z[k];
     }
@@ -150,13 +159,19 @@ if (millis() - previousMillisAM[k] >= (INTERVALf[k]*timeSpeed[k])) {
     if (i[k]<0){
       i[k]=NUM_LEDS-1;
     
-    if (colorMode == 5){
-          yval1 = yval1 + (60/numsparks);
-          yMA[k] = yval1;
-     }
-     else {
-      yMA[k] = changeColourFcn(colorMode, yMA[k], 0, 255); 
-     }
+        if (colorMode == 5){
+              yval1 = yval1 + (60/numsparks);
+              yMA[k] = yval1;
+        }
+        else {
+          yMA[k] = changeColourFcn(colorMode, yMA[k], 0, 255); 
+        }
+        if (satON == 12){
+          sMA[k] = random8(offS, S);
+        }
+        if (glowON == 12){
+          bMA[k] = random8(offBr, BRIGH);
+        }
 
       if (varON == 2 && colorMode !=4 ){
         z[k] = yMA[k] + random(50, 200);
@@ -270,10 +285,14 @@ previousMillis2 = millis();
    leds[i] = CHSV((longxArray[i]+yvar[varlu]+diff[difflu]),satval[satlu],brigh[brighlu]);
     
    brighlu++;
-   if (brighlu >= numbrigh){brighlu = 0;}
+   if (glowON != 11){
+    if (brighlu >= numbrigh){brighlu = 0;}
+   }
 
    satlu++;
-   if (satlu >= numsat){satlu = 0;}
+   if (satON != 11){
+    if (satlu >= numsat){satlu = 0;}
+   }
 
    varlu++;
    if (varlu >= 10){varlu = 0;}
@@ -300,6 +319,15 @@ if (millis() - previousMillisAM[k] >= (INTERVALf[k]*timeSpeed[k])) {
     longxArray[NUM_LEDS/2-(i[k])]=yMA[k];//+random(-ydiff,ydiff);
     longxArray[NUM_LEDS/2+(i[k])]=yMA[k];//+random(-ydiff,ydiff);
 
+    if (satON == 12){
+        satval[NUM_LEDS/2-(i[k])] = sMA[k];
+        satval[NUM_LEDS/2+(i[k])] = sMA[k];
+    }
+    if (glowON == 12){
+        brigh[NUM_LEDS/2-(i[k])] = bMA[k];
+        brigh[NUM_LEDS/2+(i[k])] = bMA[k];
+    }
+
     if (varON == 2 && i[k] > 0 && colorMode !=4){
       longxArray[NUM_LEDS/2-(i[k]-1)]=z[k];
       longxArray[NUM_LEDS/2+(i[k]+1)]=z[k];
@@ -309,13 +337,19 @@ if (millis() - previousMillisAM[k] >= (INTERVALf[k]*timeSpeed[k])) {
     if (i[k]>(NUM_LEDS/2)){
       i[k]=0;
     
-    if (colorMode == 5){
-          yval1 = yval1 + (60/numsparks);
-          yMA[k] = yval1;
-     }
-     else {
-      yMA[k] = changeColourFcn(colorMode, yMA[k], 0, 255); 
-     }
+        if (colorMode == 5){
+              yval1 = yval1 + (60/numsparks);
+              yMA[k] = yval1;
+        }
+        else {
+          yMA[k] = changeColourFcn(colorMode, yMA[k], 0, 255); 
+        }
+        if (satON == 12){
+          sMA[k] = random8(offS, S);
+        }
+        if (glowON == 12){
+          bMA[k] = random8(offBr, BRIGH);
+        }
 
       if (varON == 2 && colorMode !=4 ){
         z[k] = yMA[k] + random(50, 200);
@@ -3339,6 +3373,10 @@ void rainbow_7(void){
             
      for(int i = 0; i < NUM_LEDS; i++ ){
      leds[i] = CHSV(y0r,satval[satlu],brigh[brighlu]);
+
+      // if (i % (int)cfactor2 == 0){
+      //     y0r++;
+      // }
 
      colorCount++;
      if (colorCount == ledspercolor){

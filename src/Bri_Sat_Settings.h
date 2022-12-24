@@ -94,6 +94,36 @@ else if (glowON == 9){
   }
 }
 
+else if (glowON == 10){
+  for (int i = 0; i < numbrigh; i++){
+     if (millis() - previousMillisGlow3[i] > rtGlow3[i]){ // BPS 2 is timer modifier
+        previousMillisGlow3[i] = millis();
+        brigh[i]=random8(offBr, BRIGH);
+        rtGlow3[i]=random(waveTimeBr, waveTimeBr*3);
+    }
+  }
+}
+else if (glowON == 11){
+  for (int k=0; k < cfactor3*7; k++){       
+  if (millis() - previousMillisGlow3[k] > (rtGlow3[k]*timeSpeed[k])) {
+      previousMillisGlow3[k] = millis();
+
+      brigh[numGlow3[k]] = bMA[k];
+      numGlow3[k]=numGlow3[k]-1;
+
+      if (numGlow3[k]<0){
+        numGlow3[k]=NUM_LEDS-1;
+        bMA[k] = random8(offBr, BRIGH);
+        if (random8(25*cfactor3) == 1){
+          rtGlow3[0]=125*timeArray[random(0,5)];
+        }
+        rtGlow3[k]=rtGlow3[0];
+      }
+  }
+  }
+}
+
+
 if (overLay > 0){
   if (overLay == 1){
     for (int i = 0; i < numbrigh; i++){
@@ -103,7 +133,7 @@ if (overLay > 0){
     }
   }
   else if (overLay == 2){
-   if (millis() - previousMillis8 > overlaySpeed){ // BPS 8 is timer modifier
+   if (millis() - previousMillis8 > overlaySpeed){
     previousMillis8 = millis(); 
     blackPos++;
     if (blackPos >= ledOffset){
@@ -226,13 +256,61 @@ else if (satON == 8){
 
 else if (satON == 9){
   for (int i = 0; i < numsat; i++){
-    satval[i]=beatsin8(BPMS, 0, qadd8(S,offS), ((i/2)*convSat));
+    satval[i]=beatsin8(BPMS, 0, qadd8(S,offS), ((i/ledOffsetS)*convSat));
   }
 }
 
 else if (satON == 10){
   for (int i = 0; i < numsat; i++){
-    satval[i]=beatsin8(BPMS, 0, qadd8(S,offS), ((i/3)*convSat));
+     if (millis() - previousMillisSat3[i] > rtSat3[i]){ // BPS 2 is timer modifier
+        previousMillisSat3[i] = millis();
+        satval[i]=random8(offS, S);
+        rtSat3[i]=random(waveTimeS, waveTimeS*3);
+    }
+  }
+}
+
+else if (satON == 11){
+  for (int k=0; k < cfactor3*7; k++){       
+  if (millis() - previousMillisSat3[k] > (rtSat3[k]*timeSpeed[k])) {
+      previousMillisSat3[k] = millis();
+
+      satval[numSat3[k]] = sMA[k];
+      numSat3[k]=numSat3[k]-1;
+
+      if (numSat3[k]<0){
+        numSat3[k]=NUM_LEDS-1;
+        sMA[k] = random8(offS, S);
+        if (random8(25*cfactor3) == 1){
+          rtSat3[0]=125*timeArray[random(0,5)];
+        }
+        rtSat3[k]=rtSat3[0];
+      }
+  }
+  }
+}
+
+if (overLayS > 0){
+  if (overLayS == 1){
+    for (int i = 0; i < numsat; i++){
+      if (i % ledOffsetS != 0){
+      satval[i] = 255;
+      }
+    }
+  }
+  else if (overLayS == 2){
+   if (millis() - previousMillis9 > overlaySpeedS){
+    previousMillis9 = millis(); 
+    satPos++;
+    if (satPos >= ledOffset){
+      blackPos = 0;
+    }
+   }
+    for (int i = 0; i < numsat; i++){
+      if (i % ledOffsetS == satPos){
+      satval[i] = 255;
+      }
+    }
   }
 }
 

@@ -149,16 +149,25 @@ void fillxmasArray(){
           for (int i = 0; i < 256; i++){
           longxArray[i]=yxmas;
           yxmasold=yxmas; 
-          {if ((yxmas < ymaxrood) || (yxmas > ymingroen && yxmas < ymaxgroen) || (yxmas > yminblauw && yxmas < ymaxblauw) || (yxmas > yminrood)){  
-            yxmas=yxmas+setDifference+offdis; 
+          if ((yxmas < ymaxrood) || (yxmas > ymingroen && yxmas < ymaxgroen) || (yxmas > yminblauw && yxmas < ymaxblauw) || (yxmas > yminrood)){ 
+            if (effect_function == xmas_singles){
+              yxmas=yxmas+setDifference+offdis; 
+            }
+            else {
+              yxmas+=offdis;
+            }
           }
           else {
-            yxmas+=offdis;
+            if (effect_function == xmas_singles){
+              yxmas+=offdis;
+            }
+            else {
+              yxmas=yxmas+setDifference+offdis;
+            }
           }
           if (yxmasold > yxmas && numfirstcycle == 0){
             numAmax=i;
             numfirstcycle++;
-          }
           }
           }
         }         
@@ -166,16 +175,25 @@ void fillxmasArray(){
           for (int i = 0; i < 256; i++){
           longxArray[i]=yxmas;
           yxmasold=yxmas; 
-          {if ((yxmas > yminrood && yxmas < ymaxrood) || (yxmas > ymingroen && yxmas < ymaxgroen) || (yxmas > yminblauw && yxmas < ymaxblauw)){  
-            yxmas=yxmas+setDifference+offdis; 
+          if ((yxmas > yminrood && yxmas < ymaxrood) || (yxmas > ymingroen && yxmas < ymaxgroen) || (yxmas > yminblauw && yxmas < ymaxblauw)){  
+            if (effect_function == xmas_singles){
+              yxmas=yxmas+setDifference+offdis; 
+            }
+            else {
+              yxmas+=offdis;
+            }
           }
           else {
-            yxmas+=offdis;
+            if (effect_function == xmas_singles){
+              yxmas+=offdis;
+            }
+            else {
+              yxmas=yxmas+setDifference+offdis;
+            }
           }
           if (yxmasold > yxmas && numfirstcycle == 0){
             numAmax=i;
             numfirstcycle++;
-          }
           }
           }
         }

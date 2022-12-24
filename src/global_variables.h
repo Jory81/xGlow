@@ -103,20 +103,20 @@ struct storeInEEPROM {
   byte colorlengthm2[3];
   byte colorlengthm3[3];
   byte varONglobal; 
-  byte BRIGH[27];
-  byte offBr[27];
-  byte glowON[27];
-  byte BrF[27];
-  byte offS[27];
-  byte S[27]; 
-  byte SF[27];
-  byte satON[27];
-  byte numsat[27];
-  byte numbrigh[27];
-  byte BPMB[27];
-  byte BPMS[27];
-  uint32_t waveTimeBr[27];
-  uint32_t waveTimeS[27];
+  byte BRIGH[31];
+  byte offBr[31];
+  byte glowON[31];
+  byte BrF[31];
+  byte offS[31];
+  byte S[31]; 
+  byte SF[31];
+  byte satON[31];
+  byte numsat[31];
+  byte numbrigh[31];
+  byte BPMB[31];
+  byte BPMS[31];
+  uint32_t waveTimeBr[31];
+  uint32_t waveTimeS[31];
   float timefactor3[modeCount];
   byte numsparks[modeCount];
   byte numsparks2[modeCount];
@@ -365,20 +365,20 @@ storeInEEPROM customVar = {
       20, 50, 10, // colorLength rainbow_6, random_string, pers_block
 
       1, // varON 
-      205, 155, 205, 194, 205,         205, 205, 202, 202, 150,          255, 205, 136, 106, 205,         205, 205, 205, 205, 205,            205, 205, 194, 175, 255, 75, 35,// BRIGH          position 0 is global variable
-      36, 34, 35, 43, 40,              19, 40, 59, 60, 50,               1, 1, 93, 18, 35,                175, 90, 175, 74, 79,                45, 35, 43, 24, 0, 0, 30, // offBr               position 0 is global variable
-      2, 2, 2, 5, 5,                   2, 6, 3, 3, 6,                    3, 3, 4, 2, 8,                   6, 6, 6, 3, 3,                      8, 8, 5, 2, 0, 0, 2,  // glowON                  position 0 is global variable
-      50, 50, 50, 70, 55,              50, 0, 50, 0, 0,                  50, 50, 110, 140, 0,             0, 0, 0, 50, 50,                    50, 50, 50, 0, 0, 0, 125, // BrF                position 0 is global variable
-      35, 35, 35, 20, 80,              45, 160, 30, 112, 35,             30, 35, 45, 35, 56,              28, 142, 85, 45, 45,                35, 35, 20, 1, 115, 35, 35,  // offS               position 0 is global variable
-      250, 255, 255, 185, 225,         200, 200, 202, 248, 250,          255, 248, 200, 145, 200,         200, 200, 200, 200, 200,            200, 255, 161, 216, 248, 255, 250,  // S            position 0 is global variable
-      0, 0, 0, 50, 0,                  50, 0, 0, 0, 0,                   0, 0, 0, 110, 40,                 0, 40, 0, 0, 50,                    0, 0, 0, 0, 0, 0, 0,  // Sf                     position 0 is global variable
-      0, 0, 0, 5, 5,                   5, 3, 0, 4, 0,                    0, 0, 5, 0, 6,                   6, 4, 6, 5, 2,                      5, 0, 5, 4, 4, 0, 0,  // satOn was 3             position 0 is global variable
-      31, 31, 31, 32, 9,               31, 31, 31, 250, 31,              31, 31, 31, 31, 28,              30, 250, 28, 31, 31,                31, 31, 32, 250, 100, 31, 16, // numsat             position 0 is global variable
-      16, 13, 31, 13, 12,              13, 12, 29, 250, 100,             100, 255, 13, 13, 32,             28, 13, 31, 250, 250,               11, 29, 13, 13, 10, 10, 16, // numbrigh           position 0 is global variable
-      30, 30, 51, 30, 30,              20, 30, 12, 12, 20,               12, 10, 30, 30, 20,              60, 30, 60, 54, 48,                 45, 51, 30, 20, 0, 0, 30,  // BPMB              position 0 is global variable
-      30, 30, 30, 39, 60,              30, 45, 20, 15, 30,               20, 30, 60, 30, 60,              60, 60, 60, 60, 20,                 60, 30, 39, 52, 60, 30, 30,  // BPMS               position 0 is global variable
-      2000, 2000, 6000, 2000, 2000,    2000, 20000, 5000, 5000, 3000,    5000, 6000, 2000, 2000, 3000,    30000, 2000, 30000, 12000, 11000,    1333, 6000, 2000, 3000, 2000, 2000, 2000,  // waveTimeBr           position 0 is global variable
-      2000, 2000, 2000, 1538, 1000,    2000, 1333, 5000, 15000, 2000,     5000, 2000, 1000, 2000, 1000,    1000, 1000, 30000, 1000, 3000,      1000, 2000, 1538, 25000, 28000, 2000, 2000, // waveTimeS            position 0 is global variable
+      205, 155, 205, 194, 205,         205, 205, 202, 202, 150,          255, 205, 136, 106, 205,         205, 205, 205, 205, 205,            205, 205, 194, 175, 255, 75, 35,    255, 205, 205, 205,// BRIGH          position 0 is global variable
+      36, 34, 35, 43, 40,              19, 40, 59, 60, 50,               1, 1, 93, 18, 35,                175, 90, 175, 74, 79,                45, 35, 43, 24, 0, 0, 30,    65, 0, 0, 0,// offBr               position 0 is global variable
+      2, 2, 2, 5, 5,                   2, 6, 3, 3, 6,                    3, 3, 4, 2, 8,                   6, 6, 6, 3, 3,                      8, 8, 5, 2, 0, 0, 2,    10, 0, 0, 0,  // glowON                  position 0 is global variable
+      50, 50, 50, 70, 55,              50, 0, 50, 0, 0,                  50, 50, 110, 140, 0,             0, 0, 0, 50, 50,                    50, 50, 50, 0, 0, 0, 125,     100, 100, 100, 100, // BrF                position 0 is global variable
+      35, 35, 35, 20, 80,              45, 160, 30, 112, 35,             30, 35, 45, 35, 56,              28, 142, 85, 45, 45,                35, 35, 20, 1, 115, 35, 35,     125, 0, 0, 0,  // offS               position 0 is global variable
+      250, 255, 255, 185, 225,         200, 200, 202, 248, 250,          255, 248, 200, 145, 200,         200, 200, 200, 200, 200,            200, 255, 161, 216, 248, 255, 250,   255, 205, 205, 205,  // S            position 0 is global variable
+      0, 0, 0, 50, 0,                  50, 0, 0, 0, 0,                   0, 0, 0, 110, 40,                 0, 40, 0, 0, 50,                    0, 0, 0, 0, 0, 0, 0,    0, 0, 0, 0,  // Sf                     position 0 is global variable
+      0, 0, 0, 5, 5,                   5, 3, 0, 4, 0,                    0, 0, 5, 0, 6,                   6, 4, 6, 5, 2,                      5, 0, 5, 4, 4, 0, 0,    10, 0, 0, 0,  // satOn was 3             position 0 is global variable
+      31, 31, 31, 32, 9,               31, 31, 31, 250, 31,              31, 31, 31, 31, 28,              30, 250, 28, 31, 31,                31, 31, 32, 250, 100, 31, 16,     255, 10, 10, 10, // numsat             position 0 is global variable
+      16, 13, 31, 13, 12,              13, 12, 29, 250, 100,             100, 255, 13, 13, 32,             28, 13, 31, 250, 250,               11, 29, 13, 13, 10, 10, 16,      255, 10, 10, 10, // numbrigh           position 0 is global variable
+      30, 30, 51, 30, 30,              20, 30, 12, 12, 20,               12, 10, 30, 30, 20,              60, 30, 60, 54, 48,                 45, 51, 30, 20, 0, 0, 30,     1, 20, 20, 20,   // BPMB              position 0 is global variable
+      30, 30, 30, 39, 60,              30, 45, 20, 15, 30,               20, 30, 60, 30, 60,              60, 60, 60, 60, 20,                 60, 30, 39, 52, 60, 30, 30,     1, 20, 20, 20, // BPMS               position 0 is global variable
+      2000, 2000, 6000, 2000, 2000,    2000, 20000, 5000, 5000, 3000,    5000, 6000, 2000, 2000, 3000,    30000, 2000, 30000, 12000, 11000,    1333, 6000, 2000, 3000, 2000, 2000, 2000,      30000, 10000, 10000, 10000,  // waveTimeBr           position 0 is global variable
+      2000, 2000, 2000, 1538, 1000,    2000, 1333, 5000, 15000, 2000,     5000, 2000, 1000, 2000, 1000,    1000, 1000, 30000, 1000, 3000,      1000, 2000, 1538, 25000, 28000, 2000, 2000,    30000, 10000, 10000, 10000,// waveTimeS            position 0 is global variable
       1.00, 0.25, 1.00, 1.00, 1.00,     1.00, 1.00, 1.00, 1.00, 1.00, // timefactor3
       1.00, 1.00, 1.00, 1.00, 1.00,     1.00, 1.00, 1.00, 1.00, 1.00,
       1.00, 0.25, 1.00, 0.50, 0.50,     0.25, 1.00, 1.00, 1.00, 0.25, 
@@ -646,7 +646,7 @@ static const selectColorMod19_Mod26_pgm selectColor_data[14] PROGMEM =
   {60,  130,  1,}      
 };
 
-uint8_t   brigh[255]={0};
+uint8_t   brigh[600]={0};
 uint8_t   colour[15]={};
 
 //colour[4] = 0;   colour[0] = 55;     colour[1] = 158;     colour[2] = 88;     colour[3] = 217;
@@ -741,12 +741,14 @@ byte    y[30] = {0};
 int     ir[2] = {0,0};
 int     a[30] = {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
 
-uint8_t satval[255]={255};
-byte    satlu=0;
+uint8_t satval[600]={255};
+uint16_t satlu=0;
 uint8_t z[30] = {88};
 uint8_t zmem = 99;
 uint8_t zr[4]={140, 10, 228, 88};
 uint8_t yMA[30]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+uint8_t sMA[30]={255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255};
+uint8_t bMA[30]={255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255};
 
 // int sparkarray[30]={0};
 // int arraypos=0;
@@ -844,6 +846,7 @@ boolean     varBPMB = false;
 boolean     varNumsat = false;
 boolean     varBPMS = false;
 boolean     colourTimerActive = true;
+boolean     switchBrS = true;
 byte        selectedPreset[modeCount] = {0};
 byte        selectedPresetVariable = 0;
 boolean     sendDelayWSMessage=false;
@@ -1027,6 +1030,11 @@ uint8_t ledOffset = 1;
 uint8_t overLay = 0;
 uint32_t overlaySpeed = 1000;
 
+uint8_t satPos = 0;
+uint8_t ledOffsetS = 1;
+uint8_t overLayS = 0;
+uint32_t overlaySpeedS = 1000;
+
 int     T = 0;
 long    cycleT = 0;
 unsigned long irCheckedTime = 0;
@@ -1037,6 +1045,7 @@ unsigned long previousMillis5 = 0;
 unsigned long previousMillis6 = 0;
 unsigned long previousMillis7 = 0;
 unsigned long previousMillis8 = 0;
+unsigned long previousMillis9 = 0;
 unsigned long previousMillis11 = 0;
 unsigned long previousMillis13 = 0;
 unsigned long previousMillis14 = 0;

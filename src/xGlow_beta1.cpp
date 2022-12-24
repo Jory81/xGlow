@@ -431,7 +431,22 @@ void handleEspNowMessage(){
                 doc["SBOF"] = ledOffset;
                 doc["SOSS"] = overlaySpeed;
     } 
-    break;                            
+    break;   
+    case 25:  {
+                doc["SSOV"] = overLayS;
+                doc["SSOF"] = ledOffsetS;
+                doc["SOSP"] = overlaySpeedS;
+    } 
+    break; 
+    case 26:  {
+                doc["YMIR"] = yminrood;
+                doc["YMAR"] = ymaxrood;
+                doc["YMIG"] = ymingroen;
+                doc["YMAG"] = ymaxgroen;
+                doc["YMIB"] = yminblauw;
+                doc["YMAB"] = ymaxblauw;
+    } 
+    break;                                
   } 
   doc["TSYN"] = false;
   doc["TSCN"] = false;  
