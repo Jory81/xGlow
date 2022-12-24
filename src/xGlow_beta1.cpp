@@ -445,8 +445,12 @@ void handleEspNowMessage(){
                 doc["YMAG"] = ymaxgroen;
                 doc["YMIB"] = yminblauw;
                 doc["YMAB"] = ymaxblauw;
-    } 
-    break;                                
+    }
+    break;  
+    case 27:  {
+                doc["TSBS"] = switchBrS;
+    }
+    break;                              
   } 
   doc["TSYN"] = false;
   doc["TSCN"] = false;  

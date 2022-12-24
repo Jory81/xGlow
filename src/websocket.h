@@ -124,7 +124,7 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
       else if (json.containsKey("TRBO")){rainbowON = json["TRBO"];}
       else if (json.containsKey("TRVO")){reverseON = json["TRVO"];}
       else if (json.containsKey("TWHO")){whiteON = json["TWHO"];  if (whiteON){for (int t=0; t<15; t++){satval[t]=S;   satval[0]=0;}} else if (!whiteON){for (int t=0; t<15; t++){satval[t]=S;}}}
-      else if (json.containsKey("TSBS")){switchBrS = json["TSBS"];}
+      else if (json.containsKey("TSBS")){switchBrS = json["TSBS"]; if (syncEsp){espNowMessage = true;   EspNowMessageType = 27;  }; }
       else if (json.containsKey("TDIR")){xdir = json["TDIR"];  if (xdir == 1){dir = 2; dir1 = 1;} else {dir = 1; dir1 = -1;}}
       else if (json.containsKey("TSTE")){saveToEEPROM = json["TSTE"];}
       else if (json.containsKey("TTWO")){tower = json["TTWO"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, tower), tower);  EEPROM.commit();};} // EEPROM
@@ -786,8 +786,10 @@ timefactor3 = EEPROM.readFloat(offsetPosition);
 
 if (selectedPresetVariable == 1){
   DEBUG_PRINTLN("load from position 1");
-    int offsetPosition = (offsetof(storeInEEPROM, BriSPreset[0])) + programMode;  
+    int offsetPosition = (offsetof(storeInEEPROM, BriSPreset[0])) + programMode;
+    if (switchBrS){  
     BriSPreset = EEPROM.read(offsetPosition);
+    }
     offsetPosition = (offsetof(storeInEEPROM, varON[0])) + programMode; 
     varON = EEPROM.read(offsetPosition); for (int p=0; p<10; p++){if (varON == 0){yvar[p]= 0; yvarg[p]= 0;} else {yvar[p]=yvarC[p]; yvarg[p]=yvargC[p];};}
     offsetPosition = (offsetof(storeInEEPROM, numsparks[0])) + programMode; 
@@ -860,7 +862,9 @@ if (selectedPresetVariable == 1){
   else if (selectedPresetVariable == 2){
     DEBUG_PRINTLN("load from position 2");
     int offsetPosition = (offsetof(storeInEEPROM, BriSPreset2[0])) + programMode;  
+    if (switchBrS){  
     BriSPreset = EEPROM.read(offsetPosition);
+    }
     // offsetPosition = (offsetof(storeInEEPROM, arrayn2[0])) + programMode; 
     // arrayn = EEPROM.read(offsetPosition);
     offsetPosition = (offsetof(storeInEEPROM, varON2[0])) + programMode; 
@@ -937,8 +941,10 @@ if (selectedPresetVariable == 1){
 
   else if (selectedPresetVariable == 3){
     DEBUG_PRINTLN("load from position 3");
-        int offsetPosition = (offsetof(storeInEEPROM, BriSPreset3[0])) + programMode;  
+    int offsetPosition = (offsetof(storeInEEPROM, BriSPreset3[0])) + programMode;  
+    if (switchBrS){  
     BriSPreset = EEPROM.read(offsetPosition);
+    }
     offsetPosition = (offsetof(storeInEEPROM, arrayn3[0])) + programMode; 
     arrayn = EEPROM.read(offsetPosition);
     offsetPosition = (offsetof(storeInEEPROM, varON3[0])) + programMode; 
@@ -1010,8 +1016,8 @@ if (selectedPresetVariable == 1){
     offsetPosition = (offsetof(storeInEEPROM, arrayn3[0])) + programMode; 
     arrayn = EEPROM.read(offsetPosition);
     }
-
   }
+
 if (effect_function == gradient || effect_function == sparklingR || effect_function == snow_flakesR){
   dir1=1;
   ymax4 = pgm_read_byte(&selectColor_data[selectColor].ymax4);
@@ -1622,6 +1628,7 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
           else if (variable == "SHUE"){yval = json["SHUE"]; forcedColourChange = true;}// if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, yval), yval);  EEPROM.commit();};}
           else if (variable == "TSYN"){syncEsp = json["TSYN"];}
           else if (variable == "TSCN"){colourSyncToggle = json["TSCN"];}
+          else if (variable == "TSBS"){switchBrS = json["TSBS"];}
           else if (variable == "SHUY"){yval1 = json["SHUY"];}
           else if (variable == "SYOL"){yold = json["SYOL"];}
           else if (variable == "ZVAL"){for (int n = 0; n < 30; n++){z[n] = json["ZVAL"][n];};}
