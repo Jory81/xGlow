@@ -158,6 +158,8 @@ if (changeModus){
       pos[s]=NUM_LEDS;
       pos7[s]=NUM_LEDS;
       INTERVALf[s]=100;
+      rtGlow3[s]=100;
+      rtSat3[3]=100;
       }
     // fill_solid(leds, NUM_SET, CRGB::Black);
     // FastLED.show();

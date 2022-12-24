@@ -104,7 +104,10 @@ else if (glowON == 10){
   }
 }
 else if (glowON == 11){
-  for (int k=0; k < cfactor3*7; k++){       
+    if (numbrigh > 29){
+    numbrigh = 29;
+  }
+  for (int k=0; k < numbrigh; k++){       
   if (millis() - previousMillisGlow3[k] > (rtGlow3[k]*timeSpeed[k])) {
       previousMillisGlow3[k] = millis();
 
@@ -114,8 +117,8 @@ else if (glowON == 11){
       if (numGlow3[k]<0){
         numGlow3[k]=NUM_LEDS-1;
         bMA[k] = random8(offBr, BRIGH);
-        if (random8(25*cfactor3) == 1){
-          rtGlow3[0]=125*timeArray[random(0,5)];
+        if (random8(12*cfactor3) == 1){
+          rtGlow3[0]=(waveTimeBr/50)*timeArray[random(0,5)];
         }
         rtGlow3[k]=rtGlow3[0];
       }
@@ -271,7 +274,10 @@ else if (satON == 10){
 }
 
 else if (satON == 11){
-  for (int k=0; k < cfactor3*7; k++){       
+  if (numsat > 29){
+    numsat = 29;
+  }
+  for (int k=0; k < numsat; k++){       
   if (millis() - previousMillisSat3[k] > (rtSat3[k]*timeSpeed[k])) {
       previousMillisSat3[k] = millis();
 
@@ -281,8 +287,8 @@ else if (satON == 11){
       if (numSat3[k]<0){
         numSat3[k]=NUM_LEDS-1;
         sMA[k] = random8(offS, S);
-        if (random8(25*cfactor3) == 1){
-          rtSat3[0]=125*timeArray[random(0,5)];
+        if (random8(12*cfactor3) == 1){
+          rtSat3[0]=(waveTimeS/50)*timeArray[random(0,5)];
         }
         rtSat3[k]=rtSat3[0];
       }

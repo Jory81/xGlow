@@ -73,7 +73,7 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
       else if (json.containsKey("SHUE")){yval = json["SHUE"]; forcedColourChange = true; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, yval), yval);  EEPROM.commit();}; if (syncEsp){espNowMessage = true;   EspNowMessageType = 2;  }; }
 
       else if (json.containsKey("SBRI")){BRIGH = json["SBRI"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, BRIGH), BRIGH);  EEPROM.commit();}; if (syncEsp){espNowMessage = true;   EspNowMessageType = 22;  };}
-      else if (json.containsKey("SGLO")){glowON = json["SGLO"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, glowON), glowON);  EEPROM.commit();}; if (syncEsp){espNowMessage = true;   EspNowMessageType = 22;  };}
+      else if (json.containsKey("SGLO")){glowON = json["SGLO"]; for (int s=0; s<30; s++){rtGlow3[s] = 100;} if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, glowON), glowON);  EEPROM.commit();}; if (syncEsp){espNowMessage = true;   EspNowMessageType = 22;  };}
       else if (json.containsKey("SNBR")){numbrigh = json["SNBR"]; if (maintainWaveForm){convBrigh=waveTimeBr/numbrigh;}; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, numbrigh), numbrigh);  EEPROM.commit();}; if (syncEsp){espNowMessage = true;   EspNowMessageType = 22;  };}
       else if (json.containsKey("SSBR")){BrF = json["SSBR"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, BrF), BrF);  EEPROM.commit();}; if (syncEsp){espNowMessage = true;   EspNowMessageType = 22;  };}
       else if (json.containsKey("SBWS")){waveTimeBr = json["SBWS"]; convBrigh = waveTimeBr/numbrigh; if (maintainWaveForm){BPMB=60000/waveTimeBr; notifyClientsSingleObjectByte("SSBS", BPMB);}; if (syncEsp){espNowMessage = true;   EspNowMessageType = 22;  };}// if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, waveTimeBr), waveTimeBr); EEPROM.put(offsetof(storeInEEPROM, BPMB), BPMB);  EEPROM.commit();};}
@@ -81,7 +81,7 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
       else if (json.containsKey("SOBR")){offBr = json["SOBR"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, offBr), offBr);  EEPROM.commit();}; if (syncEsp){espNowMessage = true;   EspNowMessageType = 22;  };}   
       
       else if (json.containsKey("SSAT")){S = json["SSAT"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, S), S);  EEPROM.commit();}; if (syncEsp){espNowMessage = true;   EspNowMessageType = 23;  };}
-      else if (json.containsKey("SSTM")){satON = json["SSTM"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, satON), satON);  EEPROM.commit();}; if (syncEsp){espNowMessage = true;   EspNowMessageType = 23;  };}
+      else if (json.containsKey("SSTM")){satON = json["SSTM"]; for (int s=0; s<30; s++){rtSat3[s] = 100;} if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, satON), satON);  EEPROM.commit();}; if (syncEsp){espNowMessage = true;   EspNowMessageType = 23;  };}
       else if (json.containsKey("SSTN")){numsat = json["SSTN"]; if (maintainWaveForm){convSat=waveTimeS/numsat;}; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, numsat), numsat);  EEPROM.commit();}; if (syncEsp){espNowMessage = true;   EspNowMessageType = 23;  };}
       else if (json.containsKey("SSSF")){SF = json["SSSF"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, SF), SF);  EEPROM.commit();}; if (syncEsp){espNowMessage = true;   EspNowMessageType = 23;  };}
       else if (json.containsKey("SSWS")){waveTimeS = json["SSWS"]; convSat = waveTimeS/numsat; if (maintainWaveForm){BPMS=60000/waveTimeS; notifyClientsSingleObjectByte("SSSS", BPMS);}; if (syncEsp){espNowMessage = true;   EspNowMessageType = 23;  };}// if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, waveTimeS), waveTimeS); EEPROM.put(offsetof(storeInEEPROM, BPMS), BPMS);  EEPROM.commit();};}      
@@ -1532,7 +1532,7 @@ void onDataRecv(uint8_t * mac, uint8_t *incomingData, uint8_t len) {
           else if (variable == "SPGM"){programMode = json["SPGM"]; cycleT=0;  previousMillis44 = millis();  previousMillis45 = millis(); changeState();} //Serial.print("containsprogramMode"); Serial.println(programMode); // if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, programMode), programMode);  EEPROM.commit();};          
  
           else if (variable == "SBRI"){BRIGH = json["SBRI"];}
-          else if (variable == "SGLO"){glowON = json["SGLO"];}
+          else if (variable == "SGLO"){glowON = json["SGLO"]; for (int s=0; s<30; s++){rtGlow3[s] = 100;};}
           else if (variable == "SOBR"){offBr = json["SOBR"];}
           else if (variable == "SNBR"){numbrigh = json["SNBR"];}
           else if (variable == "SBWS"){waveTimeBr = json["SBWS"];}
@@ -1541,7 +1541,7 @@ void onDataRecv(uint8_t * mac, uint8_t *incomingData, uint8_t len) {
           else if (variable == "CONB"){convBrigh = json["CONB"];}
 
           else if (variable == "SSAT"){S = json["SSAT"];}
-          else if (variable == "SSTM"){satON = json["SSTM"];}
+          else if (variable == "SSTM"){satON = json["SSTM"]; for (int s=0; s<30; s++){rtSat3[s] = 100;};}
           else if (variable == "SOST"){offS = json["SOST"];}
           else if (variable == "SSTN"){numsat = json["SSTN"];}
           else if (variable == "SSWS"){waveTimeS = json["SSWS"];}
@@ -1652,7 +1652,7 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
           else if (variable == "SPGM"){programMode = json["SPGM"]; cycleT=0;  previousMillis44 = millis();  previousMillis45 = millis(); changeState();} //Serial.print("containsprogramMode"); Serial.println(programMode); // if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, programMode), programMode);  EEPROM.commit();};          
  
           else if (variable == "SBRI"){BRIGH = json["SBRI"];}
-          else if (variable == "SGLO"){glowON = json["SGLO"];}
+          else if (variable == "SGLO"){glowON = json["SGLO"]; for (int s=0; s<30; s++){rtGlow3[s] = 100;};}
           else if (variable == "SOBR"){offBr = json["SOBR"];}
           else if (variable == "SNBR"){numbrigh = json["SNBR"];}
           else if (variable == "SBWS"){waveTimeBr = json["SBWS"];}
@@ -1661,7 +1661,7 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
           else if (variable == "CONB"){convBrigh = json["CONB"];}
 
           else if (variable == "SSAT"){S = json["SSAT"];}
-          else if (variable == "SSTM"){satON = json["SSTM"];}
+          else if (variable == "SSTM"){satON = json["SSTM"]; for (int s=0; s<30; s++){rtSat3[s] = 100;};}
           else if (variable == "SOST"){offS = json["SOST"];}
           else if (variable == "SSTN"){numsat = json["SSTN"];}
           else if (variable == "SSWS"){waveTimeS = json["SSWS"];}
