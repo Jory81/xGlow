@@ -293,7 +293,7 @@ void fillArrayGradient(uint8_t fillcase, uint8_t y0r, int setDifference){
         } break;
       }            
       
-      if (NUM_LEDS > 300){
+      if (NUM_LEDS > 250){
         if (i % setDifference == 0){
           y0r+=(1*dir0);
         }
@@ -328,14 +328,19 @@ void fillNUM_LEDS1(uint8_t arrayType[], int NUM_LEDS){
        for(int i = 0; i < NUM_LEDS; i++ ){
        leds[i] = CHSV(arrayType[colourlu],satval[satlu],brigh[brighlu]);
         
-       brighlu++;
-       if (brighlu >= numbrigh){brighlu = 0;}
+        brighlu++;
+        if (glowON != 11){
+          if (brighlu >= numbrigh){brighlu = 0;}
+        }
+
+        satlu++;
+        if (satON != 11){
+          if (satlu >= numsat){satlu = 0;}
+        }
        
        colourlu++;
        if (colourlu > 9){colourlu = 0;}
 
-       satlu++;
-       if (satlu >= numsat){satlu = 0;}
        } 
 
        handleGlitter();

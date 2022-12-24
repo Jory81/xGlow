@@ -99,7 +99,14 @@ previousMillis2 = millis();
    leds[i] = CHSV(colour[colourlu]+yvar[varlu],satval[satlu],brigh[brighlu]);
     
    brighlu++;
-   if (brighlu >= numbrigh){brighlu = 0;}
+   if (glowON != 11){
+    if (brighlu >= numbrigh){brighlu = 0;}
+   }
+
+   satlu++;
+   if (satON != 11){
+    if (satlu >= numsat){satlu = 0;}
+   }
    
    colourlu++;
    if (colourlu > 9){colourlu = 0;}
@@ -107,8 +114,6 @@ previousMillis2 = millis();
    varlu++;
    if (varlu >= 10){varlu = 0;}
 
-   satlu++;
-   if (satlu >= numsat){satlu = 0;}
    }
    
    handleGlitter();  
@@ -285,12 +290,18 @@ previousMillis2 = millis();
    leds[i] = CHSV((longxArray[i]+yvar[varlu]+diff[difflu]),satval[satlu],brigh[brighlu]);
     
    brighlu++;
-   if (glowON != 11){
+   if (glowON == 11 || glowON == 12){
+    // do nothing
+   }
+   else {
     if (brighlu >= numbrigh){brighlu = 0;}
    }
 
    satlu++;
-   if (satON != 11){
+   if (satON == 11 || satON == 12){
+    // do nothing
+   }
+   else {
     if (satlu >= numsat){satlu = 0;}
    }
 
@@ -448,10 +459,20 @@ previousMillis2 = millis();
    leds[i] = CHSV((longxArray[i]+yvar[varlu]+diff[difflu]),satval[satlu],brigh[brighlu]);
     
    brighlu++;
-   if (brighlu >= numbrigh){brighlu = 0;}
+   if (glowON == 11 || glowON == 12){
+    // do nothing
+   }
+   else {
+    if (brighlu >= numbrigh){brighlu = 0;}
+   }
 
    satlu++;
-   if (satlu >= numsat){satlu = 0;}
+   if (satON == 11 || satON == 12){
+    // do nothing
+   }
+   else {
+    if (satlu >= numsat){satlu = 0;}
+   }
 
    varlu++;
    if (varlu >= 10){varlu = 0;}
@@ -689,10 +710,14 @@ previousMillis2 = millis();
       }
     
    brighlu++;
-   if (brighlu >= numbrigh){brighlu = 0;}
+   if (glowON != 11){
+    if (brighlu >= numbrigh){brighlu = 0;}
+   }
 
    satlu++;
-   if (satlu >= numsat){satlu = 0;}
+   if (satON != 11){
+    if (satlu >= numsat){satlu = 0;}
+   }
 
    varlu++;
    if (varlu >= 10){varlu = 0;}
@@ -891,10 +916,14 @@ previousMillis2 = millis();
         }
     
    brighlu++;
-   if (brighlu >= numbrigh){brighlu = 0;}
+   if (glowON != 11){
+    if (brighlu >= numbrigh){brighlu = 0;}
+   }
 
    satlu++;
-   if (satlu >= numsat){satlu = 0;}
+   if (satON != 11){
+    if (satlu >= numsat){satlu = 0;}
+   }
 
    varlu++;
    if (varlu >= 10){varlu = 0;}
@@ -1059,10 +1088,14 @@ previousMillis2 = millis();
       }
     
    brighlu++;
-   if (brighlu >= numbrigh){brighlu = 0;}
+   if (glowON != 11){
+    if (brighlu >= numbrigh){brighlu = 0;}
+   }
 
    satlu++;
-   if (satlu >= numsat){satlu = 0;}
+   if (satON != 11){
+    if (satlu >= numsat){satlu = 0;}
+   }
    } 
     
    handleGlitter(); 
@@ -1673,11 +1706,15 @@ else if ((variant == 3 || variant == 4 || variant == 5) && (!readyToChange)){
               }
            }
           
-         brighlu++;
-         if (brighlu >= numbrigh){brighlu = 0;}
+          brighlu++;
+          if (glowON != 11){
+            if (brighlu >= numbrigh){brighlu = 0;}
+          }
 
-         satlu++;
-         if (satlu >= numsat){satlu = 0;}
+          satlu++;
+          if (satON != 11){
+            if (satlu >= numsat){satlu = 0;}
+          }
 
          varlu++;
          if (varlu >= 10){varlu = 0;}
@@ -1900,11 +1937,15 @@ previousMillis39 = millis();
               leds[i] = CHSV((longxArray[i]+yvar[varlu]+diff[difflu]),satval[satlu],brigh[brighlu]);
               }
          }        
-       brighlu++;
-       if (brighlu >= numbrigh){brighlu = 0;}
+        brighlu++;
+        if (glowON != 11){
+          if (brighlu >= numbrigh){brighlu = 0;}
+        }
 
-       satlu++;
-       if (satlu >= numsat){satlu = 0;}
+        satlu++;
+        if (satON != 11){
+          if (satlu >= numsat){satlu = 0;}
+        }
 
        varlu++;
        if (varlu >= 10){varlu = 0;}
@@ -1952,11 +1993,15 @@ if (millis() - previousMillis1 >= changeSpeed){
            for(int i = 0; i < NUM_LEDS; i++ ){
            leds[i] = CHSV(longxArray[i],satval[satlu],brigh[brighlu]);
             
-           brighlu++;
-           if (brighlu >= numbrigh){brighlu = 0;}
+          brighlu++;
+          if (glowON != 11){
+            if (brighlu >= numbrigh){brighlu = 0;}
+          }
 
-           satlu++;
-           if (satlu >= numsat){satlu = 0;}   
+          satlu++;
+          if (satON != 11){
+            if (satlu >= numsat){satlu = 0;}
+          }   
            }
        handleGlitter();
        FastLED.show();
@@ -2157,19 +2202,23 @@ previousMillis2 = millis();
      for(int i = 0; i < NUM_LEDS; i++ ){
      leds[i] = CHSV(colour[colourlu],satval[satlu],brigh[brighlu]);
       
-     brighlu++;
-     if (brighlu >= numbrigh){brighlu = 0;}
+      brighlu++;
+      if (glowON != 11){
+        if (brighlu >= numbrigh){brighlu = 0;}
+      }
+
+      satlu++;
+      if (satON != 11){
+        if (whiteON){
+            if (satlu >= numcolor){satlu = 0;}
+              }
+        else {
+          if (satlu >= numsat){satlu = 0;}
+        }
+      }
      
      colourlu++;
      if (colourlu >= numcolor){colourlu = 0;}
-  
-     satlu++;
-     if (whiteON){
-     if (satlu >= numcolor){satlu = 0;}
-     }
-     else {
-      if (satlu >= numsat){satlu = 0;}
-     }
      }
      
      handleGlitter();
@@ -2207,14 +2256,19 @@ previousMillis2 = millis();
      for(int i = 0; i < NUM_LEDS; i++ ){
      leds[i] = CHSV(longxArray[colourlu],satval[satlu],brigh[brighlu]);
       
-     brighlu++;
-     if (brighlu >= numbrigh){brighlu = 0;}
+    brighlu++;
+    if (glowON != 11){
+      if (brighlu >= numbrigh){brighlu = 0;}
+    }
+
+    satlu++;
+    if (satON != 11){
+      if (satlu >= numsat){satlu = 0;}
+    }
      
      colourlu++;
      if (colourlu >= colorlength){colourlu = 0;}
-
-     satlu++;
-     if (satlu >= numsat){satlu = 0;}     
+   
      }
 
      handleGlitter();
@@ -2237,7 +2291,7 @@ void rainbow_5(void){
       for(int i = 0; i < NUM_LEDS; i++ ){
       leds[i] = CHSV(ysr+yvar[varlu],satval[satlu],brigh[brighlu]);
 
-      if (NUM_LEDS > 300){
+      if (NUM_LEDS > 250){
         if (i % setDifference == 0){
           ysr+=1;
         }
@@ -2247,13 +2301,18 @@ void rainbow_5(void){
       }
       
       brighlu++;
-      if (brighlu >= numbrigh){brighlu = 0;} 
+      if (glowON != 11){
+        if (brighlu >= numbrigh){brighlu = 0;}
+      }
+
+      satlu++;
+      if (satON != 11){
+        if (satlu >= numsat){satlu = 0;}
+      } 
       
       varlu++;
       if (varlu >= 10){varlu =0;}
 
-      satlu++;
-      if (satlu >= numsat){satlu = 0;}
       } 
        
       handleGlitter();
@@ -2278,7 +2337,7 @@ void rainbow_2(void){
               longxArray[(NUM_LEDS/2)-i] = ysr;
               longxArray[(NUM_LEDS/2)+i] = ysr;
 
-              if (NUM_LEDS > 300){
+              if (NUM_LEDS > 250){
                 if (i % setDifference == 0){
                   ysr+=1;
                 }
@@ -2300,7 +2359,7 @@ void rainbow_2(void){
               longxArray[(NUM_LEDS/2)-i] = ysr;
               longxArray[(NUM_LEDS/2)+i] = ysr;
 
-            if (NUM_LEDS > 300){
+            if (NUM_LEDS > 250){
               if (i % setDifference == 0){
                 ysr+=1;
               }
@@ -2314,7 +2373,7 @@ void rainbow_2(void){
             for(int i = 0; i < NUM_LEDS; i++ ){
               longxArray[i] = ysr;
 
-              if (NUM_LEDS > 300){
+              if (NUM_LEDS > 250){
                 if (i % setDifference == 0){
                   ysr+=1;
                 }
@@ -2341,7 +2400,7 @@ void rainbow_2(void){
               blockArray[(NUM_LEDS/2)-i] = ysr;
               blockArray[(NUM_LEDS/2)+i] = ysr;
 
-            if (NUM_LEDS > 300){
+            if (NUM_LEDS > 250){
               if (i % setDifference == 0){
                 ysr+=1;
               }
@@ -2363,7 +2422,7 @@ void rainbow_2(void){
             for(int i = 0; i < NUM_LEDS; i++ ){
               blockArray[i] = ysr;
 
-              if (NUM_LEDS > 300){
+              if (NUM_LEDS > 250){
                 if (i % setDifference == 0){
                   ysr+=1;
                 }
@@ -2471,13 +2530,18 @@ void rainbow_2(void){
             leds[i] = CHSV(longxArray[i]+yvar[varlu],satval[satlu],brigh[brighlu]);
             
             brighlu++;
-            if (brighlu >= numbrigh){brighlu = 0;} 
+            if (glowON != 11){
+              if (brighlu >= numbrigh){brighlu = 0;}
+            }
+
+            satlu++;
+            if (satON != 11){
+              if (satlu >= numsat){satlu = 0;}
+            }
             
             varlu++;
             if (varlu >= 10){varlu =0;}
 
-            satlu++;
-            if (satlu >= numsat){satlu = 0;}
             } 
 
        
@@ -2573,10 +2637,14 @@ if ((millis() - previousMillis1 > INTERVAL7 && (!inSync)) || (colourSync)) {
             }  
             
           brighlu++;
-          if (brighlu >= numbrigh){brighlu = 0;}
+          if (glowON != 11){
+            if (brighlu >= numbrigh){brighlu = 0;}
+          }
 
           satlu++;
-          if (satlu >= numsat){satlu = 0;}
+          if (satON != 11){
+            if (satlu >= numsat){satlu = 0;}
+          }
 
           varlu++;
           if (varlu >= 10){varlu = 0;}
@@ -3004,11 +3072,15 @@ if (millis() - previousMillis38 >= FPS && (changeColor)) {
               }
           }
           
-         brighlu++;
-         if (brighlu >= numbrigh){brighlu = 0;}
+        brighlu++;
+        if (glowON != 11){
+          if (brighlu >= numbrigh){brighlu = 0;}
+        }
 
-         satlu++;
-         if (satlu >= numsat){satlu = 0;}
+        satlu++;
+        if (satON != 11){
+          if (satlu >= numsat){satlu = 0;}
+        }
         
          varlu++;
          if (varlu >= 10){varlu = 0;}
@@ -3309,11 +3381,15 @@ if (millis() - previousMillis2 >= FPS) {
        for(int i = 0; i < partialArraySize; i++ ){
        leds[i] = CHSV((longxArray[i]+yvar[varlu]+diff[difflu]),satval[satlu],brigh[brighlu]);
         
-       brighlu++;
-       if (brighlu >= numbrigh){brighlu = 0;}
+      brighlu++;
+      if (glowON != 11){
+        if (brighlu >= numbrigh){brighlu = 0;}
+      }
 
-       satlu++;
-       if (satlu >= numsat){ satlu = 0;}
+      satlu++;
+      if (satON != 11){
+        if (satlu >= numsat){satlu = 0;}
+      }
 
        varlu++;
        if (varlu >= 10){varlu = 0;}
@@ -3383,11 +3459,15 @@ void rainbow_7(void){
      colorCount=0;
      y0r++;}
       
-     brighlu++;
-     if (brighlu >= numbrigh){brighlu = 0;}
-     
-     satlu++;
-     if (satlu >= numsat){satlu = 0;}     
+      brighlu++;
+      if (glowON != 11){
+        if (brighlu >= numbrigh){brighlu = 0;}
+      }
+
+      satlu++;
+      if (satON != 11){
+        if (satlu >= numsat){satlu = 0;}
+      }     
      }
 
      handleGlitter();
@@ -3471,11 +3551,15 @@ if (millis() - previousMillis37 >= changeSpeed && (changeColor)) {
        for(int i = 0; i < NUM_LEDS; i++ ){
        leds[i] = CHSV(longxArray[i],satval[satlu],brigh[brighlu]);
         
-       brighlu++;
-       if (brighlu >= numbrigh){brighlu = 0;}
+        brighlu++;
+        if (glowON != 11){
+          if (brighlu >= numbrigh){brighlu = 0;}
+        }
 
-       satlu++;
-       if (satlu >= numsat){satlu = 0;}       
+        satlu++;
+        if (satON != 11){
+          if (satlu >= numsat){satlu = 0;}
+        }      
        
       //  y0r+=setDifference*dir0;
 
@@ -3545,10 +3629,14 @@ previousMillis2 = millis();
    }
     
    brighlu++;
-   if (brighlu >= numbrigh){brighlu = 0;}
-   
+   if (glowON != 11){
+    if (brighlu >= numbrigh){brighlu = 0;}
+   }
+
    satlu++;
-   if (satlu >= numsat){satlu = 0;}
+   if (satON != 11){
+    if (satlu >= numsat){satlu = 0;}
+   }
 
    varlu++;
    if (varlu >= 16){varlu = 0;}   
@@ -3659,10 +3747,14 @@ previousMillis2 = millis();
    }
     
    brighlu++;
-   if (brighlu >= numbrigh){brighlu = 0;}
-   
+   if (glowON != 11){
+    if (brighlu >= numbrigh){brighlu = 0;}
+   }
+
    satlu++;
-   if (satlu >= numsat){satlu = 0;}      
+   if (satON != 11){
+    if (satlu >= numsat){satlu = 0;}
+   }     
 
    varlu++;
    if (varlu >= 16){varlu = 0;}
@@ -3708,13 +3800,17 @@ previousMillis2 = millis();
    }
    
    brighlu++;
-   if (brighlu >= numbrigh){brighlu = 0;}
-   
-   varlu++;
-   if (varlu >= 10){varlu =0;}
+   if (glowON != 11){
+    if (brighlu >= numbrigh){brighlu = 0;}
+   }
 
    satlu++;
-   if (satlu >= numsat){satlu = 0;}  
+   if (satON != 11){
+    if (satlu >= numsat){satlu = 0;}
+   }
+   
+   varlu++;
+   if (varlu >= 10){varlu =0;} 
    }
 
    handleGlitter();
@@ -3744,13 +3840,18 @@ previousMillis2 = millis();
    leds[i] = CHSV(longxArray[colour[colourlu]],satval[satlu],brigh[brighlu]);
    
    brighlu++;
-   if (brighlu >= numbrigh){brighlu = 0;}
+   if (glowON != 11){
+    if (brighlu >= numbrigh){brighlu = 0;}
+   }
+
+   satlu++;
+   if (satON != 11){
+    if (satlu >= numsat){satlu = 0;}
+   }
    
    colourlu++;
    if (colourlu > 9){colourlu = 0;}
-
-   satlu++;
-   if (satlu >= numsat){satlu = 0;}   
+  
    }
 
    handleGlitter();
@@ -4091,10 +4192,14 @@ else if ((variant==3 || variant ==4 || variant ==5) && (!readyToChange)){
       }
     
     brighlu++;
-    if (brighlu >= numbrigh){brighlu = 0;}
+    if (glowON != 11){
+      if (brighlu >= numbrigh){brighlu = 0;}
+    }
 
     satlu++;
-    if (satlu >= numsat){satlu = 0;}
+    if (satON != 11){
+      if (satlu >= numsat){satlu = 0;}
+    }
 
     varlu++;
     if (varlu >= 10){varlu = 0;}
