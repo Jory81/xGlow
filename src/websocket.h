@@ -1509,6 +1509,7 @@ void onDataRecv(uint8_t * mac, uint8_t *incomingData, uint8_t len) {
           else if (variable == "SHUE"){yval = json["SHUE"]; forcedColourChange = true;}// if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, yval), yval);  EEPROM.commit();};}
           else if (variable == "TSYN"){syncEsp = json["TSYN"];}
           else if (variable == "TSCN"){colourSyncToggle = json["TSCN"];}
+          else if (variable == "TSBS"){switchBrS = json["TSBS"];}
           else if (variable == "SHUY"){yval1 = json["SHUY"];}
           else if (variable == "SYOL"){yold = json["SYOL"];}
           else if (variable == "ZVAL"){for (int n = 0; n < 30; n++){z[n] = json["ZVAL"][n];};}
