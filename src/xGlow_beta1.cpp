@@ -43,7 +43,7 @@ FASTLED_USING_NAMESPACE
   #define EEPROM_PRINTF(x...)
 #endif
 
-#define DEBUG_OUTPUT // comment out for debugging mode (mainly for checking memory issues and JSON communication)
+//#define DEBUG_OUTPUT // for debugging mode (mainly for checking memory issues and JSON communication)
 
 #ifdef DEBUG_OUTPUT
   #define DEBUG_PRINT(x) Serial.print(x)
@@ -130,6 +130,7 @@ void printEEPROM();
 void wifi();
 //void initOTA();
 void espNow();
+void clearEspNowMessage();
 void LED_properties();
 void initialize_preset();
 void seedRandomNumbers();
@@ -317,7 +318,7 @@ handleWebsocketUpdate();
 }
 
 void handleEspNowMessage(){
-  if (millis() - previousMillis7 > 5) { 
+  if (millis() - previousMillis7 > 50) { 
   previousMillis7 = millis();
 
   if ((!syncEsp) && (inSync)){
@@ -465,11 +466,15 @@ void handleEspNowMessage(){
         DEBUG_PRINTLN(" ");
 
       for (int i = 0; i < 10; i++){
-        if (macConnected[i]){
+        DEBUG_PRINT("mac connected: ");
+        DEBUG_PRINTLN(macConnected[i]);
+        DEBUG_PRINT("");
+        if (macConnected[i] && (!receivedMessage[i])){
           uint8_t broadcastAddress[6] = {Mac[i*6], Mac[(i*6)+1], Mac[(i*6)+2], Mac[(i*6)+3], Mac[(i*6)+4], Mac[(i*6)+5]};
           esp_now_send(broadcastAddress, (uint8_t *) &data, len);
-          //Serial.println(broadcastAddress[i]);
+          DEBUG_PRINTF(("mac address: %d, %d, %d, %d, %d, %d\n"), broadcastAddress[0], broadcastAddress[1], broadcastAddress[2], broadcastAddress[3], broadcastAddress[4], broadcastAddress[5]);
         }
+        //DEBUG_PRINTLN(" ");
       }        
         
         //esp_now_send(NULL, (uint8_t *) &data, len); // this is useful, but requiers reboot after initialization. can also add all and validate during runtime

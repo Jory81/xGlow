@@ -813,6 +813,7 @@ boolean     colourSync = false; // sometimes timing determines colour, with this
 boolean     colourSyncToggle = false; // sometimes modes are nice when they run on their own, but this switch allows modes to be fully synced
 boolean     inColourSync = false;
 boolean     macConnected[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+boolean     receivedMessage[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 boolean     randomCycle = false; // EEPROM.readByte(96);
 boolean     changeModus = false;
 boolean     fadeFirst = true;

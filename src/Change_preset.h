@@ -12,7 +12,7 @@ void handleModeSwitch(){ // HANDLE SWITCHING MODUS
           else if (programMode < 0){programMode = modeCount-1;}  
         if ((cmode[programMode]) || (!excludeModes)){
         selectPreset(); 
-        if (syncEsp){espNowMessage = true;   EspNowMessageType = 0;}; 
+        if (syncEsp){espNowMessage = true; clearEspNowMessage();  EspNowMessageType = 0;}; 
         changeState();
         }
         else if (!cmode[programMode]){      
@@ -24,7 +24,7 @@ void handleModeSwitch(){ // HANDLE SWITCHING MODUS
                     else if (programMode < 0){programMode = modeCount-1;}             
           }
         selectPreset();
-        if (syncEsp){espNowMessage = true;   EspNowMessageType = 0;};
+        if (syncEsp){espNowMessage = true; clearEspNowMessage();  EspNowMessageType = 0;};
         changeState();
         }
       }
@@ -33,13 +33,13 @@ void handleModeSwitch(){ // HANDLE SWITCHING MODUS
         if (((cmode[newProgramMode]) && (newProgramMode != programMode)) || (!excludeModes)){
           programMode = newProgramMode;
           selectPreset();
-          if (syncEsp){espNowMessage = true;   EspNowMessageType = 0;};
+          if (syncEsp){espNowMessage = true; clearEspNowMessage();  EspNowMessageType = 0;};
           changeState();} 
         else if ((!cmode[newProgramMode]) || (newProgramMode == programMode)){
           while ((!cmode[newProgramMode]) || (newProgramMode == programMode)){ newProgramMode = random(0,modeCount); }
        programMode = newProgramMode;
        selectPreset();
-       if (syncEsp){espNowMessage = true;   EspNowMessageType = 0;};
+       if (syncEsp){espNowMessage = true; clearEspNowMessage();  EspNowMessageType = 0;};
        changeState();}
       }
   cycleT=0;
