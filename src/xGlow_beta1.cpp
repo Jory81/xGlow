@@ -470,7 +470,8 @@ void handleEspNowMessage(){
         DEBUG_PRINTLN(macConnected[i]);
         DEBUG_PRINT("");
         if (macConnected[i] && (!receivedMessage[i])){
-          uint8_t broadcastAddress[6] = {Mac[i*6], Mac[(i*6)+1], Mac[(i*6)+2], Mac[(i*6)+3], Mac[(i*6)+4], Mac[(i*6)+5]};
+          //uint8_t broadcastAddress[6] = {Mac[i*6], Mac[(i*6)+1], Mac[(i*6)+2], Mac[(i*6)+3], Mac[(i*6)+4], Mac[(i*6)+5]};
+          uint8_t broadcastAddress[6] = {Mac[i][0], Mac[i][1], Mac[i][2], Mac[i][3], Mac[i][4], Mac[i][5]};
           esp_now_send(broadcastAddress, (uint8_t *) &data, len);
           DEBUG_PRINTF(("mac address: %d, %d, %d, %d, %d, %d\n"), broadcastAddress[0], broadcastAddress[1], broadcastAddress[2], broadcastAddress[3], broadcastAddress[4], broadcastAddress[5]);
         }

@@ -163,10 +163,16 @@ struct storeInEEPROM {
   byte varON3[modeCount];
   int NUM_LEDS;
   uint8_t num_esp;
-  uint8_t Mac[60];  
+  uint8_t Mac[10][6];  
   boolean syncEsp;
   boolean colourSyncToggle;
   boolean macConnected[10];
+
+  uint8_t overLayBr[31];
+  uint8_t ledOffsetBr[31];
+  uint8_t overLayS[31];
+  uint8_t ledOffsetS[31];
+
   // uint8_t mac2[6]; 
   // uint8_t mac3[6]; 
   // uint8_t mac4[6]; 
@@ -495,7 +501,27 @@ storeInEEPROM customVar = {
       0, 0, 0, 0, 0, 0, //mac10  
       0, // syncEsp 
       0, // colourSyncToggle  
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0 // macConnected
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // macConnected
+
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // overlayBr
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+      0,
+
+      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, // ofsetbr
+      1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+      1, 
+
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // overlayS
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+      0,
+
+      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, // ofsetS
+      1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+      1                       
     };
 
 
@@ -765,7 +791,7 @@ String macAdress;
 uint8_t inSyncCounter[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 uint8_t macMem[6] = {0};
 uint8_t num_esp = 0;
-uint8_t Mac[60] = {0};
+uint8_t Mac[10][6] = {0};
 // uint8_t mac2[6] = {0};
 // uint8_t mac3[6] = {0};
 // uint8_t mac4[6] = {0};
@@ -1170,12 +1196,20 @@ colourSyncToggle = EEPROM.read(offsetof(storeInEEPROM, colourSyncToggle));
       //Serial.println("heeree in setupp 222");
       }
 
-      for (int m = 0; m < 60; m++){
-      int offsetPosition = offsetof(storeInEEPROM, Mac[0]);
-      EEPROM.get(offsetPosition+m, Mac[m]); 
-      //Serial.print(offsetPosition+m); Serial.print(" "); Serial.println(cmode[m]);
-      //Serial.println("heeree in setupp 222");
-      }      
+      for (int m = 0; m < 10; m++){
+        int offsetPosition = offsetof(storeInEEPROM, Mac[0][0]);
+        for (int j = 0; j < 6; j++){
+          Mac[m][j]  = EEPROM.get(offsetPosition+((m*6)+j));
+          DEBUG_PRINT("MAC initialization "); DEBUG_PRINT(Mac[m][j]);
+        }
+      }
+
+      // for (int m = 0; m < 60; m++){
+      // int offsetPosition = offsetof(storeInEEPROM, Mac[0]);
+      // EEPROM.get(offsetPosition+m, Mac[m]); 
+      // //Serial.print(offsetPosition+m); Serial.print(" "); Serial.println(cmode[m]);
+      // //Serial.println("heeree in setupp 222");
+      // }      
 
       for (int m = 0; m < modeCount; m++){
       int offsetPosition = offsetof(storeInEEPROM, selectedPreset[0]);
@@ -1214,11 +1248,20 @@ colourSyncToggle = EEPROM.read(offsetof(storeInEEPROM, colourSyncToggle));
       cmode[m]  = EEPROM.read(offsetPosition+m);
       }
 
-      for (int m = 0; m < 60; m++){
-      int offsetPosition = offsetof(storeInEEPROM, Mac[0]);
-      Mac[m]  = EEPROM.read(offsetPosition+m);
-      //Serial.print("MAC initialization "); Serial.println(Mac[m]);
-      }      
+
+    for (int m = 1; m < 11; m++){
+      int offsetPosition = offsetof(storeInEEPROM, Mac[0][0]);
+      for (int j = 1; j < 7; j++){
+        Mac[m-1][j-1]  = EEPROM.read(offsetPosition+(m*j));
+        DEBUG_PRINT("MAC initialization "); DEBUG_PRINT(Mac[m-1][j-1]);
+      }
+    }
+
+      // for (int m = 0; m < 60; m++){
+      // int offsetPosition = offsetof(storeInEEPROM, Mac[0]);
+      // Mac[m]  = EEPROM.read(offsetPosition+m);
+      // //Serial.print("MAC initialization "); Serial.println(Mac[m]);
+      // }      
 
       for (int m = 0; m < modeCount; m++){
       int offsetPosition = offsetof(storeInEEPROM, selectedPreset[0]);

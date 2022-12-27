@@ -73,7 +73,7 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
       else if (json.containsKey("SHUE")){yval = json["SHUE"]; forcedColourChange = true; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, yval), yval);  EEPROM.commit();}; if (syncEsp){espNowMessage = true; clearEspNowMessage();   EspNowMessageType = 2;  }; }
 
       else if (json.containsKey("SBRI")){BRIGH = json["SBRI"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, BRIGH), BRIGH);  EEPROM.commit();}; if (syncEsp){espNowMessage = true; clearEspNowMessage();   EspNowMessageType = 22;  };}
-      else if (json.containsKey("SGLO")){glowON = json["SGLO"]; for (int s=0; s<30; s++){rtGlow3[s] = 100;} if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, glowON), glowON);  EEPROM.commit();}; if (syncEsp){espNowMessage = true; clearEspNowMessage();   EspNowMessageType = 22;  };}
+      else if (json.containsKey("SGLO")){glowON = json["SGLO"]; for (int s=0; s<255; s++){rtGlow3[s] = 100;} if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, glowON), glowON);  EEPROM.commit();}; if (syncEsp){espNowMessage = true; clearEspNowMessage();   EspNowMessageType = 22;  };}
       else if (json.containsKey("SNBR")){numbrigh = json["SNBR"]; if (maintainWaveForm){convBrigh=waveTimeBr/numbrigh;}; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, numbrigh), numbrigh);  EEPROM.commit();}; if (syncEsp){espNowMessage = true; clearEspNowMessage();   EspNowMessageType = 22;  };}
       else if (json.containsKey("SSBR")){BrF = json["SSBR"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, BrF), BrF);  EEPROM.commit();}; if (syncEsp){espNowMessage = true; clearEspNowMessage();   EspNowMessageType = 22;  };}
       else if (json.containsKey("SBWS")){waveTimeBr = json["SBWS"]; convBrigh = waveTimeBr/numbrigh; if (maintainWaveForm){BPMB=60000/waveTimeBr; notifyClientsSingleObjectByte("SSBS", BPMB);}; if (syncEsp){espNowMessage = true; clearEspNowMessage();   EspNowMessageType = 22;  };}// if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, waveTimeBr), waveTimeBr); EEPROM.put(offsetof(storeInEEPROM, BPMB), BPMB);  EEPROM.commit();};}
@@ -81,7 +81,7 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
       else if (json.containsKey("SOBR")){offBr = json["SOBR"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, offBr), offBr);  EEPROM.commit();}; if (syncEsp){espNowMessage = true; clearEspNowMessage();   EspNowMessageType = 22;  };}   
       
       else if (json.containsKey("SSAT")){S = json["SSAT"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, S), S);  EEPROM.commit();}; if (syncEsp){espNowMessage = true; clearEspNowMessage();   EspNowMessageType = 23;  };}
-      else if (json.containsKey("SSTM")){satON = json["SSTM"]; for (int s=0; s<30; s++){rtSat3[s] = 100;} if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, satON), satON);  EEPROM.commit();}; if (syncEsp){espNowMessage = true; clearEspNowMessage();   EspNowMessageType = 23;  };}
+      else if (json.containsKey("SSTM")){satON = json["SSTM"]; for (int s=0; s<255; s++){rtSat3[s] = 100;} if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, satON), satON);  EEPROM.commit();}; if (syncEsp){espNowMessage = true; clearEspNowMessage();   EspNowMessageType = 23;  };}
       else if (json.containsKey("SSTN")){numsat = json["SSTN"]; if (maintainWaveForm){convSat=waveTimeS/numsat;}; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, numsat), numsat);  EEPROM.commit();}; if (syncEsp){espNowMessage = true; clearEspNowMessage();   EspNowMessageType = 23;  };}
       else if (json.containsKey("SSSF")){SF = json["SSSF"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, SF), SF);  EEPROM.commit();}; if (syncEsp){espNowMessage = true; clearEspNowMessage();   EspNowMessageType = 23;  };}
       else if (json.containsKey("SSWS")){waveTimeS = json["SSWS"]; convSat = waveTimeS/numsat; if (maintainWaveForm){BPMS=60000/waveTimeS; notifyClientsSingleObjectByte("SSSS", BPMS);}; if (syncEsp){espNowMessage = true; clearEspNowMessage();   EspNowMessageType = 23;  };}// if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, waveTimeS), waveTimeS); EEPROM.put(offsetof(storeInEEPROM, BPMS), BPMS);  EEPROM.commit();};}      
@@ -154,16 +154,26 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
       else if (json.containsKey("SMA4")){ymax4 = json["SMA4"]; yval1=ymin4; dir0=1; dir1=1;}// if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, ymax4), ymax4);  EEPROM.commit();};}
       else if (json.containsKey("SM3R")){range = json["SM3R"]; ledspercolor=NUM_LEDS/range; if (ledspercolor > 3){ledspercolor=3;} else if (ledspercolor < 1){ledspercolor = 1;} if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, range), range);  EEPROM.commit();};}
       //else if (json.containsKey("ESP")){num_esp = json["ESP"]; EEPROM.put(offsetof(storeInEEPROM, num_esp), num_esp);  EEPROM.commit();}
-      else if (json.containsKey("mac1")){for (int i = 0; i < 6; i++){Mac[i] = json["mac1"][i];} writeMacTooEEPROM(0);}
-      else if (json.containsKey("mac2")){for (int i = 6; i < 12; i++){Mac[i] = json["mac2"][i%6];} writeMacTooEEPROM(1);}
-      else if (json.containsKey("mac3")){for (int i = 12; i < 18; i++){Mac[i] = json["mac3"][i%6];} writeMacTooEEPROM(2);}
-      else if (json.containsKey("mac4")){for (int i = 18; i < 24; i++){Mac[i] = json["mac4"][i%6];} writeMacTooEEPROM(3);}
-      else if (json.containsKey("mac5")){for (int i = 24; i < 30; i++){Mac[i] = json["mac5"][i%6];} writeMacTooEEPROM(4);}
-      else if (json.containsKey("mac6")){for (int i = 30; i < 36; i++){Mac[i] = json["mac6"][i%6];} writeMacTooEEPROM(5);}
-      else if (json.containsKey("mac7")){for (int i = 36; i < 42; i++){Mac[i] = json["mac7"][i%6];} writeMacTooEEPROM(6);}
-      else if (json.containsKey("mac8")){for (int i = 42; i < 48; i++){Mac[i] = json["mac8"][i%6];} writeMacTooEEPROM(7);}
-      else if (json.containsKey("mac9")){for (int i = 48; i < 54; i++){Mac[i] = json["mac9"][i%6];} writeMacTooEEPROM(8);}
-      else if (json.containsKey("mac10")){for (int i = 54; i < 60; i++){Mac[i] = json["mac10"][i%6];} writeMacTooEEPROM(9);}
+      else if (json.containsKey("mac1")){for (int i = 0; i < 6; i++){Mac[0][i] = json["mac1"][i];} writeMacTooEEPROM(0);}
+      else if (json.containsKey("mac2")){for (int i = 0; i < 6; i++){Mac[1][i] = json["mac2"][i];} writeMacTooEEPROM(1);}
+      else if (json.containsKey("mac3")){for (int i = 0; i < 6; i++){Mac[2][i] = json["mac3"][i];} writeMacTooEEPROM(2);}
+      else if (json.containsKey("mac4")){for (int i = 0; i < 6; i++){Mac[3][i] = json["mac4"][i];} writeMacTooEEPROM(3);}
+      else if (json.containsKey("mac5")){for (int i = 0; i < 6; i++){Mac[4][i] = json["mac5"][i];} writeMacTooEEPROM(4);}
+      else if (json.containsKey("mac6")){for (int i = 0; i < 6; i++){Mac[5][i] = json["mac6"][i];} writeMacTooEEPROM(5);}
+      else if (json.containsKey("mac7")){for (int i = 0; i < 6; i++){Mac[6][i] = json["mac7"][i];} writeMacTooEEPROM(6);}
+      else if (json.containsKey("mac8")){for (int i = 0; i < 6; i++){Mac[7][i] = json["mac8"][i];} writeMacTooEEPROM(7);}
+      else if (json.containsKey("mac9")){for (int i = 0; i < 6; i++){Mac[8][i] = json["mac9"][i];} writeMacTooEEPROM(8);}
+      else if (json.containsKey("mac10")){for (int i = 0; i < 6; i++){Mac[9][i] = json["mac10"][i];} writeMacTooEEPROM(9);}      
+      // else if (json.containsKey("mac1")){for (int i = 0; i < 6; i++){Mac[i] = json["mac1"][i];} writeMacTooEEPROM(0);}
+      // else if (json.containsKey("mac2")){for (int i = 6; i < 12; i++){Mac[i] = json["mac2"][i%6];} writeMacTooEEPROM(1);}
+      // else if (json.containsKey("mac3")){for (int i = 12; i < 18; i++){Mac[i] = json["mac3"][i%6];} writeMacTooEEPROM(2);}
+      // else if (json.containsKey("mac4")){for (int i = 18; i < 24; i++){Mac[i] = json["mac4"][i%6];} writeMacTooEEPROM(3);}
+      // else if (json.containsKey("mac5")){for (int i = 24; i < 30; i++){Mac[i] = json["mac5"][i%6];} writeMacTooEEPROM(4);}
+      // else if (json.containsKey("mac6")){for (int i = 30; i < 36; i++){Mac[i] = json["mac6"][i%6];} writeMacTooEEPROM(5);}
+      // else if (json.containsKey("mac7")){for (int i = 36; i < 42; i++){Mac[i] = json["mac7"][i%6];} writeMacTooEEPROM(6);}
+      // else if (json.containsKey("mac8")){for (int i = 42; i < 48; i++){Mac[i] = json["mac8"][i%6];} writeMacTooEEPROM(7);}
+      // else if (json.containsKey("mac9")){for (int i = 48; i < 54; i++){Mac[i] = json["mac9"][i%6];} writeMacTooEEPROM(8);}
+      // else if (json.containsKey("mac10")){for (int i = 54; i < 60; i++){Mac[i] = json["mac10"][i%6];} writeMacTooEEPROM(9);}
       else if (json.containsKey("TSYN")){syncEsp = json["TSYN"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, syncEsp), syncEsp);  EEPROM.commit();} if (!syncEsp){espNowMessage = true; clearEspNowMessage();   EspNowMessageType = 20;};}
       else if (json.containsKey("TSCN")){colourSyncToggle = json["TSCN"]; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, colourSyncToggle), colourSyncToggle);  EEPROM.commit();} if (!colourSyncToggle){espNowMessage = true; clearEspNowMessage();   EspNowMessageType = 21;}}
       else if (json.containsKey("m1c")){macConnected[0] = json["m1c"]; inSyncCounter[0] = 0; if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, macConnected[0]), macConnected[0]); EEPROM.commit();};}
@@ -190,14 +200,26 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
 }
 
   void writeMacTooEEPROM(uint8_t mac){
-    for (int i = mac*6; i < (mac*6)+6; i++){
-      int offsetPosition = (offsetof(storeInEEPROM, Mac[0]));
+    // for (int i = 0; i < 6; i++){
+    for (int j = 0; j < 6; j++){
+      int offsetPosition = (offsetof(storeInEEPROM, Mac[0][0]));
+//          Mac[mac][j-1]  = EEPROM.get(offsetPosition+(mac*j));
       //uint8_t macAds = Mac[i];
       //Serial.print("offsetposition"); Serial.println(offsetPosition+i);
-      EEPROM.put((offsetPosition+i), Mac[i]);  
+      EEPROM.put(offsetPosition+((mac*6)+j), Mac[mac][j]);  
     }
     EEPROM.commit();
   }
+
+  // void writeMacTooEEPROM(uint8_t mac){
+  //   for (int i = mac*6; i < (mac*6)+6; i++){
+  //     int offsetPosition = (offsetof(storeInEEPROM, Mac[0]));
+  //     //uint8_t macAds = Mac[i];
+  //     //Serial.print("offsetposition"); Serial.println(offsetPosition+i);
+  //     EEPROM.put((offsetPosition+i), Mac[i]);  
+  //   }
+  //   EEPROM.commit();
+  // }
 
 void sendProgramInfo(byte message){
 //StaticJsonDocument<2000> doc; // 2500
@@ -330,66 +352,78 @@ DynamicJsonDocument doc(2000);
       //doc["n_esp"] = num_esp;
       for (int n = 0; n < 10; n++){
         switch (n){
-          case 0: {
-            for (int m = n*6; m < (n*6)+6; m++){
-              doc["mac1"][m%6] = Mac[m];
-              }
-          }
-          break;
-          case 1: {
-            for (int m = n*6; m < (n*6)+6; m++){
-              doc["mac2"][m%6] = Mac[m];
-              }
-          }
-          break;
-          case 2: {
-            for (int m = n*6; m < (n*6)+6; m++){
-              doc["mac3"][m%6] = Mac[m];
-              }
-          }
-          break;
-          case 3: {
-            for (int m = n*6; m < (n*6)+6; m++){
-              doc["mac4"][m%6] = Mac[m];
-              }
-          }
-          break;
-          case 4: {
-            for (int m = n*6; m < (n*6)+6; m++){
-              doc["mac5"][m%6] = Mac[m];
-              }
-          }
-          break;
-          case 5: {
-            for (int m = n*6; m < (n*6)+6; m++){
-              doc["mac6"][m%6] = Mac[m];
-              }
-          }
-          break;
-          case 6: {
-            for (int m = n*6; m < (n*6)+6; m++){
-              doc["mac7"][m%6] = Mac[m];
-              }
-          }
-          break;
-          case 7: {
-            for (int m = n*6; m < (n*6)+6; m++){
-              doc["mac8"][m%6] = Mac[m];
-              }
-          }
-          break;
-          case 8: {
-            for (int m = n*6; m < (n*6)+6; m++){
-              doc["mac9"][m%6] = Mac[m];
-              }
-          }
-          break;
-          case 9: {
-            for (int m = n*6; m < (n*6)+6; m++){
-              doc["mac10"][m%6] = Mac[m];
-              }
-          }
-          break;                                                                   
+          case 0: {for (int m = 0; m < 6; m++){doc["mac1"][m] = Mac[n][m];}}  break;
+          case 1: {for (int m = 0; m < 6; m++){doc["mac2"][m] = Mac[n][m];}}  break;
+          case 2: {for (int m = 0; m < 6; m++){doc["mac3"][m] = Mac[n][m];}}  break;
+          case 3: {for (int m = 0; m < 6; m++){doc["mac4"][m] = Mac[n][m];}}  break;
+          case 4: {for (int m = 0; m < 6; m++){doc["mac5"][m] = Mac[n][m];}}  break;
+          case 5: {for (int m = 0; m < 6; m++){doc["mac6"][m] = Mac[n][m];}}  break;
+          case 6: {for (int m = 0; m < 6; m++){doc["mac7"][m] = Mac[n][m];}}  break;
+          case 7: {for (int m = 0; m < 6; m++){doc["mac8"][m] = Mac[n][m];}}  break;
+          case 8: {for (int m = 0; m < 6; m++){doc["mac9"][m] = Mac[n][m];}}  break;
+          case 9: {for (int m = 0; m < 6; m++){doc["mac10"][m] = Mac[n][m];}}  break;
+
+        // switch (n){
+        //   case 0: {
+        //     for (int m = n*6; m < (n*6)+6; m++){
+        //       doc["mac1"][m%6] = Mac[m];
+        //       }
+        //   }
+        //   break;
+        //   case 1: {
+        //     for (int m = n*6; m < (n*6)+6; m++){
+        //       doc["mac2"][m%6] = Mac[m];
+        //       }
+        //   }
+        //   break;
+        //   case 2: {
+        //     for (int m = n*6; m < (n*6)+6; m++){
+        //       doc["mac3"][m%6] = Mac[m];
+        //       }
+        //   }
+        //   break;
+        //   case 3: {
+        //     for (int m = n*6; m < (n*6)+6; m++){
+        //       doc["mac4"][m%6] = Mac[m];
+        //       }
+        //   }
+        //   break;
+        //   case 4: {
+        //     for (int m = n*6; m < (n*6)+6; m++){
+        //       doc["mac5"][m%6] = Mac[m];
+        //       }
+        //   }
+        //   break;
+        //   case 5: {
+        //     for (int m = n*6; m < (n*6)+6; m++){
+        //       doc["mac6"][m%6] = Mac[m];
+        //       }
+        //   }
+        //   break;
+        //   case 6: {
+        //     for (int m = n*6; m < (n*6)+6; m++){
+        //       doc["mac7"][m%6] = Mac[m];
+        //       }
+        //   }
+        //   break;
+        //   case 7: {
+        //     for (int m = n*6; m < (n*6)+6; m++){
+        //       doc["mac8"][m%6] = Mac[m];
+        //       }
+        //   }
+        //   break;
+        //   case 8: {
+        //     for (int m = n*6; m < (n*6)+6; m++){
+        //       doc["mac9"][m%6] = Mac[m];
+        //       }
+        //   }
+        //   break;
+        //   case 9: {
+        //     for (int m = n*6; m < (n*6)+6; m++){
+        //       doc["mac10"][m%6] = Mac[m];
+        //       }
+        //   }
+        //   break;                                                                   
         }
       }
       for (int n = 0; n < 10; n++){  
@@ -516,182 +550,201 @@ EEPROM.commit();
 }
 
 void saveCurrentPresetToEEPROM(){
-if (selectedPreset[programMode] == 1){
-  DEBUG_PRINTLN("save to position 1");
-int offsetPosition = offsetof(storeInEEPROM, BriSPreset[0]);
-EEPROM.put((offsetPosition+programMode), BriSPreset); 
-offsetPosition = offsetof(storeInEEPROM, changeSpeed[0]);
-EEPROM.put((offsetPosition+(programMode*sizeof(unsigned long))), changeSpeed); 
-offsetPosition = offsetof(storeInEEPROM, setDifference[0]);
-EEPROM.put((offsetPosition+(programMode*sizeof(int))), setDifference);
-offsetPosition = offsetof(storeInEEPROM, colorMode[0]);
-EEPROM.put((offsetPosition+(programMode*sizeof(int))), colorMode);
-offsetPosition = offsetof(storeInEEPROM, numsparks[0]);
-EEPROM.put((offsetPosition+programMode), numsparks); 
-offsetPosition = offsetof(storeInEEPROM, varON[0]);
-EEPROM.put((offsetPosition+programMode), varON);
-offsetPosition = offsetof(storeInEEPROM, glitterON[0]);
-EEPROM.put((offsetPosition+programMode), glitterON);
 
-if (effect_function == pers_color){
-EEPROM.put(offsetof(storeInEEPROM, numcolor1), numcolor); 
-}
-else if (effect_function == pers_block){
-EEPROM.put(offsetof(storeInEEPROM, numcolor2), numcolor); 
-EEPROM.put(offsetof(storeInEEPROM, colorlengthm[2]), colorlength); 
-}
-else if (effect_function == static_glow && programMode == 0){
-EEPROM.put(offsetof(storeInEEPROM, yval), yval);
-}
-else if (effect_function == static_glow && programMode == 2){
-EEPROM.put(offsetof(storeInEEPROM, yvalm2), yval);
-}
-else if (effect_function == static_glow && programMode == 3){
-EEPROM.put(offsetof(storeInEEPROM, yvalm3), yval);
-}
-else if (effect_function == palettes){
-EEPROM.put(offsetof(storeInEEPROM, gCurrentPaletteNumber), gCurrentPaletteNumber);
-}
-else if (effect_function == rainbow_6){
-EEPROM.put(offsetof(storeInEEPROM, colorlengthm[0]), colorlength);
-}
-else if (effect_function == random_string){
-EEPROM.put(offsetof(storeInEEPROM, colorlengthm[1]), colorlength);
-}
+switch (selectedPresetVariable){
+  case 1: {
+    DEBUG_PRINTLN("save to position 1");
+    int offsetPosition = offsetof(storeInEEPROM, BriSPreset[0]);
+    EEPROM.put((offsetPosition+programMode), BriSPreset); 
+    offsetPosition = offsetof(storeInEEPROM, changeSpeed[0]);
+    EEPROM.put((offsetPosition+(programMode*sizeof(unsigned long))), changeSpeed); 
+    offsetPosition = offsetof(storeInEEPROM, setDifference[0]);
+    EEPROM.put((offsetPosition+(programMode*sizeof(int))), setDifference);
+    offsetPosition = offsetof(storeInEEPROM, colorMode[0]);
+    EEPROM.put((offsetPosition+(programMode*sizeof(int))), colorMode);
+    offsetPosition = offsetof(storeInEEPROM, numsparks[0]);
+    EEPROM.put((offsetPosition+programMode), numsparks); 
+    offsetPosition = offsetof(storeInEEPROM, varON[0]);
+    EEPROM.put((offsetPosition+programMode), varON);
+    offsetPosition = offsetof(storeInEEPROM, glitterON[0]);
+    EEPROM.put((offsetPosition+programMode), glitterON);
 
-if (effect_function == gradient || effect_function == sparklingR || effect_function == snow_flakesR){
-  offsetPosition = offsetof(storeInEEPROM, arrayn[0]);
-  EEPROM.put((offsetPosition+programMode), selectColor); 
-}
-else {
-  offsetPosition = offsetof(storeInEEPROM, arrayn[0]);
-  EEPROM.put((offsetPosition+programMode), arrayn); 
-}
-}
+    if (effect_function == pers_color){
+    EEPROM.put(offsetof(storeInEEPROM, numcolor1), numcolor); 
+    }
+    else if (effect_function == pers_block){
+    EEPROM.put(offsetof(storeInEEPROM, numcolor2), numcolor); 
+    EEPROM.put(offsetof(storeInEEPROM, colorlengthm[2]), colorlength); 
+    }
+    else if (effect_function == static_glow && programMode == 0){
+    EEPROM.put(offsetof(storeInEEPROM, yval), yval);
+    }
+    else if (effect_function == static_glow && programMode == 2){
+    EEPROM.put(offsetof(storeInEEPROM, yvalm2), yval);
+    }
+    else if (effect_function == static_glow && programMode == 3){
+    EEPROM.put(offsetof(storeInEEPROM, yvalm3), yval);
+    }
+    else if (effect_function == palettes){
+    EEPROM.put(offsetof(storeInEEPROM, gCurrentPaletteNumber), gCurrentPaletteNumber);
+    }
+    else if (effect_function == rainbow_6){
+    EEPROM.put(offsetof(storeInEEPROM, colorlengthm[0]), colorlength);
+    }
+    else if (effect_function == random_string){
+    EEPROM.put(offsetof(storeInEEPROM, colorlengthm[1]), colorlength);
+    }
 
-else if (selectedPreset[programMode] == 2){
-  DEBUG_PRINTLN("save to position 2");
-int offsetPosition = offsetof(storeInEEPROM, BriSPreset2[0]);
-EEPROM.put((offsetPosition+programMode), BriSPreset); 
+    if (effect_function == gradient || effect_function == sparklingR || effect_function == snow_flakesR){
+      offsetPosition = offsetof(storeInEEPROM, arrayn[0]);
+      EEPROM.put((offsetPosition+programMode), selectColor); 
+    }
+    else {
+      offsetPosition = offsetof(storeInEEPROM, arrayn[0]);
+      EEPROM.put((offsetPosition+programMode), arrayn); 
+    }
+  }
+  break;
 
-offsetPosition = offsetof(storeInEEPROM, changeSpeed2[0]);
-EEPROM.put((offsetPosition+(programMode*sizeof(unsigned long))), changeSpeed); 
+  case 2: {
+      DEBUG_PRINTLN("save to position 2");
+    int offsetPosition = offsetof(storeInEEPROM, BriSPreset2[0]);
+    EEPROM.put((offsetPosition+programMode), BriSPreset); 
 
-offsetPosition = offsetof(storeInEEPROM, setDifference2[0]);
-EEPROM.put((offsetPosition+(programMode*sizeof(int))), setDifference);
+    offsetPosition = offsetof(storeInEEPROM, changeSpeed2[0]);
+    EEPROM.put((offsetPosition+(programMode*sizeof(unsigned long))), changeSpeed); 
 
-offsetPosition = offsetof(storeInEEPROM, colorMode2[0]);
-EEPROM.put((offsetPosition+(programMode*sizeof(int))), colorMode); 
+    offsetPosition = offsetof(storeInEEPROM, setDifference2[0]);
+    EEPROM.put((offsetPosition+(programMode*sizeof(int))), setDifference);
 
-// offsetPosition = offsetof(storeInEEPROM, arrayn2[0]);
-// EEPROM.put((offsetPosition+programMode), arrayn); 
+    offsetPosition = offsetof(storeInEEPROM, colorMode2[0]);
+    EEPROM.put((offsetPosition+(programMode*sizeof(int))), colorMode); 
 
-offsetPosition = offsetof(storeInEEPROM, numsparks2[0]);
-EEPROM.put((offsetPosition+programMode), numsparks); 
+    // offsetPosition = offsetof(storeInEEPROM, arrayn2[0]);
+    // EEPROM.put((offsetPosition+programMode), arrayn); 
 
-offsetPosition = offsetof(storeInEEPROM, varON2[0]);
-EEPROM.put((offsetPosition+programMode), varON);
+    offsetPosition = offsetof(storeInEEPROM, numsparks2[0]);
+    EEPROM.put((offsetPosition+programMode), numsparks); 
 
-offsetPosition = offsetof(storeInEEPROM, glitterON2[0]);
-EEPROM.put((offsetPosition+programMode), glitterON);
+    offsetPosition = offsetof(storeInEEPROM, varON2[0]);
+    EEPROM.put((offsetPosition+programMode), varON);
 
-if (effect_function == pers_color){
-EEPROM.put(offsetof(storeInEEPROM, numcolor12), numcolor); 
-}
-else if (effect_function == pers_block){
-EEPROM.put(offsetof(storeInEEPROM, numcolor22), numcolor); 
-EEPROM.put(offsetof(storeInEEPROM, colorlengthm2[2]), colorlength); 
-}
-else if (effect_function == static_glow && programMode == 0){
-EEPROM.put(offsetof(storeInEEPROM, yval2), yval);
-}
-else if (effect_function == static_glow && programMode == 2){
-EEPROM.put(offsetof(storeInEEPROM, yvalm22), yval);
-}
-else if (effect_function == static_glow && programMode == 3){
-EEPROM.put(offsetof(storeInEEPROM, yvalm32), yval);
-}
-else if (effect_function == palettes){
-EEPROM.put(offsetof(storeInEEPROM, gCurrentPaletteNumber2), gCurrentPaletteNumber);
-}
-else if (effect_function == rainbow_6){
-EEPROM.put(offsetof(storeInEEPROM, colorlengthm2[0]), colorlength);
-}
-else if (effect_function == random_string){
-EEPROM.put(offsetof(storeInEEPROM, colorlengthm2[1]), colorlength);
-}
-if (effect_function == gradient || effect_function == sparklingR || effect_function == snow_flakesR){
-  offsetPosition = offsetof(storeInEEPROM, arrayn2[0]);
-  EEPROM.put((offsetPosition+programMode), selectColor); 
-}
-else {
-  offsetPosition = offsetof(storeInEEPROM, arrayn2[0]);
-  EEPROM.put((offsetPosition+programMode), arrayn); 
-}
-}
+    offsetPosition = offsetof(storeInEEPROM, glitterON2[0]);
+    EEPROM.put((offsetPosition+programMode), glitterON);
 
-else if (selectedPreset[programMode] == 3){
+    if (effect_function == pers_color){
+    EEPROM.put(offsetof(storeInEEPROM, numcolor12), numcolor); 
+    }
+    else if (effect_function == pers_block){
+    EEPROM.put(offsetof(storeInEEPROM, numcolor22), numcolor); 
+    EEPROM.put(offsetof(storeInEEPROM, colorlengthm2[2]), colorlength); 
+    }
+    else if (effect_function == static_glow && programMode == 0){
+    EEPROM.put(offsetof(storeInEEPROM, yval2), yval);
+    }
+    else if (effect_function == static_glow && programMode == 2){
+    EEPROM.put(offsetof(storeInEEPROM, yvalm22), yval);
+    }
+    else if (effect_function == static_glow && programMode == 3){
+    EEPROM.put(offsetof(storeInEEPROM, yvalm32), yval);
+    }
+    else if (effect_function == palettes){
+    EEPROM.put(offsetof(storeInEEPROM, gCurrentPaletteNumber2), gCurrentPaletteNumber);
+    }
+    else if (effect_function == rainbow_6){
+    EEPROM.put(offsetof(storeInEEPROM, colorlengthm2[0]), colorlength);
+    }
+    else if (effect_function == random_string){
+    EEPROM.put(offsetof(storeInEEPROM, colorlengthm2[1]), colorlength);
+    }
+    if (effect_function == gradient || effect_function == sparklingR || effect_function == snow_flakesR){
+      offsetPosition = offsetof(storeInEEPROM, arrayn2[0]);
+      EEPROM.put((offsetPosition+programMode), selectColor); 
+    }
+    else {
+      offsetPosition = offsetof(storeInEEPROM, arrayn2[0]);
+      EEPROM.put((offsetPosition+programMode), arrayn); 
+    }
+  }
+  break;
+  case 3: {
   DEBUG_PRINTLN("save to position 3");
-int offsetPosition = offsetof(storeInEEPROM, BriSPreset3[0]);
-EEPROM.put((offsetPosition+programMode), BriSPreset); 
+    int offsetPosition = offsetof(storeInEEPROM, BriSPreset3[0]);
+    EEPROM.put((offsetPosition+programMode), BriSPreset); 
 
-offsetPosition = offsetof(storeInEEPROM, changeSpeed3[0]);
-EEPROM.put((offsetPosition+(programMode*sizeof(unsigned long))), changeSpeed); 
+    offsetPosition = offsetof(storeInEEPROM, changeSpeed3[0]);
+    EEPROM.put((offsetPosition+(programMode*sizeof(unsigned long))), changeSpeed); 
 
-offsetPosition = offsetof(storeInEEPROM, setDifference3[0]);
-EEPROM.put((offsetPosition+(programMode*sizeof(int))), setDifference);
+    offsetPosition = offsetof(storeInEEPROM, setDifference3[0]);
+    EEPROM.put((offsetPosition+(programMode*sizeof(int))), setDifference);
 
-offsetPosition = offsetof(storeInEEPROM, colorMode3[0]);
-EEPROM.put((offsetPosition+(programMode*sizeof(int))), colorMode); 
+    offsetPosition = offsetof(storeInEEPROM, colorMode3[0]);
+    EEPROM.put((offsetPosition+(programMode*sizeof(int))), colorMode); 
 
-// offsetPosition = offsetof(storeInEEPROM, arrayn3[0]);
-// EEPROM.put((offsetPosition+programMode), arrayn); 
+    // offsetPosition = offsetof(storeInEEPROM, arrayn3[0]);
+    // EEPROM.put((offsetPosition+programMode), arrayn); 
 
-offsetPosition = offsetof(storeInEEPROM, numsparks3[0]);
-EEPROM.put((offsetPosition+programMode), numsparks); 
+    offsetPosition = offsetof(storeInEEPROM, numsparks3[0]);
+    EEPROM.put((offsetPosition+programMode), numsparks); 
 
-offsetPosition = offsetof(storeInEEPROM, varON3[0]);
-EEPROM.put((offsetPosition+programMode), varON);
+    offsetPosition = offsetof(storeInEEPROM, varON3[0]);
+    EEPROM.put((offsetPosition+programMode), varON);
 
-offsetPosition = offsetof(storeInEEPROM, glitterON3[0]);
-EEPROM.put((offsetPosition+programMode), glitterON);
+    offsetPosition = offsetof(storeInEEPROM, glitterON3[0]);
+    EEPROM.put((offsetPosition+programMode), glitterON);
 
-if (effect_function == pers_color){
-EEPROM.put(offsetof(storeInEEPROM, numcolor13), numcolor); 
-}
-else if (effect_function == pers_block){
-EEPROM.put(offsetof(storeInEEPROM, numcolor23), numcolor); 
-EEPROM.put(offsetof(storeInEEPROM, colorlengthm3[2]), colorlength); 
-}
-else if (effect_function == static_glow && programMode == 0){
-EEPROM.put(offsetof(storeInEEPROM, yval3), yval);
-}
-else if (effect_function == static_glow && programMode == 2){
-EEPROM.put(offsetof(storeInEEPROM, yvalm23), yval);
-}
-else if (effect_function == static_glow && programMode == 3){
-EEPROM.put(offsetof(storeInEEPROM, yvalm33), yval);
-}
-else if (effect_function == palettes){
-EEPROM.put(offsetof(storeInEEPROM, gCurrentPaletteNumber3), gCurrentPaletteNumber);
-}
-else if (effect_function == rainbow_6){
-EEPROM.put(offsetof(storeInEEPROM, colorlengthm3[0]), colorlength);
-}
-else if (effect_function == random_string){
-EEPROM.put(offsetof(storeInEEPROM, colorlengthm3[1]), colorlength);
-}
-if (effect_function == gradient || effect_function == sparklingR || effect_function == snow_flakesR){
-  offsetPosition = offsetof(storeInEEPROM, arrayn3[0]);
-  EEPROM.put((offsetPosition+programMode), selectColor); 
-}
-else {
-  offsetPosition = offsetof(storeInEEPROM, arrayn3[0]);
-  EEPROM.put((offsetPosition+programMode), arrayn); 
-}
+    if (effect_function == pers_color){
+    EEPROM.put(offsetof(storeInEEPROM, numcolor13), numcolor); 
+    }
+    else if (effect_function == pers_block){
+    EEPROM.put(offsetof(storeInEEPROM, numcolor23), numcolor); 
+    EEPROM.put(offsetof(storeInEEPROM, colorlengthm3[2]), colorlength); 
+    }
+    else if (effect_function == static_glow && programMode == 0){
+    EEPROM.put(offsetof(storeInEEPROM, yval3), yval);
+    }
+    else if (effect_function == static_glow && programMode == 2){
+    EEPROM.put(offsetof(storeInEEPROM, yvalm23), yval);
+    }
+    else if (effect_function == static_glow && programMode == 3){
+    EEPROM.put(offsetof(storeInEEPROM, yvalm33), yval);
+    }
+    else if (effect_function == palettes){
+    EEPROM.put(offsetof(storeInEEPROM, gCurrentPaletteNumber3), gCurrentPaletteNumber);
+    }
+    else if (effect_function == rainbow_6){
+    EEPROM.put(offsetof(storeInEEPROM, colorlengthm3[0]), colorlength);
+    }
+    else if (effect_function == random_string){
+    EEPROM.put(offsetof(storeInEEPROM, colorlengthm3[1]), colorlength);
+    }
+    if (effect_function == gradient || effect_function == sparklingR || effect_function == snow_flakesR){
+      offsetPosition = offsetof(storeInEEPROM, arrayn3[0]);
+      EEPROM.put((offsetPosition+programMode), selectColor); 
+    }
+    else {
+      offsetPosition = offsetof(storeInEEPROM, arrayn3[0]);
+      EEPROM.put((offsetPosition+programMode), arrayn); 
+    }
+  }
+  break;
 }
 EEPROM.commit();
 }
+
+// if (selectedPreset[programMode] == 1){
+    
+// }
+
+// else if (selectedPreset[programMode] == 2){
+  
+// }
+
+// else if (selectedPreset[programMode] == 3){
+  
+// }
+
+// }
 
 void saveCurrentBriSPresetToEEPROM(){
 uint8_t offsetInArray = BriSPreset;
@@ -723,6 +776,15 @@ offsetPosition = offsetof(storeInEEPROM, numbrigh[0]);
 EEPROM.put((offsetPosition+offsetInArray), numbrigh);
 offsetPosition = offsetof(storeInEEPROM, numsat[0]);
 EEPROM.put((offsetPosition+offsetInArray), numsat);
+
+offsetPosition = offsetof(storeInEEPROM, overLayBr[0]);
+EEPROM.put((offsetPosition+offsetInArray), overLay);
+offsetPosition = offsetof(storeInEEPROM, ledOffsetBr[0]);
+EEPROM.put((offsetPosition+offsetInArray), ledOffset);
+offsetPosition = offsetof(storeInEEPROM, overLayS[0]);
+EEPROM.put((offsetPosition+offsetInArray), overLayS);
+offsetPosition = offsetof(storeInEEPROM, ledOffsetS[0]);
+EEPROM.put((offsetPosition+offsetInArray), ledOffsetS);
 EEPROM.commit();
 }
 
@@ -1076,7 +1138,16 @@ void readBriSData(byte preset){
       offsetPosition = (offsetof(storeInEEPROM, BPMB[0])) + offsetInArray; 
       BPMB = EEPROM.read(offsetPosition); 
       offsetPosition = (offsetof(storeInEEPROM, BPMS[0])) + offsetInArray; 
-      BPMS = EEPROM.read(offsetPosition);      
+      BPMS = EEPROM.read(offsetPosition);  
+
+      offsetPosition = (offsetof(storeInEEPROM, overLayBr[0])) + offsetInArray; 
+      overLay = EEPROM.read(offsetPosition);
+      offsetPosition = (offsetof(storeInEEPROM, ledOffsetBr[0])) + offsetInArray; 
+      ledOffset = EEPROM.read(offsetPosition);  
+      offsetPosition = (offsetof(storeInEEPROM, overLayS[0])) + offsetInArray; 
+      overLayS = EEPROM.read(offsetPosition);
+      offsetPosition = (offsetof(storeInEEPROM, ledOffsetS[0])) + offsetInArray; 
+      ledOffsetS = EEPROM.read(offsetPosition);                   
 
       #ifdef ESP8266  
       offsetPosition = offsetof(storeInEEPROM, waveTimeBr[0]) + (offsetInArray*sizeof(unsigned long));
@@ -1532,7 +1603,7 @@ void onDataRecv(uint8_t * mac, uint8_t *incomingData, uint8_t len) {
           else if (variable == "SPGM"){programMode = json["SPGM"]; cycleT=0;  previousMillis44 = millis();  previousMillis45 = millis(); changeState();} //Serial.print("containsprogramMode"); Serial.println(programMode); // if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, programMode), programMode);  EEPROM.commit();};          
  
           else if (variable == "SBRI"){BRIGH = json["SBRI"];}
-          else if (variable == "SGLO"){glowON = json["SGLO"]; for (int s=0; s<30; s++){rtGlow3[s] = 100;};}
+          else if (variable == "SGLO"){glowON = json["SGLO"]; for (int s=0; s<255; s++){rtGlow3[s] = 100;};}
           else if (variable == "SOBR"){offBr = json["SOBR"];}
           else if (variable == "SNBR"){numbrigh = json["SNBR"];}
           else if (variable == "SBWS"){waveTimeBr = json["SBWS"];}
@@ -1541,7 +1612,7 @@ void onDataRecv(uint8_t * mac, uint8_t *incomingData, uint8_t len) {
           else if (variable == "CONB"){convBrigh = json["CONB"];}
 
           else if (variable == "SSAT"){S = json["SSAT"];}
-          else if (variable == "SSTM"){satON = json["SSTM"]; for (int s=0; s<30; s++){rtSat3[s] = 100;};}
+          else if (variable == "SSTM"){satON = json["SSTM"]; for (int s=0; s<255; s++){rtSat3[s] = 100;};}
           else if (variable == "SOST"){offS = json["SOST"];}
           else if (variable == "SSTN"){numsat = json["SSTN"];}
           else if (variable == "SSWS"){waveTimeS = json["SSWS"];}
@@ -1652,7 +1723,7 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
           else if (variable == "SPGM"){programMode = json["SPGM"]; cycleT=0;  previousMillis44 = millis();  previousMillis45 = millis(); changeState();} //Serial.print("containsprogramMode"); Serial.println(programMode); // if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, programMode), programMode);  EEPROM.commit();};          
  
           else if (variable == "SBRI"){BRIGH = json["SBRI"];}
-          else if (variable == "SGLO"){glowON = json["SGLO"]; for (int s=0; s<30; s++){rtGlow3[s] = 100;};}
+          else if (variable == "SGLO"){glowON = json["SGLO"]; for (int s=0; s<255; s++){rtGlow3[s] = 100;};}
           else if (variable == "SOBR"){offBr = json["SOBR"];}
           else if (variable == "SNBR"){numbrigh = json["SNBR"];}
           else if (variable == "SBWS"){waveTimeBr = json["SBWS"];}
@@ -1661,7 +1732,7 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
           else if (variable == "CONB"){convBrigh = json["CONB"];}
 
           else if (variable == "SSAT"){S = json["SSAT"];}
-          else if (variable == "SSTM"){satON = json["SSTM"]; for (int s=0; s<30; s++){rtSat3[s] = 100;};}
+          else if (variable == "SSTM"){satON = json["SSTM"]; for (int s=0; s<255; s++){rtSat3[s] = 100;};}
           else if (variable == "SOST"){offS = json["SOST"];}
           else if (variable == "SSTN"){numsat = json["SSTN"];}
           else if (variable == "SSWS"){waveTimeS = json["SSWS"];}
@@ -1698,7 +1769,8 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
   if (sendStatus == 0){
     DEBUG_PRINTLN("Delivery success");
       for (int i = 0; i < 10; i++){
-          if (Mac[i*6] == macMem[0] && Mac[(i*6)+1] == macMem[1] && Mac[(i*6)+2] == macMem[2] && Mac[(i*6)+3] == macMem[3] && Mac[(i*6)+4] == macMem[4] && Mac[(i*6)+5] == macMem[5]) {
+          //if (Mac[i*6] == macMem[0] && Mac[(i*6)+1] == macMem[1] && Mac[(i*6)+2] == macMem[2] && Mac[(i*6)+3] == macMem[3] && Mac[(i*6)+4] == macMem[4] && Mac[(i*6)+5] == macMem[5]) {
+          if (Mac[i][0] == macMem[0] && Mac[i][1] == macMem[1] && Mac[i][2] == macMem[2] && Mac[i][3] == macMem[3] && Mac[i][4] == macMem[4] && Mac[i][5] == macMem[5]) {
             inSyncCounter[i] = 0;
             receivedMessage[i] = true;
           }
@@ -1708,7 +1780,8 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
   else{
     DEBUG_PRINTLN("Delivery fail");
       for (int i = 0; i < 10; i++){
-          if (Mac[i*6] == macMem[0] && Mac[(i*6)+1] == macMem[1] && Mac[(i*6)+2] == macMem[2] && Mac[(i*6)+3] == macMem[3] && Mac[(i*6)+4] == macMem[4] && Mac[(i*6)+5] == macMem[5]) {
+          //if (Mac[i*6] == macMem[0] && Mac[(i*6)+1] == macMem[1] && Mac[(i*6)+2] == macMem[2] && Mac[(i*6)+3] == macMem[3] && Mac[(i*6)+4] == macMem[4] && Mac[(i*6)+5] == macMem[5]) {
+            if (Mac[i][0] == macMem[0] && Mac[i][1] == macMem[1] && Mac[i][2] == macMem[2] && Mac[i][3] == macMem[3] && Mac[i][4] == macMem[4] && Mac[i][5] == macMem[5]) {
             inSyncCounter[i]++;
             receivedMessage[i] = false;
             if (inSyncCounter[i] > 10){
@@ -1750,7 +1823,9 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
   if (status == ESP_NOW_SEND_SUCCESS){
     DEBUG_PRINTLN("Delivery success");
       for (int i = 0; i < 10; i++){
-          if (Mac[i*6] == macMem[0] && Mac[(i*6)+1] == macMem[1] && Mac[(i*6)+2] == macMem[2] && Mac[(i*6)+3] == macMem[3] && Mac[(i*6)+4] == macMem[4] && Mac[(i*6)+5] == macMem[5]) {
+ //         if (Mac[i*6] == macMem[0] && Mac[(i*6)+1] == macMem[1] && Mac[(i*6)+2] == macMem[2] && Mac[(i*6)+3] == macMem[3] && Mac[(i*6)+4] == macMem[4] && Mac[(i*6)+5] == macMem[5]) {
+          if (Mac[i][0] == macMem[0] && Mac[i][1] == macMem[1] && Mac[i][2] == macMem[2] && Mac[i][3] == macMem[3] && Mac[i][4] == macMem[4] && Mac[i][5] == macMem[5]) {
+
             inSyncCounter[i] = 0;
             receivedMessage[i] = true;
           }
@@ -1760,8 +1835,9 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
   else {
     DEBUG_PRINTLN("Delivery fail");
       for (int i = 0; i < 10; i++){
-          if (Mac[i*6] == macMem[0] && Mac[(i*6)+1] == macMem[1] && Mac[(i*6)+2] == macMem[2] && Mac[(i*6)+3] == macMem[3] && Mac[(i*6)+4] == macMem[4] && Mac[(i*6)+5] == macMem[5]) {
-            inSyncCounter[i]++;
+    //      if (Mac[i*6] == macMem[0] && Mac[(i*6)+1] == macMem[1] && Mac[(i*6)+2] == macMem[2] && Mac[(i*6)+3] == macMem[3] && Mac[(i*6)+4] == macMem[4] && Mac[(i*6)+5] == macMem[5]) {
+        if (Mac[i][0] == macMem[0] && Mac[i][1] == macMem[1] && Mac[i][2] == macMem[2] && Mac[i][3] == macMem[3] && Mac[i][4] == macMem[4] && Mac[i][5] == macMem[5]) {
+        inSyncCounter[i]++;
             receivedMessage[i] = false;
             if (inSyncCounter[i] > 10){
               macConnected[i] = false;

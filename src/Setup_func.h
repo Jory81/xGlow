@@ -201,12 +201,19 @@ void espNow(){
   
   // Register peer
   for (int i = 0; i < 10; i++){
-    if (Mac[i*6] + Mac[(i*6)+1] + Mac[(i*6)+2] + Mac[(i*6)+3] + Mac[(i*6)+4] + Mac[(i*6)+5]){
-        uint8_t broadcastAddress[6] = {Mac[i*6], Mac[(i*6)+1], Mac[(i*6)+2], Mac[(i*6)+3], Mac[(i*6)+4], Mac[(i*6)+5]};
+    if (Mac[i][0] + Mac[i][1] + Mac[i][2] + Mac[i][3] + Mac[i][4] + Mac[i][5]){
+      uint8_t broadcastAddress[6] = {Mac[i][0], Mac[i][1], Mac[i][2], Mac[i][3], Mac[i][4], Mac[i][5]};
+    // if (Mac[i*6] + Mac[(i*6)+1] + Mac[(i*6)+2] + Mac[(i*6)+3] + Mac[(i*6)+4] + Mac[(i*6)+5]){
+    //     uint8_t broadcastAddress[6] = {Mac[i*6], Mac[(i*6)+1], Mac[(i*6)+2], Mac[(i*6)+3], Mac[(i*6)+4], Mac[(i*6)+5]};
         memcpy(peerInfo.peer_addr, broadcastAddress, 6);
         peerInfo.channel = 0;  
         peerInfo.encrypt = false;
-        Serial.print("added peer: "); Serial.print(i); Serial.print(" "); Serial.print(broadcastAddress[0]); Serial.print(" "); Serial.print(broadcastAddress[1]); Serial.print(" "); Serial.print(broadcastAddress[2]); Serial.print(" "); Serial.print(broadcastAddress[3]); Serial.print(" "); Serial.print(broadcastAddress[4]); Serial.print(" "); Serial.println(broadcastAddress[5]);
+        Serial.print("added peer: "); Serial.print(i);
+        for (int j = 0; j<6; j++){
+          Serial.print(broadcastAddress[j]); Serial.print(" ");
+        }
+        Serial.println(" ");
+        //Serial.print("added peer: "); Serial.print(i); Serial.print(" "); Serial.print(broadcastAddress[0]); Serial.print(" "); Serial.print(broadcastAddress[1]); Serial.print(" "); Serial.print(broadcastAddress[2]); Serial.print(" "); Serial.print(broadcastAddress[3]); Serial.print(" "); Serial.print(broadcastAddress[4]); Serial.print(" "); Serial.println(broadcastAddress[5]);
     // Add peer        
     if (esp_now_add_peer(&peerInfo) != ESP_OK){
       Serial.println("Failed to add peer");
