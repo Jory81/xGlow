@@ -208,7 +208,7 @@ void espNow(){
         memcpy(peerInfo.peer_addr, broadcastAddress, 6);
         peerInfo.channel = 0;  
         peerInfo.encrypt = false;
-        Serial.print("added peer: "); Serial.print(i);
+        Serial.print("added peer: "); Serial.print(i); Serial.print(" ");
         for (int j = 0; j<6; j++){
           Serial.print(broadcastAddress[j]); Serial.print(" ");
         }
