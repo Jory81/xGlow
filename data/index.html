@@ -176,7 +176,7 @@ function onMessage(event) {
 		for (var i = 0; i < len; i++) {
 		var variable = Object.keys(data)[i];
 		//console.log("this is the name "); console.log(variable);
-		if (variable == 'progn'){document.getElementById("progn").innerHTML = data.progn;}		
+		if (variable == 'progn'){}//{document.getElementById("progn").innerHTML = data.progn;}		
 
 		else if (variable == 'wifiID'){document.getElementById('HSIDS').innerHTML = data.wifiID;}
 		else if (variable == 'wifiPASS'){document.getElementById('HPASS').innerHTML = data.wifiPASS;}
@@ -740,7 +740,7 @@ function onMessage(event) {
 	
 	function updateSliderT(timeLeft){
 	totalTime = document.getElementById('SCTMS').value;
-	var remainingTime = timeLeft / totalTime * 100;
+	var remainingTime = (totalTime - timeLeft) / totalTime * 100;
 	document.getElementById('cycleSlider').value = remainingTime;
 	}
 	
@@ -758,7 +758,7 @@ function setTab(fixedVariable) {
 }
 
 function showSecondDropdown() {
-	var dropdown4 = document.getElementById("dropdown4");
+	var dropdown4 = document.getElementById("SCOM");
 	var dropdown5Container = document.getElementById("dropdown5-container");
 	var sliderContainer = document.getElementById("slider-container");
 	
@@ -828,6 +828,8 @@ $(document).ready(function() {
     <main>
         <div class="cycleParam">
             <h3>Cycle settings</h3>
+				<p class="infowindow">time to next effect: <span id='HCTIS'></span> &nbsp </span></p>
+				<p class="infowindow">time to colour change: <span id='HPTIS'></span> / <span id='HPTTS'></span> </span></p>
 			<div>
                 <label for="slider">remaining time:</label>
                 <input type="range" id="cycleSlider" name="slider" min="0" max="100">
@@ -1056,7 +1058,7 @@ $(document).ready(function() {
 		
 				            <div>
                 <label for="checkbox">_*glitter:</label>
-                <input type="checkbox" id="checkbox" name="checkbox" value="checkbox">
+                <input type="checkbox" id="TGLI" name="checkbox" value="checkbox">
             </div>
 		<div>
                 <label for="dropdown6">_preset: </label>
