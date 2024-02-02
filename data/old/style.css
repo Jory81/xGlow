@@ -1,121 +1,30 @@
 
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
+body {
+  background-color: grey;
+}
 
-        header {
-            background-color: #333;
-            color: #fff;
-            padding: 1em;
-            text-align: center;
-        }
 
-        nav {
-            background-color: #eee;
-            padding: 1em;
-            text-align: center;
-        }
-
-        main {
-            display: flex;
-            justify-content: space-between;
-            margin: 1em;
-        }
-		
-		.cycleParam {
-            background-color: #fff;
-            padding: 0.5em;
-            margin: 0.5em;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-			width: 22%;
-		}
-
-		.mainParam {
-            flex: 1.0;
-            background-color: #fff;
-            padding: 0.5em;
-            margin: 0.5em;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-		}		
-		
-		.addParam {
-            background-color: #fff;
-            padding: 0.5em;
-            margin: 0.5em;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-			width: 30%;
-		}	
-
-        section {
-            flex: 1.0;
-            background-color: #fff;
-            padding: 1em;
-            margin: 1em;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-		
-
-        aside {
-            width: 20%;
-            background-color: #eee;
-            padding: 1em;
-            margin: 1em;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        footer {
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            padding: 1em;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-
-       .dropdown-container {
-            display: flex;
-            align-items: center; /* Align items vertically */
-        }
-
-        .dropdown-container > div {
-            margin-right: 20px; /* Adjust the spacing between dropdowns */
-        }
-		
 h1 {
-	color: grey;
+	color: white;
 	text-align: center;
 }
 
 p.sliderwindow {
-	color: grey;
+	color: white;
 	text-align: center;
 }
 
 .textinfo {
-	color: grey;
+	color: white;
 	text-align: center;
 }
 
 .inputparam {
 	color: grey;
-	text-align: left;
+	text-align: center;
 }
 
 p.sliderwindowsmall {
-	color: grey;
-	text-align: left;
-	font-size: 0.8em;
-}
-p.sliderwindowsmallm {
 	color: white;
 	text-align: center;
 	font-size: 0.8em;
@@ -123,7 +32,7 @@ p.sliderwindowsmallm {
 }
 
 p.infowindow {
-	color: grey;
+	color: white;
 	text-align: center;
 	padding: 0 0px;
 	margin: 0px 0px 0px 0px;
@@ -147,16 +56,7 @@ p.togglewindow {
 }
 
 .varvaluex {
-  color: grey;
-  position: relative;
-  display: flex;
-  width: 3%;
-  float: center;
-}
-
-.varvaluex2 {
-  font-size: 0.8em;
-  color: grey;
+  color: white;
   position: relative;
   display: flex;
   width: 3%;
@@ -164,7 +64,7 @@ p.togglewindow {
 }
 
 .varvaluex1 {
-  color: grey;
+  color: white;
   position: relative;
   display: flex;
   width: 1%;
@@ -172,10 +72,10 @@ p.togglewindow {
 }
 
 .varvalueh {
-  color: black;
+  color: white;
   position: relative;
   display: flex;
-  width: 100%;
+  width: 13%;
   float: center;
 }
 
@@ -194,32 +94,22 @@ p.togglewindow {
 
 
 .titlex { 
-  color: grey;
+  color: white;
   width: 12%;
   position: relative;
   display: flex;
   text-align: left;
 }
 
-.titlex2 { 
-  font-size: 0.8em;
-  color: grey;
-  width: 45%;
-  position: relative;
-  display: flex;
-  text-align: left;
-}
-
 .titlex1 { 
-  color: grey;
+  color: white;
   width: 10%;
   position: right;
   text-align: right;
 }
 
 .titlez { 
-  font-size: 0.8em;
-  color: grey;
+  color: white;
   position: relative;
   display: flex;
 }
@@ -241,12 +131,6 @@ p.progwindows {
   display: flex;
 }
 
-.slidecontainerx2 {
-  position: relative;
-  width: 50%;
-  display: flex;
-}
-
 .slidecontainerx1 {
   width: 15%;
   display: flex;
@@ -259,12 +143,12 @@ p.progwindows {
 
 .switchcontainer{
 	text-align: center;
-	color: grey;
+	color: white;
 }
 
 .switchcontainer1{
 	text-align: left;
-	color: grey;
+	color: white;
 }
 
 .sliderhue {
@@ -605,7 +489,7 @@ p.progwindows {
 }
 
 .sliderticksx p {
-  color: grey;	
+  color: white;	
   position: left;
   display: flex;
   justify-content: center;
@@ -1244,9 +1128,9 @@ section.range-slider3 input::-moz-range-thumb {
 height: 25px;
 }
 
-.inputparam2 {
-color: black;
-text-align: left;
+.inputparam {
+color: grey;
+text-align: center;
 }
 
 .form-controlx input-sl {
