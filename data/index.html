@@ -53,7 +53,6 @@ function initWebSocket() {
 function onOpen(event) {
  
     // Log connection state
-	document.getElementById("colorSettings").style.display = "none";
 	document.getElementById("waveSettings").style.display = "none";		
 	document.getElementById("ledSettings").style.display = "none";
 
@@ -63,7 +62,8 @@ function onOpen(event) {
 		
     console.log("Connected");
 	
-	showSecondDropdown();
+	showColourDropdown();
+	showModeDropdown();
 }
  
 // Called when the WebSocket connection is closed
@@ -76,6 +76,13 @@ function updateNumber(key, value) {
 		if (key == 'SNLD'){
 		document.getElementById("HNUMS").innerHTML  = value;
 		}
+		else if (key == "SCOM"){
+			showColourDropdown();
+		}
+		else if (key == "SPGM"){
+			showModeDropdown();
+		}
+		else{
 		var field = key;
 		var obj = {};
 		obj[field] = value;
@@ -83,6 +90,7 @@ function updateNumber(key, value) {
 		websocket.send(myJSON);  
 		//console.log(myJSON);
 	}
+}
 
 	function updateMac(key, val1, val2, val3, val4, val5, val6) {
 		var field = key;
@@ -147,14 +155,14 @@ function updateNumberS(key, value) {
 		//console.log(myJSON);	
 }
 
-	function updateValue(key, value){
-		var field = key;
-		var obj = {};
-		obj[field] = value;
-		var myJSON = JSON.stringify(obj);
-		websocket.send(myJSON);
-		//console.log(myJSON);	
-}
+// 	function updateValue(key, value){
+// 		var field = key;
+// 		var obj = {};
+// 		obj[field] = value;
+// 		var myJSON = JSON.stringify(obj);
+// 		websocket.send(myJSON);
+// 		//console.log(myJSON);	
+// }
 	
 	function updateButton(key, value) {
 		var field = key;
@@ -205,15 +213,15 @@ function onMessage(event) {
 		
 		
 	
-		else if (variable == 'SPGM'){document.getElementById('SPGM').value }
-		else if (variable == 'SBSM'){document.getElementById('SBSM').value }
-		else if (variable == 'SVAR'){document.getElementById('SVAR').value }
-		else if (variable == 'SCOM'){document.getElementById('SCOM').value }
-		else if (variable == 'SDIF'){document.getElementById('SDIF').value }
-		else if (variable == 'SLSP'){document.getElementById('SLSP').value }
-		else if (variable == 'SCAR'){document.getElementById('SCAR').value }
-		else if (variable == 'SNSP'){document.getElementById('SNSP').value }
-		else if (variable == 'SPST'){document.getElementById('SPST').value }
+		else if (variable == 'SPGM'){document.getElementById('SPGM').value = data.SPGM; }
+		else if (variable == 'SBSM'){document.getElementById('SBSM').value = data.SBSM; }
+		else if (variable == 'SVAR'){document.getElementById('SVAR').value = data.SVAR; }
+		else if (variable == 'SCOM'){document.getElementById('SCOM').value = data.SCOM; }
+		else if (variable == 'SDIF'){document.getElementById('SDIF').value = data.SDIF; }
+		else if (variable == 'SLSP'){document.getElementById('SLSP').value = data.SLSP; }
+		else if (variable == 'SCAR'){document.getElementById('SCAR').value = data.SCAR; }
+		else if (variable == 'SNSP'){document.getElementById('SNSP').value = data.SNSP; }
+		else if (variable == 'SPST'){document.getElementById('SPST').value = data.SPST; }
 		
 		
 		
@@ -241,7 +249,7 @@ function onMessage(event) {
 		else if (variable == 'SM3R'){document.getElementById('SM3R').value = data.SM3R; document.getElementById('SM3RS').innerHTML = data.SM3R;}
 		
 		else if (variable == 'SSSF'){document.getElementById('SSSF').value = data.SSSF; document.getElementById('SSSFS').innerHTML = data.SSSF;}
-		else if (variable == 'SPSV'){document.getElementById('SPSV').innerHTML = data.SPSV;}
+		else if (variable == 'SPSV'){}//document.getElementById('SPSV').innerHTML = data.SPSV;}
 
 		else if (variable == 'SBOF'){document.getElementById('SBOF').value = data.SBOF; document.getElementById('SBOFS').innerHTML = data.SBOF;}
 		else if (variable == 'SBOV'){document.getElementById('SBOV').value = data.SBOV; document.getElementById('SBOVS').innerHTML = data.SBOV;}
@@ -287,7 +295,7 @@ function onMessage(event) {
 
 		else if (variable == 'SLPS'){document.getElementById('SLPSS').value = data.SLPS;}
 
-		else if (variable == 'HSPE'){document.getElementById('HSPES').innerHTML = data.HSPE;}
+		else if (variable == 'HSPE'){}//document.getElementById('HSPES').innerHTML = data.HSPE;}
 		else if (variable == 'HHHH'){document.getElementById('HHHHS').innerHTML = data.HHHH;}
 		else if (variable == 'HSSS'){document.getElementById('HSSSS').innerHTML = data.HSSS;}
 		else if (variable == 'HVVV'){document.getElementById('HVVVS').innerHTML = data.HVVV;}
@@ -757,22 +765,321 @@ function setTab(fixedVariable) {
   }
 }
 
-function showSecondDropdown() {
-	var dropdown4 = document.getElementById("SCOM");
-	var dropdown5Container = document.getElementById("dropdown5-container");
-	var sliderContainer = document.getElementById("slider-container");
+function showColourDropdown() {
+	//var Mode = document.getElementById("SPGM");
+	var ColorMode = document.getElementById("SCOM");
+	var ColorArray = document.getElementById("colorArray");
+	var HueSlider = document.getElementById("hueSlider");
+	var cm23slider = document.getElementById("cm23slider");
+	//var huedisplay = document.getElementById("hue");
 	
-	if (dropdown4.value === "0") {
-		sliderContainer.style.display = "block";
-	} else {
-		sliderContainer.style.display = "none";
+	if (ColorMode.value === "0") {
+		HueSlider.style.display = "block";
+		ColorArray.style.display = "none";
+		cm23slider.style.display = "none";
+	//	huedisplay.style.display = "block";
+	} 
+	else if (ColorMode.value === "2" || ColorMode.value === "3") {
+		ColorArray.style.display = "none";
+		HueSlider.style.display = "none";
+		cm23slider.style.display = "block";
+	//	huedisplay.style.display = "none";
 	}
+	else if (ColorMode.value === "4") {
+		ColorArray.style.display = "block";
+		HueSlider.style.display = "none";
+		cm23slider.style.display = "none";
+	//	huedisplay.style.display = "none";
+	}
+	else {
+		HueSlider.style.display = "none";
+		ColorArray.style.display = "none";
+		cm23slider.style.display = "none";
+	//	huedisplay.style.display = "block";
+	}
+	// if (Mode.value === "37"){
+	// 	HueSlider.style.display = "none";
+	// 	ColorArray.style.display = "none";
+	// 	huedisplay.style.display = "none";
+	// }
+}
 
-	if (dropdown4.value === "4") {
-		dropdown5Container.style.display = "block";
-	} else {
-		dropdown5Container.style.display = "none";
+function showModeDropdown() {
+	var Mode = document.getElementById("SPGM");
+
+	var brispreset = document.getElementById("brispreset");
+	brispreset.style.display = "block";
+	var variation = document.getElementById("var");
+	variation.style.display = "block";
+	var colormode = document.getElementById("colormode");
+	colormode.style.display = "block";
+	var huedisplay = document.getElementById("hue");
+	huedisplay.style.display = "block";
+	var dif = document.getElementById("dif");
+	dif.style.display = "block";
+	var speed = document.getElementById("speed");
+	speed.style.display = "block";
+	var preset = document.getElementById("preset");
+	preset.style.display = "block";
+	var glitter = document.getElementById("glitter");
+	glitter.style.display = "block";	
+	
+	var numspark = document.getElementById("numspark");
+	numspark.style.display = "none";
+	
+	var rainbow3 = document.getElementById("rainbow_3");
+	rainbow3.style.display = "none";
+	var rainbow7 = document.getElementById("rainbow_7");
+	rainbow7.style.display = "none";
+	var xmas = document.getElementById("xmas");
+	xmas.style.display = "none";
+	var white = document.getElementById("white");
+	white.style.display = "none";
+	var reverse = document.getElementById("reverse");
+	reverse.style.display = "none";
+	var rainbow = document.getElementById("rainbow");
+	rainbow.style.display = "none";
+	var gradient = document.getElementById("gradient");
+	gradient.style.display = "none";
+	var gradientcolor = document.getElementById("gradientcolor");
+	gradientcolor.style.display = "none";
+	var palet = document.getElementById("palet");
+	palet.style.display = "none";
+	var tower = document.getElementById("tower");
+	tower.style.display = "none";
+	var bees = document.getElementById("bees");
+	bees.style.display = "none";
+	var ModeRGB = document.getElementById("RGBmode");
+	ModeRGB.style.display = "none";		
+	
+	var offset = document.getElementById("offset");
+	offset.style.display = "none";
+	var dir = document.getElementById("dir");
+	dir.style.display = "none";
+
+	var colorlength = document.getElementById("colorlength");
+	colorlength.style.display = "none";
+	var numcolor = document.getElementById("numcolor");
+	numcolor.style.display = "none";
+
+	var sparkcolor = document.getElementById("sparkcolor");
+	sparkcolor.style.display = "none";
+	var sparkbri = document.getElementById("sparkbri");
+	sparkbri.style.display = "none";
+	var sparksat = document.getElementById("sparksat");
+	sparksat.style.display = "none";
+
+
+	if (Mode.value === "0") { // static glow
 	}
+	else if (Mode.value === "1") { //  static_glow2
+	}
+	else if (Mode.value === "2") { // static glow
+	}
+	else if (Mode.value === "3") { // static glow
+	}
+	else if (Mode.value === "4") { //  static_glow2
+	}
+	else if (Mode.value === "5") { // colourSplash
+		colormode.style.display = "none";
+		huedisplay.style.display = "none";
+	}
+	else if (Mode.value === "6") { // palettes
+		palet.style.display = "block";
+		colormode.style.display = "none";
+		huedisplay.style.display = "none";
+	}
+	else if (Mode.value === "7") { // rainbow1
+		dir.style.display = "block";
+	}
+	else if (Mode.value === "8") { // rainbow2
+		offset.style.display = "block";
+		dir.style.display = "block";
+		colormode.style.display = "none";
+		huedisplay.style.display = "none";
+	}
+	else if (Mode.value === "9") { // rainbow3
+		rainbow3.style.display = "block";
+		colormode.style.display = "none";
+		huedisplay.style.display = "none";
+	}
+	else if (Mode.value === "10") { // rainbow4
+		dir.style.display = "block";
+		colormode.style.display = "none";
+		huedisplay.style.display = "none";
+	}
+	else if (Mode.value === "11") { // rainbow5
+		dir.style.display = "block";
+		offset.style.display = "block";
+		colormode.style.display = "none";
+		huedisplay.style.display = "none";
+	}
+	else if (Mode.value === "12") { // rainbow6
+		colorlength.style.display = "block";
+	}
+	else if (Mode.value === "13") { // rainbow7
+		huedisplay.style.display = "none";
+		variation.style.display = "none";
+		rainbow7.style.display = "block";
+		colormode.style.display = "none";
+		huedisplay.style.display = "none";
+	}
+	else if (Mode.value === "14") { // gradient
+		gradient.style.display = "block";
+		gradientcolor.style.display = "block";
+		colormode.style.display = "none";
+		huedisplay.style.display = "none";
+	}
+	else if (Mode.value === "15") { // s7_strings
+		reverse.style.display = "block";
+		rainbow.style.display = "block";
+		numspark.style.display = "block";
+	}
+	else if (Mode.value === "16") { // s7_strings
+		reverse.style.display = "block";
+		rainbow.style.display = "block";
+		numspark.style.display = "block";		
+	}
+	else if (Mode.value === "17") { // s7_strings_2
+		reverse.style.display = "block";
+		rainbow.style.display = "block";
+		numspark.style.display = "block";		
+	}
+	else if (Mode.value === "18") { // s7_strings
+		reverse.style.display = "block";
+		rainbow.style.display = "block";
+		numspark.style.display = "block";		
+	}
+	else if (Mode.value === "19") {  //snow_flakes; 
+		tower.style.display = "block";
+		bees.style.display = "block";
+		offset.style.display = "block";
+		numspark.style.display = "block";
+		sparksat.style.display = "block";
+		sparkbri.style.display = "block";
+		sparkcolor.style.display = "block";
+	}
+	else if (Mode.value === "20") { //snow_flakes; 
+		tower.style.display = "block";
+		bees.style.display = "block";
+		offset.style.display = "block";
+		numspark.style.display = "block";
+		sparksat.style.display = "block";
+		sparkbri.style.display = "block";
+		sparkcolor.style.display = "block";				
+	}
+	else if (Mode.value === "21") { //snow_flakes_2;
+		tower.style.display = "block";
+		bees.style.display = "block";	
+		offset.style.display = "block";	
+		numspark.style.display = "block";
+		sparksat.style.display = "block";
+		sparkbri.style.display = "block";
+		sparkcolor.style.display = "block";		
+	}
+	else if (Mode.value === "22") { //snow_storm;
+		offset.style.display = "block";
+		numspark.style.display = "block";
+		sparksat.style.display = "block";
+		sparkbri.style.display = "block";
+		sparkcolor.style.display = "block";		
+	}
+	else if (Mode.value === "23") { // snow_flakesR;
+		gradient.style.display = "block";
+		gradientcolor.style.display = "block";
+		tower.style.display = "block";
+		bees.style.display = "block";
+		offset.style.display = "block";	
+		numspark.style.display = "block";
+		sparksat.style.display = "block";
+		sparkbri.style.display = "block";
+		sparkcolor.style.display = "block";			
+	} 
+	else if (Mode.value === "24") { // snow_flakes2;
+		offset.style.display = "block";
+		numspark.style.display = "block";
+		sparksat.style.display = "block";
+		sparkbri.style.display = "block";
+		sparkcolor.style.display = "block";		
+	}
+	else if (Mode.value === "25") { //sparkling;
+		offset.style.display = "block";
+		numspark.style.display = "block";
+		sparksat.style.display = "block";
+		sparkbri.style.display = "block";
+		sparkcolor.style.display = "block";		
+	}
+	else if (Mode.value === "26") { // sparkling_2;
+		offset.style.display = "block";
+		numspark.style.display = "block";
+		sparksat.style.display = "block";
+		sparkbri.style.display = "block";
+		sparkcolor.style.display = "block";		
+	}
+	else if (Mode.value === "27") { // sparklingR;
+		gradient.style.display = "block";
+		gradientcolor.style.display = "block";
+		offset.style.display = "block";
+		numspark.style.display = "block";
+		sparksat.style.display = "block";
+		sparkbri.style.display = "block";
+		sparkcolor.style.display = "block";		
+	}
+	else if (Mode.value === "28") { // twinkle; 
+		numspark.style.display = "block";
+	}
+	else if (Mode.value === "29") { // random_led;
+	}
+	else if (Mode.value === "30") { // pers_color; 
+		white.style.display = "block";
+		colormode.style.display = "none";
+		huedisplay.style.display = "none";
+		numcolor.style.display = "block";
+	}
+	else if (Mode.value === "31") { // pers_block
+		colormode.style.display = "none";
+		huedisplay.style.display = "none";
+		colorlength.style.display = "block";
+		numcolor.style.display = "block";
+	}
+	else if (Mode.value === "32") { // xmas_string;
+		dir.style.display = "block";
+		offset.style.display = "block";
+		colormode.style.display = "none";
+		huedisplay.style.display = "none";
+		xmas.style.display = "block";
+	}
+	else if (Mode.value === "33") { // xmas_singles
+		offset.style.display = "block";
+		colormode.style.display = "none";
+		huedisplay.style.display = "none";
+		variation.style.display = "none";
+		xmas.style.display = "block";
+	}
+	else if (Mode.value === "34") { // splash
+	}
+	else if (Mode.value === "35") { // strobe
+		numspark.style.display = "block";
+	}
+	else if (Mode.value === "36") { //meteor
+		offset.style.display = "block";
+		numspark.style.display = "block";
+		glitter.style.display = "none";
+	}
+	else if (Mode.value === "37") { // RGB
+		brispreset.style.display = "none";
+		variation.style.display = "none";
+		colormode.style.display = "none";
+		huedisplay.style.display = "none";
+		dif.style.display = "none";
+		speed.style.display = "none";
+		glitter.style.display = "none";
+		preset.style.display = "none";
+
+		ModeRGB.style.display = "block";
+	}
+	
+	showColourDropdown();
 }
  
 </script>
@@ -792,69 +1099,321 @@ $(document).ready(function() {
 </script>
 
 <body>
-
     <header>
-        <h1>LED Control panel</h1>
-		<p class="infowindow">
-<div class='time-frame'>
-    <span id='date-part'></span>
-    <span> &nbsp  / &nbsp  </span>
-    <span id='time-part'></span>
+			<p class="infowindow">
+				<div class='time-frame'>
+					<span id='date-part'></span>
+					<span> &nbsp  / &nbsp  </span>
+					<span id='time-part'></span> &nbsp;
 
-	&nbsp;
+					<span id="checkbox6">
+						<input class="checkbox-element1" type="checkbox" id="recMsg"/>  
+						<i class="glyphicon glyphicon-ok"></i>
+					</span> &nbsp; 
 
-	<span id="checkbox6">
-		<input class="ckeckbox-element" type="checkbox" id="recMsg"/>  
-		<i class="glyphicon glyphicon-ok"></i>
-	</span> 
-
-	&nbsp; 
-
-<span class="switchcontainer">
-	_EEPROM
-	<input type="checkbox" id="TSTE" onclick="updateButton(this.id, this.checked)"> 
-</span>
-
-</div>
-<p class="sliderwindow"> 
-	<span class="textinfo">mac address: </span>
-	<span class="textinfo" id="MAC">___</span> &nbsp
-	<span class="textinfo">connected devices:</span>&nbsp <span class="textinfo" id="connectedDevices"></span>
-	</p>
-
-</p>
+					<span class="switchcontainer">
+						_EEPROM
+						<input type="checkbox" id="TSTE" onclick="updateButton(this.id, this.checked)"> 
+					</span>
+				</div>
+				<p class="sliderwindow">
+					<span class="switchcontainer">_mode sync
+						<input type="checkbox" id="TSYN" onclick="updateButton(this.id, this.checked)"> 
+					</span>
+					<span class="switchcontainer">_color sync
+						<input type="checkbox" id="TSCN" onclick="updateButton(this.id, this.checked)"> 
+					</span>
+				</p>
+				<p class="sliderwindow"> 
+					<span class="textinfo">mac address: </span>
+					<span class="textinfo" id="MAC">___</span> &nbsp
+					<span class="textinfo">connected devices:</span>&nbsp <span class="textinfo" id="connectedDevices"></span>
+				</p>
+			</p>
     </header>
-
+		<br>
+		<p class="sliderwindow">
+		Configuration and connection:  
+		<span>
+			<input class="ckeckbox-element1" type="checkbox" id="1N1" onclick="setTab('ledSettings')"/>  
+			<!--<i class="glyphicon glyphicon-menu-down"></i>-->
+		</span> 
+	</p>
+	<div id="ledSettings">
+		<br>
+		<p class="sliderwindow"> 
+		<span class="textinfo">NUM_LEDS (1-600):</span> <span class="inputparam"> <input type="number" id="NUM_LEDS" max="600" min="1" value=""></span> &nbsp
+		<span class="textinfo" id="HNUMS">___</span> &nbsp
+		<span class="inputparam"> <button onclick="updateNumber('SNLD', NUM_LEDS.value)">submit</button>	</span> &nbsp
+		</p>
+		
+		<p class="sliderwindow"> 
+		<span class="textinfo"> color order: </span> &nbsp 
+		<span class="inputparam">
+		<select id="setColour" onchange="changeColor('SETT', this.value)">
+			<option value="0. RGB">pin 16 RGB</option>
+			<option value="1. GRB">pin 16 GRB</option>
+			<option value="2. BRG">pin 16 BRG</option>
+			<option value="3. BGR">pin 16 BGR</option>
+			<option value="4. RBG">pin 16 RBG</option>
+			<option value="5. GBR">pin 16 GBR</option>
+			<option value="6. RGB">pin 16, 3, 26 RGB</option>
+			<option value="7. GRB">pin 16, 3, 26 GRB</option>	
+		</select>
+		</span>&nbsp
+		<span class="textinfo" id="HCOLS">___</span> 
+		</p>
+		<br>
+		<p class="sliderwindow"> WIFI & ESP32 settings:
+		
+			</p>
+		<p class="sliderwindow"> 
+		<span class="textinfo">ssid:</span> <span class="inputparam"> <input type="text" id="ssid" value=""></span> <span class="textinfo" id="HSIDS">___</span> &nbsp <span class="inputparam"> <button onclick="updateText('ssid', ssid.value)">submit</button> </span>
+		<br>
+		<span class="textinfo">pass:</span> <span class="inputparam"> <input type="text" id="pass" value=""></span> <span class="textinfo" id="HPASS">___</span> &nbsp <span class="inputparam"> <button onclick="updateText('pass', pass.value)">submit</button> </span>
+		</p>
+		<br>
+		
+		<p class="sliderwindow"> 
+			<span class="textinfo">ESP32's connected:</span> &nbsp
+		</p>
+		
+		<p class="sliderwindowsmallm">
+			<span class="textinfo">mac 1:</span>
+			<span class="switchcontainer">
+				<input type="checkbox" id="m1c" onclick="updateButton(this.id, this.checked)"> 
+				 
+			</span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac1_1" value=""></span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac1_2" value=""></span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac1_3" value=""></span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac1_4" value=""></span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac1_5" value=""></span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac1_6" value=""></span>
+			<span><button onclick="updateMac('mac1', mac1_1.value, mac1_2.value, mac1_3.value, mac1_4.value, mac1_5.value, mac1_6.value)" class="btnx btn-primary">_update</button> </span>
+		</p>
+		
+		<p class="sliderwindowsmallm">
+			<span class="textinfo">mac 2:</span>
+			<span class="switchcontainer">
+				<input type="checkbox" id="m2c" onclick="updateButton(this.id, this.checked)"> 
+				 
+			</span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac2_1" value=""></span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac2_2" value=""></span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac2_3" value=""></span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac2_4" value=""></span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac2_5" value=""></span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac2_6" value=""></span>
+			<span><button onclick="updateMac('mac2', mac2_1.value, mac2_2.value, mac2_3.value, mac2_4.value, mac2_5.value, mac2_6.value)" class="btnx btn-primary">_update</button> </span>
+		</p>
+		
+		<p class="sliderwindowsmallm">
+			<span class="textinfo">mac 3:</span>
+			<span class="switchcontainer">
+				<input type="checkbox" id="m3c" onclick="updateButton(this.id, this.checked)"> 
+				 
+			</span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac3_1" value=""></span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac3_2" value=""></span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac3_3" value=""></span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac3_4" value=""></span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac3_5" value=""></span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac3_6" value=""></span>
+			<span><button onclick="updateMac('mac3', mac3_1.value, mac3_2.value, mac3_3.value, mac3_4.value, mac3_5.value, mac3_6.value)" class="btnx btn-primary">_update</button> </span>
+		</p>
+		
+		<p class="sliderwindowsmallm">
+			<span class="textinfo">mac 4:</span>
+			<span class="switchcontainer">
+				<input type="checkbox" id="m4c" onclick="updateButton(this.id, this.checked)"> 
+				 
+			</span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac4_1" value=""></span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac4_2" value=""></span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac4_3" value=""></span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac4_4" value=""></span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac4_5" value=""></span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac4_6" value=""></span>
+			<span><button onclick="updateMac('mac4', mac4_1.value, mac4_2.value, mac4_3.value, mac4_4.value, mac4_5.value, mac4_6.value)" class="btnx btn-primary">_update</button> </span>
+		</p>
+		
+		<p class="sliderwindowsmallm">
+			<span class="textinfo">mac 5:</span>
+			<span class="switchcontainer">
+				<input type="checkbox" id="m5c" onclick="updateButton(this.id, this.checked)"> 
+				 
+			</span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac5_1" value=""></span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac5_2" value=""></span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac5_3" value=""></span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac5_4" value=""></span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac5_5" value=""></span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac5_6" value=""></span>
+			<span><button onclick="updateMac('mac5', mac5_1.value, mac5_2.value, mac5_3.value, mac5_4.value, mac5_5.value, mac5_6.value)" class="btnx btn-primary">_update</button> </span>
+		</p>
+		
+		<p class="sliderwindowsmallm">
+			<span class="textinfo">mac 6:</span>
+			<span class="switchcontainer">
+				<input type="checkbox" id="m6c" onclick="updateButton(this.id, this.checked)"> 
+				 
+			</span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac6_1" value=""></span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac6_2" value=""></span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac6_3" value=""></span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac6_4" value=""></span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac6_5" value=""></span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac6_6" value=""></span>
+			<span><button onclick="updateMac('mac6', mac6_1.value, mac6_2.value, mac6_3.value, mac6_4.value, mac6_5.value, mac6_6.value)" class="btnx btn-primary">_update</button> </span>
+		</p>
+		
+		<p class="sliderwindowsmallm">
+			<span class="textinfo">mac 7:</span>
+			<span class="switchcontainer">
+				<input type="checkbox" id="m7c" onclick="updateButton(this.id, this.checked)"> 
+				 
+			</span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac7_1" value=""></span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac7_2" value=""></span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac7_3" value=""></span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac7_4" value=""></span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac7_5" value=""></span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac7_6" value=""></span>
+			<span><button onclick="updateMac('mac7', mac7_1.value, mac7_2.value, mac7_3.value, mac7_4.value, mac7_5.value, mac7_6.value)" class="btnx btn-primary">_update</button> </span>
+		</p>
+		
+		<p class="sliderwindowsmallm">
+			<span class="textinfo">mac 8:</span>
+			<span class="switchcontainer">
+				<input type="checkbox" id="m8c" onclick="updateButton(this.id, this.checked)"> 
+				 
+			</span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac8_1" value=""></span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac8_2" value=""></span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac8_3" value=""></span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac8_4" value=""></span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac8_5" value=""></span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac8_6" value=""></span>
+			<span><button onclick="updateMac('mac8', mac8_1.value, mac8_2.value, mac8_3.value, mac8_4.value, mac8_5.value, mac8_6.value)" class="btnx btn-primary">_update</button> </span>
+		</p>
+		
+		<p class="sliderwindowsmallm">
+			<span class="textinfo">mac 9:</span>
+			<span class="switchcontainer">
+				<input type="checkbox" id="m9c" onclick="updateButton(this.id, this.checked)"> 
+				 
+			</span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac9_1" value=""></span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac9_2" value=""></span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac9_3" value=""></span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac9_4" value=""></span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac9_5" value=""></span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac9_6" value=""></span>
+			<span><button onclick="updateMac('mac9', mac9_1.value, mac9_2.value, mac9_3.value, mac9_4.value, mac9_5.value, mac9_6.value)" class="btnx btn-primary">_update</button> </span>
+		</p>
+		
+		<p class="sliderwindowsmallm">
+			<span class="textinfo">mac 10:</span>
+			<span class="switchcontainer">
+				<input type="checkbox" id="m10c" onclick="updateButton(this.id, this.checked)"> 
+				 
+			</span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac10_1" value=""></span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac10_2" value=""></span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac10_3" value=""></span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac10_4" value=""></span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac10_5" value=""></span>
+			<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac10_6" value=""></span>
+			<span><button onclick="updateMac('mac10', mac10_1.value, mac10_2.value, mac10_3.value, mac10_4.value, mac10_5.value, mac10_6.value)" class="btnx btn-primary">_update</button> </span>
+		</p>
+		
+		<br>
+		<p class="sliderwindow"> 
+		<span class="textinfo"> <span id="reboot"></span></span>&nbsp
+		<span class="inputparam"> <button onclick="updateText('BOOT', 1)">reboot</button></span>
+		</p>
+		<br>
+		<hr/>
+		<p class="sliderwindow">SPECIAL EEPROM FUNCTIONS</P>
+		<br>
+		<div class="switchcontainer">
+			Save All SETTINGS to GLOBAL EEPROM (BriSPreset [0])
+			<label class="switch1">
+			  <input type="checkbox" id="TSET" onclick="updateButton(this.id, this.checked)"> 
+			  <span class="sliderround1"></span>
+			</label>
+		</div>
+		
+		<div class="switchcontainer">
+			save current cycle param (cycle time & effect speed) to all modes:
+			<label class="switch1">
+			  <input type="checkbox" id="TCPM" onclick="updateButton(this.id, this.checked)"> 
+			  <span class="sliderround1"></span>
+			</label>
+		</div>
+		<div class="switchcontainer">
+		ACTIVATE all PRESETS in EEPROM
+		<label class="switch1">
+		  <input type="checkbox" id="TAAM" onclick="updateButton(this.id, this.checked)"> 
+		  <span class="sliderround1"></span>
+		</label>
+		</div>
+		<div class="switchcontainer">
+		DEACTIVATE all PRESETS in EEPROM
+		<label class="switch1">
+		  <input type="checkbox" id="TDAM" onclick="updateButton(this.id, this.checked)"> 
+		  <span class="sliderround1"></span>
+		</label>
+		</div>
+		<div class="switchcontainer">
+			Clear EEPROM - SET TO DEFAULT
+				<label class="switch1">
+				  <input type="checkbox" id="TSED" onclick="updateButton(this.id, this.checked)"> 
+				  <span class="sliderround1"></span>
+				</label>
+			</div>
+		</div>
+	
+	
     <main>
         <div class="cycleParam">
-            <h3>Cycle settings</h3>
-				<p class="infowindow">time to next effect: <span id='HCTIS'></span> &nbsp </span></p>
-				<p class="infowindow">time to colour change: <span id='HPTIS'></span> / <span id='HPTTS'></span> </span></p>
+            <h2>Cycle settings</h2>
+				<!--<p class="infowindow">time to next effect: <span id='HCTIS'></span> &nbsp </span></p>
+				<p class="infowindow">time to colour change: <span id='HPTIS'></span> / <span id='HPTTS'></span> </span></p>-->
 			<div>
-                <label for="slider">remaining time:</label>
+                 remaining time: 
                 <input type="range" id="cycleSlider" name="slider" min="0" max="100">
+				&nbsp
+				<span id='HCTIS'></span>colour:
+				&nbsp
+				<span id='HPTIS'></span>/ <span id='HPTTS'></span>
             </div>
 							            <div>
-                <label for="checkbox">_cycle:</label>
+                 _cycle: 
                 <input type="checkbox" id="TCON" onclick="updateButton(this.id, this.checked)">
             </div>
 			
 							            <div>
-                <label for="checkbox">_fade:</label>
+                 _fade: 
                 <input type="checkbox" id="TCFA" onclick="updateButton(this.id, this.checked)"> 
             </div>
-							            <div>
-                <label for="checkbox">_random:</label>
+			<div>
+                 _random: 
                 <input type="checkbox" id="TCRA" onclick="updateButton(this.id, this.checked)">
             </div>
-									            <div>
-                <label for="checkbox">_(de)activate:</label>
+			<div>
+                 _select: 
                 <input type="checkbox" id="TCAC" onclick="updateButton(this.id, this.checked)">  
             </div>
-									            <div>
-                <label for="checkbox">_selection:</label>
+			<div>
+                 _selection only: 
                 <input type="checkbox" id="TCEX" onclick="updateButton(this.id, this.checked)">
             </div>
+			<div>
+				coupled BriS
+				<input type="checkbox" id="TSBS" onclick="updateButton(this.id, this.checked)"> 
+			</div>
 			
 			<p class="sliderwindowsmall">
 				<span class="inputparam"> <input type="number" style="width: 65px;" placeholder="uint32_t" id="SCTMS" value=""></span> <span class="textinfo"> (s)      </span>
@@ -870,397 +1429,394 @@ $(document).ready(function() {
         <div class="mainParam">
             <h2>Leds info</h2>
             <div>
-                <label for="dropdown1">_mode:</label>
-                <select id="SPGM" name="program">
-                        <option value="0"  onclick="updateNumberS('SPGM', this.value)">0: static_glow</option >
-						<option value="1"  onclick="updateNumberS('SPGM', this.value)">1: var_glow</option >
-						<option value="2"  onclick="updateNumberS('SPGM', this.value)">2: warm_glow</option >
-						<option value="3"  onclick="updateNumberS('SPGM', this.value)">3: reflection</option >
-						<option value="4"  onclick="updateNumberS('SPGM', this.value)">4: deflection</option >
-						<option value="5"  onclick="updateNumberS('SPGM', this.value)">5: coloursplash</option >
-						<option value="6"  onclick="updateNumberS('SPGM', this.value)">6: palette</option >
-						<option value="7"  onclick="updateNumberS('SPGM', this.value)">7: rainbow_1</option >
-						<option value="8"  onclick="updateNumberS('SPGM', this.value)">8: rainbow_2</option >
-						<option value="9"  onclick="updateNumberS('SPGM', this.value)">9: rainbow_3</option >
-						<option value="10"  onclick="updateNumberS('SPGM', this.value)">10: rainbow_4</option >
-						<option value="11"  onclick="updateNumberS('SPGM', this.value)">11: rainbow_5</option >
-						<option value="12"  onclick="updateNumberS('SPGM', this.value)">12: rainbow_6</option >
-						<option value="13"  onclick="updateNumberS('SPGM', this.value)">13: rainbow_7</option >
-						<option value="14"  onclick="updateNumberS('SPGM', this.value)">14: gradient</option >
-						<option value="15"  onclick="updateNumberS('SPGM', this.value)">15: 7strings</option >
-						<option value="16"  onclick="updateNumberS('SPGM', this.value)">16: 7s_v2</option >	
-						<option value="17"  onclick="updateNumberS('SPGM', this.value)">17: 7s_mirror</option >
-						<option value="18"  onclick="updateNumberS('SPGM', this.value)">18: halcyon</option >
-						<option value="19"  onclick="updateNumberS('SPGM', this.value)">19: snow</option >
-						<option value="20"  onclick="updateNumberS('SPGM', this.value)">20: snow_v2</option >
-						<option value="21"  onclick="updateNumberS('SPGM', this.value)">21: snow_pile</option >
-						<option value="22"  onclick="updateNumberS('SPGM', this.value)">22: snow_storm</option >
-						<option value="23"  onclick="updateNumberS('SPGM', this.value)">23: snow_rainbow</option >
-						<option value="24"  onclick="updateNumberS('SPGM', this.value)">24: snow_mirror</option >
-						<option value="25"  onclick="updateNumberS('SPGM', this.value)">25: sparkle</option >
-						<option value="26"  onclick="updateNumberS('SPGM', this.value)">26: sparkle_storm</option >	
-						<option value="27"  onclick="updateNumberS('SPGM', this.value)">27: sparkle_rainbow</option > 
-						<option value="28"  onclick="updateNumberS('SPGM', this.value)">28: twinkle</option >	
-						<option value="29"  onclick="updateNumberS('SPGM', this.value)">29: casino</option >
-						<option value="30"  onclick="updateNumberS('SPGM', this.value)">30: fine_canvas</option >	
-						<option value="31"  onclick="updateNumberS('SPGM', this.value)">31: rough_canvas</option >	
-						<option value="32"  onclick="updateNumberS('SPGM', this.value)">32: xmas_1</option >
-						<option value="33"  onclick="updateNumberS('SPGM', this.value)">33: xmas_2</option >
-						<option value="34"  onclick="updateNumberS('SPGM', this.value)">34: splash</option >
-						<option value="35"  onclick="updateNumberS('SPGM', this.value)">35: strobe</option >
-						<option value="36"  onclick="updateNumberS('SPGM', this.value)">36: meteor</option >	
-						<option value="37"  onclick="updateNumberS('SPGM', this.value)">37: RGBmode</option >
+                 _mode: 
+                <select id="SPGM" onchange="updateNumber(this.id, this.value)">
+                        <option value="0">0: static_glow</option >
+						<option value="1">1: var_glow</option >
+						<option value="2">2: warm_glow</option >
+						<option value="3">3: reflection</option >
+						<option value="4">4: deflection</option >
+						<option value="5">5: coloursplash</option >
+						<option value="6">6: palette</option >
+						<option value="7">7: rainbow_1</option >
+						<option value="8">8: rainbow_2</option >
+						<option value="9">9: rainbow_3</option >
+						<option value="10">10: rainbow_4</option >
+						<option value="11">11: rainbow_5</option >
+						<option value="12">12: rainbow_6</option >
+						<option value="13">13: rainbow_7</option >
+						<option value="14">14: gradient</option >
+						<option value="15">15: 7strings</option >
+						<option value="16">16: 7s_v2</option >	
+						<option value="17">17: 7s_mirror</option >
+						<option value="18">18: halcyon</option >
+						<option value="19">19: snow</option >
+						<option value="20">20: snow_v2</option >
+						<option value="21">21: snow_pile</option >
+						<option value="22">22: snow_storm</option >
+						<option value="23">23: snow_rainbow</option >
+						<option value="24">24: snow_mirror</option >
+						<option value="25">25: sparkle</option >
+						<option value="26">26: sparkle_storm</option >	
+						<option value="27">27: sparkle_rainbow</option > 
+						<option value="28">28: twinkle</option >	
+						<option value="29">29: casino</option >
+						<option value="30">30: fine_canvas</option >	
+						<option value="31">31: rough_canvas</option >	
+						<option value="32">32: xmas_1</option >
+						<option value="33">33: xmas_2</option >
+						<option value="34">34: splash</option >
+						<option value="35">35: strobe</option >
+						<option value="36">36: meteor</option >	
+						<option value="37">37: RGBmode</option >
                 </select>
-				
-				<span class="switchcontainer">sync
-					<input type="checkbox" id="TSYN" onclick="updateButton(this.id, this.checked)"> 
-				</span>
-				<span class="switchcontainer">
-					<input type="checkbox" id="TSCN" onclick="updateButton(this.id, this.checked)"> 
-				</span>
 
             </div>
-			         <div>
-                <label for="dropdown2">_*briS:&nbsp</label>
-                <select id="SBSM" name="brispeset">
-					  <option id="bs0" value="0"  onclick="updateNumberS('SBSM', this.value)">0: global storage</option>
-					  <option id="bs1" value="1"  onclick="updateNumberS('SBSM', this.value)">1: basic glow_1</option>
-					  <option id="bs2" value="2"  onclick="updateNumberS('SBSM', this.value)">2: basic glow_2</option>
-					  <option id="bs3" value="3"  onclick="updateNumberS('SBSM', this.value)">3: misty_1</option>
-					  <option id="bs4" value="4"  onclick="updateNumberS('SBSM', this.value)">4: misty_2</option>
-					  <option id="bs5" value="5"  onclick="updateNumberS('SBSM', this.value)">5: misty_3</option>
-					  <option id="bs6" value="6"  onclick="updateNumberS('SBSM', this.value)">6: misty_4</option>	
-					  <option id="bs7" value="7"  onclick="updateNumberS('SBSM', this.value)">7: S_twinkle_bsl_1</option>
-					  <option id="bs8" value="8"  onclick="updateNumberS('SBSM', this.value)">8: S_twinkle_bsl_2</option>		
-					  <option id="bs9" value="9"  onclick="updateNumberS('SBSM', this.value)">9: S_twinkle_rb1</option>	
-					  <option id="bs10" value="10"  onclick="updateNumberS('SBSM', this.value)">10: S_twinkle_rb1</option>	
-					  <option id="bs11" value="11"  onclick="updateNumberS('SBSM', this.value)">11: S_twinkle_b2</option> 
-					  <option id="bs12" value="12"  onclick="updateNumberS('SBSM', this.value)">12: spark_1</option>
-					  <option id="bs13" value="13"  onclick="updateNumberS('SBSM', this.value)">13: spark_2</option>
-					  <option id="bs14" value="14"  onclick="updateNumberS('SBSM', this.value)">14: long_wave</option>
-					  <option id="bs15" value="15"  onclick="updateNumberS('SBSM', this.value)">15: diamond_1</option>
-					  <option id="bs16" value="16"  onclick="updateNumberS('SBSM', this.value)">16: diamond_2 (Df)</option>
-					  <option id="bs17" value="17"  onclick="updateNumberS('SBSM', this.value)">17: diamond_3</option>
-					  <option id="bs18" value="18"  onclick="updateNumberS('SBSM', this.value)">18: F_twinkle_bsl</option>
-					  <option id="bs19" value="19"  onclick="updateNumberS('SBSM', this.value)">19: M_twinkle</option>
-					  <option id="bs20" value="20"  onclick="updateNumberS('SBSM', this.value)">20: F_twinkle_s</option>
-					  <option id="bs21" value="21"  onclick="updateNumberS('SBSM', this.value)">21: F_twinkle_fc</option>
-					  <option id="bs22" value="22"  onclick="updateNumberS('SBSM', this.value)">22: neon_lights</option>
-					  <option id="bs23" value="23"  onclick="updateNumberS('SBSM', this.value)">23: fire_glow</option>
-					  <option id="bs24" value="24"  onclick="updateNumberS('SBSM', this.value)">24: no_glow_hiBr</option>
-					  <option id="bs25" value="25"  onclick="updateNumberS('SBSM', this.value)">25: no_glow_loBr</option>
-					  <option id="bs26" value="26"  onclick="updateNumberS('SBSM', this.value)">26: spark_3</option>
-					  <option id="bs27" value="27"  onclick="updateNumberS('SBSM', this.value)">27: random Br/S</option>
-					  <option id="bs28" value="28"  onclick="updateNumberS('SBSM', this.value)">28: empty</option>
-					  <option id="bs29" value="29"  onclick="updateNumberS('SBSM', this.value)">29: empty</option>
-					  <option id="bs30" value="30"  onclick="updateNumberS('SBSM', this.value)">30: empty</option>
+			         <div id="brispreset">
+                 _*briS:&nbsp 
+                <select id="SBSM" onchange="updateNumber(this.id, this.value)">
+					  <option id="bs0" value="0">0: global storage</option>
+					  <option id="bs1" value="1">1: basic glow_1</option>
+					  <option id="bs2" value="2">2: basic glow_2</option>
+					  <option id="bs3" value="3">3: misty_1</option>
+					  <option id="bs4" value="4">4: misty_2</option>
+					  <option id="bs5" value="5">5: misty_3</option>
+					  <option id="bs6" value="6">6: misty_4</option>	
+					  <option id="bs7" value="7">7: S_twinkle_bsl_1</option>
+					  <option id="bs8" value="8">8: S_twinkle_bsl_2</option>		
+					  <option id="bs9" value="9">9: S_twinkle_rb1</option>	
+					  <option id="bs10" value="10">10: S_twinkle_rb1</option>	
+					  <option id="bs11" value="11">11: S_twinkle_b2</option> 
+					  <option id="bs12" value="12">12: spark_1</option>
+					  <option id="bs13" value="13">13: spark_2</option>
+					  <option id="bs14" value="14">14: long_wave</option>
+					  <option id="bs15" value="15">15: diamond_1</option>
+					  <option id="bs16" value="16">16: diamond_2 (Df)</option>
+					  <option id="bs17" value="17">17: diamond_3</option>
+					  <option id="bs18" value="18">18: F_twinkle_bsl</option>
+					  <option id="bs19" value="19">19: M_twinkle</option>
+					  <option id="bs20" value="20">20: F_twinkle_s</option>
+					  <option id="bs21" value="21">21: F_twinkle_fc</option>
+					  <option id="bs22" value="22">22: neon_lights</option>
+					  <option id="bs23" value="23">23: fire_glow</option>
+					  <option id="bs24" value="24">24: no_glow_hiBr</option>
+					  <option id="bs25" value="25">25: no_glow_loBr</option>
+					  <option id="bs26" value="26">26: spark_3</option>
+					  <option id="bs27" value="27">27: random Br/S</option>
+					  <option id="bs28" value="28">28: empty</option>
+					  <option id="bs29" value="29">29: empty</option>
+					  <option id="bs30" value="30">30: empty</option>
                 </select>
             </div>
 			
-			         <div>
-                <label for="dropdown3">_*var:&nbsp&nbsp&nbsp</label>
-                <select id="SVAR" name="variation">
-					<option value="0"  onclick="updateNumberS('SVAR', this.value)">0: most basic variant</option>
-					<option value="1"  onclick="updateNumberS('SVAR', this.value)">1: standard variant</option>
-					<option value="2"  onclick="updateNumberS('SVAR', this.value)">2: colourful variant</option>
+			<div id="var">
+                 _*var:&nbsp&nbsp&nbsp 
+                <select id="SVAR" onchange="updateNumber(this.id, this.value)">
+					<option value="0">0: most basic variant</option>
+					<option value="1">1: standard variant</option>
+					<option value="2">2: colourful variant</option>
                 </select>
             </div>	
 			
-			    <div class="dropdown-container">
-				<div>
-        <label for="dropdown4">_*cm:&nbsp&nbsp&nbsp</label>
-                <select id="SCOM" onchange="showSecondDropdown()">
-					<option value="0"  onclick="updateNumberS('SCOM', this.value)">0: Hue color</option>
-		  <option value="1"  onclick="updateNumberS('SCOM', this.value)">1: all colours</option>
-		  <option value="2"  onclick="updateNumberS('SCOM', this.value)">2: selection 1</option>
-		  <option value="3"  onclick="updateNumberS('SCOM', this.value)">3: anti-selection </option>
-		  <option value="4"  onclick="updateNumberS('SCOM', this.value)">4: color array (0-58)</option>
-		  <option value="5"  onclick="updateNumberS('SCOM', this.value)">5: mode (hue + spark)</option>
-                </select>
-				</div>
+		<div id="colormode">
+        	_*cm:&nbsp&nbsp&nbsp 
+            <select id="SCOM" onchange="updateNumber(this.id, this.value)">
+				<option value="0">0: Hue color</option>
+				<option value="1">1: all colours</option>
+				<option value="2">2: selection</option>
+				<option value="3">3: anti-selection </option>
+				<option value="4">4: color array (0-58)</option>
+				<option value="5">5: mode (hue + spark)</option>
+            </select>
 				
-				
-		<div class="slidecontainerx2" id="slider-container" style="display: none;">
-			<input id="SHUE" class="sliderhue" type="range" min="0" max="255" step="1" value="128" onchange="updateSlider(this.id, this.value)">
+		<div id="hueSlider">		
+			<div class="slidecontainerx2">
+				<input id="SHUE" class="sliderhue" type="range" min="0" max="255" step="1" value="128" onchange="updateSlider(this.id, this.value)">
+			</div>
+		</div>
+		
+		<div id="cm23slider">
+		<span class="switchcontainer1">_cm 2&3: &nbsp<span id="SYMIS"></span>-<span id="SYMAS"></span> &nbsp &nbsp &nbsp  gap2: <span id="SMI1S"></span>-<span id="SMA1S"></span></span>
+		<section class="range-slider">
+		  <input id="SYMI" value="42" min="0" max="255" step="1" type="range" class="sliderorange" onchange="updateSlider(this.id, this.value)">
+		  <input id="SYMA" value="84" min="0" max="255" step="1" type="range" class="sliderpink" onchange="updateSlider(this.id, this.value)">  
+		  <input id="SMI1" value="82" min="0" max="255" step="1" type="range" class="sliderlemon" onchange="updateSlider(this.id, this.value)">
+		  <input id="SMA1" value="206" min="0" max="255" step="1" type="range" class="slideraqua" onchange="updateSlider(this.id, this.value)">  
+		</section>
 		</div>
 
-		<div id="dropdown5-container" style="display: none;">
-                
-				<label for="dropdown5">_*</label>
-				<select id="SCAR">
-					<option value="0"  onclick="updateNumberS('SCAR', this.value)">0: little green</option>
-	  <option value="1"  onclick="updateNumberS('SCAR', this.value)">1: personal best</option>
-	  <option value="2"  onclick="updateNumberS('SCAR', this.value)">2: orange</option>
-	  <option value="3"  onclick="updateNumberS('SCAR', this.value)">3: pink, blue</option>
-	  <option value="4"  onclick="updateNumberS('SCAR', this.value)">4: blue, pink</option>
-	  <option value="5"  onclick="updateNumberS('SCAR', this.value)">5: blue, orange, pink </option>
-	  <option value="6"  onclick="updateNumberS('SCAR', this.value)">6: no purple/pink</option>	
-	  <option value="7"  onclick="updateNumberS('SCAR', this.value)">7: rainbow</option>	
-	  <option value="8"  onclick="updateNumberS('SCAR', this.value)">8: fine canvas</option>	
-	  <option value="9"  onclick="updateNumberS('SCAR', this.value)">9: rainbow_2</option>
-	  <option value="10"  onclick="updateNumberS('SCAR', this.value)">10: no green</option>
-	  <option value="11"  onclick="updateNumberS('SCAR', this.value)">11: yellow, red</option>
-	  <option value="12"  onclick="updateNumberS('SCAR', this.value)">12: rainbow_3</option>
-	  <option value="13"  onclick="updateNumberS('SCAR', this.value)">13: no red</option>
-	  <option value="14"  onclick="updateNumberS('SCAR', this.value)">14: rainbow_4</option>
-	  <option value="15"  onclick="updateNumberS('SCAR', this.value)">15: RGB + yel</option>
-	  <option value="16"  onclick="updateNumberS('SCAR', this.value)">16: 4 colour_1</option>
-	  <option value="17"  onclick="updateNumberS('SCAR', this.value)">17: 4_colour_2</option>
-	  <option value="18"  onclick="updateNumberS('SCAR', this.value)">18: RGB</option>
-	  <option value="19"  onclick="updateNumberS('SCAR', this.value)">19: blue, orange, pink</option>
-	  <option value="20"  onclick="updateNumberS('SCAR', this.value)">20: yellow, orange, red</option>
-	  <option value="21"  onclick="updateNumberS('SCAR', this.value)">21: pink, orange, green</option>
-	  <option value="22"  onclick="updateNumberS('SCAR', this.value)">22: pink, orange, yellow</option>
-	  <option value="23"  onclick="updateNumberS('SCAR', this.value)">23: yellow, orange, green</option>
-	  <option value="24"  onclick="updateNumberS('SCAR', this.value)">24: blue, orange, purple</option>
-	  <option value="25"  onclick="updateNumberS('SCAR', this.value)">25: red, orange, pink</option>
-	  <option value="26"  onclick="updateNumberS('SCAR', this.value)">26: red, orange, salmon</option>	
-	  <option value="27"  onclick="updateNumberS('SCAR', this.value)">27: red, orange, turqoise</option>	
-	  <option value="28"  onclick="updateNumberS('SCAR', this.value)">28: blue, purple, turqoise</option>	
-	  <option value="29"  onclick="updateNumberS('SCAR', this.value)">29: purple, orange, turqoise</option>
-	  <option value="30"  onclick="updateNumberS('SCAR', this.value)">30: red, green</option>
-	  <option value="31"  onclick="updateNumberS('SCAR', this.value)">31: lemon, red</option>
-	  <option value="32"  onclick="updateNumberS('SCAR', this.value)">32: cyan, lemon</option>
-	  <option value="33"  onclick="updateNumberS('SCAR', this.value)">33: pink, lemon</option>
-	  <option value="34"  onclick="updateNumberS('SCAR', this.value)">34: purple, green</option>
-	  <option value="35"  onclick="updateNumberS('SCAR', this.value)">35: yellow, green</option>
-	  <option value="36"  onclick="updateNumberS('SCAR', this.value)">36: cyan, yellow</option>
-	  <option value="37"  onclick="updateNumberS('SCAR', this.value)">37: cyan, orange</option>
-	  <option value="38"  onclick="updateNumberS('SCAR', this.value)">38: orange, pink</option>
-	  <option value="39"  onclick="updateNumberS('SCAR', this.value)">39: orange, salmon</option>
-	  <option value="40"  onclick="updateNumberS('SCAR', this.value)">40: yellow, red</option>	
-	  <option value="41"  onclick="updateNumberS('SCAR', this.value)">41: red, pink</option>
-	  <option value="42"  onclick="updateNumberS('SCAR', this.value)">42: yellow, pink</option>
-	  <option value="43"  onclick="updateNumberS('SCAR', this.value)">43: cyan, turqoise</option>
-	  <option value="44"  onclick="updateNumberS('SCAR', this.value)">44: cyan, pink</option>
-	  <option value="45"  onclick="updateNumberS('SCAR', this.value)">45: turqoise, purple</option>
-	  <option value="46"  onclick="updateNumberS('SCAR', this.value)">46: purple, orange</option>	
-	  <option value="47"  onclick="updateNumberS('SCAR', this.value)">47: purple, red</option>	
-	  <option value="48"  onclick="updateNumberS('SCAR', this.value)">48: cyan, red</option>	
-	  <option value="49"  onclick="updateNumberS('SCAR', this.value)">49: cyan, pink</option>
-	  <option value="50"  onclick="updateNumberS('SCAR', this.value)">50: red to yellow</option>
-	  <option value="51"  onclick="updateNumberS('SCAR', this.value)">51: blue to yellow</option>
-	  <option value="52"  onclick="updateNumberS('SCAR', this.value)">52: blue to yellow + green</option>
-	  <option value="53"  onclick="updateNumberS('SCAR', this.value)">53: red to yellow + green</option>
-	  <option value="54"  onclick="updateNumberS('SCAR', this.value)">54: red to yellow + green</option>
-	  <option value="55"  onclick="updateNumberS('SCAR', this.value)">55: red to yellow + blue</option>
-	  <option value="56"  onclick="updateNumberS('SCAR', this.value)">56: green to blue + red</option>
-	  <option value="57"  onclick="updateNumberS('SCAR', this.value)">57: green to blue + red</option>
-	  <option value="58"  onclick="updateNumberS('SCAR', this.value)">58: rainbow_5</option>
+		<div id="colorArray">
+				_*
+				<select id="SCAR" onchange="updateNumber(this.id, this.value)">
+					<option value="0">0: little green</option>
+					<option value="1">1: personal best</option>
+					<option value="2">2: orange</option>
+					<option value="3">3: pink, blue</option>
+					<option value="4">4: blue, pink</option>
+					<option value="5">5: blue, orange, pink </option>
+					<option value="6">6: no purple/pink</option>	
+					<option value="7">7: rainbow</option>	
+					<option value="8">8: fine canvas</option>	
+					<option value="9">9: rainbow_2</option>
+					<option value="10">10: no green</option>
+					<option value="11">11: yellow, red</option>
+					<option value="12">12: rainbow_3</option>
+					<option value="13">13: no red</option>
+					<option value="14">14: rainbow_4</option>
+					<option value="15">15: RGB + yel</option>
+					<option value="16">16: 4 colour_1</option>
+					<option value="17">17: 4_colour_2</option>
+					<option value="18">18: RGB</option>
+					<option value="19">19: blue, orange, pink</option>
+					<option value="20">20: yellow, orange, red</option>
+					<option value="21">21: pink, orange, green</option>
+					<option value="22">22: pink, orange, yellow</option>
+					<option value="23">23: yellow, orange, green</option>
+					<option value="24">24: blue, orange, purple</option>
+					<option value="25">25: red, orange, pink</option>
+					<option value="26">26: red, orange, salmon</option>	
+					<option value="27">27: red, orange, turqoise</option>	
+					<option value="28">28: blue, purple, turqoise</option>	
+					<option value="29">29: purple, orange, turqoise</option>
+					<option value="30">30: red, green</option>
+					<option value="31">31: lemon, red</option>
+					<option value="32">32: cyan, lemon</option>
+					<option value="33">33: pink, lemon</option>
+					<option value="34">34: purple, green</option>
+					<option value="35">35: yellow, green</option>
+					<option value="36">36: cyan, yellow</option>
+					<option value="37">37: cyan, orange</option>
+					<option value="38">38: orange, pink</option>
+					<option value="39">39: orange, salmon</option>
+					<option value="40">40: yellow, red</option>	
+					<option value="41">41: red, pink</option>
+					<option value="42">42: yellow, pink</option>
+					<option value="43">43: cyan, turqoise</option>
+					<option value="44">44: cyan, pink</option>
+					<option value="45">45: turqoise, purple</option>
+					<option value="46">46: purple, orange</option>	
+					<option value="47">47: purple, red</option>	
+					<option value="48">48: cyan, red</option>	
+					<option value="49">49: cyan, pink</option>
+					<option value="50">50: red to yellow</option>
+					<option value="51">51: blue to yellow</option>
+					<option value="52">52: blue to yellow + green</option>
+					<option value="53">53: red to yellow + green</option>
+					<option value="54">54: red to yellow + green</option>
+					<option value="55">55: red to yellow + blue</option>
+					<option value="56">56: green to blue + red</option>
+					<option value="57">57: green to blue + red</option>
+					<option value="58">58: rainbow_5</option>
                 </select>
-				
-				</div>
-        </div>
-		<div class="varvalueh"><label>_hue:&nbsp&nbsp&nbsp&nbsp&nbsp</label><span id="SHUES"></span> &nbsp | &nbsp   <span id="HY1OS"></span>>><span id="HY1NS"></span></div>
-			<div class="inputparam2"><label>_*Led dif (1-255)&nbsp&nbsp&nbsp&nbsp&nbsp</label>  <input type="number" min="1" max="255" style="width: 45px;" placeholder="000" id="SDIF" value="" onchange="updateValue(this.id, this.value)"></div>			
-			<div class="inputparam2"><label>_*Led speed (ms)&nbsp&nbsp&nbsp</label> <input type="number" min="5" max="100000" style="width: 65px;" placeholder="00000" id="SLSP" value="" onchange="updateValue(this.id, this.value)"></div>	
-			<div class="inputparam2"><label>_*Numspark (0-30)&nbsp</label> <input type="number" min="0" max="29" style="width: 45px;" placeholder="000" id="SNSP" value="" onchange="updateValue(this.id, this.value)"></div>
+			</div>
+		</div>
+		<div id="hue" class="varvalueh"> _hue:&nbsp&nbsp&nbsp&nbsp&nbsp <span id="SHUES"></span> &nbsp | &nbsp   <span id="HY1OS"></span>>><span id="HY1NS"></span></div>
+			<div id="dif" class="inputparam2"> _*Led dif (1-255)&nbsp&nbsp&nbsp&nbsp&nbsp   <input type="number" min="1" max="255" style="width: 45px;" placeholder="000" id="SDIF" value="" onchange="updateNumber(this.id, this.value)"></div>			
+			<div id="speed" class="inputparam2"> _*Led speed (ms)&nbsp&nbsp&nbsp  <input type="number" min="5" max="100000" style="width: 65px;" placeholder="00000" id="SLSP" value="" onchange="updateNumber(this.id, this.value)"></div>	
+			<div id="numspark" class="inputparam2"> _*Numspark (0-30)&nbsp  <input type="number" min="0" max="29" style="width: 45px;" placeholder="000" id="SNSP" value="" onchange="updateNumber(this.id, this.value)"></div>
 		
-				            <div>
-                <label for="checkbox">_*glitter:</label>
+				            <div id="glitter">
+                _*glitter:
                 <input type="checkbox" id="TGLI" name="checkbox" value="checkbox">
             </div>
-		<div>
-                <label for="dropdown6">_preset: </label>
-                <select id="SPST" name="presets">
-			<option value="0"  onclick="updateNumberS('SPST', this.value)">preset 1 (hardcoded)</option>
-			<option value="1"  onclick="updateNumberS('SPST', this.value)">preset 2 (EEPROM)</option>
-			<option value="2"  onclick="updateNumberS('SPST', this.value)">preset 3 (EEPROM)</option>
-			<option value="3"  onclick="updateNumberS('SPST', this.value)">preset 4 (EEPROM)</option>
-			<option value="4"  onclick="updateNumberS('SPST', this.value)">cycles all 4 presets</option>
+		<div id="preset">
+                _preset:
+                <select id="SPST" onchange="updateNumber(this.id, this.value)">
+					<option value="0">preset 1 (hardcoded)</option>
+					<option value="1">preset 2 (EEPROM)</option>
+					<option value="2">preset 3 (EEPROM)</option>
+					<option value="3">preset 4 (EEPROM)</option>
+					<option value="4">cycles all 4 presets</option>
                 </select>
             </div>
 			
 		            <div>
-                <label for="checkbox">Save preset (_*):</label>
+                 Save preset (_*): 
                 <input type="checkbox" id="TSCM" onclick="updateButton(this.id, this.checked)">
             </div>
 				            
 		
 		</div>
 		
-		        <div class="addParam">
-				<h2>additional info</h2>
+<div class="addParam">
+<h2>Additional info</h2>
 
-			<div class="slidecontainerx">
-<div class="titlex2">
-_Num_colors:
-</div>
-<input id="SNCO" class="slider" type="range" min="0" max="15" step="1" value="0" onchange="updateSlider(this.id, this.value)">
-<div class="varvaluex2" id="SNCOS"></div> 
-</div>
+<div id="RGBmode">			
+	<div class="slidecontainerx">
+	<div class="titlex2">
+	_RED (0-255):
+	</div>
+	<input id="SRED" class="sliderred" type="range" min="0" max="255" step="1" value="128" onchange="updateSlider(this.id, this.value)">
+	<div class="varvaluex2" id="SREDS"></div>
+	</div>
 
-<div class="slidecontainerx">
-<div class="titlex2">
-_ColorLength:
-</div>
-<input id="SNCL" class="slider" type="range" min="0" max="50" step="1" value="10" onchange="updateSlider(this.id, this.value)">
-<div class="varvaluex2" id="SNCLS"></div> 
-</div>
+	<div class="slidecontainerx">
+	<div class="titlex2">
+	_GREEN (0-255) :
+	</div>
+	<input id="SGRE" class="slidergreen" type="range" min="0" max="255" step="1" value="128" onchange="updateSlider(this.id, this.value)">
+	<div class="varvaluex2" id="SGRES"></div>
+	</div>
 
-<div class="slidecontainerx">
-<div class="titlex2">
-_FastLED.Palet:
-</div>
-<input id="SPAL" class="slider" type="range" min="0" max="19" step="1" value="2" onchange="updateSlider(this.id, this.value)">
-<div class="varvaluex2" id="SPALS"></div> 
-</div>
+	<div class="slidecontainerx">
+	<div class="titlex2">
+	_BLUE (0-255) :
+	</div>
+	<input id="SBLU" class="sliderblues" type="range" min="0" max="255" step="1" value="128" onchange="updateSlider(this.id, this.value)">
+	<div class="varvaluex2" id="SBLUS"></div>
+	</div>
 
-<div class="slidecontainerx">
-<div class="titlex2">
-_Prog.Gradient:
-</div>
-<input id="SGRA" class="slider" type="range" min="0" max="13" step="1" value="0" onchange="updateSlider(this.id, this.value)">
-<div class="varvaluex2" id="SGRAS"></div> 
-</div>
-			
-<div class="slidecontainerx">
-<div class="titlex2">
-_RED (0-255):
-</div>
-<input id="SRED" class="sliderred" type="range" min="0" max="255" step="1" value="128" onchange="updateSlider(this.id, this.value)">
-<div class="varvaluex2" id="SREDS"></div>
-</div>
-
-<div class="slidecontainerx">
-<div class="titlex2">
-_GREEN (0-255) :
-</div>
-<input id="SGRE" class="slidergreen" type="range" min="0" max="255" step="1" value="128" onchange="updateSlider(this.id, this.value)">
-<div class="varvaluex2" id="SGRES"></div>
-</div>
-
-<div class="slidecontainerx">
-<div class="titlex2">
-_BLUE (0-255) :
-</div>
-<input id="SBLU" class="sliderblues" type="range" min="0" max="255" step="1" value="128" onchange="updateSlider(this.id, this.value)">
-<div class="varvaluex2" id="SBLUS"></div>
-</div>
-
-<span class="titlez"> approx HSV values:&nbsp Hue:<span id="HHHHS"></span> &nbsp Bri:<span id="HVVVS"></span> &nbsp Sat:<span id="HSSSS"></span>
-</span>
-<div class="switchcontainer">
-update & display HSV values:
-<label class="switch1">
-  <input type="checkbox" id="THSV" onclick="updateButton(this.id, this.checked)"> 
-  <span class="sliderround1"></span>
-</label>
-</div>
-
-<div class="slidecontainerx">
-<div class="titlex2">
-_**Spark_bri (0-255):
-</div>
-<input id="SSBR" class="slider" type="range" min="0" max="255" step="1" value="0" onchange="updateSlider(this.id, this.value)">
-<div class="varvaluex2" id="SSBRS"></div>
-</div>
-
-<div class="slidecontainerx">
-<div class="titlex2">
-_**Spark_sat (0-255):
-</div>
-<input id="SSSF" class="slider" type="range" min="0" max="255" step="1" value="0" onchange="updateSlider(this.id, this.value)">
-<div class="varvaluex2" id="SSSFS"></div>
-</div>
-
-<div class="slidecontainerx">
-<div class="titlex2">
-_Spark_color (0-255):
-</div>
-<input id="SSCO" class="slider" type="range" min="0" max="255" step="1" value="0" onchange="updateSlider(this.id, this.value)">
-<div class="varvaluex2" id="SSCOS"></div> 
-</div>
-
-<div class="slidecontainerx">
-<div class="titlex2">
-Add.offset (1-15):
-</div>
-<input id="SOFF" class="slider" type="range" min="1" max="15" step="1" value="7" onchange="updateSlider(this.id, this.value)">
-<div class="varvaluex2" id="SOFFS"></div> 
-</div>
-
-<div class="switchcontainer">
-
-<div>
-	Rainbow (mode 16-18)
+	<span class="titlez"> approx HSV values:&nbsp Hue:<span id="HHHHS"></span> &nbsp Bri:<span id="HVVVS"></span> &nbsp Sat:<span id="HSSSS"></span>
+	</span>
+	<div class="switchcontainer">
+	update & display HSV values:
 	<label class="switch1">
-	<input type="checkbox" id="TRBO" onclick="updateButton(this.id, this.checked)"> 
-	<span class="sliderround1"></span> 
+	<input type="checkbox" id="THSV" onclick="updateButton(this.id, this.checked)"> 
+	<span class="sliderround1"></span>
 	</label>
 	</div>
-<div>
-	Reverse (mode 16-18)
-	<label class="switch1">
-	<input type="checkbox" id="TRVO" onclick="updateButton(this.id, this.checked)"> 
-	<span class="sliderround1"></span> 
-	</label>
+</div>
+
+	<div id="numcolor" class="slidecontainerx">
+	<div class="titlex2">
+	_Num_colors: &nbsp
+	<div class="varvaluex2" id="SNCOS"></div>
 	</div>
-<div>
-	white (mode 29)
-	<label class="switch1">
-	<input type="checkbox" id="TWHO" onclick="updateButton(this.id, this.checked)"> 
-	<span class="sliderround1"></span> 
-	</label>
+	<input id="SNCO" class="slider" type="range" min="0" max="15" step="1" value="0" onchange="updateSlider(this.id, this.value)"> 
 	</div>
-<div>
-	switch BrS (all modes)
-	<label class="switch1">
-	  <input type="checkbox" id="TSBS" onclick="updateButton(this.id, this.checked)"> 
-	  <span class="sliderround1"></span> 
-	</label>
+
+	<div id="colorlength" class="slidecontainerx">
+	<div class="titlex2">
+	_ColorLength: &nbsp
+	<span class="varvaluex2" id="SNCLS"></span> 
 	</div>
-<div class="switchcontainer">	
-<span class="sliderwindowsmall"> complex settings (default is advised): </span> 
-<div>
-direction
-<label class="switch1">
-  <input type="checkbox" id="TDIR" onclick="updateButton(this.id, this.checked)"> 
-  <span class="sliderround1"></span>
-</label>
-</div>
-<div>
-_Tower (mode 19, 20, 22 23, 24)
-<label class="switch1">
-  <input type="checkbox" id="TTWO" onclick="updateButton(this.id, this.checked)"> 
-  <span class="sliderround1"></span>
-</label>
-</div>
-<div>
-_Bees (19, 22)
-<label class="switch1">
-  <input type="checkbox" id="TBEE" onclick="updateButton(this.id, this.checked)"> 
-  <span class="sliderround1"></span>
-</label>
-</div>
-</div>	
-</div>
+	<input id="SNCL" class="slider" type="range" min="0" max="50" step="1" value="10" onchange="updateSlider(this.id, this.value)">
+	</div>
+
+	<div id="palet" class="slidecontainerx">
+	<div class="titlex2">
+	_FastLED.Palet: &nbsp
+	<span class="varvaluex2" id="SPALS"></span> 
+	</div>
+	<input id="SPAL" class="slider" type="range" min="0" max="19" step="1" value="2" onchange="updateSlider(this.id, this.value)">
+	</div>
+
+	<div id="gradient" class="slidecontainerx">
+		<div class="titlex2">
+		_Prog.Gradient: &nbsp
+		<span class="varvaluex2" id="SGRAS"></span> 
+		</div>
+		<input id="SGRA" class="slider" type="range" min="0" max="13" step="1" value="0" onchange="updateSlider(this.id, this.value)">
+	</div>
+	<div id="gradientcolor">
+		_span gradient: <span id="SMI4S"></span>-<span id="SMA4S"></span>
+		<section class="range-slider">
+		<input id="SMI4" value="0" min="0" max="255" step="1" type="range" class="sliderorange" onchange="updateSlider(this.id, this.value)">  
+		<input id="SMA4" value="40" min="0" max="255" step="1" type="range" class="sliderpink" onchange="updateSlider(this.id, this.value)">
+		</section>
+	</div>
+	
+
+	<div id="rainbow_3">
+		_rainbow3: <span id="SMI2S"></span>-<span id="SMA2S"></span>
+		<section class="range-slider">
+			<input id="SMI2" value="130" min="0" max="255" step="1" type="range" class="sliderorange" onchange="updateSlider(this.id, this.value)">  
+			<input id="SMA2" value="42" min="0" max="255" step="1" type="range" class="sliderpink" onchange="updateSlider(this.id, this.value)">
+		</section>
+	</div>
+
+	<div id="rainbow_7">
+		_rainbow7: <span id="SMI3S"></span>-<span id="SMA3S"></span>&nbsp &nbsp &nbsp <span>range: </span> <span id="SM3RS"></span>
+	<section class="range-slider">
+	  <input id="SMI3" value="130" min="0" max="255" step="1" type="range" class="sliderorange" onchange="updateSlider(this.id, this.value)">  
+	  <input id="SMA3" value="190" min="0" max="255" step="1" type="range" class="sliderpink" onchange="updateSlider(this.id, this.value)">
+	  <input id="SM3R" value="90" min="0" max="255" step="1" type="range" class="sliderhue" onchange="updateSlider(this.id, this.value)">
+	</section>
+	</div>	
+
+	<div id="xmas">
+		_gaps xmas:<span id="SRMIS"></span>-<span id="SRMAS"></span> &nbsp &nbsp &nbsp y-green: <span id="SGMIS"></span>-<span id="SGMAS"></span> &nbsp &nbsp &nbsp  y-blue: <span id="SBMIS"></span>-<span id="SBMAS"></span>
+	<section class="range-slider">
+		<input id="SRMI" value="245" min="0" max="255" step="1" type="range" class="sliderpink" onchange="updateSlider(this.id, this.value)">
+		<input id="SRMA" value="10" min="0" max="255" step="1" type="range" class="sliderorange" onchange="updateSlider(this.id, this.value)">
+		<input id="SGMI" value="55" min="0" max="255" step="1" type="range" class="sliderlemon" onchange="updateSlider(this.id, this.value)">
+		<input id="SGMA" value="115" min="0" max="255" step="1" type="range" class="slideraqua" onchange="updateSlider(this.id, this.value)">
+		<input id="SBMI" value="145" min="0" max="255" step="1" type="range" class="sliderblue" onchange="updateSlider(this.id, this.value)">
+		<input id="SBMA" value="180" min="0" max="255" step="1" type="range" class="sliderpurple" onchange="updateSlider(this.id, this.value)">  
+	</section>
+	</div>	
+
+
+	<div id="sparkbri" class="slidecontainerx">
+	<div class="titlex2">
+	_**Spark_bri (0-255): &nbsp
+	<span class="varvaluex2" id="SSBRS"></span>
+	</div>
+	<input id="SSBR" class="slider" type="range" min="0" max="255" step="1" value="0" onchange="updateSlider(this.id, this.value)">
+	</div>
+
+	<div id="sparksat" class="slidecontainerx">
+	<div class="titlex2">
+	_**Spark_sat (0-255): &nbsp
+	<span class="varvaluex2" id="SSSFS"></span>
+	</div>
+	<input id="SSSF" class="slider" type="range" min="0" max="255" step="1" value="0" onchange="updateSlider(this.id, this.value)">
+	</div>
+
+	<div id="sparkcolor" class="slidecontainerx">
+	<div class="titlex2">
+	_Spark_color (0-255): &nbsp
+	<span class="varvaluex2" id="SSCOS"></span>
+	</div>
+	<input id="SSCO" class="slider" type="range" min="0" max="255" step="1" value="0" onchange="updateSlider(this.id, this.value)"> 
+	</div>
+
+	<div id="offset" class="slidecontainerx">
+	<div class="titlex2">
+	Add.offset (1-15): &nbsp
+	<span class="varvaluex2" id="SOFFS"></span> 
+	</div>
+	<input id="SOFF" class="slider" type="range" min="1" max="15" step="1" value="7" onchange="updateSlider(this.id, this.value)">
+	</div>
+
+		<div id="rainbow">
+			Rainbow
+			<input type="checkbox" id="TRBO" onclick="updateButton(this.id, this.checked)"> 
+			</div>
+		<div id="reverse">
+			Reverse
+			<input type="checkbox" id="TRVO" onclick="updateButton(this.id, this.checked)"> 
+			</div>
+		<div id="white">
+			white
+			<input type="checkbox" id="TWHO" onclick="updateButton(this.id, this.checked)"> 
+		</div>
+				<!--<span class="sliderwindowsmall"> complex settings (default is advised): </span>-->
+		<div id="dir">
+			Direction
+			<input type="checkbox" id="TDIR" onclick="updateButton(this.id, this.checked)"> 
+		</div>
+		<div id="tower">
+			_Tower
+			<input type="checkbox" id="TTWO" onclick="updateButton(this.id, this.checked)"> 
+		</div>
+		<div id="bees">
+			_Bees
+			<input type="checkbox" id="TBEE" onclick="updateButton(this.id, this.checked)"> 
+		</div>
 </div>
 
         </div>
     </main>
 	<main>
 	<section>
+		
 	<p class="sliderwindow">
-<label>Bri S waveform: </label>
-	<span id="checkbox1">
-	
-	<input class="ckeckbox-element" type="checkbox" id="1M1" onclick="setTab('waveSettings')"/>  
-	<i class="glyphicon glyphicon-menu-down"></i>
+ 	Bri S waveform:  
+	<span>
+		<input class="ckeckbox-element1" type="checkbox" id="1M1" onclick="setTab('waveSettings')"/>  
+		<!--<i class="glyphicon glyphicon-menu-down"></i>-->
 	</span> 
-<label>color settings: </label>
-	<span id="checkbox1">
-	
-	<input class="ckeckbox-element" type="checkbox" id="1M1" onclick="setTab('colorSettings')"/>  
-	<i class="glyphicon glyphicon-menu-down"></i>
-	</span> 
-	
-	<label>LEDstrip settings: </label>
-		<span id="checkbox1">
-	<input class="ckeckbox-element" type="checkbox" id="1N1" onclick="setTab('ledSettings')"/>  
-	<i class="glyphicon glyphicon-menu-down"></i>
-	</span> 
-
 	</p>
 
 	<div id="waveSettings">
@@ -1269,7 +1825,7 @@ _Bees (19, 22)
 <p class="sliderwindowsmall">adjust to fine tune twinkle, wave or glow settings	</p>
 
 <div>
-                <label for="checkbox">Save BriS preset (_**):</label>
+                 Save BriS preset (_**): 
                 <input type="checkbox" id="TSBM" onclick="updateButton(this.id, this.checked)"> 
             </div>
 
@@ -1810,326 +2366,9 @@ Maintain complete waveforms
 </label>
 </div>
 </div>
-
-<div id="colorSettings">
-<br>
-<p class="infowindow">y-red: <span id="SRMIS"></span>-<span id="SRMAS"></span> &nbsp &nbsp &nbsp y-green: <span id="SGMIS"></span>-<span id="SGMAS"></span> &nbsp &nbsp &nbsp  y-blue: <span id="SBMIS"></span>-<span id="SBMAS"></span>
-</p>	
-<div class="slidecontainerx">
-<div class="titlex">
-_gaps xmas modes (32-33):
-</div>
-<section class="range-slider">
-  <span class="rangeValues"></span>
-  <input id="SRMI" value="245" min="0" max="255" step="1" type="range" class="sliderpink" onchange="updateSlider(this.id, this.value)">
-  <input id="SRMA" value="10" min="0" max="255" step="1" type="range" class="sliderorange" onchange="updateSlider(this.id, this.value)">
-  <input id="SGMI" value="55" min="0" max="255" step="1" type="range" class="sliderlemon" onchange="updateSlider(this.id, this.value)">
-  <input id="SGMA" value="115" min="0" max="255" step="1" type="range" class="slideraqua" onchange="updateSlider(this.id, this.value)">
-  <input id="SBMI" value="145" min="0" max="255" step="1" type="range" class="sliderblue" onchange="updateSlider(this.id, this.value)">
-  <input id="SBMA" value="180" min="0" max="255" step="1" type="range" class="sliderpurple" onchange="updateSlider(this.id, this.value)">  
+<hr>
 </section>
-</div>
-
-<!-- This block can be reused as many times as needed -->
-<p class="infowindow">gap1: <span id="SYMIS"></span>-<span id="SYMAS"></span> &nbsp &nbsp &nbsp  gap2: <span id="SMI1S"></span>-<span id="SMA1S"></span>
-</p>
-<div class="slidecontainerx">
-<div class="titlex">
-_gaps CM 2&3:
-</div>
-<!-- This block can be reused as many times as needed -->
-<section class="range-slider1">
-  <span class="rangeValues1"></span>
-  <input id="SYMI" value="42" min="0" max="255" step="1" type="range" class="sliderorange" onchange="updateSlider(this.id, this.value)">
-  <input id="SYMA" value="84" min="0" max="255" step="1" type="range" class="sliderpink" onchange="updateSlider(this.id, this.value)">  
-  <input id="SMI1" value="82" min="0" max="255" step="1" type="range" class="sliderlemon" onchange="updateSlider(this.id, this.value)">
-  <input id="SMA1" value="206" min="0" max="255" step="1" type="range" class="slideraqua" onchange="updateSlider(this.id, this.value)">  
-</section>
-</div>
-
-<p class="infowindow">span rainbow_3: <span id="SMI2S"></span>-<span id="SMA2S"></span>
-</p>
-<div class="slidecontainerx">
-<div class="titlex">
-_mode 9:
-</div>
-<!-- This block can be reused as many times as needed -->
-<section class="range-slider3">
-  <span class="rangeValues3"></span>
-  <input id="SMI2" value="130" min="0" max="255" step="1" type="range" class="sliderorange" onchange="updateSlider(this.id, this.value)">  
-  <input id="SMA2" value="42" min="0" max="255" step="1" type="range" class="sliderpink" onchange="updateSlider(this.id, this.value)">
-</section>
-</div>
-
-<p class="infowindow">span rainbow_7: <span id="SMI3S"></span>-<span id="SMA3S"></span>&nbsp &nbsp &nbsp <span class="textinfo">range: </span> <span class="textinfo" id="SM3RS"></span>
-</p>
-<div class="slidecontainerx">
-<div class="titlex">
-_mode 13: 
-</div>
-<!-- This block can be reused as many times as needed -->
-<section class="range-slider2">
-  <span class="rangeValues2"></span>
-  <input id="SMI3" value="130" min="0" max="255" step="1" type="range" class="sliderorange" onchange="updateSlider(this.id, this.value)">  
-  <input id="SMA3" value="190" min="0" max="255" step="1" type="range" class="sliderpink" onchange="updateSlider(this.id, this.value)">
-  <input id="SM3R" value="90" min="0" max="255" step="1" type="range" class="sliderhue" onchange="updateSlider(this.id, this.value)">
-</section>
-</div>
-
-<p class="infowindow">span gradient: <span id="SMI4S"></span>-<span id="SMA4S"></span>
-</p>
-<div class="slidecontainerx">
-<div class="titlex">
-mode 14 (&23, 27):
-</div>
-<!-- This block can be reused as many times as needed -->
-<section class="range-slider3">
-  <span class="rangeValues3"></span>
-  <input id="SMI4" value="0" min="0" max="255" step="1" type="range" class="sliderorange" onchange="updateSlider(this.id, this.value)">  
-  <input id="SMA4" value="40" min="0" max="255" step="1" type="range" class="sliderpink" onchange="updateSlider(this.id, this.value)">
-</section>
-</div>
-</div>	
-
-	<div id="ledSettings">
-<br>
-<p class="sliderwindow"> 
-<span class="textinfo">NUM_LEDS (1-600):</span> <span class="inputparam"> <input type="number" id="NUM_LEDS" max="600" min="1" value=""></span> &nbsp
-<span class="textinfo" id="HNUMS">___</span> &nbsp
-<span class="inputparam"> <button onclick="updateNumber('SNLD', NUM_LEDS.value)">submit</button>	</span> &nbsp
-</p>
-
-<p class="sliderwindow"> 
-<span class="textinfo"> color order: </span> &nbsp 
-<span class="inputparam">
-<select onchange="changeColor('SETT', this.value)">
-    <option value="0. RGB">pin 16 RGB</option>
-    <option value="1. GRB">pin 16 GRB</option>
-    <option value="2. BRG">pin 16 BRG</option>
-    <option value="3. BGR">pin 16 BGR</option>
-    <option value="4. RBG">pin 16 RBG</option>
-    <option value="5. GBR">pin 16 GBR</option>
-    <option value="6. RGB">pin 16, 3, 26 RGB</option>
-    <option value="7. GRB">pin 16, 3, 26 GRB</option>	
-</select>
-</span>&nbsp
-<span class="textinfo" id="HCOLS">___</span> 
-</p>
-<br>
-<p class="sliderwindow"> WIFI & ESP32 settings:
-
-	</p>
-<p class="sliderwindow"> 
-<span class="textinfo">ssid:</span> <span class="inputparam"> <input type="text" id="ssid" value=""></span> <span class="textinfo" id="HSIDS">___</span> &nbsp <span class="inputparam"> <button onclick="updateText('ssid', ssid.value)">submit</button> </span>
-<br>
-<span class="textinfo">pass:</span> <span class="inputparam"> <input type="text" id="pass" value=""></span> <span class="textinfo" id="HPASS">___</span> &nbsp <span class="inputparam"> <button onclick="updateText('pass', pass.value)">submit</button> </span>
-</p>
-<br>
-
-<p class="sliderwindow"> 
-	<span class="textinfo">ESP32's connected:</span> &nbsp
-</p>
-
-<p class="sliderwindowsmallm">
-	<span class="textinfo">mac 1:</span>
-	<span class="switchcontainer">
-		<input type="checkbox" id="m1c" onclick="updateButton(this.id, this.checked)"> 
-		</label>
-	</span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac1_1" value=""></span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac1_2" value=""></span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac1_3" value=""></span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac1_4" value=""></span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac1_5" value=""></span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac1_6" value=""></span>
-	<span><button onclick="updateMac('mac1', mac1_1.value, mac1_2.value, mac1_3.value, mac1_4.value, mac1_5.value, mac1_6.value)" class="btnx btn-primary">_update</button> </span>
-</p>
-
-<p class="sliderwindowsmallm">
-	<span class="textinfo">mac 2:</span>
-	<span class="switchcontainer">
-		<input type="checkbox" id="m2c" onclick="updateButton(this.id, this.checked)"> 
-		</label>
-	</span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac2_1" value=""></span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac2_2" value=""></span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac2_3" value=""></span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac2_4" value=""></span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac2_5" value=""></span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac2_6" value=""></span>
-	<span><button onclick="updateMac('mac2', mac2_1.value, mac2_2.value, mac2_3.value, mac2_4.value, mac2_5.value, mac2_6.value)" class="btnx btn-primary">_update</button> </span>
-</p>
-
-<p class="sliderwindowsmallm">
-	<span class="textinfo">mac 3:</span>
-	<span class="switchcontainer">
-		<input type="checkbox" id="m3c" onclick="updateButton(this.id, this.checked)"> 
-		</label>
-	</span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac3_1" value=""></span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac3_2" value=""></span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac3_3" value=""></span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac3_4" value=""></span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac3_5" value=""></span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac3_6" value=""></span>
-	<span><button onclick="updateMac('mac3', mac3_1.value, mac3_2.value, mac3_3.value, mac3_4.value, mac3_5.value, mac3_6.value)" class="btnx btn-primary">_update</button> </span>
-</p>
-
-<p class="sliderwindowsmallm">
-	<span class="textinfo">mac 4:</span>
-	<span class="switchcontainer">
-		<input type="checkbox" id="m4c" onclick="updateButton(this.id, this.checked)"> 
-		</label>
-	</span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac4_1" value=""></span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac4_2" value=""></span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac4_3" value=""></span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac4_4" value=""></span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac4_5" value=""></span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac4_6" value=""></span>
-	<span><button onclick="updateMac('mac4', mac4_1.value, mac4_2.value, mac4_3.value, mac4_4.value, mac4_5.value, mac4_6.value)" class="btnx btn-primary">_update</button> </span>
-</p>
-
-<p class="sliderwindowsmallm">
-	<span class="textinfo">mac 5:</span>
-	<span class="switchcontainer">
-		<input type="checkbox" id="m5c" onclick="updateButton(this.id, this.checked)"> 
-		</label>
-	</span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac5_1" value=""></span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac5_2" value=""></span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac5_3" value=""></span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac5_4" value=""></span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac5_5" value=""></span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac5_6" value=""></span>
-	<span><button onclick="updateMac('mac5', mac5_1.value, mac5_2.value, mac5_3.value, mac5_4.value, mac5_5.value, mac5_6.value)" class="btnx btn-primary">_update</button> </span>
-</p>
-
-<p class="sliderwindowsmallm">
-	<span class="textinfo">mac 6:</span>
-	<span class="switchcontainer">
-		<input type="checkbox" id="m6c" onclick="updateButton(this.id, this.checked)"> 
-		</label>
-	</span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac6_1" value=""></span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac6_2" value=""></span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac6_3" value=""></span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac6_4" value=""></span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac6_5" value=""></span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac6_6" value=""></span>
-	<span><button onclick="updateMac('mac6', mac6_1.value, mac6_2.value, mac6_3.value, mac6_4.value, mac6_5.value, mac6_6.value)" class="btnx btn-primary">_update</button> </span>
-</p>
-
-<p class="sliderwindowsmallm">
-	<span class="textinfo">mac 7:</span>
-	<span class="switchcontainer">
-		<input type="checkbox" id="m7c" onclick="updateButton(this.id, this.checked)"> 
-		</label>
-	</span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac7_1" value=""></span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac7_2" value=""></span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac7_3" value=""></span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac7_4" value=""></span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac7_5" value=""></span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac7_6" value=""></span>
-	<span><button onclick="updateMac('mac7', mac7_1.value, mac7_2.value, mac7_3.value, mac7_4.value, mac7_5.value, mac7_6.value)" class="btnx btn-primary">_update</button> </span>
-</p>
-
-<p class="sliderwindowsmallm">
-	<span class="textinfo">mac 8:</span>
-	<span class="switchcontainer">
-		<input type="checkbox" id="m8c" onclick="updateButton(this.id, this.checked)"> 
-		</label>
-	</span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac8_1" value=""></span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac8_2" value=""></span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac8_3" value=""></span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac8_4" value=""></span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac8_5" value=""></span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac8_6" value=""></span>
-	<span><button onclick="updateMac('mac8', mac8_1.value, mac8_2.value, mac8_3.value, mac8_4.value, mac8_5.value, mac8_6.value)" class="btnx btn-primary">_update</button> </span>
-</p>
-
-<p class="sliderwindowsmallm">
-	<span class="textinfo">mac 9:</span>
-	<span class="switchcontainer">
-		<input type="checkbox" id="m9c" onclick="updateButton(this.id, this.checked)"> 
-		</label>
-	</span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac9_1" value=""></span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac9_2" value=""></span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac9_3" value=""></span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac9_4" value=""></span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac9_5" value=""></span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac9_6" value=""></span>
-	<span><button onclick="updateMac('mac9', mac9_1.value, mac9_2.value, mac9_3.value, mac9_4.value, mac9_5.value, mac9_6.value)" class="btnx btn-primary">_update</button> </span>
-</p>
-
-<p class="sliderwindowsmallm">
-	<span class="textinfo">mac 10:</span>
-	<span class="switchcontainer">
-		<input type="checkbox" id="m10c" onclick="updateButton(this.id, this.checked)"> 
-		</label>
-	</span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac10_1" value=""></span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac10_2" value=""></span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac10_3" value=""></span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac10_4" value=""></span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac10_5" value=""></span>
-	<span class="inputparam"> <input type="number" style="width: 45px;" placeholder="000" id="mac10_6" value=""></span>
-	<span><button onclick="updateMac('mac10', mac10_1.value, mac10_2.value, mac10_3.value, mac10_4.value, mac10_5.value, mac10_6.value)" class="btnx btn-primary">_update</button> </span>
-</p>
-
-<br>
-<p class="sliderwindow"> 
-<span class="textinfo"> <span id="reboot"></span></span>&nbsp
-<span class="inputparam"> <button onclick="updateText('BOOT', 1)">reboot</button></span>
-</p>
-<br>
-<hr/>
-<p class="sliderwindow">SPECIAL EEPROM FUNCTIONS</P>
-<br>
-<div class="switchcontainer">
-	Save All SETTINGS to GLOBAL EEPROM (BriSPreset [0])
-	<label class="switch1">
-	  <input type="checkbox" id="TSET" onclick="updateButton(this.id, this.checked)"> 
-	  <span class="sliderround1"></span>
-	</label>
-</div>
-
-<div class="switchcontainer">
-	save current cycle param (cycle time & effect speed) to all modes:
-	<label class="switch1">
-	  <input type="checkbox" id="TCPM" onclick="updateButton(this.id, this.checked)"> 
-	  <span class="sliderround1"></span>
-	</label>
-</div>
-<div class="switchcontainer">
-ACTIVATE all PRESETS in EEPROM
-<label class="switch1">
-  <input type="checkbox" id="TAAM" onclick="updateButton(this.id, this.checked)"> 
-  <span class="sliderround1"></span>
-</label>
-</div>
-<div class="switchcontainer">
-DEACTIVATE all PRESETS in EEPROM
-<label class="switch1">
-  <input type="checkbox" id="TDAM" onclick="updateButton(this.id, this.checked)"> 
-  <span class="sliderround1"></span>
-</label>
-</div>
-<div class="switchcontainer">
-	Clear EEPROM - SET TO DEFAULT
-		<label class="switch1">
-		  <input type="checkbox" id="TSED" onclick="updateButton(this.id, this.checked)"> 
-		  <span class="sliderround1"></span>
-		</label>
-	</div>
-</div>
-<hr/>
-
-</section>
-	</main>
+</main>
 
     <footer>
         <p>&copy; 2024. All rights reserved.</p>
