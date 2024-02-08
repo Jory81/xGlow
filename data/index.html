@@ -82,14 +82,12 @@ function updateNumber(key, value) {
 		else if (key == "SPGM"){
 			showModeDropdown();
 		}
-		else{
 		var field = key;
 		var obj = {};
 		obj[field] = value;
 		var myJSON = JSON.stringify(obj);
 		websocket.send(myJSON);  
 		//console.log(myJSON);
-	}
 }
 
 	function updateMac(key, val1, val2, val3, val4, val5, val6) {
@@ -1382,10 +1380,10 @@ $(document).ready(function() {
 				<!--<p class="infowindow">time to next effect: <span id='HCTIS'></span> &nbsp </span></p>
 				<p class="infowindow">time to colour change: <span id='HPTIS'></span> / <span id='HPTTS'></span> </span></p>-->
 			<div>
-                 remaining time: 
+                 remaining time: &nbsp <span id='HCTIS'></span> 
                 <input type="range" id="cycleSlider" name="slider" min="0" max="100">
 				&nbsp
-				<span id='HCTIS'></span>colour:
+				colour:
 				&nbsp
 				<span id='HPTIS'></span>/ <span id='HPTTS'></span>
             </div>
@@ -1617,7 +1615,7 @@ $(document).ready(function() {
 		
 				            <div id="glitter">
                 _*glitter:
-                <input type="checkbox" id="TGLI" name="checkbox" value="checkbox">
+                <input type="checkbox" id="TGLI" onclick="updateButton(this.id, this.checked)">
             </div>
 		<div id="preset">
                 _preset:
@@ -1644,7 +1642,7 @@ $(document).ready(function() {
 <div id="RGBmode">			
 	<div class="slidecontainerx">
 	<div class="titlex2">
-	_RED (0-255):
+	_RED:
 	</div>
 	<input id="SRED" class="sliderred" type="range" min="0" max="255" step="1" value="128" onchange="updateSlider(this.id, this.value)">
 	<div class="varvaluex2" id="SREDS"></div>
@@ -1652,7 +1650,7 @@ $(document).ready(function() {
 
 	<div class="slidecontainerx">
 	<div class="titlex2">
-	_GREEN (0-255) :
+	_GREEN:
 	</div>
 	<input id="SGRE" class="slidergreen" type="range" min="0" max="255" step="1" value="128" onchange="updateSlider(this.id, this.value)">
 	<div class="varvaluex2" id="SGRES"></div>
@@ -1660,7 +1658,7 @@ $(document).ready(function() {
 
 	<div class="slidecontainerx">
 	<div class="titlex2">
-	_BLUE (0-255) :
+	_BLUE:
 	</div>
 	<input id="SBLU" class="sliderblues" type="range" min="0" max="255" step="1" value="128" onchange="updateSlider(this.id, this.value)">
 	<div class="varvaluex2" id="SBLUS"></div>
@@ -1749,7 +1747,7 @@ $(document).ready(function() {
 
 	<div id="sparkbri" class="slidecontainerx">
 	<div class="titlex2">
-	_**Spark_bri (0-255): &nbsp
+	_**Spark_bri: &nbsp
 	<span class="varvaluex2" id="SSBRS"></span>
 	</div>
 	<input id="SSBR" class="slider" type="range" min="0" max="255" step="1" value="0" onchange="updateSlider(this.id, this.value)">
@@ -1757,7 +1755,7 @@ $(document).ready(function() {
 
 	<div id="sparksat" class="slidecontainerx">
 	<div class="titlex2">
-	_**Spark_sat (0-255): &nbsp
+	_**Spark_sat: &nbsp
 	<span class="varvaluex2" id="SSSFS"></span>
 	</div>
 	<input id="SSSF" class="slider" type="range" min="0" max="255" step="1" value="0" onchange="updateSlider(this.id, this.value)">
@@ -1765,7 +1763,7 @@ $(document).ready(function() {
 
 	<div id="sparkcolor" class="slidecontainerx">
 	<div class="titlex2">
-	_Spark_color (0-255): &nbsp
+	_Spark_color: &nbsp
 	<span class="varvaluex2" id="SSCOS"></span>
 	</div>
 	<input id="SSCO" class="slider" type="range" min="0" max="255" step="1" value="0" onchange="updateSlider(this.id, this.value)"> 
