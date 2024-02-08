@@ -28,19 +28,15 @@ Creators of the FastLED library\
 Stephen Culley\
 and everyone who makes these libraries publicly available!
 
-Layout with all tabs:
-
-![](images/layout.jpg)
-
-Main settings that basically allow you to control everything important:
+Main settings that basically allow you to control everything (colors, speed, etc.):
 
 ![](images/Main_settings.png)
 
-Modes:
+Modes (up to 37):
 
 ![](images/modes.png)
 
-Color_settings tab. An example tab which allows to personalize settings:
+Connectivity so multiple nodes can be synced via Esp_now:
 
-![](images/example_colorsettings.jpg)
+![](images/connectivity.png)
 
