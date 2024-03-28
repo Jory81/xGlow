@@ -76,12 +76,12 @@ function updateNumber(key, value) {
 		if (key == 'SNLD'){
 		document.getElementById("HNUMS").innerHTML  = value;
 		}
-		else if (key == "SCOM"){
-			showColourDropdown();
-		}
-		else if (key == "SPGM"){
-			showModeDropdown();
-		}
+		// else if (key == "SCOM"){
+		// 	showColourDropdown();
+		// }
+		// else if (key == "SPGM"){
+		// 	showModeDropdown();
+		// }
 		var field = key;
 		var obj = {};
 		obj[field] = value;
@@ -742,6 +742,7 @@ function onMessage(event) {
 
 
 		}
+		showModeDropdown();
 	}
 	
 	function updateSliderT(timeLeft){
