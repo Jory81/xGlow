@@ -271,7 +271,7 @@ DynamicJsonDocument doc(2000);
         doc["TTWO"] = tower;
         
         doc["SPST"] = selectedPreset[programMode];
-        doc["SPSV"] = selectedPresetVariable;
+        doc["SPSV"] = selectedPresetVariable + 1;
 
         doc["SOBR"] = offBr;
         doc["SOST"] = offS;
