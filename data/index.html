@@ -247,7 +247,7 @@ function onMessage(event) {
 		else if (variable == 'SM3R'){document.getElementById('SM3R').value = data.SM3R; document.getElementById('SM3RS').innerHTML = data.SM3R;}
 		
 		else if (variable == 'SSSF'){document.getElementById('SSSF').value = data.SSSF; document.getElementById('SSSFS').innerHTML = data.SSSF;}
-		else if (variable == 'SPSV'){}//document.getElementById('SPSV').innerHTML = data.SPSV;}
+		else if (variable == 'SPSV'){document.getElementById('SPSV').innerHTML = data.SPSV;}
 
 		else if (variable == 'SBOF'){document.getElementById('SBOF').value = data.SBOF; document.getElementById('SBOFS').innerHTML = data.SBOF;}
 		else if (variable == 'SBOV'){document.getElementById('SBOV').value = data.SBOV; document.getElementById('SBOVS').innerHTML = data.SBOV;}
@@ -1620,6 +1620,7 @@ $(document).ready(function() {
             </div>
 		<div id="preset">
                 _preset:
+				<span class="textinfo" id="SPSV">_</span>
                 <select id="SPST" onchange="updateNumber(this.id, this.value)">
 					<option value="0">preset 1 (hardcoded)</option>
 					<option value="1">preset 2 (EEPROM)</option>
@@ -2021,7 +2022,7 @@ _**Wave BPM(br):
 <br>
 <div class="slidecontainerx">
 	<div class="titlex">
-	ledOffset:
+	**ledOffset:
 	</div>
 	<input id="SBOF" class="sliderx" type="range" min="1" max="20" step="1" value="0" onchange="updateSlider(this.id, this.value)">
 	<div class="varvaluex" id="SBOFS"></div><div class="infox"></div>
@@ -2057,7 +2058,7 @@ _**Wave BPM(br):
 		
 <div class="slidecontainerx">
 	<div class="titlex">
-	Overlay (0-2):
+	**Overlay (0-2):
 	</div>
 	<input id="SBOV" class="sliderx" type="range" min="0" max="2" step="1" value="0" onchange="updateSlider(this.id, this.value)">
 	<div class="varvaluex" id="SBOVS"></div><div class="infox">
@@ -2286,7 +2287,7 @@ _**Wave BPM (sat):
 <br>
 <div class="slidecontainerx">
 	<div class="titlex">
-	ledOffset:
+	**ledOffset:
 	</div>
 	<input id="SSOF" class="sliderx" type="range" min="1" max="20" step="1" value="0" onchange="updateSlider(this.id, this.value)">
 	<div class="varvaluex" id="SSOFS"></div><div class="infox"></div>
@@ -2322,7 +2323,7 @@ _**Wave BPM (sat):
 		
 <div class="slidecontainerx">
 	<div class="titlex">
-	Overlay (0-2):
+	**Overlay (0-2):
 	</div>
 	<input id="SSOV" class="sliderx" type="range" min="0" max="2" step="1" value="0" onchange="updateSlider(this.id, this.value)">
 	<div class="varvaluex" id="SSOVS"></div><div class="infox">

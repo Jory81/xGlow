@@ -194,6 +194,7 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
       else if (json.containsKey("SSOV")){overLayS = json["SSOV"]; if (syncEsp){espNowMessage = true; clearEspNowMessage();   EspNowMessageType = 25;  };}
       else if (json.containsKey("SOSP")){overlaySpeedS = json["SOSP"]; if (syncEsp){espNowMessage = true; clearEspNowMessage();   EspNowMessageType = 25;  };}
 
+      //if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, BRIGH), BRIGH);  EEPROM.commit();};
       else if (json.containsKey("BOOT")){ESP.restart();};
       notifyClientsSingleObject("recMsg", true);
     }

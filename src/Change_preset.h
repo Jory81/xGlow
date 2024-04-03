@@ -68,9 +68,16 @@ void changeState(){
 void selectPreset(){
   if (switchBrS){  
     if (selectedPreset[programMode] == 4){
+      if (tower){
+      selectedPresetVariable = random8(1,4);
+      DEBUG_PRINTLN("in changeState mode 4");
+      DEBUG_PRINTLN(selectedPresetVariable);
+      }
+      else {
       selectedPresetVariable = random8(0,4);
       DEBUG_PRINTLN("in changeState mode 4");
       DEBUG_PRINTLN(selectedPresetVariable);
+      }
     }
     else {
       selectedPresetVariable = selectedPreset[programMode];
@@ -185,6 +192,7 @@ if (changeModus){
     }
     if (selectedPresetVariable == 0){
     readBriSData(BriSPreset);
+
     }
     // if (inColourSync){
     //   colourSync = true;
