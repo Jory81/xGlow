@@ -1199,7 +1199,7 @@ colourSyncToggle = EEPROM.read(offsetof(storeInEEPROM, colourSyncToggle));
       for (int m = 0; m < 10; m++){
         int offsetPosition = offsetof(storeInEEPROM, Mac[0][0]);
         for (int j = 0; j < 6; j++){
-          Mac[m][j]  = EEPROM.get(offsetPosition+((m*6)+j));
+          //Mac[m][j]  = EEPROM.get(offsetPosition+((m*6)+j));
           DEBUG_PRINT(Mac[m][j]); DEBUG_PRINT(" ");
         }
         DEBUG_PRINTLN(" ");
