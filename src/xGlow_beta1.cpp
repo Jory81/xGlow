@@ -68,8 +68,9 @@ int NUM_LEDS = 100; //EEPROM.readInt(93); THIS ONE WILL BE RE-INITIALIZED DURING
   const int DATA_PIN2 = 2;
   const int DATA_PIN3 = 16;
 #else
-  const int DATA_PIN = 16; // GPIO2 - jumper set to the left
+  //const int DATA_PIN = 16; // GPIO2 - jumper set to the left
   
+  const int DATA_PIN = 22;
   //const int DATA_PIN = 3; // GPIO2 - jumper set to the right
   
   //const int DATA_PIN3 = 26; // GPIO2 - jumper set to the left
