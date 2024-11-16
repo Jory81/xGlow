@@ -3248,13 +3248,13 @@ if (millis() - previousMillis35 >= FPS) {
             for (int k = 0; k < setDifference; k++){
               if (i-k >= 0){
                 if (varON == 0){
-                  leds[i+k] += CHSV(longxArray[i],S,qadd8(BRIGH,(k*10))); // tryout   i-k
+                  leds[i-k] += CHSV(longxArray[i],S,qadd8(BRIGH,(k*10))); // tryout   i-k
                 }
                 else if (varON == 1){
-                  leds[i+k] = CHSV(longxArray[i],qsub8(S,(k*10)),qadd8(BRIGH,(k*10))); // original   i-k
+                  leds[i-k] = CHSV(longxArray[i],qsub8(S,(k*10)),qadd8(BRIGH,(k*10))); // original   i-k
                 }
                 else{
-                  leds[i+k] += CHSV(longxArray[i],qsub8(S,(k*10)),qadd8(BRIGH,(k*10))); // tryout qsub8(S,(k*10))    i-k
+                  leds[i-k] += CHSV(longxArray[i],qsub8(S,(k*10)),qadd8(BRIGH,(k*10))); // tryout qsub8(S,(k*10))    i-k
                 }
               }
             }
