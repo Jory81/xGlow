@@ -331,7 +331,7 @@ void handleEspNowMessage(){
   }
   }
 
-  if (espNowMessage){
+  if ((espNowMessage) && ((macConnected[0]) || (macConnected[1]) || (macConnected[2]) ||  (macConnected[3]) || (macConnected[4]) || (macConnected[5]) || (macConnected[6]) || (macConnected[7]) || (macConnected[8]) || (macConnected[9]))){
 
   DynamicJsonDocument doc(250);
   switch (EspNowMessageType){
@@ -484,5 +484,8 @@ void handleEspNowMessage(){
         //esp_now_send(NULL, (uint8_t *) &data, len); // this is useful, but requiers reboot after initialization. can also add all and validate during runtime
 
   }
+  else if ((!macConnected[0]) && (!macConnected[1]) && (!macConnected[2]) &&  (!macConnected[3]) && (!macConnected[4]) && (!macConnected[5]) && (!macConnected[6]) && (!macConnected[7]) && (!macConnected[8]) && (!macConnected[9])){
+    espNowMessage = false;
+}
 }
 }

@@ -1842,7 +1842,7 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
         if (Mac[i][0] == macMem[0] && Mac[i][1] == macMem[1] && Mac[i][2] == macMem[2] && Mac[i][3] == macMem[3] && Mac[i][4] == macMem[4] && Mac[i][5] == macMem[5]) {
         inSyncCounter[i]++;
             receivedMessage[i] = false;
-            if (inSyncCounter[i] > 3){
+            if (inSyncCounter[i] > 5){
               macConnected[i] = false;
               //sendProgramInfo(3);
             }

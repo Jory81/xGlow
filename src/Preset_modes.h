@@ -2150,9 +2150,17 @@ previousMillis1 = millis();
 changePColors();
 }
 
-else if (millis() - previousMillis36 > INTERVAL7 && varON == 2) {
+else if ((millis() - previousMillis36 > INTERVAL7 && varON == 2) || (inSync)) {
   if (millis() - previousMillis1 >= (changeSpeed/10)) {
   previousMillis1 = millis(); 
+
+    if ((syncEsp) && (alertColor)){
+      espNowMessage = true;
+      clearEspNowMessage();
+      EspNowMessageType = 7;
+      alertColor = false;
+      notifyClientsSingleObjectByte("SCAR", arrayn);
+    }
 
     for (int i = 0;  i < 15; i++){
      if (colour[i] != newColour[i]) { 
@@ -2188,12 +2196,6 @@ else if (millis() - previousMillis36 > INTERVAL7 && varON == 2) {
       T=0;        
     }
   }
-}
-
-if ((syncEsp) && (alertColor)){
-    espNowMessage = true;
-    EspNowMessageType = 7;
-    alertColor = false;
 }
 
 if (millis() - previousMillis2 >= FPS) {
@@ -3673,9 +3675,18 @@ if (millis() - previousMillis1 >= modeDelay) {
     yintm=yint;
     modeDelay = 1*changeSpeed;   
   }
-  else if (millis() - previousMillis36 > INTERVAL7 && varON == 2){ //  && colorMode != 4     
+  else if ((millis() - previousMillis36 > INTERVAL7 && varON == 2) || (inSync)){ //  && colorMode != 4     
       modeDelay = changeSpeed/10;
       newColors++;
+
+      if ((syncEsp) && (alertColor)){
+        espNowMessage = true;
+        clearEspNowMessage();
+        EspNowMessageType = 7;
+        alertColor = false;
+        notifyClientsSingleObjectByte("SCAR", arrayn);
+        //DEBUG_PRINTLN("send color in preset mode");
+      }  
       
       for (int i = 0;  i < 15; i++){
         if (colour[i] != newColour[i]) { 
@@ -3699,6 +3710,7 @@ if (millis() - previousMillis1 >= modeDelay) {
             arrayn = random(arrayCount);
             updateOled(24, 40, &oldArrayn);
             selectcolorArray();
+            //notifyClientsSingleObjectByte("SCAR", arrayn);
           }
           else {
             for (int i=0; i<15; i++){
@@ -3711,13 +3723,7 @@ if (millis() - previousMillis1 >= modeDelay) {
           previousMillis36 = millis();
           T=0;        
         }
-      }
-  if ((syncEsp) && (alertColor)){
-        espNowMessage = true;
-        EspNowMessageType = 7;
-        alertColor = false;
-        DEBUG_PRINTLN("send color in preset mode");
-  }    
+      }  
     // else if (colorMode == 4){
     //   changePColors();
     //   modeDelay = 3*changeSpeed;    
