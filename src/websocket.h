@@ -1692,7 +1692,9 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
           else if (variable == "TCON"){cycle = json["TCON"]; } // Serial.println("cycle to false"); if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, cycle), cycle);  EEPROM.commit();};} // EEPROM
           else if (variable == "SGRA"){selectColor = json["SGRA"];   dir1=1;    ymax4 = pgm_read_byte(&selectColor_data[selectColor].ymax4);  ymin4 = pgm_read_byte(&selectColor_data[selectColor].ymin4);   setDifference = pgm_read_byte(&selectColor_data[selectColor].setDifference);    yval1=ymin4;   dir0=1;     fillArrayGradient(3, yval1, setDifference); changeColor = true;   if (effect_function == *rainbow_3){setDifference = 4;} sendProgramInfo(1);}
           else if (variable == "SPAL"){gCurrentPaletteNumber = json["SPAL"]; gTargetPalette =( gGradientPalettes[gCurrentPaletteNumber] );}
-          else if (variable == "SCAR"){arrayn = json["SCAR"];     selectcolorArray();    newColors++;    if (colorMode != 4){for (int n = 0; n < 15; n++){newColour[n] = json["YV"][n];};};}  // THIS ONE
+          else if (variable == "SCAR"){arrayn = json["SCAR"];     selectcolorArray();    newColors++;    if (colorMode != 4){for (int n = 0; n < 15; n++){newColour[n] = json["YV"][n];};};
+          
+          }  // THIS ONE
           
           else if (variable == "SDIF"){setDifference = json["SDIF"]; fillxmasArray();  setDifference2 = setDifference+5;} // diff[0]=0;     x = 1;  num = 0;        diff[1]=0;     xn = 1;    num7 = 0; } diffbeat=60000/(setDifference*4*100); diffbeat2=diffbeat/2;
           else if (variable == "SLSP"){changeSpeed = json["SLSP"];}
@@ -1840,7 +1842,7 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
         if (Mac[i][0] == macMem[0] && Mac[i][1] == macMem[1] && Mac[i][2] == macMem[2] && Mac[i][3] == macMem[3] && Mac[i][4] == macMem[4] && Mac[i][5] == macMem[5]) {
         inSyncCounter[i]++;
             receivedMessage[i] = false;
-            if (inSyncCounter[i] > 10){
+            if (inSyncCounter[i] > 3){
               macConnected[i] = false;
               //sendProgramInfo(3);
             }

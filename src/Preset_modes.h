@@ -2153,12 +2153,6 @@ changePColors();
 else if (millis() - previousMillis36 > INTERVAL7 && varON == 2) {
   if (millis() - previousMillis1 >= (changeSpeed/10)) {
   previousMillis1 = millis(); 
-  
-  if ((syncEsp) && (alertColor)){
-    espNowMessage = true;
-    EspNowMessageType = 7;
-    alertColor = false;
-  };   
 
     for (int i = 0;  i < 15; i++){
      if (colour[i] != newColour[i]) { 
@@ -2194,6 +2188,12 @@ else if (millis() - previousMillis36 > INTERVAL7 && varON == 2) {
       T=0;        
     }
   }
+}
+
+if ((syncEsp) && (alertColor)){
+    espNowMessage = true;
+    EspNowMessageType = 7;
+    alertColor = false;
 }
 
 if (millis() - previousMillis2 >= FPS) {
@@ -3674,12 +3674,6 @@ if (millis() - previousMillis1 >= modeDelay) {
     modeDelay = 1*changeSpeed;   
   }
   else if (millis() - previousMillis36 > INTERVAL7 && varON == 2){ //  && colorMode != 4     
-      if ((syncEsp) && (alertColor)){
-        espNowMessage = true;
-        EspNowMessageType = 7;
-        alertColor = false;
-      }
-
       modeDelay = changeSpeed/10;
       newColors++;
       
@@ -3718,6 +3712,12 @@ if (millis() - previousMillis1 >= modeDelay) {
           T=0;        
         }
       }
+  if ((syncEsp) && (alertColor)){
+        espNowMessage = true;
+        EspNowMessageType = 7;
+        alertColor = false;
+        DEBUG_PRINTLN("send color in preset mode");
+  }    
     // else if (colorMode == 4){
     //   changePColors();
     //   modeDelay = 3*changeSpeed;    
