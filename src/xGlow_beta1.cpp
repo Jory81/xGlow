@@ -44,7 +44,7 @@ FASTLED_USING_NAMESPACE
   #define EEPROM_PRINTF(x...)
 #endif
 
-#define DEBUG_OUTPUT // for debugging mode (mainly for checking memory issues and JSON communication)
+//#define DEBUG_OUTPUT // for debugging mode (mainly for checking memory issues and JSON communication)
 
 #ifdef DEBUG_OUTPUT
   #define DEBUG_PRINT(x) Serial.print(x)
