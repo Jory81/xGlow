@@ -122,6 +122,9 @@ void wifi(){
   }
   else {
     Serial.printf(" %s\n", WiFi.localIP().toString().c_str());
+
+    mqtt.setServer(MQTT_HOST, MQTT_PORT);
+    connectMqtt();
   }  
     
   initWebSocket();

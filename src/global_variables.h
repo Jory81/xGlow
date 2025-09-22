@@ -1094,6 +1094,12 @@ unsigned long previousMillis46 = 0;
 unsigned long previousMillis52 = 0;
 unsigned long previousMillis54 = 0;
 
+// Timers for periodic tasks
+// unsigned long lastAlive = 0;
+// unsigned long lastIP    = 0;
+// const unsigned long aliveInterval = 60000;   // 60 s
+// const unsigned long ipInterval    = 60000;   // 60 s (can be same or different)
+
 unsigned long changeSpeed = 100; //100;
 unsigned long modeDelay = 100; //100;
 

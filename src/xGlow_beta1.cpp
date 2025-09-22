@@ -30,6 +30,7 @@ FASTLED_USING_NAMESPACE
 #include <IRutils.h>
 #include <ESPAsyncWebServer.h>
 #include <AsyncElegantOTA.h>
+#include <PubSubClient.h>
 //#include <ArduinoOTA.h> 
 
 #define print_EEPROM
@@ -99,6 +100,87 @@ decode_results results;
 
 AsyncWebServer server(80);
 AsyncWebSocket ws("/ws");
+
+// // ======= Wi-Fi SETTINGS =======
+// const char* WIFI_SSID = "your-ssid";
+// const char* WIFI_PASS = "your-wifi-password";
+
+// ======= MQTT SETTINGS =======
+const char* MQTT_HOST   = "192.168.2.154";
+const uint16_t MQTT_PORT = 1883;
+const char* MQTT_USER   = "princiej";
+const char* MQTT_PASS   = "Az81!PrinsJ";
+
+// ======= DEVICE IDENTIFIERS =======
+const char* DEVICE_ID   = "fastled_node_01";
+const char* DEVICE_NAME = "MyESP32";
+
+// ======= MQTT TOPICS =======
+String discoveryTopic = "homeassistant/sensor/" + String(DEVICE_ID) + "/ip/config";
+String stateTopic     = "home/" + String(DEVICE_ID) + "/ip";
+String aliveTopic     = "home/" + String(DEVICE_ID) + "/alive";
+
+WiFiClient espClient;
+PubSubClient mqtt(espClient);
+
+// ======= Timers =======
+unsigned long lastAlive = 0;
+unsigned long lastIP    = 0;
+const unsigned long aliveInterval = 60000;  // 60 seconds
+const unsigned long ipInterval    = 60000;  // 60 seconds
+
+// ======= MQTT FUNCTIONS =======
+void publishDiscovery() {
+    StaticJsonDocument<256> doc;
+    doc["name"] = String(DEVICE_NAME) + " IP";
+    doc["state_topic"] = stateTopic;
+    doc["unique_id"] = String(DEVICE_ID) + "_ip";
+    doc["availability_topic"] = aliveTopic;
+    doc["value_template"] = "{{ value_json.ip }}";
+
+    JsonObject device = doc.createNestedObject("device");
+    device["identifiers"] = DEVICE_ID;
+    device["name"] = DEVICE_NAME;
+    device["manufacturer"] = "DIY";
+    device["model"] = "ESP32 FastLED Controller";
+
+    char buffer[256];
+    serializeJson(doc, buffer);
+
+    mqtt.publish(discoveryTopic.c_str(), buffer); // ✅ works on PubSubClient 2.8
+}
+
+void publishIP() {
+    StaticJsonDocument<128> doc;
+    doc["ip"]  = WiFi.localIP().toString();
+    doc["mac"] = WiFi.macAddress();
+
+    char buffer[128];
+    serializeJson(doc, buffer);
+
+    mqtt.publish(stateTopic.c_str(), buffer); // ✅ works
+}
+
+void publishAlive() {
+    mqtt.publish(aliveTopic.c_str(), "online"); // ✅ works
+}
+
+void connectMqtt() {
+    while (!mqtt.connected()) {
+        Serial.print("Connecting to MQTT...");
+        if (mqtt.connect(DEVICE_ID, MQTT_USER, MQTT_PASS)) { // only supported args
+            Serial.println(" connected");
+            publishDiscovery();
+            publishIP();
+            publishAlive();
+        } else {
+            Serial.print(" failed, rc=");
+            Serial.print(mqtt.state());
+            Serial.println(" retrying in 5 seconds");
+            delay(5000);
+        }
+    }
+}
 
 char dataEspNow[250];
 
@@ -260,6 +342,11 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len);
 //void OnDataRecv(const uint8_t * mac, const uint8_t *data, int len);
 //void receiveCallback(const uint8_t *macAddr, const uint8_t *data, int dataLen);
 
+// void publishDiscovery();
+// void publishIP();
+// void publishAlive();
+// void connectMqtt();
+
 void notifyClientsSingleObject(String object, boolean value);
 void notifyClientsSingleObjectByte(String object, byte value);
 void notifyClientsSingleObjectInt(String object, uint32_t value);
@@ -284,6 +371,7 @@ void readBriSData(byte preset);
 #include "colour_Func.h"
 #include "Preset_modes.h"
 #include "IR_func.h"
+#include "mqtt.h"
 #include "Setup_func.h"
 #include "Update_OLED_WS.h"
 #include "websocket.h"
@@ -318,6 +406,23 @@ handleAdditionalVariables();
 handleLEDSettings();
 handleIR(); 
 handleWebsocketUpdate();
+
+    if (!mqtt.connected()) connectMqtt();
+    mqtt.loop();
+
+    unsigned long now = millis();
+
+    // Heartbeat
+    if (now - lastAlive > aliveInterval) {
+        publishAlive();
+        lastAlive = now;
+    }
+
+    // IP/MAC update
+    if (now - lastIP > ipInterval) {
+        publishIP();
+        lastIP = now;
+    }
 }
 
 void handleEspNowMessage(){
