@@ -90,7 +90,7 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
 
       else if (json.containsKey("SCOM")){colorMode = json["SCOM"]; colorMode = colorMode-1; procesColourMode(); if (syncEsp){espNowMessage = true; clearEspNowMessage();   EspNowMessageType = 3;  }; } // memoryByte = 'c'; processChange();} // THIS ONE
       else if (json.containsKey("SVAR")){varON = json["SVAR"]; for (int p=0; p<10; p++){if (varON == 0){yvar[p]= 0; yvarg[p]= 0;} else {yvar[p]=yvarC[p]; yvarg[p]=yvargC[p];};} if (syncEsp){espNowMessage = true; clearEspNowMessage();   EspNowMessageType = 4;  }; } //if (saveToEEPROM){EEPROM.put(offsetof(storeInEEPROM, varON), varON);  EEPROM.commit();};
-      else if (json.containsKey("SNSP")){numsparks = json["SNSP"];}
+      else if (json.containsKey("SNSP")){numsparks = json["SNSP"]; if (syncEsp){espNowMessage = true; clearEspNowMessage();   EspNowMessageType = 28;  };}
       else if (json.containsKey("SDIF")){setDifference = json["SDIF"]; fillxmasArray(); setDifference2 = setDifference+5;if (syncEsp){espNowMessage = true; clearEspNowMessage();   EspNowMessageType = 5;  }; } // diff[0]=0;     x = 1;  num = 0;        diff[1]=0;     xn = 1;    num7 = 0; } diffbeat=60000/(setDifference*4*100); diffbeat2=diffbeat/2;
       else if (json.containsKey("SLSP")){changeSpeed = json["SLSP"];if (syncEsp){espNowMessage = true; clearEspNowMessage();   EspNowMessageType = 6;  }; }
 
@@ -306,6 +306,10 @@ DynamicJsonDocument doc(2000);
         doc["HCOL"] = RGBCOLOR;
         doc["TSYN"] = syncEsp;
         doc["TSCN"] = colourSyncToggle;
+           // inSync = false;
+           // inColourSync = false;
+           // forcedColourChange
+           // colourSync
 
         doc["SBOF"] = ledOffset;
         doc["SBOV"] = overLay;
@@ -1704,6 +1708,7 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
           else if (variable == "TSYN"){syncEsp = json["TSYN"];}
           else if (variable == "TSCN"){colourSyncToggle = json["TSCN"];}
           else if (variable == "TSBS"){switchBrS = json["TSBS"];}
+          else if (variable == "SNSP"){numsparks = json["SNSP"];}
           else if (variable == "SHUY"){yval1 = json["SHUY"];}
           else if (variable == "SYOL"){yold = json["SYOL"];}
           else if (variable == "ZVAL"){for (int n = 0; n < 30; n++){z[n] = json["ZVAL"][n];};}
