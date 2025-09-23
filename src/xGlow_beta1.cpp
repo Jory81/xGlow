@@ -30,7 +30,6 @@ FASTLED_USING_NAMESPACE
 #include <IRutils.h>
 #include <ESPAsyncWebServer.h>
 #include <AsyncElegantOTA.h>
-//#define MQTT_MAX_PACKET_SIZE 512   // or 1024 if needed
 #include <PubSubClient.h>
 //#include <ArduinoOTA.h> 
 
@@ -107,20 +106,24 @@ AsyncWebSocket ws("/ws");
 // const char* WIFI_PASS = "your-wifi-password";
 
 // ======= MQTT SETTINGS =======
-const char* MQTT_HOST   = "xxxxxx";
+const char* MQTT_HOST   = "192.168.2.154";
 const uint16_t MQTT_PORT = 1883;
-const char* MQTT_USER   = "xxxxxx";
-const char* MQTT_PASS   = "xxxxxx";
+const char* MQTT_USER   = "xxxxx"
+const char* MQTT_PASS   = "xxxxx"
 
 // ======= DEVICE IDENTIFIERS =======
-const char* DEVICE_ID   = "fastled_node_03";
-const char* DEVICE_NAME = "MyESP32-3";
+const char* DEVICE_ID   = "fastled_node_01";
+const char* DEVICE_NAME = "MyESP32-1";
 
 // ======= MQTT TOPICS =======
-
 String discoveryTopic = "homeassistant/sensor/" + String(DEVICE_ID) + "/ip/config";
 String stateTopic     = "home/" + String(DEVICE_ID) + "/ip";
 String aliveTopic     = "home/" + String(DEVICE_ID) + "/alive";
+String aliveDiscoveryTopic = "homeassistant/binary_sensor/" + String(DEVICE_ID) + "/alive/config";
+
+
+// String aliveDiscoveryTopic = "homeassistant/binary_sensor/" + String(DEVICE_ID) + "/alive/config";
+
 
 WiFiClient espClient;
 PubSubClient mqtt(espClient);
@@ -132,11 +135,18 @@ const unsigned long aliveInterval = 60000;  // 60 seconds
 const unsigned long ipInterval    = 60000;  // 60 seconds
 
 void publishDiscovery() {
-    StaticJsonDocument<128> doc;         // 128 is now plenty
+    StaticJsonDocument<128> doc;         // 128 is now plenty 256 FROM 128
     doc["name"]        = DEVICE_NAME;    // short name
     doc["state_topic"] = stateTopic;
     doc["unique_id"]   = DEVICE_ID;      // must be unique
     doc["value_template"] = "{{ value_json.ip }}";
+
+    // // Add device block
+    // JsonObject dev = doc.createNestedObject("device");
+    // dev["identifiers"].add(DEVICE_ID);
+    // dev["name"] = DEVICE_NAME;
+    // dev["manufacturer"] = "ACME";
+    // dev["model"] = "ESP32";
 
     String payload;
     serializeJson(doc, payload);
@@ -167,12 +177,61 @@ void publishDiscovery() {
     // Serial.println("===========================");
 }
 
+// ======= Minimal binary_sensor discovery =======
+void publishAliveDiscovery() {
+    StaticJsonDocument<256> doc;
+    doc["name"]        = String(DEVICE_NAME) + " Alive";
+    doc["unique_id"]   = String(DEVICE_ID) + "_alive";
+    doc["device_class"] = "connectivity";
+    doc["state_topic"] = aliveTopic;
+    doc["payload_on"]  = "online";
+    doc["payload_off"] = "offline";
+
+    String payload;
+    serializeJson(doc, payload);
+    mqtt.publish(
+      aliveDiscoveryTopic.c_str(),
+      reinterpret_cast<const uint8_t*>(payload.c_str()),
+      payload.length(),
+      true);
+}
+
+// Publish alive binary_sensor discovery
+// void publishAliveDiscovery() {
+//     StaticJsonDocument<1024> doc;
+//     doc["name"]        = String(DEVICE_NAME) + " Alive";
+//     doc["unique_id"]   = String(DEVICE_ID) + "_alive";
+//     doc["device_class"] = "connectivity";
+//     doc["state_topic"] = aliveTopic;
+//     doc["payload_on"]  = "online";
+//     doc["payload_off"] = "offline";
+//     doc["availability_topic"] = aliveTopic;
+//     doc["payload_available"]  = "online";
+//     doc["payload_not_available"] = "offline";
+
+//    // Add device block
+//     JsonObject dev = doc.createNestedObject("device");
+//     dev["identifiers"].add(DEVICE_ID);
+//     dev["name"] = DEVICE_NAME;
+//     dev["manufacturer"] = "ACME";
+//     dev["model"] = "ESP32";
+
+//     String payload;
+//     serializeJson(doc, payload);
+//     mqtt.publish(
+//       aliveDiscoveryTopic.c_str(),
+//       reinterpret_cast<const uint8_t*>(payload.c_str()),
+//       payload.length(),
+//       true // retained
+//     );
+// }
+
 void publishIP() {
     StaticJsonDocument<64> doc;
     doc["ip"] = WiFi.localIP().toString();
     String payload;
     serializeJson(doc, payload);
-    mqtt.publish(stateTopic.c_str(), payload.c_str());
+    mqtt.publish(stateTopic.c_str(), payload.c_str(), true);
 }
 
 // void publishAlive() {
@@ -208,6 +267,7 @@ void connectMqtt() {
 
       // Publish device info and status
       publishDiscovery();  // discovery message
+      publishAliveDiscovery();  // heartbeat
       publishIP();         // current IP/MAC
       publishAlive();      // mark online immediately
     } else {
@@ -478,6 +538,7 @@ handleWebsocketUpdate();
     // Heartbeat
     if (now - lastAlive > aliveInterval) {
         publishAlive();
+        //publishAliveDiscovery();
         //publishDiscovery();
         lastAlive = now;
     }
