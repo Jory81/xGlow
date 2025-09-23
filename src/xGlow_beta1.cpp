@@ -30,6 +30,7 @@ FASTLED_USING_NAMESPACE
 #include <IRutils.h>
 #include <ESPAsyncWebServer.h>
 #include <AsyncElegantOTA.h>
+//#define MQTT_MAX_PACKET_SIZE 512   // or 1024 if needed
 #include <PubSubClient.h>
 //#include <ArduinoOTA.h> 
 
@@ -112,10 +113,11 @@ const char* MQTT_USER   = "princiej";
 const char* MQTT_PASS   = "Az81!PrinsJ";
 
 // ======= DEVICE IDENTIFIERS =======
-const char* DEVICE_ID   = "fastled_node_01";
-const char* DEVICE_NAME = "MyESP32";
+const char* DEVICE_ID   = "fastled_node_03";
+const char* DEVICE_NAME = "MyESP32-3";
 
 // ======= MQTT TOPICS =======
+
 String discoveryTopic = "homeassistant/sensor/" + String(DEVICE_ID) + "/ip/config";
 String stateTopic     = "home/" + String(DEVICE_ID) + "/ip";
 String aliveTopic     = "home/" + String(DEVICE_ID) + "/alive";
@@ -129,58 +131,119 @@ unsigned long lastIP    = 0;
 const unsigned long aliveInterval = 60000;  // 60 seconds
 const unsigned long ipInterval    = 60000;  // 60 seconds
 
-// ======= MQTT FUNCTIONS =======
 void publishDiscovery() {
-    StaticJsonDocument<256> doc;
-    doc["name"] = String(DEVICE_NAME) + " IP";
+    StaticJsonDocument<128> doc;         // 128 is now plenty
+    doc["name"]        = DEVICE_NAME;    // short name
     doc["state_topic"] = stateTopic;
-    doc["unique_id"] = String(DEVICE_ID) + "_ip";
-    doc["availability_topic"] = aliveTopic;
+    doc["unique_id"]   = DEVICE_ID;      // must be unique
     doc["value_template"] = "{{ value_json.ip }}";
 
-    JsonObject device = doc.createNestedObject("device");
-    device["identifiers"] = DEVICE_ID;
-    device["name"] = DEVICE_NAME;
-    device["manufacturer"] = "DIY";
-    device["model"] = "ESP32 FastLED Controller";
+    String payload;
+    serializeJson(doc, payload);
 
-    char buffer[256];
-    serializeJson(doc, buffer);
+    mqtt.publish(
+      discoveryTopic.c_str(),
+      reinterpret_cast<const uint8_t*>(payload.c_str()),
+      payload.length(),
+      true  // << retained = true
+    );
 
-    mqtt.publish(discoveryTopic.c_str(), buffer); // ✅ works on PubSubClient 2.8
+    // // Print debug info to Serial
+    // Serial.println("=== MQTT Discovery Debug ===");
+    // Serial.print("Topic: ");
+    // Serial.println(discoveryTopic);
+    // Serial.print("Payload: ");
+    // Serial.println(payload);
+
+    // // Publish and check if it succeeded
+    // bool ok = mqtt.publish(
+    //     discoveryTopic.c_str(),
+    //     reinterpret_cast<const uint8_t*>(payload.c_str()),
+    //     payload.length(),
+    //     true        // retained
+    // );
+    // Serial.print("Publish successful? ");
+    // Serial.println(ok ? "YES" : "NO");
+    // Serial.println("===========================");
 }
 
 void publishIP() {
-    StaticJsonDocument<128> doc;
-    doc["ip"]  = WiFi.localIP().toString();
-    doc["mac"] = WiFi.macAddress();
-
-    char buffer[128];
-    serializeJson(doc, buffer);
-
-    mqtt.publish(stateTopic.c_str(), buffer); // ✅ works
+    StaticJsonDocument<64> doc;
+    doc["ip"] = WiFi.localIP().toString();
+    String payload;
+    serializeJson(doc, payload);
+    mqtt.publish(stateTopic.c_str(), payload.c_str());
 }
+
+// void publishAlive() {
+//     mqtt.publish(aliveTopic.c_str(), "online"); //
+// }
 
 void publishAlive() {
-    mqtt.publish(aliveTopic.c_str(), "online"); // ✅ works
+    mqtt.publish(aliveTopic.c_str(), "online", true); // retained
 }
 
+
 void connectMqtt() {
-    while (!mqtt.connected()) {
-        Serial.print("Connecting to MQTT...");
-        if (mqtt.connect(DEVICE_ID, MQTT_USER, MQTT_PASS)) { // only supported args
-            Serial.println(" connected");
-            publishDiscovery();
-            publishIP();
-            publishAlive();
-        } else {
-            Serial.print(" failed, rc=");
-            Serial.print(mqtt.state());
-            Serial.println(" retrying in 5 seconds");
-            delay(5000);
-        }
+  while (!mqtt.connected()) {
+    Serial.print("Connecting MQTT...");
+
+    // Set LWT here in the connect() call
+    if (mqtt.connect(
+          DEVICE_ID,       // Client ID
+          MQTT_USER,       // Username
+          MQTT_PASS,       // Password
+          aliveTopic.c_str(), // Will topic
+          1,               // QoS
+          true,            // Retained
+          "offline"        // Will message
+        )) 
+    {
+      Serial.println(" connected");
+
+      delay(100);  // Give handshake a moment
+
+      Serial.print("MQTT connected? ");
+      Serial.println(mqtt.connected() ? "YES" : "NO");
+
+      // Publish device info and status
+      publishDiscovery();  // discovery message
+      publishIP();         // current IP/MAC
+      publishAlive();      // mark online immediately
+    } else {
+      Serial.print(" failed, rc=");
+      Serial.println(mqtt.state());
+      delay(5000); // retry after 5 seconds
     }
+  }
 }
+
+
+
+// void connectMqtt() {
+//   while (!mqtt.connected()) {
+//     Serial.print("Connecting MQTT...");
+//     if (mqtt.connect(DEVICE_ID, MQTT_USER, MQTT_PASS)) {
+//       Serial.println(" connected");
+
+//       // Now set the Last Will manually BEFORE publishing alive/discovery
+//       mqtt.publish(aliveTopic.c_str(), "offline", true);
+
+//       delay(100);  // give handshake a moment
+
+//       Serial.print("MQTT connected? ");
+//       Serial.println(mqtt.connected() ? "YES" : "NO");
+
+//       publishDiscovery();   // now should succeed
+//       publishIP();
+//       publishAlive();
+//     } else {
+//       Serial.print(" failed, rc=");
+//       Serial.println(mqtt.state());
+//       delay(5000);
+//     }
+//   }
+// }
 
 char dataEspNow[250];
 
@@ -415,6 +478,7 @@ handleWebsocketUpdate();
     // Heartbeat
     if (now - lastAlive > aliveInterval) {
         publishAlive();
+        //publishDiscovery();
         lastAlive = now;
     }
 
