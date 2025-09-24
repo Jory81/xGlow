@@ -31,6 +31,7 @@ FASTLED_USING_NAMESPACE
 #include <ESPAsyncWebServer.h>
 #include <AsyncElegantOTA.h>
 #include <PubSubClient.h>
+#include "secrets.h"
 //#include <ArduinoOTA.h> 
 
 #define print_EEPROM
@@ -108,8 +109,8 @@ AsyncWebSocket ws("/ws");
 // ======= MQTT SETTINGS =======
 const char* MQTT_HOST   = "192.168.2.154";
 const uint16_t MQTT_PORT = 1883;
-const char* MQTT_USER   = "xxxxx"
-const char* MQTT_PASS   = "xxxxx"
+const char* MQTT_USER   = "xxxxx";
+const char* MQTT_PASS   = "xxxxx";
 
 // ======= DEVICE IDENTIFIERS =======
 const char* DEVICE_ID   = "fastled_node_01";
