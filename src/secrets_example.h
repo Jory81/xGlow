@@ -1,8 +1,8 @@
 #pragma once
 
-// #define WIFI_SSID     "YourHomeSSID"
-// #define WIFI_PASSWORD "YourSuperSecretPass"
+String wifiID = "SSID";
+String wifiPASS = "PASS";
 
-const char* MQTT_HOST   = "hostname";
+const char* MQTT_HOST   = "192.168.1.1";
 const char* MQTT_USER   = "username";
 const char* MQTT_PASS   = "password";
