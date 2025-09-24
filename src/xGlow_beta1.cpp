@@ -107,10 +107,7 @@ AsyncWebSocket ws("/ws");
 // const char* WIFI_PASS = "your-wifi-password";
 
 // ======= MQTT SETTINGS =======
-const char* MQTT_HOST   = "192.168.2.154";
 const uint16_t MQTT_PORT = 1883;
-const char* MQTT_USER   = "xxxxx";
-const char* MQTT_PASS   = "xxxxx";
 
 // ======= DEVICE IDENTIFIERS =======
 const char* DEVICE_ID   = "fastled_node_01";

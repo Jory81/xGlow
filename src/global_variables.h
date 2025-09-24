@@ -785,8 +785,8 @@ uint8_t bMA[30]={255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255
 // int arrayPos=0;
 
 String dataString;
-String wifiID;
-String wifiPASS;
+// String wifiID;
+// String wifiPASS;
 String macAdress;
 uint8_t inSyncCounter[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 uint8_t macMem[6] = {0};
@@ -802,8 +802,6 @@ uint8_t Mac[10][6] = {0};
 // uint8_t mac9[6] = {0};
 // uint8_t mac10[6] = {0};
 
-//const char *WIFI_SSID = "Su***s**l";
-//const char *WIFI_PASS = "se*******at13";
 
 const char *WIFI_SSID_AP = "ESP32-AP";
 const char *WIFI_PASS_AP =  "";
@@ -1282,16 +1280,55 @@ colourSyncToggle = EEPROM.read(offsetof(storeInEEPROM, colourSyncToggle));
       int offsetPosition = offsetof(storeInEEPROM, ssidStorage[0]);
       ssidStorage[m]  = EEPROM.read(offsetPosition+m);
       }
-      wifiID = String(ssidStorage);
-      Serial.print("wifiID "); Serial.println(wifiID);
+      // wifiID = String(ssidStorage);
+      // Serial.print("wifiID "); Serial.println(wifiID);
+
+      // Check if EEPROM is not empty
+      bool eepromHasSSID = false;
+      for (int i = 0; i < 32; i++) {
+          if (ssidStorage[i] != 0 && ssidStorage[i] != 0xFF) { // 0xFF is default erased EEPROM
+              eepromHasSSID = true;
+              break;
+          }
+      }
+
+      // Only overwrite wifiID if EEPROM has a value
+      if (eepromHasSSID) {
+          wifiID = String(ssidStorage);
+          wifiID.trim();  // remove trailing nulls / whitespace
+          Serial.print("Using EEPROM SSID: ");
+          Serial.println(wifiID);
+      } else {
+          Serial.print("Using secrets.h SSID: ");
+          Serial.println(wifiID);
+      }
       
       for (int m = 0; m < 32; m++){
       //Serial.print(m); Serial.print("m ");   
       int offsetPosition = offsetof(storeInEEPROM, passStorage[0]);
       passStorage[m]  = EEPROM.read(offsetPosition+m);
       }
-      wifiPASS = String(passStorage);
-      Serial.print("wifiPASS "); Serial.println(wifiPASS);
+      // wifiPASS = String(passStorage);
+      // Serial.print("wifiPASS "); Serial.println(wifiPASS);
+
+      bool eepromHasPASS = false;
+      for (int i = 0; i < 32; i++) {
+          if (passStorage[i] != 0 && passStorage[i] != 0xFF) { // 0xFF is default erased EEPROM
+              eepromHasPASS = true;
+              break;
+          }
+      }
+
+      // Only overwrite wifiID if EEPROM has a value
+      if (eepromHasPASS) {
+          wifiPASS = String(passStorage);
+          wifiPASS.trim();  // remove trailing nulls / whitespace
+          Serial.print("Using EEPROM PASS: ");
+          Serial.println(wifiPASS);
+      } else {
+          Serial.print("Using secrets.h PASS: ");
+          Serial.println(wifiPASS);
+      }
 
       for (int m = 0; m < 10; m++){
       int offsetPosition = offsetof(storeInEEPROM, macConnected[0]);
