@@ -110,8 +110,8 @@ AsyncWebSocket ws("/ws");
 const uint16_t MQTT_PORT = 1883;
 
 // ======= DEVICE IDENTIFIERS =======
-const char* DEVICE_ID   = "fastled_node_01";
-const char* DEVICE_NAME = "MyESP32-1";
+const char* DEVICE_ID   = "fastled_node_04";
+const char* DEVICE_NAME = "MyESP32-4";
 
 // ======= MQTT TOPICS =======
 String discoveryTopic = "homeassistant/sensor/" + String(DEVICE_ID) + "/ip/config";
