@@ -110,8 +110,8 @@ AsyncWebSocket ws("/ws");
 const uint16_t MQTT_PORT = 1883;
 
 // ======= DEVICE IDENTIFIERS =======
-const char* DEVICE_ID   = "fastled_node_06";
-const char* DEVICE_NAME = "MyESP32-6";
+const char* DEVICE_ID   = "fastled_node_07";
+const char* DEVICE_NAME = "MyESP32-7";
 
 // ======= MQTT TOPICS =======
 String discoveryTopic = "homeassistant/sensor/" + String(DEVICE_ID) + "/ip/config";
@@ -119,6 +119,9 @@ String stateTopic     = "home/" + String(DEVICE_ID) + "/ip";
 String aliveTopic     = "home/" + String(DEVICE_ID) + "/alive";
 String aliveDiscoveryTopic = "homeassistant/binary_sensor/" + String(DEVICE_ID) + "/alive/config";
 
+bool mqttEnabled = true;
+int mqttFailCount = 0;
+const int MQTT_MAX_FAILS = 1;
 
 // String aliveDiscoveryTopic = "homeassistant/binary_sensor/" + String(DEVICE_ID) + "/alive/config";
 
@@ -243,6 +246,8 @@ void publishAlive() {
 void connectMqtt() {
     static unsigned long lastAttempt = 0;
 
+    if (!mqttEnabled) return;
+
     if (mqtt.connected()) return;
 
     unsigned long now = millis();
@@ -264,8 +269,14 @@ void connectMqtt() {
         publishIP();
         publishAlive();
     } else {
+        mqttFailCount++;
         Serial.print("Failed. rc=");
         Serial.println(mqtt.state());
+
+            if (mqttFailCount >= MQTT_MAX_FAILS) {
+            Serial.println("MQTT disabled after too many failures.");
+            mqttEnabled = false;   // permanently disable MQTT
+        }
     }
 }
 
@@ -559,8 +570,13 @@ handleLEDSettings();
 handleIR(); 
 handleWebsocketUpdate();
 
-    if (!mqtt.connected()) connectMqtt();
-    mqtt.loop();
+    if (mqttEnabled) {
+        if (mqtt.connected()) {
+            mqtt.loop();
+        } else {
+            connectMqtt();   // internally handles retry limits
+        }
+    }
 
     unsigned long now = millis();
 

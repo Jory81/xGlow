@@ -118,11 +118,11 @@ void wifi(){
   Serial.println(WiFi.softAPIP());
   display.println(WiFi.softAPIP());
   Serial.printf(" %s\n", WiFi.softAPIP().toString().c_str());
-  display.display();    
+  display.display();  
+  mqttEnabled = false;  
   }
   else {
     Serial.printf(" %s\n", WiFi.localIP().toString().c_str());
-
     mqtt.setServer(MQTT_HOST, MQTT_PORT);
     connectMqtt();
   }  
