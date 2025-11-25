@@ -110,8 +110,8 @@ AsyncWebSocket ws("/ws");
 const uint16_t MQTT_PORT = 1883;
 
 // ======= DEVICE IDENTIFIERS =======
-const char* DEVICE_ID   = "fastled_node_04";
-const char* DEVICE_NAME = "MyESP32-4";
+const char* DEVICE_ID   = "fastled_node_06";
+const char* DEVICE_NAME = "MyESP32-6";
 
 // ======= MQTT TOPICS =======
 String discoveryTopic = "homeassistant/sensor/" + String(DEVICE_ID) + "/ip/config";
@@ -240,41 +240,72 @@ void publishAlive() {
     mqtt.publish(aliveTopic.c_str(), "online", true); // retained
 }
 
-
 void connectMqtt() {
-  while (!mqtt.connected()) {
-    Serial.print("Connecting MQTT...");
+    static unsigned long lastAttempt = 0;
 
-    // Set LWT here in the connect() call
-    if (mqtt.connect(
-          DEVICE_ID,       // Client ID
-          MQTT_USER,       // Username
-          MQTT_PASS,       // Password
-          aliveTopic.c_str(), // Will topic
-          1,               // QoS
-          true,            // Retained
-          "offline"        // Will message
-        )) 
-    {
-      Serial.println(" connected");
+    if (mqtt.connected()) return;
 
-      delay(100);  // Give handshake a moment
+    unsigned long now = millis();
+    if (now - lastAttempt < 1000) return;  // 1s retry
 
-      Serial.print("MQTT connected? ");
-      Serial.println(mqtt.connected() ? "YES" : "NO");
+    lastAttempt = now;
+    Serial.print("Connecting MQTT... ");
 
-      // Publish device info and status
-      publishDiscovery();  // discovery message
-      publishAliveDiscovery();  // heartbeat
-      publishIP();         // current IP/MAC
-      publishAlive();      // mark online immediately
+    if (mqtt.connect(DEVICE_ID, MQTT_USER, MQTT_PASS)) {
+        Serial.println("connected!");
+
+        delay(100);  // Give handshake a moment
+
+        Serial.print("MQTT connected? ");
+        Serial.println(mqtt.connected() ? "YES" : "NO");
+
+        publishDiscovery();
+        publishAliveDiscovery();
+        publishIP();
+        publishAlive();
     } else {
-      Serial.print(" failed, rc=");
-      Serial.println(mqtt.state());
-      delay(5000); // retry after 5 seconds
+        Serial.print("Failed. rc=");
+        Serial.println(mqtt.state());
     }
-  }
 }
+
+
+
+// void connectMqtt() {
+//   while (!mqtt.connected()) {
+//     Serial.print("Connecting MQTT...");
+//     //static unsigned long lastAttempt = 0;
+
+//     // Set LWT here in the connect() call
+//     if (mqtt.connect(
+//           DEVICE_ID,       // Client ID
+//           MQTT_USER,       // Username
+//           MQTT_PASS,       // Password
+//           aliveTopic.c_str(), // Will topic
+//           1,               // QoS
+//           true,            // Retained
+//           "offline"        // Will message
+//         )) 
+//     {
+//       Serial.println(" connected");
+
+//       delay(100);  // Give handshake a moment
+
+//       Serial.print("MQTT connected? ");
+//       Serial.println(mqtt.connected() ? "YES" : "NO");
+
+//       // Publish device info and status
+//       publishDiscovery();  // discovery message
+//       publishAliveDiscovery();  // heartbeat
+//       publishIP();         // current IP/MAC
+//       publishAlive();      // mark online immediately
+//     } else {
+//       Serial.print(" failed, rc=");
+//       Serial.println(mqtt.state());
+//       delay(5000); // retry after 5 seconds
+//     }
+//   }
+// }
 
 
 
